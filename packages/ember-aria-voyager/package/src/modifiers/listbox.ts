@@ -1,9 +1,4 @@
-import {
-  IndexEmitStrategy,
-  ItemEmitStrategy,
-  Listbox,
-  ReactiveUpdateStrategy
-} from 'aria-voyager';
+import { IndexEmitStrategy, ItemEmitStrategy, Listbox, ReactiveUpdateStrategy } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
 
@@ -70,30 +65,30 @@ type WithItems<T> = {
   selection?: T | T[];
   activateItem?: (item: T) => void;
 } & (
-    | {
+  | {
       multi: true;
       select?: (selection: T[]) => void;
     }
-    | {
+  | {
       multi?: false;
       select?: (selection: T) => void;
     }
-  );
+);
 
 type OptionalItems = {
   items?: HTMLElement[];
   selection?: HTMLElement | HTMLElement[];
   activateItem?: (item: HTMLElement) => void;
 } & (
-    | {
+  | {
       multi: true;
       select?: (selection: HTMLElement[]) => void;
     }
-    | {
+  | {
       multi?: false;
       select?: (selection: HTMLElement) => void;
     }
-  );
+);
 
 interface ListboxSignature<T> {
   Args: {
