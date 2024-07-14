@@ -47,6 +47,7 @@
     "@babel/core": "^7.24.7",
     "@babel/eslint-parser": "^7.24.7",
     "@babel/plugin-transform-typescript": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@babel/runtime": "^7.24.7",
     "@ember/test-helpers": "^3.3.0",
     "@embroider/addon-dev": "^4.2.0",
