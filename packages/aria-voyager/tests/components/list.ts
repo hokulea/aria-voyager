@@ -1,4 +1,4 @@
-import styles from '@hokulea/core/controls.module.css';
+// import styles from '@hokulea/core/controls.module.css';
 
 import { Listbox } from '../../src';
 
@@ -12,7 +12,7 @@ export class List {
   createElement(parent: HTMLElement) {
     this.element = document.createElement('div');
     this.element.role = 'listbox';
-    this.element.classList.add(styles.list);
+    // this.element.classList.add(styles.list);
 
     parent.appendChild(this.element);
 
@@ -35,7 +35,7 @@ export function createListElement(parent: HTMLElement) {
   const element = document.createElement('div');
 
   element.role = 'listbox';
-  element.classList.add(styles.list);
+  // element.classList.add(styles.list);
 
   parent.appendChild(element);
 

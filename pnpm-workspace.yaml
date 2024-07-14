@@ -1,0 +1,4 @@
+packages:
+  - 'packages/ember-aria-voyager/package'
+  - 'packages/ember-aria-voyager/test-app'
+  - 'packages/*'
