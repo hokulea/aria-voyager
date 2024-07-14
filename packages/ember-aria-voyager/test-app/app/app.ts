@@ -1,6 +1,6 @@
 import Application from '@ember/application';
 
-import config from 'ember-aria-navigator-test-app/config/environment';
+import config from 'ember-aria-voyager-test-app/config/environment';
 import loadInitializers from 'ember-load-initializers';
 import Resolver from 'ember-resolver';
 

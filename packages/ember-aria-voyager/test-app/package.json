@@ -1,8 +1,8 @@
 {
-  "name": "ember-aria-navigator-test-app",
+  "name": "ember-aria-voyager-test-app",
   "version": "0.0.0",
   "private": true,
-  "description": "Small description for ember-aria-navigator-test-app goes here",
+  "description": "Small description for ember-aria-voyager-test-app goes here",
   "repository": "",
   "license": "MIT",
   "author": "",
@@ -25,7 +25,7 @@
     "test:watch": "ember test --server"
   },
   "dependencies": {
-    "ember-aria-navigator": "workspace:*"
+    "ember-aria-voyager": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

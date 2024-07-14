@@ -3,10 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "ember-aria-navigator-test-app/tests/*": [
+      "ember-aria-voyager-test-app/tests/*": [
         "tests/*"
       ],
-      "ember-aria-navigator-test-app/*": [
+      "ember-aria-voyager-test-app/*": [
         "app/*"
       ]
     }

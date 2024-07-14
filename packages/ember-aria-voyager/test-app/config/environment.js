@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'ember-aria-navigator-test-app',
+    modulePrefix: 'ember-aria-voyager-test-app',
     environment,
     rootURL: '/',
     locationType: 'history',

@@ -1,4 +1,4 @@
-# ember-aria-navigator-test-app
+# ember-aria-voyager-test-app
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
@@ -16,7 +16,7 @@ You will need the following things properly installed on your computer.
 ## Installation
 
 * `git clone <repository-url>` this repository
-* `cd ember-aria-navigator-test-app`
+* `cd ember-aria-voyager-test-app`
 * `yarn install`
 
 ## Running / Development

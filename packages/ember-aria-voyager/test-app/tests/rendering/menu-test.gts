@@ -3,12 +3,12 @@ import { render, rerender } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { menu } from 'ember-aria-navigator';
+import { menu } from 'ember-aria-voyager';
 
 import {
   testMenuKeyboardNavigation,
   testMenuPointerNavigation
-} from 'ember-aria-navigator/test-support';
+} from 'ember-aria-voyager/test-support';
 
 module('Rendering | Modifier | {{menu}}', (hooks) => {
   setupRenderingTest(hooks);

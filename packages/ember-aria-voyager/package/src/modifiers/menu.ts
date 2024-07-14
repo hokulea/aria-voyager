@@ -1,8 +1,8 @@
-import { Menu, ReactiveUpdateStrategy } from 'aria-navigator';
+import { Menu, ReactiveUpdateStrategy } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
 
-import type { EmitStrategy } from 'aria-navigator';
+import type { EmitStrategy } from 'aria-voyager';
 import type { NamedArgs, PositionalArgs } from 'ember-modifier';
 
 export interface MenuSignature<T> {

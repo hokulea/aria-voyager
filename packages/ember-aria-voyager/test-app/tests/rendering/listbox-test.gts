@@ -3,7 +3,7 @@ import { render, rerender } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { listbox } from 'ember-aria-navigator';
+import { listbox } from 'ember-aria-voyager';
 import sinon from 'sinon';
 
 import {
@@ -12,7 +12,7 @@ import {
   testListKeyboardSelection,
   testListPointerNavigation,
   testListPointerSelection
-} from 'ember-aria-navigator/test-support';
+} from 'ember-aria-voyager/test-support';
 
 import type { TestContext as BaseTestContext } from '@ember/test-helpers';
 

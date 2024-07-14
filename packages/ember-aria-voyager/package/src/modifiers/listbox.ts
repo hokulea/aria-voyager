@@ -3,11 +3,11 @@ import {
   ItemEmitStrategy,
   Listbox,
   ReactiveUpdateStrategy
-} from 'aria-navigator';
+} from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
 
-import type { EmitStrategy } from 'aria-navigator';
+import type { EmitStrategy } from 'aria-voyager';
 import type { NamedArgs, PositionalArgs } from 'ember-modifier';
 
 function asArray(val?: unknown) {
@@ -70,30 +70,30 @@ type WithItems<T> = {
   selection?: T | T[];
   activateItem?: (item: T) => void;
 } & (
-  | {
+    | {
       multi: true;
       select?: (selection: T[]) => void;
     }
-  | {
+    | {
       multi?: false;
       select?: (selection: T) => void;
     }
-);
+  );
 
 type OptionalItems = {
   items?: HTMLElement[];
   selection?: HTMLElement | HTMLElement[];
   activateItem?: (item: HTMLElement) => void;
 } & (
-  | {
+    | {
       multi: true;
       select?: (selection: HTMLElement[]) => void;
     }
-  | {
+    | {
       multi?: false;
       select?: (selection: HTMLElement) => void;
     }
-);
+  );
 
 interface ListboxSignature<T> {
   Args: {

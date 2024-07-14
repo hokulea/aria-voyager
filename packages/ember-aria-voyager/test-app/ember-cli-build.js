@@ -8,7 +8,7 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     trees: {
       app: sideWatch('app', {
-        watching: ['../../aria-navigator/dist', '../../ember-aria-navigator/package/dist']
+        watching: ['../../aria-voyager/dist', '../../ember-aria-voyager/package/dist']
       })
     },
 
