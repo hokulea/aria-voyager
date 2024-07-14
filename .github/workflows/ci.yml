@@ -56,10 +56,8 @@ jobs:
         uses: wyvox/action@v1
       - name: Build package
         run: pnpm build
-      - name: Build Test App
-        run: pnpm run --filter=@hokulea/ember-test-app build
       - name: Build Aria Voyager Test App
-        run: pnpm run --filter=ember-aria-navigator-test-app build
+        run: pnpm run --filter=ember-aria-voyager-test-app build
 
   test-locked-deps:
     name: Locked Deps
