@@ -19,7 +19,8 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+          COVERAGE: true
         with:
-          coverageCommand: COVERAGE=true pnpm run -r --parallel --aggregate-output test
+          coverageCommand: pnpm run -r --parallel --aggregate-output test
           coverageLocations: |
             ${{github.workspace}}/*/lcov.info:lcov
