@@ -23,4 +23,5 @@ jobs:
         with:
           coverageCommand: pnpm run -r --parallel --aggregate-output test
           coverageLocations: |
-            ${{github.workspace}}/{,!(node_modules)/**/}lcov.info:lcov
+            ${{github.workspace}}/packages/aria-voyager/coverage/lcov.info:lcov
+            ${{github.workspace}}/packages/ember-aria-voyager/test-app/coverage/lcov.info:lcov
