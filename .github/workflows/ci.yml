@@ -3,27 +3,11 @@ name: 'CI'
 on:
   workflow_dispatch:
   pull_request:
-    types: [opened, reopened, labeled, unlabeled, synchronize]
   push:
     branches:
       - main
 
 jobs:
-  labels:
-    name: labels
-    runs-on: ubuntu-latest
-    steps:
-      - name: Require Labels
-        uses: mheap/github-action-required-labels@v5
-        with:
-          mode: minimum
-          count: 1
-          labels: |
-            breaking
-            enhancement
-            bug
-            documentation
-            internal
 
   lint-js:
     name: lint:js
