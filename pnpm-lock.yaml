@@ -10,7 +10,7 @@ importers:
     devDependencies:
       '@gossi/config-eslint':
         specifier: ^0.10.0
-        version: 0.10.0(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3)
+        version: 0.10.0(@babel/core@7.24.8)(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3)
       '@gossi/config-prettier':
         specifier: ^0.9.0
         version: 0.9.0(prettier@3.3.3)
@@ -43,7 +43,7 @@ importers:
         specifier: ^1.4.6
         version: 1.6.13
       '@testing-library/dom':
-        specifier: ^10.1.0
+        specifier: ^10.3.1
         version: 10.3.1
       '@types/css-modules':
         specifier: ^1.0.5
@@ -3222,7 +3222,7 @@ packages:
       - typescript
     dev: true
 
-  /@gossi/config-eslint@0.10.0(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3):
+  /@gossi/config-eslint@0.10.0(@babel/core@7.24.8)(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3):
     resolution: {integrity: sha512-J7gJU3+DBveO2jUVg0R3BVpIuI+qmbySvlX8zy+Q+nIUheUSVtHky/MV9Hf6cG8NwAc1/bCxt+W6Uerq+4POJQ==}
     engines: {node: 16.* || >= 18.*}
     peerDependencies:
@@ -3250,6 +3250,7 @@ packages:
       eslint-plugin-storybook:
         optional: true
     dependencies:
+      '@babel/core': 7.24.8
       cosmiconfig: 9.0.0(typescript@5.4.5)
       eslint: 8.57.0
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
