@@ -20,7 +20,7 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: 'istanbul',
-      reporter: ['text', 'html', 'clover', 'json']
+      reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
     browser: {
       enabled: true,
