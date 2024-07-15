@@ -8,6 +8,22 @@ on:
       - main
 
 jobs:
+  labels:
+    name: labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require Labels
+        uses: mheap/github-action-required-labels@v5
+        with:
+          mode: minimum
+          count: 1
+          labels: |
+            breaking
+            enhancement
+            bug
+            documentation
+            internal
+
   lint-js:
     name: lint:js
     runs-on: ubuntu-latest
@@ -59,24 +75,13 @@ jobs:
       - name: Build Aria Voyager Test App
         run: pnpm run --filter=ember-aria-voyager-test-app build
 
-  test-locked-deps:
-    name: Locked Deps
+  test:
+    name: test
     runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: wyvox/action@v1
       - name: Build package
         run: pnpm build
-      - name: Tests
-        run: pnpm run -r --parallel --aggregate-output test
-
-  test-floating-deps:
-    name: Floating Deps
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup
-        uses: wyvox/action@v1
-      - name: Build package
-        run: pnpm build
-      - name: Tests
+      - name: Test
         run: pnpm run -r --parallel --aggregate-output test
