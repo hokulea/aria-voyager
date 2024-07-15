@@ -1,5 +1,8 @@
 # aria-voyager
 
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6bd88c10540e66d94e2a/test_coverage)](https://codeclimate.com/github/hokulea/aria-voyager/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6bd88c10540e66d94e2a/maintainability)](https://codeclimate.com/github/hokulea/aria-voyager/maintainability)
+
 _Canoe vessel that navigates your aria._
 
 A framework agnostic / universal package that implements navigation patterns for

@@ -58,7 +58,7 @@ export default defineConfig({
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     // addon.hbs(),
 
-    // addon.gjs(),
+    // addon.gjs({ inline_source_map: true }),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
