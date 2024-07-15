@@ -1,12 +1,8 @@
 name: 'PR'
 
 on:
-  workflow_dispatch:
   pull_request:
     types: [opened, reopened, labeled, unlabeled, synchronize]
-  push:
-    branches:
-      - main
 
 jobs:
   labels:
