@@ -1,7 +1,7 @@
 {
   "name": "ember-aria-voyager",
-  "version": "0.0.0",
-  "description": "The default blueprint for Embroider v2 addons.",
+  "version": "0.0.1",
+  "description": "Navigation patterns for various aria roles and features in ember.js",
   "keywords": [
     "ember-addon"
   ],

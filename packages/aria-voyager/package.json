@@ -1,6 +1,7 @@
 {
   "name": "aria-voyager",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A framework agnostic / universal package that implements navigation patterns for various aria roles and features",
   "author": "gossi",
   "files": [
     "dist"
