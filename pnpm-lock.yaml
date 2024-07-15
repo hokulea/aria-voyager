@@ -14,13 +14,13 @@ importers:
   .:
     devDependencies:
       '@gossi/config-eslint':
-        specifier: ^0.10.0
+        specifier: 0.10.0
         version: 0.10.0(@babel/core@7.24.8)(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3)
       '@gossi/config-prettier':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0(prettier@3.3.3)
       eslint:
-        specifier: ^8.57.0
+        specifier: 8.57.0
         version: 8.57.0
       release-plan:
         specifier: ^0.9.0
@@ -39,10 +39,10 @@ importers:
         version: 9.0.1
     devDependencies:
       '@gossi/config-eslint':
-        specifier: ^0.10.0
+        specifier: 0.10.0
         version: 0.10.0(@babel/core@7.24.8)(@types/eslint@8.56.10)(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.5.3)
       '@gossi/config-prettier':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0(prettier@3.3.3)
       '@swc/cli':
         specifier: ^0.3.10
@@ -78,10 +78,10 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       eslint:
-        specifier: ^8.57.0
+        specifier: 8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.2.5
+        specifier: 3.3.3
         version: 3.3.3
       tsup:
         specifier: ^8.0.2
@@ -145,16 +145,16 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@gossi/config-eslint':
-        specifier: ^0.10.0
+        specifier: 0.10.0
         version: 0.10.0(@babel/core@7.24.8)(@babel/eslint-parser@7.24.8)(eslint-plugin-ember@12.1.1)(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.5.3)
       '@gossi/config-prettier':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0(prettier@3.3.3)
       '@gossi/config-targets':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0
       '@gossi/config-template-lint':
-        specifier: ^0.8.0
+        specifier: 0.8.0
         version: 0.8.0(ember-template-lint@6.0.0)(prettier@3.3.3)
       '@rollup/plugin-babel':
         specifier: ^6.0.4
@@ -187,19 +187,19 @@ importers:
         specifier: ~5.9.0
         version: 5.9.0(@babel/core@7.24.8)(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.93.0)
       ember-template-lint:
-        specifier: ^6.0.0
+        specifier: 6.0.0
         version: 6.0.0
       eslint:
-        specifier: ^8.57.0
+        specifier: 8.57.0
         version: 8.57.0
       eslint-plugin-ember:
-        specifier: ^12.1.1
+        specifier: 12.1.1
         version: 12.1.1(@babel/core@7.24.8)(@typescript-eslint/parser@7.16.0)(eslint@8.57.0)
       postcss:
         specifier: ^8.4.35
         version: 8.4.39
       prettier:
-        specifier: ^3.2.5
+        specifier: 3.3.3
         version: 3.3.3
       qunit-dom:
         specifier: ^3.0.0
@@ -266,19 +266,19 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@gossi/config-eslint':
-        specifier: ^0.10.0
+        specifier: 0.10.0
         version: 0.10.0(@babel/core@7.24.8)(@typescript-eslint/eslint-plugin@7.16.0)(@typescript-eslint/parser@7.16.0)(eslint-plugin-ember@12.1.1)(eslint-plugin-import@2.29.1)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.4.5)
       '@gossi/config-prettier':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0(prettier@3.3.3)
       '@gossi/config-stylelint':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0(stylelint@16.7.0)
       '@gossi/config-targets':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0
       '@gossi/config-template-lint':
-        specifier: ^0.8.0
+        specifier: 0.8.0
         version: 0.8.0(ember-template-lint@6.0.0)(prettier@3.3.3)
       '@tsconfig/ember':
         specifier: ^3.0.5
@@ -290,10 +290,10 @@ importers:
         specifier: ^17.0.3
         version: 17.0.3
       '@typescript-eslint/eslint-plugin':
-        specifier: ^7.5.0
+        specifier: 7.16.0
         version: 7.16.0(@typescript-eslint/parser@7.16.0)(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
-        specifier: ^7.5.0
+        specifier: 7.16.0
         version: 7.16.0(eslint@8.57.0)(typescript@5.4.5)
       broccoli-asset-rev:
         specifier: ^3.0.0
@@ -356,16 +356,16 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
       ember-template-lint:
-        specifier: ^6.0.0
+        specifier: 6.0.0
         version: 6.0.0
       ember-try:
         specifier: ^3.0.0
         version: 3.0.0
       eslint:
-        specifier: ^8.57.0
+        specifier: 8.57.0
         version: 8.57.0
       eslint-plugin-ember:
-        specifier: ^12.1.1
+        specifier: 12.1.1
         version: 12.1.1(@babel/core@7.24.8)(@typescript-eslint/parser@7.16.0)(eslint@8.57.0)
       loader.js:
         specifier: ^4.7.0
@@ -374,7 +374,7 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       prettier:
-        specifier: ^3.2.5
+        specifier: 3.3.3
         version: 3.3.3
       qunit:
         specifier: ^2.21.0
@@ -5007,7 +5007,7 @@ packages:
     resolution: {integrity: sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA==}
     engines: {node: '>= 14'}
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.5(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -9871,7 +9871,7 @@ packages:
     engines: {node: '>= 10.17.0'}
     hasBin: true
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.5(supports-color@8.1.1)
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -13688,7 +13688,7 @@ packages:
     dependencies:
       '@tootallnate/quickjs-emscripten': 0.23.0
       agent-base: 7.1.1
-      debug: 4.3.4
+      debug: 4.3.5(supports-color@8.1.1)
       get-uri: 6.0.3
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.5
@@ -14560,7 +14560,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.4
+      debug: 4.3.5(supports-color@8.1.1)
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.5
       lru-cache: 7.18.3
@@ -14576,7 +14576,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.4
+      debug: 4.3.5(supports-color@8.1.1)
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.5
       lru-cache: 7.18.3
@@ -15739,7 +15739,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.4
+      debug: 4.3.5(supports-color@8.1.1)
       socks: 2.8.3
     transitivePeerDependencies:
       - supports-color
