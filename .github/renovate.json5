@@ -30,13 +30,26 @@
         "after 9pm on sunday"
       ]
     },
-    // This library needs to be bumped, because otherwise we would not
-    // receive blueprint updates whenever a release occurs
+    //
+    // Labels
+    //
     {
-      "packageNames": [
-        "ember-addon-automated-ci"
+      "matchDepTypes": [
+        "devDependencies"
       ],
-      "rangeStrategy": "bump"
+      "addLabels": [
+        "internal"
+      ]
+    },
+    {
+      "matchDepTypes": [
+        "dependencies",
+        "peerDependencies",
+        "optionalDependencies"
+      ],
+      "addLabels": [
+        "enhancement"
+      ]
     },
     {
       "groupName": "Lint Dependencies",
