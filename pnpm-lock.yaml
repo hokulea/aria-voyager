@@ -45,8 +45,8 @@ importers:
         specifier: 0.9.0
         version: 0.9.0(prettier@3.3.3)
       '@swc/cli':
-        specifier: 0.3.14
-        version: 0.3.14(@swc/core@1.6.13)
+        specifier: 0.4.0
+        version: 0.4.0(@swc/core@1.6.13)
       '@swc/core':
         specifier: 1.6.13
         version: 1.6.13
@@ -4102,8 +4102,8 @@ packages:
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
     dev: true
 
-  /@swc/cli@0.3.14(@swc/core@1.6.13):
-    resolution: {integrity: sha512-0vGqD6FSW67PaZUZABkA+ADKsX7OUY/PwNEz1SbQdCvVk/e4Z36Gwh7mFVBQH9RIsMonTyhV1RHkwkGnEfR3zQ==}
+  /@swc/cli@0.4.0(@swc/core@1.6.13):
+    resolution: {integrity: sha512-4JdVrPtF/4rCMXp6Q1h5I6YkYZrCCcqod7Wk97ZQq7K8vNGzJUryBv4eHCvqx5sJOJBrbYm9fcswe1B0TygNoA==}
     engines: {node: '>= 16.14.0'}
     hasBin: true
     peerDependencies:
