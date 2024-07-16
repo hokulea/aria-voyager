@@ -46,7 +46,7 @@
   "devDependencies": {
     "@gossi/config-eslint": "0.10.0",
     "@gossi/config-prettier": "0.9.0",
-    "@swc/cli": "0.3.14",
+    "@swc/cli": "0.4.0",
     "@swc/core": "1.6.13",
     "@testing-library/dom": "10.3.2",
     "@types/css-modules": "^1.0.5",
