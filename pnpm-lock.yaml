@@ -90,8 +90,8 @@ importers:
         specifier: 5.5.3
         version: 5.5.3
       vite:
-        specifier: 5.3.3
-        version: 5.3.3
+        specifier: 5.3.4
+        version: 5.3.4
       vitest:
         specifier: 1.6.0
         version: 1.6.0(@vitest/browser@1.6.0)(@vitest/ui@1.6.0)
@@ -17321,7 +17321,7 @@ packages:
       debug: 4.3.5(supports-color@8.1.1)
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.3.3
+      vite: 5.3.4
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -17333,8 +17333,8 @@ packages:
       - terser
     dev: true
 
-  /vite@5.3.3:
-    resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
+  /vite@5.3.4:
+    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -17412,7 +17412,7 @@ packages:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.3.3
+      vite: 5.3.4
       vite-node: 1.6.0
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
