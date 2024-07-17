@@ -344,8 +344,8 @@ importers:
         specifier: 12.0.1
         version: 12.0.1(ember-source@5.10.1)
       ember-sinon-qunit:
-        specifier: 7.4.0
-        version: 7.4.0(ember-source@5.10.1)(qunit@2.21.0)(sinon@17.0.1)
+        specifier: 7.5.0
+        version: 7.5.0(@babel/core@7.24.9)(ember-source@5.10.1)(qunit@2.21.0)(sinon@17.0.1)
       ember-source:
         specifier: 5.10.1
         version: 5.10.1(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.93.0)
@@ -4684,12 +4684,6 @@ packages:
       '@types/send': 0.17.4
     dev: true
 
-  /@types/sinon@10.0.20:
-    resolution: {integrity: sha512-2APKKruFNCAZgx3daAyACGzWuJ028VVCUDk6o2rw/Z4PXT0ogwdV4KUegW0MwVs0Zu59auPXbbuBJHF12Sx1Eg==}
-    dependencies:
-      '@types/sinonjs__fake-timers': 8.1.5
-    dev: true
-
   /@types/sinon@17.0.3:
     resolution: {integrity: sha512-j3uovdn8ewky9kRBG19bOwaZbexJu/XjtkHyjvUgt4xfPFz18dcORIMqnYh66Fx3Powhcr85NT5+er3+oViapw==}
     dependencies:
@@ -7900,7 +7894,6 @@ packages:
       babel-import-util: 3.0.0
     transitivePeerDependencies:
       - '@babel/core'
-    dev: false
 
   /deep-eql@4.1.4:
     resolution: {integrity: sha512-SUwdGfqdKOwxCPeVYjwSyRpJ7Z+fhpwIAtmCUdZIWZ/YP5R9WAsyuSgpLVDi9bjWoN2LXHNss/dk3urXtdQxGg==}
@@ -8868,19 +8861,21 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-sinon-qunit@7.4.0(ember-source@5.10.1)(qunit@2.21.0)(sinon@17.0.1):
-    resolution: {integrity: sha512-BcH2scgJ4Vpq5Fnjeq5Z2ESnHLsmcfFRaq/gOujy3my+8w7WTtrHyaUgWzmd5mLw+tfCYssAUEalQhk1ZNpV+g==}
+  /ember-sinon-qunit@7.5.0(@babel/core@7.24.9)(ember-source@5.10.1)(qunit@2.21.0)(sinon@17.0.1):
+    resolution: {integrity: sha512-wSoRqBbiytUtDFIE6DLPDZFYhoS4FH+kgHhr707HJMF5tUYpKPIruBusF9kWezj/yOrJLyLqoWFoaAJ2aG2FQw==}
     peerDependencies:
       ember-source: '>=3.28.0'
       qunit: ^2.0.0
-      sinon: ^15.0.3 || ^16.0.0 || ^17.0.0
+      sinon: '>=15.0.3'
     dependencies:
       '@embroider/addon-shim': 1.8.9
-      '@types/sinon': 10.0.20
+      '@types/sinon': 17.0.3
+      decorator-transforms: 2.0.0(@babel/core@7.24.9)
       ember-source: 5.10.1(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.93.0)
       qunit: 2.21.0
       sinon: 17.0.1
     transitivePeerDependencies:
+      - '@babel/core'
       - supports-color
     dev: true
 
