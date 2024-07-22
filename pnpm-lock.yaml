@@ -54,16 +54,16 @@ importers:
         specifier: 10.3.2
         version: 10.3.2
       '@types/css-modules':
-        specifier: ^1.0.5
+        specifier: 1.0.5
         version: 1.0.5
       '@types/eslint':
-        specifier: ^8.56.5
+        specifier: 8.56.10
         version: 8.56.10
       '@types/lodash.isequal':
-        specifier: ^4.5.8
+        specifier: 4.5.8
         version: 4.5.8
       '@types/uuid':
-        specifier: ^9.0.8
+        specifier: 9.0.8
         version: 9.0.8
       '@vitest/browser':
         specifier: 1.6.0
@@ -166,13 +166,13 @@ importers:
         specifier: 3.0.8
         version: 3.0.8
       '@types/lodash.isequal':
-        specifier: ^4.5.8
+        specifier: 4.5.8
         version: 4.5.8
       '@types/qunit':
-        specifier: ^2.19.10
+        specifier: 2.19.10
         version: 2.19.10
       '@types/sinon':
-        specifier: ^17.0.3
+        specifier: 17.0.3
         version: 17.0.3
       concurrently:
         specifier: ^8.2.2
@@ -284,10 +284,10 @@ importers:
         specifier: 3.0.8
         version: 3.0.8
       '@types/qunit':
-        specifier: ^2.19.9
+        specifier: 2.19.10
         version: 2.19.10
       '@types/sinon':
-        specifier: ^17.0.3
+        specifier: 17.0.3
         version: 17.0.3
       '@typescript-eslint/eslint-plugin':
         specifier: 7.16.0
