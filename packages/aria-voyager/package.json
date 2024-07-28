@@ -50,7 +50,7 @@
     "@swc/core": "1.7.3",
     "@testing-library/dom": "10.4.0",
     "@types/css-modules": "1.0.5",
-    "@types/eslint": "8.56.10",
+    "@types/eslint": "8.56.11",
     "@types/lodash.isequal": "4.5.8",
     "@types/uuid": "9.0.8",
     "@vitest/browser": "1.6.0",
