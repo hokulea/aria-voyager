@@ -339,13 +339,13 @@ importers:
         version: 2.1.2(@babel/core@7.24.9)
       ember-qunit:
         specifier: 8.1.0
-        version: 8.1.0(@ember/test-helpers@3.3.1)(@glint/template@1.4.0)(ember-source@5.10.1)(qunit@2.21.0)
+        version: 8.1.0(@ember/test-helpers@3.3.1)(@glint/template@1.4.0)(ember-source@5.10.1)(qunit@2.21.1)
       ember-resolver:
         specifier: 12.0.1
         version: 12.0.1(ember-source@5.10.1)
       ember-sinon-qunit:
         specifier: 7.5.0
-        version: 7.5.0(@babel/core@7.24.9)(ember-source@5.10.1)(qunit@2.21.0)(sinon@18.0.0)
+        version: 7.5.0(@babel/core@7.24.9)(ember-source@5.10.1)(qunit@2.21.1)(sinon@18.0.0)
       ember-source:
         specifier: 5.10.1
         version: 5.10.1(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.93.0)
@@ -377,8 +377,8 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       qunit:
-        specifier: 2.21.0
-        version: 2.21.0
+        specifier: 2.21.1
+        version: 2.21.1
       qunit-dom:
         specifier: 3.2.0
         version: 3.2.0
@@ -9020,7 +9020,7 @@ packages:
       - supports-color
     dev: false
 
-  /ember-qunit@8.1.0(@ember/test-helpers@3.3.1)(@glint/template@1.4.0)(ember-source@5.10.1)(qunit@2.21.0):
+  /ember-qunit@8.1.0(@ember/test-helpers@3.3.1)(@glint/template@1.4.0)(ember-source@5.10.1)(qunit@2.21.1):
     resolution: {integrity: sha512-55/xqvVQwhiNcnh/tCzWyvlYzrYqwDY0/cIPyDQbAxGKtkUt9jCfRUGllfyOofC6LX0fL/0fIi+5e9sg1m6vXw==}
     peerDependencies:
       '@ember/test-helpers': '>=3.0.3'
@@ -9032,7 +9032,7 @@ packages:
       '@embroider/macros': 1.16.5(@glint/template@1.4.0)
       ember-cli-test-loader: 3.1.0
       ember-source: 5.10.1(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.93.0)
-      qunit: 2.21.0
+      qunit: 2.21.1
       qunit-theme-ember: 1.0.0
     transitivePeerDependencies:
       - '@glint/template'
@@ -9067,7 +9067,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-sinon-qunit@7.5.0(@babel/core@7.24.9)(ember-source@5.10.1)(qunit@2.21.0)(sinon@18.0.0):
+  /ember-sinon-qunit@7.5.0(@babel/core@7.24.9)(ember-source@5.10.1)(qunit@2.21.1)(sinon@18.0.0):
     resolution: {integrity: sha512-wSoRqBbiytUtDFIE6DLPDZFYhoS4FH+kgHhr707HJMF5tUYpKPIruBusF9kWezj/yOrJLyLqoWFoaAJ2aG2FQw==}
     peerDependencies:
       ember-source: '>=3.28.0'
@@ -9078,7 +9078,7 @@ packages:
       '@types/sinon': 17.0.3
       decorator-transforms: 2.0.0(@babel/core@7.24.9)
       ember-source: 5.10.1(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.93.0)
-      qunit: 2.21.0
+      qunit: 2.21.1
       sinon: 18.0.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -15090,8 +15090,8 @@ packages:
     resolution: {integrity: sha512-vdMVVo6ecdCkWttMTKeyq1ZTLGHcA6zdze2zhguNuc3ritlJMhOXY5RDseqazOwqZVfCg3rtlmL3fMUyIzUyFQ==}
     dev: true
 
-  /qunit@2.21.0:
-    resolution: {integrity: sha512-kJJ+uzx5xDWk0oRrbOZ3zsm+imPULE58ZMIrNl+3POZl4a1k6VXj2E4OiqTmZ9j6hh9egE3kNgnAti9Q+BG6Yw==}
+  /qunit@2.21.1:
+    resolution: {integrity: sha512-SMA8IBZamI9MyVB4dShGpn6+X6plO8mIyfZTQ815XBvv/nVMeUj+yxsw8SgZVnrMlrAvTziJkmjOhaDwkNMHWQ==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
