@@ -71,7 +71,7 @@
     "postcss": "8.4.40",
     "prettier": "3.3.3",
     "qunit-dom": "3.2.0",
-    "rollup": "4.19.2",
+    "rollup": "4.20.0",
     "rollup-plugin-postcss": "4.0.2",
     "typescript": "5.5.4",
     "webpack": "5.93.0"
