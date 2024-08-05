@@ -1,6 +1,6 @@
 {
   "name": "ember-aria-voyager",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Navigation patterns for various aria roles and features in ember.js",
   "keywords": [
     "ember-addon"
