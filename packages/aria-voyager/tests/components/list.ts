@@ -33,6 +33,10 @@ export class List {
     this.listbox = new Listbox(this.element);
   }
 
+  get items() {
+    return this.listbox.items;
+  }
+
   setItems(items: string[]) {
     for (const item of items) {
       const elem = document.createElement('span');

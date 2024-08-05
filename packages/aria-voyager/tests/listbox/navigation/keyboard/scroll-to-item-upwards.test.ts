@@ -12,6 +12,7 @@ list.style.overflow = 'auto';
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 listbox.setItems([...Array(20).keys()].map((i) => `Item ${i + 1}`));
+listbox.items.forEach((item) => (item.style.height = '19px'));
 
 const lastIndex = list.children.length;
 const lastItem = list.children[lastIndex - 1];
@@ -23,7 +24,7 @@ describe('Scroll Upwards', () => {
     list.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
 
     expect(lastItem.getAttribute('aria-selected')).toBe('true');
-    expect(list.scrollTop).toBe(170);
+    expect(list.scrollTop).toBe(180);
   });
 
   it('use `ArrowUp` to scroll up', () => {
@@ -34,15 +35,15 @@ describe('Scroll Upwards', () => {
       i--;
     }
 
-    expect(list.scrollTop).toBe(170);
+    expect(list.scrollTop).toBe(180);
     expect(list.children[i].getAttribute('aria-selected')).toBe('true');
 
     list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
-    expect(list.scrollTop).toBe(165);
+    expect(list.scrollTop).toBe(169);
     expect(list.children[i - 1].getAttribute('aria-selected')).toBe('true');
 
     list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
-    expect(list.scrollTop).toBe(146);
+    expect(list.scrollTop).toBe(150);
     expect(list.children[i - 2].getAttribute('aria-selected')).toBe('true');
   });
 });

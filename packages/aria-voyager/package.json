@@ -36,7 +36,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "tsc --noEmit",
     "test": "vitest run --browser.headless --browser.provider=webdriverio",
-    "test:ui": "vitest --no-open"
+    "test:ui": "vitest"
   },
   "dependencies": {
     "lodash.isequal": "^4.5.0",

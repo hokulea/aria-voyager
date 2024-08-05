@@ -12,6 +12,7 @@ list.style.overflow = 'auto';
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 listbox.setItems([...Array(20).keys()].map((i) => `Item ${i + 1}`));
+listbox.items.forEach((item) => (item.style.height = '19px'));
 
 const firstItem = list.children[0];
 
@@ -36,11 +37,11 @@ describe('Scroll Downwards', () => {
     expect(list.children[i].getAttribute('aria-selected')).toBe('true');
 
     list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-    expect(list.scrollTop).toBe(6);
+    expect(list.scrollTop).toBe(11);
     expect(list.children[i + 1].getAttribute('aria-selected')).toBe('true');
 
     list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-    expect(list.scrollTop).toBe(25);
+    expect(list.scrollTop).toBe(30);
     expect(list.children[i + 2].getAttribute('aria-selected')).toBe('true');
   });
 });
