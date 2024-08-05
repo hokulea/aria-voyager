@@ -2,6 +2,16 @@
 
 ## Release (2024-08-05)
 
+
+
+#### :house: Internal
+* [#73](https://github.com/hokulea/aria-voyager/pull/73) Update to turborepo v2 ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
+## Release (2024-08-05)
+
 aria-voyager 0.0.2 (patch)
 ember-aria-voyager 0.0.3 (patch)
 
