@@ -33,11 +33,11 @@ export class ActiveDescendentStrategy implements NavigationPattern, FocusStrateg
   }
 
   handleFocus() {
-    const multiSelection =
-      this.control.capabilities.multiSelection && this.control.options.multiple;
+    // const multiSelection =
+    //   this.control.capabilities.multiSelection && this.control.options.multiple;
     const selectionPresent = this.control.selection.length > 0;
 
-    if (multiSelection && selectionPresent) {
+    if (selectionPresent) {
       this.activateItem(this.control.selection[0]);
     } else {
       this.activateItem(this.control.items[0]);
