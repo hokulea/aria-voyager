@@ -15,8 +15,7 @@ export default defineConfig({
     }
   },
   test: {
-    // disableConsoleIntercept: true,
-    open: false,
+    // open: true,
     coverage: {
       enabled: true,
       provider: 'istanbul',
@@ -24,11 +23,9 @@ export default defineConfig({
     },
     browser: {
       enabled: true,
-      // enableUI: true,
-      headless: true,
       name: 'chrome',
-      // provider: 'playwright'
-      // provider: 'none'
+      provider: 'preview'
+      // provider: 'webdriverio'
     }
   }
 });
