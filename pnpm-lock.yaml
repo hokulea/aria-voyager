@@ -48,8 +48,8 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@hokulea/theme-moana':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       '@swc/cli':
         specifier: 0.4.0
         version: 0.4.0(@swc/core@1.7.6)(chokidar@3.6.0)
@@ -1726,8 +1726,8 @@ packages:
     resolution: {integrity: sha512-/3Q7LHSC6DJG/6Z9YvMUNxItWa6hi53DID0AlfzzDzfUUDMGlnygpjPkF0TE7N/AtbzdSl8hMYriMjryrT+ung==}
     engines: {node: '>= 20.*'}
 
-  '@hokulea/theme-moana@0.0.2':
-    resolution: {integrity: sha512-5ND5jBBrsEm+2AM9vko2GJGf50DC3CWs9dIaX0YaYepVQbKGO84ruboGkHpvMr6BuvEtTylmJZy2Ma4eCAZoGA==}
+  '@hokulea/theme-moana@0.0.3':
+    resolution: {integrity: sha512-C7id2WKen1GnuRgFZBKAj/b2nZsIctT0n6FN33rsdDCAeJw7bTjM9dNBwGBTQ4MkbNwQn5yn581DIAOw6zTRFw==}
     engines: {node: '>= 20'}
 
   '@humanwhocodes/config-array@0.11.14':
@@ -11675,7 +11675,7 @@ snapshots:
 
   '@hokulea/core@0.1.1': {}
 
-  '@hokulea/theme-moana@0.0.2': {}
+  '@hokulea/theme-moana@0.0.3': {}
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
