@@ -47,7 +47,7 @@
     "@babel/eslint-parser": "7.25.1",
     "@babel/plugin-transform-typescript": "7.25.2",
     "@babel/preset-typescript": "7.24.7",
-    "@babel/runtime": "7.25.0",
+    "@babel/runtime": "7.25.4",
     "@ember/test-helpers": "3.3.1",
     "@embroider/addon-dev": "5.0.0",
     "@glint/template": "1.4.0",
