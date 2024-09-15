@@ -32,7 +32,7 @@
     "dom-element-descriptors": "^0.5.0",
     "ember-modifier": "^4.2.0",
     "aria-voyager": "workspace:*",
-    "sinon": "^18.0.0"
+    "sinon": "^19.0.0"
   },
   "peerDependencies": {
     "@ember/test-helpers": "^4.0.0"
