@@ -48,7 +48,7 @@
     "@hokulea/core": "^0.1.2",
     "@hokulea/theme-moana": "^0.0.3",
     "@swc/cli": "0.4.0",
-    "@swc/core": "1.7.26",
+    "@swc/core": "1.7.35",
     "@testing-library/dom": "10.4.0",
     "@types/css-modules": "1.0.5",
     "@types/eslint": "9.6.1",
