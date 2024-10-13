@@ -30,7 +30,7 @@ pnpm add ember-aria-voyager
 
 Basic example:
 
-```gts
+```glimmer-ts
 import { listbox } from 'ember-aria-voyager';
 const options = ['apple', 'banana', 'pineapple'];
 
@@ -66,7 +66,7 @@ When passing `items` the `select()` and `selection` can work off of your passed 
 
 Full example:
 
-```gts
+```glimmer-ts
 import { listbox } from 'ember-aria-voyager';
 const options = ['apple', 'banana', 'pineapple'];
 const context = new class {
@@ -99,7 +99,7 @@ const selection = ['banana'];
 
 Basic example:
 
-```gts
+```glimmer-ts
 import { menu } from 'ember-aria-voyager';
 
 <template>
@@ -126,7 +126,7 @@ interface MenuSignature<T> {
 
 Here is a full example:
 
-```gts
+```glimmer-ts
 import { menu } from 'ember-aria-voyager';
 const items = [
   {
