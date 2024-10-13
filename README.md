@@ -66,8 +66,9 @@ apply styling, it will operate on the accessibility tree.
     <td>
       ✅ Disabled<br>
       ❌ Hover Behavior Configurable<br>
-      ❌ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemcheckbox" target="_blank"><code>role="menuitemcheckbox"</code></a><br>
-      ❌ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemradio" target="_blank"><code>role="menuitemradio"</code></a>
+      ✅ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitem" target="_blank"><code>role="menuitem"</code></a><br>
+      ✅ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemcheckbox" target="_blank"><code>role="menuitemcheckbox"</code></a><br>
+      ✅ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemradio" target="_blank"><code>role="menuitemradio"</code></a>
     </td>
     <td>
       <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>

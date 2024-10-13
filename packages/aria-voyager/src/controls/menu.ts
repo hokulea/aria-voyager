@@ -58,7 +58,17 @@ export class Menu extends Control {
   }
 
   readItems() {
-    this.items = [...this.element.querySelectorAll('& > [role="menuitem"]')] as HTMLElement[];
+    // Find all descendant elements with role "menuitem", "menuitemcheckbox", or "menuitemradio"
+    const items = this.element.querySelectorAll(
+      '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'
+    ) as HTMLElement[];
+
+    // Filter out elements that are within a nested menu but not the root menu
+    this.items = Array.from(items).filter((item) => {
+      // Check if the closest ancestor with <menu> tag or [role="menu"] is not the root element
+      const closestMenu = item.closest('menu,[role="menu"]');
+      return !closestMenu || closestMenu === this.element;
+    });
 
     this.focusStrategy.updateItems();
   }
