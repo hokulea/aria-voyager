@@ -18,7 +18,7 @@ type Elements = {
 const DEFAULT_SELECTORS = {
   trigger: 'button',
   menu: '[role="menu"]',
-  item: '& > [role="menuitem"]'
+  item: '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'
 };
 
 function setupMenuTest(

@@ -17,7 +17,10 @@ describe('Menu', () => {
         appendItemToMenu(refactorMenu, 'Command Palette');
 
         await vi.waitUntil(
-          () => refactorMenu.querySelectorAll('& > [role="menuitem"]').length === 8
+          () =>
+            refactorMenu.querySelectorAll(
+              '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]'
+            ).length === 8
         );
 
         expect(menu.items.length).toBe(8);
