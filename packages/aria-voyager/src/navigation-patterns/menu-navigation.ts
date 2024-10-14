@@ -93,6 +93,8 @@ export class MenuNavigation implements NavigationPattern {
   }
 
   navigateWithPointer(event: PointerEvent) {
+    const target = event.target as HTMLElement;
+
     // hover ...
     if (event.type === 'pointerover') {
       // close sibling menus
@@ -115,7 +117,6 @@ export class MenuNavigation implements NavigationPattern {
 
     // ... and out
     else if (event.type === 'pointerout') {
-      const target = event.target as HTMLElement;
 
       // moving pointer from menu to trigger
       if (
@@ -127,15 +128,19 @@ export class MenuNavigation implements NavigationPattern {
     }
 
     // close on invocation
-    else if (
-      event.type === 'pointerup' &&
-      !this.control.activeItem?.hasAttribute('popovertarget')
-    ) {
-      // firefox wouldn't execute the default click handler from a menuitem,
-      // when `this.closeRootMenu()` is invoked directly.
-      // As such, pushing this on the event loop gives firefox "time to breath"
-      // and execute the default click handler as well as closing the menu
-      window.setTimeout(() => this.closeRootMenu(), 0);
+    else if ( event.type === 'pointerup') {
+
+      // only close the menu if we have clicked a menuitem
+      if (
+        this.control.items.find(item => item.contains(target)) &&
+        !this.control.activeItem?.hasAttribute('popovertarget')
+      ) {
+        // firefox wouldn't execute the default click handler from a menuitem,
+        // when `this.closeRootMenu()` is invoked directly.
+        // As such, pushing this on the event loop gives firefox "time to breath"
+        // and execute the default click handler as well as closing the menu
+        window.setTimeout(() => this.closeRootMenu(), 0);
+      }
     }
   }
 

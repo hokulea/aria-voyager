@@ -123,6 +123,7 @@ module('Rendering | Modifier | {{menu}}', (hooks) => {
         <template>
           <button type="button" popovertarget="refactormenu">Refactor</button>
           <div role="menu" id="refactormenu" popover {{menu}}>
+            <header>Header</header>
             <button type="button" role="menuitem">Format Document</button>
             <button type="button" role="menuitem">Refactor...</button>
             <button type="button" role="menuitem">Source Action...</button>
