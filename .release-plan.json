@@ -1,30 +1,13 @@
 {
   "solution": {
     "aria-voyager": {
-      "impact": "patch",
-      "oldVersion": "0.0.1",
-      "newVersion": "0.0.2",
-      "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
-        }
-      ],
-      "pkgJSONPath": "./packages/aria-voyager/package.json"
+      "oldVersion": "0.0.2"
     },
     "ember-aria-voyager": {
       "impact": "patch",
-      "oldVersion": "0.0.2",
-      "newVersion": "0.0.3",
+      "oldVersion": "0.0.3",
+      "newVersion": "0.0.4",
       "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Has dependency `workspace:*` on aria-voyager"
-        },
         {
           "impact": "patch",
           "reason": "Appears in changelog section :house: Internal"
@@ -33,5 +16,5 @@
       "pkgJSONPath": "./packages/ember-aria-voyager/package/package.json"
     }
   },
-  "description": "## Release (2024-08-05)\n\naria-voyager 0.0.2 (patch)\nember-aria-voyager 0.0.3 (patch)\n\n#### :bug: Bug Fix\n* `aria-voyager`\n  * [#72](https://github.com/hokulea/aria-voyager/pull/72) Fix active item on focus ([@gossi](https://github.com/gossi))\n  * [#70](https://github.com/hokulea/aria-voyager/pull/70) Fix scroll to item ([@gossi](https://github.com/gossi))\n\n#### :house: Internal\n* Other\n  * [#67](https://github.com/hokulea/aria-voyager/pull/67) Use shared renovate config ([@gossi](https://github.com/gossi))\n* `aria-voyager`, `ember-aria-voyager`, `ember-aria-voyager-test-app`\n  * [#66](https://github.com/hokulea/aria-voyager/pull/66) Remove volta for corepack ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "## Release (2024-10-14)\n\nember-aria-voyager 0.0.4 (patch)\n\n#### :house: Internal\n* `ember-aria-voyager`\n  * [#107](https://github.com/hokulea/aria-voyager/pull/107) Syntax Highlighting of gts codeblocks ([@evoactivity](https://github.com/evoactivity))\n* Other\n  * [#73](https://github.com/hokulea/aria-voyager/pull/73) Update to turborepo v2 ([@gossi](https://github.com/gossi))\n\n#### Committers: 2\n- Liam Potter ([@evoactivity](https://github.com/evoactivity))\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }

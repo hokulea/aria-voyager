@@ -1,5 +1,19 @@
 # Changelog
 
+## Release (2024-10-14)
+
+ember-aria-voyager 0.0.4 (patch)
+
+#### :house: Internal
+* `ember-aria-voyager`
+  * [#107](https://github.com/hokulea/aria-voyager/pull/107) Syntax Highlighting of gts codeblocks ([@evoactivity](https://github.com/evoactivity))
+* Other
+  * [#73](https://github.com/hokulea/aria-voyager/pull/73) Update to turborepo v2 ([@gossi](https://github.com/gossi))
+
+#### Committers: 2
+- Liam Potter ([@evoactivity](https://github.com/evoactivity))
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-08-05)
 
 aria-voyager 0.0.2 (patch)
