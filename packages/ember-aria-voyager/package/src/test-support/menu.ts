@@ -153,7 +153,7 @@ export async function testMenuPointerNavigation(
 
   //   assert.dom(fourth).hasAttribute('tabindex', '0', '`ArrowDown` 2x activates fourth item');
 
-  await click('[role="menu"] header');
+  await click('[role="menu"] span');
   assert.true(
     menu.matches(':popover-open'),
     'Main menu still open after clicking a non-item inside the popover'
