@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { IndexEmitStrategy, ItemEmitStrategy, Listbox, ReactiveUpdateStrategy } from '../../src';
-import { appendItemToList } from '../components/list';
+import { appendItemToList, getItems } from '../components/list';
 import { createListWithFruits } from './-shared';
 
 describe('Listbox', () => {
@@ -79,7 +79,7 @@ describe('Listbox', () => {
       it('reads elements on appending', async () => {
         appendItemToList('Grapefruit', list);
 
-        await vi.waitUntil(() => list.querySelectorAll('[role="option"]').length === 4);
+        await vi.waitUntil(() => getItems(list).length === 4);
 
         expect(listbox.items.length).toBe(4);
       });
@@ -104,7 +104,7 @@ describe('Listbox', () => {
 
         list.removeChild(secondItem);
 
-        await vi.waitUntil(() => list.querySelectorAll('[role="option"]').length === 3);
+        await vi.waitUntil(() => getItems(list).length === 3);
 
         expect(listbox.items.length).toBe(3);
         expect(listbox.selection.length).toBe(0);

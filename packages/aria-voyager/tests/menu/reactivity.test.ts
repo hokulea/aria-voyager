@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { Menu, ReactiveUpdateStrategy } from '../../src';
-import { appendItemToMenu } from '../components/menu';
+import { appendItemToMenu, getItems } from '../components/menu';
 import { createCodeMenu } from './-shared';
 
 describe('Menu', () => {
@@ -16,7 +16,7 @@ describe('Menu', () => {
       it('reads elements on appending', async () => {
         appendItemToMenu(codeMenu, 'Command Palette');
 
-        await vi.waitUntil(() => codeMenu.querySelectorAll('& > [role="menuitem"]').length === 12);
+        await vi.waitUntil(() => getItems(codeMenu).length === 12);
 
         expect(menu.items.length).toBe(12);
       });

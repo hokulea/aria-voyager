@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 // import styles from '@hokulea/core/navigation.module.css';
 import { Menu as MenuBehavior } from '../../src';
+import { getCompositeItems } from './-composites';
 
 export function createMenuElement(parent: HTMLElement) {
   const element = document.createElement('div');
@@ -90,4 +91,12 @@ export class Menu {
       appendItemToMenu(this.element, item);
     }
   }
+}
+
+export function getItems(parent: HTMLElement) {
+  return getCompositeItems(
+    parent,
+    '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]',
+    'menu, [role="menu"]'
+  );
 }
