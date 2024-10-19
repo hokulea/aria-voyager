@@ -4,6 +4,31 @@ import { appendItemToMenu, appendSubmenuToMenu, createMenuElement } from '../com
 
 import type { Menu } from '../../src';
 
+export function createSectionedMenu() {
+  const appearanceMenu = createMenuElement(document.body);
+
+  appendItemToMenu(appearanceMenu, 'Full Screen');
+  appendItemToMenu(appearanceMenu, 'Zen Mode');
+  appendItemToMenu(appearanceMenu, 'Centered Layout');
+
+  appearanceMenu.append(document.createElement('hr'));
+
+  const panels = document.createElement('div');
+  const panelsHeader = document.createElement('header');
+
+  panelsHeader.append('Panels');
+  panels.append(panelsHeader);
+
+  appendItemToMenu(panels, 'Primary Side Bar');
+  appendItemToMenu(panels, 'Secondary Side Bar');
+  appendItemToMenu(panels, 'Status Bar');
+  appendItemToMenu(panels, 'Panel');
+
+  appearanceMenu.append(document.createElement('hr'));
+
+  return { appearanceMenu, panelsHeader };
+}
+
 export function createRefactorMenu() {
   const refactorMenu = createMenuElement(document.body);
 
@@ -51,6 +76,16 @@ export function withTriggerButton(menu: HTMLElement) {
 export function createRefactorMenuWithTriggerButton() {
   const menus = createRefactorMenu();
   const triggerButton = withTriggerButton(menus.refactorMenu);
+
+  return {
+    ...menus,
+    triggerButton
+  };
+}
+
+export function createSectionedMenuWithTriggerButton() {
+  const menus = createSectionedMenu();
+  const triggerButton = withTriggerButton(menus.appearanceMenu);
 
   return {
     ...menus,

@@ -1,7 +1,11 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenuWithTriggerButton, getItems } from '../../-shared';
+import {
+  createRefactorMenuWithTriggerButton,
+  createSectionedMenuWithTriggerButton,
+  getItems
+} from '../../-shared';
 
 describe('Menu > Navigation > With Pointer', () => {
   describe('invoking a menu item closes the menu', () => {
@@ -37,6 +41,32 @@ describe('Menu > Navigation > With Pointer', () => {
         expect(refactorMenu.matches(':popover-open')).toBeFalsy();
         expect(shareMenu.matches(':popover-open')).toBeFalsy();
         expect(socialMenu.matches(':popover-open')).toBeFalsy();
+      });
+    });
+  });
+
+  describe('invoking a descending menu item closes the menu', () => {
+    const { appearanceMenu, panelsHeader, triggerButton } = createSectionedMenuWithTriggerButton();
+    const menu = new Menu(appearanceMenu);
+    const { secondItem } = getItems(menu);
+
+    expect(appearanceMenu.matches(':popover-open')).toBeFalsy();
+
+    test('open the menus', () => {
+      triggerButton.click();
+      expect(appearanceMenu.matches(':popover-open')).toBeTruthy();
+    });
+
+    test('clicking a non-menu item keeps the menu open', () => {
+      panelsHeader.click();
+      expect(appearanceMenu.matches(':popover-open')).toBeTruthy();
+    });
+
+    test('clicking a descendend menu item closes the menu', async () => {
+      secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+
+      await vi.waitFor(() => {
+        expect(appearanceMenu.matches(':popover-open')).toBeFalsy();
       });
     });
   });
