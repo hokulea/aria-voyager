@@ -1,12 +1,12 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Keyboard', () => {
   describe('invoking a menu item closes all submenus', () => {
-    const { refactorMenu, shareMenu, socialMenu } = createRefactorMenu();
-    const menu = new Menu(refactorMenu);
+    const { codeMenu, shareMenu, socialMenu } = createCodeMenu();
+    const menu = new Menu(codeMenu);
     const { fourthItem } = getItems(menu);
     const share = new Menu(shareMenu);
     const socialItem = share.items[1];

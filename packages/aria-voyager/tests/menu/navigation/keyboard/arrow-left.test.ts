@@ -1,13 +1,13 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Keyboard', () => {
   describe('close with `ArrowLeft`', async () => {
-    const { refactorMenu, shareMenu } = createRefactorMenu();
+    const { codeMenu, shareMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
     const share = new Menu(shareMenu);
     const codeItem = share.items[0];
 
@@ -15,12 +15,12 @@ describe('Menu > Navigation > With Keyboard', () => {
 
     const { fourthItem } = getItems(menu);
 
-    refactorMenu.dispatchEvent(new FocusEvent('focusin'));
-    refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-    refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-    refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
-    refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
 
     await vi.waitFor(() => {
       expect(shareMenu.matches(':popover-open')).toBeTruthy();

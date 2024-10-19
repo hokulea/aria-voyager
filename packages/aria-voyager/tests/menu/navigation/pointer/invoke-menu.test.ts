@@ -1,30 +1,25 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import {
-  createRefactorMenuWithTriggerButton,
-  createSectionedMenuWithTriggerButton,
-  getItems
-} from '../../-shared';
+import { createCodeMenuWithTriggerButton, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Pointer', () => {
   describe('invoking a menu item closes the menu', () => {
-    const { refactorMenu, shareMenu, socialMenu, triggerButton } =
-      createRefactorMenuWithTriggerButton();
-    const menu = new Menu(refactorMenu);
+    const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
+    const menu = new Menu(codeMenu);
     const { fourthItem } = getItems(menu);
     const share = new Menu(shareMenu);
     const socialItem = share.items[1];
     const social = new Menu(socialMenu);
     const mastodonItem = social.items[1];
 
-    expect(refactorMenu.matches(':popover-open')).toBeFalsy();
+    expect(codeMenu.matches(':popover-open')).toBeFalsy();
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
     expect(socialMenu.matches(':popover-open')).toBeFalsy();
 
     test('open the menus', () => {
       triggerButton.click();
-      expect(refactorMenu.matches(':popover-open')).toBeTruthy();
+      expect(codeMenu.matches(':popover-open')).toBeTruthy();
 
       fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
       socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
@@ -38,7 +33,7 @@ describe('Menu > Navigation > With Pointer', () => {
       mastodonItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
 
       await vi.waitFor(() => {
-        expect(refactorMenu.matches(':popover-open')).toBeFalsy();
+        expect(codeMenu.matches(':popover-open')).toBeFalsy();
         expect(shareMenu.matches(':popover-open')).toBeFalsy();
         expect(socialMenu.matches(':popover-open')).toBeFalsy();
       });
@@ -46,27 +41,27 @@ describe('Menu > Navigation > With Pointer', () => {
   });
 
   describe('invoking a descending menu item closes the menu', () => {
-    const { appearanceMenu, panelsHeader, triggerButton } = createSectionedMenuWithTriggerButton();
-    const menu = new Menu(appearanceMenu);
+    const { codeMenu, refactorHeader, triggerButton } = createCodeMenuWithTriggerButton();
+    const menu = new Menu(codeMenu);
     const { secondItem } = getItems(menu);
 
-    expect(appearanceMenu.matches(':popover-open')).toBeFalsy();
+    expect(codeMenu.matches(':popover-open')).toBeFalsy();
 
     test('open the menus', () => {
       triggerButton.click();
-      expect(appearanceMenu.matches(':popover-open')).toBeTruthy();
+      expect(codeMenu.matches(':popover-open')).toBeTruthy();
     });
 
     test('clicking a non-menu item keeps the menu open', () => {
-      panelsHeader.click();
-      expect(appearanceMenu.matches(':popover-open')).toBeTruthy();
+      refactorHeader.click();
+      expect(codeMenu.matches(':popover-open')).toBeTruthy();
     });
 
     test('clicking a descendend menu item closes the menu', async () => {
       secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
 
       await vi.waitFor(() => {
-        expect(appearanceMenu.matches(':popover-open')).toBeFalsy();
+        expect(codeMenu.matches(':popover-open')).toBeFalsy();
       });
     });
   });

@@ -1,13 +1,12 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenuWithTriggerButton, getItems } from '../../-shared';
+import { createCodeMenuWithTriggerButton, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Keyboard', () => {
   describe('invoking a menu item closes all submenus', () => {
-    const { refactorMenu, shareMenu, socialMenu, triggerButton } =
-      createRefactorMenuWithTriggerButton();
-    const menu = new Menu(refactorMenu);
+    const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
+    const menu = new Menu(codeMenu);
     const { fourthItem } = getItems(menu);
     const share = new Menu(shareMenu);
     const socialItem = share.items[1];
@@ -19,7 +18,7 @@ describe('Menu > Navigation > With Keyboard', () => {
 
     test('open the menus', () => {
       triggerButton.click();
-      expect(refactorMenu.matches(':popover-open')).toBeTruthy();
+      expect(codeMenu.matches(':popover-open')).toBeTruthy();
 
       fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
       socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
@@ -33,7 +32,7 @@ describe('Menu > Navigation > With Keyboard', () => {
       socialMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
 
       await vi.waitFor(() => {
-        expect(refactorMenu.matches(':popover-open')).toBeFalsy();
+        expect(codeMenu.matches(':popover-open')).toBeFalsy();
         expect(shareMenu.matches(':popover-open')).toBeFalsy();
         expect(socialMenu.matches(':popover-open')).toBeFalsy();
       });

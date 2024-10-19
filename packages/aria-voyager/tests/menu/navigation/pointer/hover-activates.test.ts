@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Pointer', () => {
   describe('Hover activates item', () => {
-    const { refactorMenu } = createRefactorMenu();
+    const { codeMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
     const { firstItem, secondItem } = getItems(menu);
 

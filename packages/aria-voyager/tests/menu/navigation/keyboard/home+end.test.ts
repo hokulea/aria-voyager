@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Keyboard', () => {
   describe('navigates with `Home` and `End`', () => {
-    const { refactorMenu } = createRefactorMenu();
+    const { codeMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
     const firstItem = menu.items[0];
     const lastItem = menu.items[menu.items.length - 1];
@@ -18,13 +18,13 @@ describe('Menu > Navigation > With Keyboard', () => {
     expect(menu.activeItem).toBeUndefined();
 
     test('focusing activates the first item', () => {
-      refactorMenu.dispatchEvent(new FocusEvent('focusin'));
+      codeMenu.dispatchEvent(new FocusEvent('focusin'));
 
       expect(menu.activeItem).toBe(firstItem);
     });
 
     test('activates the last item with END', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
 
       expect(lastItem.getAttribute('tabindex')).toBe('0');
       expect(
@@ -33,7 +33,7 @@ describe('Menu > Navigation > With Keyboard', () => {
     });
 
     test('activates the first item with HOME', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
 
       expect(firstItem.getAttribute('tabindex')).toBe('0');
       expect(
@@ -43,11 +43,11 @@ describe('Menu > Navigation > With Keyboard', () => {
   });
 
   describe('navigates with `Home` and `End`, skip disabled items', () => {
-    const { refactorMenu } = createRefactorMenu();
+    const { codeMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
-    const { firstItem, secondItem, sixthItem, lastItem } = getItems(menu);
+    const { firstItem, secondItem, secondLastItem, lastItem } = getItems(menu);
 
     expect(firstItem.getAttribute('tabindex')).toBe('0');
     expect(lastItem.getAttribute('tabindex')).toBe('-1');
@@ -58,24 +58,24 @@ describe('Menu > Navigation > With Keyboard', () => {
     expect(menu.activeItem).toBeUndefined();
 
     test('focusing activates the first item', () => {
-      refactorMenu.dispatchEvent(new FocusEvent('focusin'));
+      codeMenu.dispatchEvent(new FocusEvent('focusin'));
 
       expect(menu.activeItem).toBe(secondItem);
     });
 
     test('activates the last item with END', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
 
-      expect(sixthItem.getAttribute('tabindex')).toBe('0');
+      expect(secondLastItem.getAttribute('tabindex')).toBe('0');
       expect(
         menu.items
-          .filter((_, idx) => idx !== 5)
+          .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
           .every((item) => item.getAttribute('tabindex') === '-1')
       ).toBeTruthy();
     });
 
     test('activates the first item with HOME', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
 
       expect(secondItem.getAttribute('tabindex')).toBe('0');
       expect(

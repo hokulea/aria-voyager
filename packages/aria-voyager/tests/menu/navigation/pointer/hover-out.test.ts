@@ -1,12 +1,12 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Pointer', () => {
   describe('Hover out to trigger keeps submenu open', () => {
-    const { refactorMenu, shareMenu } = createRefactorMenu();
-    const menu = new Menu(refactorMenu);
+    const { codeMenu, shareMenu } = createCodeMenu();
+    const menu = new Menu(codeMenu);
     const share = new Menu(shareMenu);
     const codeItem = share.items[0];
     const { fourthItem } = getItems(menu);

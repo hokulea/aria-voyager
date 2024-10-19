@@ -2,25 +2,23 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { Menu, ReactiveUpdateStrategy } from '../../src';
 import { appendItemToMenu } from '../components/menu';
-import { createRefactorMenu } from './-shared';
+import { createCodeMenu } from './-shared';
 
 describe('Menu', () => {
   describe('Updates', () => {
     describe('DOM Observer', () => {
-      const { refactorMenu } = createRefactorMenu();
+      const { codeMenu } = createCodeMenu();
 
-      const menu = new Menu(refactorMenu);
+      const menu = new Menu(codeMenu);
 
-      expect(menu.items.length).toBe(7);
+      expect(menu.items.length).toBe(11);
 
       it('reads elements on appending', async () => {
-        appendItemToMenu(refactorMenu, 'Command Palette');
+        appendItemToMenu(codeMenu, 'Command Palette');
 
-        await vi.waitUntil(
-          () => refactorMenu.querySelectorAll('& > [role="menuitem"]').length === 8
-        );
+        await vi.waitUntil(() => codeMenu.querySelectorAll('& > [role="menuitem"]').length === 12);
 
-        expect(menu.items.length).toBe(8);
+        expect(menu.items.length).toBe(12);
       });
 
       describe('read options', () => {
@@ -33,9 +31,9 @@ describe('Menu', () => {
               .every(Boolean)
           ).toBeTruthy();
 
-          refactorMenu.setAttribute('aria-disabled', 'true');
+          codeMenu.setAttribute('aria-disabled', 'true');
 
-          await vi.waitUntil(() => refactorMenu.getAttribute('aria-disabled') === 'true');
+          await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === 'true');
 
           expect(
             menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
@@ -47,9 +45,9 @@ describe('Menu', () => {
             menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
           ).toBeTruthy();
 
-          refactorMenu.removeAttribute('aria-disabled');
+          codeMenu.removeAttribute('aria-disabled');
 
-          await vi.waitUntil(() => refactorMenu.getAttribute('aria-disabled') === null);
+          await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === null);
 
           expect(menu.items[0].getAttribute('tabindex')).toBe('0');
           expect(
@@ -64,20 +62,20 @@ describe('Menu', () => {
 
     // simulating a framework with a reactive library
     describe('Reactive Updater', () => {
-      const { refactorMenu } = createRefactorMenu();
+      const { codeMenu } = createCodeMenu();
       const updater = new ReactiveUpdateStrategy();
-      const menu = new Menu(refactorMenu, {
+      const menu = new Menu(codeMenu, {
         updater
       });
 
-      expect(menu.items.length).toBe(7);
+      expect(menu.items.length).toBe(11);
 
       it('reads elements on appending', () => {
-        appendItemToMenu(refactorMenu, 'Command Palette');
+        appendItemToMenu(codeMenu, 'Command Palette');
 
         updater.updateItems();
 
-        expect(menu.items.length).toBe(8);
+        expect(menu.items.length).toBe(12);
       });
 
       describe('read options', () => {
@@ -90,7 +88,7 @@ describe('Menu', () => {
               .every(Boolean)
           ).toBeTruthy();
 
-          refactorMenu.setAttribute('aria-disabled', 'true');
+          codeMenu.setAttribute('aria-disabled', 'true');
 
           updater.updateOptions();
 
@@ -104,7 +102,7 @@ describe('Menu', () => {
             menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
           ).toBeTruthy();
 
-          refactorMenu.removeAttribute('aria-disabled');
+          codeMenu.removeAttribute('aria-disabled');
 
           updater.updateOptions();
 
