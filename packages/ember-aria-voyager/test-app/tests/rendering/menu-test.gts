@@ -43,7 +43,7 @@ const CodeMenu: TOC<CodeMenuSignature> = <template>
     <button type="button" role="menuitem">Paste</button>
     <hr />
     <span>Appearance</span>
-    <div>
+    <div role="presentation">
       <button type="button" role="menuitemcheckbox" aria-checked="true">Primary Side Bar</button>
       <button type="button" role="menuitemcheckbox" aria-checked="true">Secondary Side Bar</button>
       <button type="button" role="menuitemcheckbox" aria-checked="true">Status Bar</button>
