@@ -1,6 +1,5 @@
 import { focus, getRootElement } from '@ember/test-helpers';
 
-import { getCompositeItems } from './-private/composite';
 import {
   testListboxForKeyboardMultiSelection,
   testListboxForKeyboardSingleSelection,
