@@ -117,7 +117,6 @@ export class MenuNavigation implements NavigationPattern {
 
     // ... and out
     else if (event.type === 'pointerout') {
-
       // moving pointer from menu to trigger
       if (
         target === this.control.element &&
@@ -128,11 +127,10 @@ export class MenuNavigation implements NavigationPattern {
     }
 
     // close on invocation
-    else if ( event.type === 'pointerup') {
-
+    else if (event.type === 'pointerup') {
       // only close the menu if we have clicked a menuitem
       if (
-        this.control.items.find(item => item.contains(target)) &&
+        this.control.items.find((item) => item.contains(target)) &&
         !this.control.activeItem?.hasAttribute('popovertarget')
       ) {
         // firefox wouldn't execute the default click handler from a menuitem,
