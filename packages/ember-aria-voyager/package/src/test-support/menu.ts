@@ -2,7 +2,7 @@ import { click, getRootElement, triggerEvent, triggerKeyEvent } from '@ember/tes
 
 import sinon from 'sinon';
 
-import { getItems } from './-private/composite';
+import { getCompositeItems } from './-private/composite';
 
 type Selectors = {
   trigger: string;
@@ -40,6 +40,14 @@ function setupMenuTest(
   };
 }
 
+export function getItems(parent: HTMLElement) {
+  return getCompositeItems(
+    parent,
+    '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]',
+    'menu, [role="menu"]'
+  );
+}
+
 //
 // KEYBOARD
 //
@@ -48,7 +56,7 @@ export async function testMenuKeyboardNavigation(
   assert: Assert,
   selectors: Partial<Selectors> = DEFAULT_SELECTORS
 ): Promise<void> {
-  const { elements, selectors: allSelectors } = setupMenuTest(assert, selectors);
+  const { elements } = setupMenuTest(assert, selectors);
   const { trigger, menu } = elements;
 
   const shareMenu = getRootElement().querySelectorAll('[role="menu"]').item(1) as HTMLElement;
@@ -58,7 +66,7 @@ export async function testMenuKeyboardNavigation(
 
   assert.true(menu.matches(':popover-open'), 'Main menu opened');
 
-  const items = getItems(menu, allSelectors.item);
+  const items = getItems(menu);
   const [first, second, , fourth] = items;
   const last = items[items.length - 1];
 
@@ -85,7 +93,7 @@ export async function testMenuKeyboardNavigation(
   assert.false(shareMenu.matches(':popover-open'), '`ArrowLeft` closes share menu');
 
   // open sub-submenu and closing all of it
-  const shareItems = getItems(shareMenu, allSelectors.item);
+  const shareItems = getItems(shareMenu);
 
   await triggerKeyEvent(menu, 'keydown', 'ArrowRight');
   assert.true(shareMenu.matches(':popover-open'), '`ArrowRight` opens share menu again');
@@ -99,7 +107,7 @@ export async function testMenuKeyboardNavigation(
   await triggerKeyEvent(shareMenu, 'keydown', 'ArrowRight');
   assert.true(socialMenu.matches(':popover-open'), '`ArrowRight` opens social menu');
 
-  const socialItems = getItems(socialMenu, allSelectors.item);
+  const socialItems = getItems(socialMenu);
   const spy = sinon.spy();
 
   socialItems[0]?.addEventListener('click', spy, { once: true });
@@ -131,7 +139,7 @@ export async function testMenuPointerNavigation(
   assert: Assert,
   selectors: Partial<Selectors> = DEFAULT_SELECTORS
 ): Promise<void> {
-  const { elements, selectors: allSelectors } = setupMenuTest(assert, selectors);
+  const { elements } = setupMenuTest(assert, selectors);
   const { trigger, menu } = elements;
 
   const shareMenu = getRootElement().querySelectorAll('[role="menu"]').item(1) as HTMLElement;
@@ -141,7 +149,7 @@ export async function testMenuPointerNavigation(
 
   assert.true(menu.matches(':popover-open'), 'Main menu opened');
 
-  const items = getItems(menu, allSelectors.item);
+  const items = getItems(menu);
   const [first, second, , fourth, fifth] = items;
 
   assert.dom(first).hasAttribute('tabindex', '0', 'First item is activated');
@@ -172,7 +180,7 @@ export async function testMenuPointerNavigation(
   assert.false(shareMenu.matches(':popover-open'), '`pointerover` fifth element closes share menu');
 
   // open sub-submenu and closing all of it
-  const shareItems = getItems(shareMenu, allSelectors.item);
+  const shareItems = getItems(shareMenu);
 
   await triggerEvent(fourth as HTMLElement, 'pointerover');
   assert.true(
@@ -192,7 +200,7 @@ export async function testMenuPointerNavigation(
 
   assert.true(socialMenu.matches(':popover-open'), '... and opens social menu');
 
-  const socialItems = getItems(socialMenu, allSelectors.item);
+  const socialItems = getItems(socialMenu);
   const spy = sinon.spy();
 
   socialItems[0]?.addEventListener('click', spy, { once: true });

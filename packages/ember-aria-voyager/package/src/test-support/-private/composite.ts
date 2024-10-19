@@ -1,10 +1,18 @@
-export function getItems(parent: HTMLElement, selector: string): HTMLElement[] {
-  const allMenuItemDescendants = [...parent.querySelectorAll(selector)] as HTMLElement[];
+export function getCompositeItems(
+  parent: HTMLElement,
+  selector: string,
+  parentSelector?: string
+): HTMLElement[] {
+  const items = [...parent.querySelectorAll(selector)] as HTMLElement[];
 
-  // make sure to filter out descendands that are within a nested menu but not the root menu
-  return Array.from(allMenuItemDescendants).filter((item) => {
-    const closestMenu = item.closest('menu,[role="menu"]');
+  if (parentSelector) {
+    // make sure to filter out descendands that are within a nested menu but not the root menu
+    return items.filter((item) => {
+      const closestParent = item.closest(parentSelector);
 
-    return !closestMenu || closestMenu === parent;
-  });
+      return !closestParent || closestParent === parent;
+    });
+  }
+
+  return items;
 }

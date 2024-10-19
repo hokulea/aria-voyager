@@ -1,5 +1,6 @@
 import { focus, getRootElement } from '@ember/test-helpers';
 
+import { getCompositeItems } from './-private/composite';
 import {
   testListboxForKeyboardMultiSelection,
   testListboxForKeyboardSingleSelection,
@@ -45,6 +46,10 @@ function setupListTest(
     },
     selectors: fullSelectors
   };
+}
+
+export function getItems(parent: HTMLElement) {
+  return getCompositeItems(parent, '[role="option"]', '[role="listbox"]');
 }
 
 //
