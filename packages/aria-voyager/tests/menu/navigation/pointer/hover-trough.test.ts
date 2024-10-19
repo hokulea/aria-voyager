@@ -1,12 +1,12 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Pointer', () => {
   describe('Hover through items opens and closes submenus', () => {
-    const { refactorMenu, shareMenu } = createRefactorMenu();
-    const menu = new Menu(refactorMenu);
+    const { codeMenu, shareMenu } = createCodeMenu();
+    const menu = new Menu(codeMenu);
     const { thirdItem, fourthItem, fifthItem } = getItems(menu);
 
     expect(shareMenu.matches(':popover-open')).toBeFalsy();

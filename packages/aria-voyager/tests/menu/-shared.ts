@@ -1,43 +1,31 @@
 import { v4 as uuid } from 'uuid';
 
-import { appendItemToMenu, appendSubmenuToMenu, createMenuElement } from '../components/menu';
+import {
+  appendCheckboxItemToMenu,
+  appendItemToMenu,
+  appendRadioItemToMenu,
+  appendSubmenuToMenu,
+  createMenuElement
+} from '../components/menu';
 
 import type { Menu } from '../../src';
 
-export function createSectionedMenu() {
-  const appearanceMenu = createMenuElement(document.body);
+export function createCodeMenu() {
+  const codeMenu = createMenuElement(document.body);
 
-  appendItemToMenu(appearanceMenu, 'Full Screen');
-  appendItemToMenu(appearanceMenu, 'Zen Mode');
-  appendItemToMenu(appearanceMenu, 'Centered Layout');
+  // Refactor
+  const refactorHeader = document.createElement('span');
 
-  appearanceMenu.append(document.createElement('hr'));
+  refactorHeader.append('Refactor');
 
-  const panels = document.createElement('div');
-  const panelsHeader = document.createElement('header');
+  codeMenu.append(refactorHeader);
 
-  panelsHeader.append('Panels');
-  panels.append(panelsHeader);
+  appendItemToMenu(codeMenu, 'Format Document');
+  appendItemToMenu(codeMenu, 'Refactor...');
+  appendItemToMenu(codeMenu, 'Source Action...');
+  codeMenu.append(document.createElement('hr'));
 
-  appendItemToMenu(panels, 'Primary Side Bar');
-  appendItemToMenu(panels, 'Secondary Side Bar');
-  appendItemToMenu(panels, 'Status Bar');
-  appendItemToMenu(panels, 'Panel');
-
-  appearanceMenu.append(document.createElement('hr'));
-
-  return { appearanceMenu, panelsHeader };
-}
-
-export function createRefactorMenu() {
-  const refactorMenu = createMenuElement(document.body);
-
-  appendItemToMenu(refactorMenu, 'Format Document');
-  appendItemToMenu(refactorMenu, 'Refactor...');
-  appendItemToMenu(refactorMenu, 'Source Action...');
-  refactorMenu.append(document.createElement('hr'));
-
-  const shareMenu = createMenuElement(refactorMenu);
+  const shareMenu = createMenuElement(codeMenu);
 
   appendItemToMenu(shareMenu, 'Code');
 
@@ -48,14 +36,49 @@ export function createRefactorMenu() {
   appendItemToMenu(socialMenu, 'Bsky');
   appendSubmenuToMenu(shareMenu, 'Social', socialMenu);
 
-  appendSubmenuToMenu(refactorMenu, 'Share', shareMenu);
+  appendSubmenuToMenu(codeMenu, 'Share', shareMenu);
 
-  refactorMenu.append(document.createElement('hr'));
-  appendItemToMenu(refactorMenu, 'Cut');
-  appendItemToMenu(refactorMenu, 'Copy');
-  appendItemToMenu(refactorMenu, 'Paste');
+  codeMenu.append(document.createElement('hr'));
+  appendItemToMenu(codeMenu, 'Cut');
+  appendItemToMenu(codeMenu, 'Copy');
+  appendItemToMenu(codeMenu, 'Paste');
 
-  return { refactorMenu, socialMenu, shareMenu };
+  // Appearance
+  const appearanceHeader = document.createElement('span');
+
+  appearanceHeader.append('Appearance');
+
+  codeMenu.append(appearanceHeader);
+
+  codeMenu.append(document.createElement('hr'));
+
+  appendItemToMenu(codeMenu, 'Full Screen');
+  appendItemToMenu(codeMenu, 'Zen Mode');
+  appendItemToMenu(codeMenu, 'Centered Layout');
+
+  codeMenu.append(document.createElement('hr'));
+
+  const panels = document.createElement('div');
+
+  panels.role = 'presentation';
+
+  appendCheckboxItemToMenu(panels, 'Primary Side Bar', true);
+  appendCheckboxItemToMenu(panels, 'Secondary Side Bar', true);
+  appendCheckboxItemToMenu(panels, 'Status Bar', true);
+  appendCheckboxItemToMenu(panels, 'Panel', true);
+
+  codeMenu.append(document.createElement('hr'));
+
+  const panelPositionMenu = createMenuElement(codeMenu);
+
+  appendRadioItemToMenu(panelPositionMenu, 'Top');
+  appendRadioItemToMenu(panelPositionMenu, 'Left');
+  appendRadioItemToMenu(panelPositionMenu, 'Right');
+  appendRadioItemToMenu(panelPositionMenu, 'Bottom', true);
+
+  appendSubmenuToMenu(codeMenu, 'Panel Position', panelPositionMenu);
+
+  return { codeMenu, socialMenu, shareMenu, panelPositionMenu, refactorHeader, appearanceHeader };
 }
 
 export function withTriggerButton(menu: HTMLElement) {
@@ -73,19 +96,9 @@ export function withTriggerButton(menu: HTMLElement) {
   return button;
 }
 
-export function createRefactorMenuWithTriggerButton() {
-  const menus = createRefactorMenu();
-  const triggerButton = withTriggerButton(menus.refactorMenu);
-
-  return {
-    ...menus,
-    triggerButton
-  };
-}
-
-export function createSectionedMenuWithTriggerButton() {
-  const menus = createSectionedMenu();
-  const triggerButton = withTriggerButton(menus.appearanceMenu);
+export function createCodeMenuWithTriggerButton() {
+  const menus = createCodeMenu();
+  const triggerButton = withTriggerButton(menus.codeMenu);
 
   return {
     ...menus,
@@ -101,6 +114,10 @@ export function getItems(menu: Menu) {
     fourthItem: menu.items[3],
     fifthItem: menu.items[4],
     sixthItem: menu.items[5],
-    lastItem: menu.items[6]
+    // ...
+    fourthLastItem: menu.items.at(-4) as HTMLElement,
+    thirdLastItem: menu.items.at(-3) as HTMLElement,
+    secondLastItem: menu.items.at(-2) as HTMLElement,
+    lastItem: menu.items.at(-1) as HTMLElement
   };
 }

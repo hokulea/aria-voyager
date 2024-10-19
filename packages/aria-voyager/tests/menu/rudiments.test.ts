@@ -2,15 +2,15 @@ import { describe, expect, test } from 'vitest';
 
 import { Menu } from '../../src';
 import { createMenuElement } from '../components/menu';
-import { createRefactorMenu } from './-shared';
+import { createCodeMenu } from './-shared';
 
 describe('Menu', () => {
   test('renders', () => {
-    const { refactorMenu } = createRefactorMenu();
+    const { codeMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
-    expect(menu.items.length).toBe(7);
+    expect(menu.items.length).toBe(11);
   });
 
   describe('setup', () => {
@@ -23,27 +23,27 @@ describe('Menu', () => {
     });
 
     test('sets tabindex on the first item', () => {
-      const { refactorMenu } = createRefactorMenu();
+      const { codeMenu } = createCodeMenu();
 
-      new Menu(refactorMenu);
+      new Menu(codeMenu);
 
-      const firstItem = refactorMenu.querySelector('[role="menuitem"]') as HTMLElement;
+      const firstItem = codeMenu.querySelector('[role="menuitem"]') as HTMLElement;
 
       expect(firstItem.getAttribute('tabindex')).toBe('0');
     });
 
     test('reads items', () => {
-      const { refactorMenu } = createRefactorMenu();
+      const { codeMenu } = createCodeMenu();
 
-      const menu = new Menu(refactorMenu);
+      const menu = new Menu(codeMenu);
 
-      expect(menu.items.length).toBe(7);
+      expect(menu.items.length).toBe(11);
     });
 
     test('items have tabindex', () => {
-      const { refactorMenu } = createRefactorMenu();
+      const { codeMenu } = createCodeMenu();
 
-      const menu = new Menu(refactorMenu);
+      const menu = new Menu(codeMenu);
 
       expect(menu.items.map((item) => item.getAttribute('tabindex')).every(Boolean)).toBeTruthy();
     });
@@ -51,17 +51,17 @@ describe('Menu', () => {
 
   describe('disabled', () => {
     test('focus does not work', () => {
-      const { refactorMenu } = createRefactorMenu();
+      const { codeMenu } = createCodeMenu();
 
-      refactorMenu.setAttribute('aria-disabled', 'true');
+      codeMenu.setAttribute('aria-disabled', 'true');
 
-      const menu = new Menu(refactorMenu);
+      const menu = new Menu(codeMenu);
 
       expect(
         menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
       ).toBeTruthy();
 
-      refactorMenu.dispatchEvent(new FocusEvent('focusin'));
+      codeMenu.dispatchEvent(new FocusEvent('focusin'));
     });
   });
 });

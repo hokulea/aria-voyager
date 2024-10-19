@@ -26,6 +26,28 @@ export function appendItemToMenu(parent: HTMLElement, item: string) {
   return elem;
 }
 
+export function appendCheckboxItemToMenu(
+  parent: HTMLElement,
+  item: string,
+  checked: boolean = false
+) {
+  const elem = appendItemToMenu(parent, item);
+
+  elem.role = 'menuitemcheckbox';
+  elem.setAttribute('aria-checked', checked ? 'true' : 'false');
+
+  return elem;
+}
+
+export function appendRadioItemToMenu(parent: HTMLElement, item: string, checked: boolean = false) {
+  const elem = appendItemToMenu(parent, item);
+
+  elem.role = 'menuitemcheckbox';
+  elem.setAttribute('aria-checked', checked ? 'true' : 'false');
+
+  return elem;
+}
+
 export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTMLElement) {
   menu.id = uuid();
   menu.setAttribute('popover', '');

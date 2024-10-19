@@ -1,24 +1,24 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Keyboard', () => {
   describe('open with `Enter`', () => {
-    const { refactorMenu, shareMenu } = createRefactorMenu();
+    const { codeMenu, shareMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
 
     const { fourthItem } = getItems(menu);
 
-    refactorMenu.dispatchEvent(new FocusEvent('focusin'));
+    codeMenu.dispatchEvent(new FocusEvent('focusin'));
 
     test('use `Enter` to open submenu', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
       expect(fourthItem.getAttribute('tabindex')).toBe('0');
 

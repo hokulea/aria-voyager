@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
 
 import { Menu } from '../../../../src';
-import { createRefactorMenu, getItems } from '../../-shared';
+import { createCodeMenu, getItems } from '../../-shared';
 
 describe('Menu > Navigation > With Keyboard', () => {
   describe('navigate with `ArrowDown`', () => {
-    const { refactorMenu } = createRefactorMenu();
+    const { codeMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
     const { firstItem, secondItem, thirdItem, lastItem } = getItems(menu);
 
@@ -16,10 +16,10 @@ describe('Menu > Navigation > With Keyboard', () => {
       menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
     ).toBeTruthy();
 
-    refactorMenu.dispatchEvent(new FocusEvent('focusin'));
+    codeMenu.dispatchEvent(new FocusEvent('focusin'));
 
     test('use `ArrowDown` key to activate second item', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
       expect(secondItem.getAttribute('tabindex')).toBe('0');
       expect(
@@ -30,7 +30,7 @@ describe('Menu > Navigation > With Keyboard', () => {
     });
 
     test('use `ArrowDown` key to activate third item', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
       expect(thirdItem.getAttribute('tabindex')).toBe('0');
       expect(
@@ -41,8 +41,8 @@ describe('Menu > Navigation > With Keyboard', () => {
     });
 
     test('use `ArrowDown` key at the last item does nothing', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
       expect(lastItem.getAttribute('tabindex')).toBe('0');
       expect(
@@ -52,9 +52,9 @@ describe('Menu > Navigation > With Keyboard', () => {
   });
 
   describe('navigate with `ArrowDown`, skipping disabled items', () => {
-    const { refactorMenu } = createRefactorMenu();
+    const { codeMenu } = createCodeMenu();
 
-    const menu = new Menu(refactorMenu);
+    const menu = new Menu(codeMenu);
 
     const { firstItem, secondItem, thirdItem, fourthItem } = getItems(menu);
 
@@ -65,10 +65,10 @@ describe('Menu > Navigation > With Keyboard', () => {
 
     thirdItem.setAttribute('aria-disabled', 'true');
 
-    refactorMenu.dispatchEvent(new FocusEvent('focusin'));
+    codeMenu.dispatchEvent(new FocusEvent('focusin'));
 
     test('use `ArrowDown` key to activate second item', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
       expect(secondItem.getAttribute('tabindex')).toBe('0');
       expect(
@@ -79,7 +79,7 @@ describe('Menu > Navigation > With Keyboard', () => {
     });
 
     test('use `ArrowDown` key to activate fourth item', () => {
-      refactorMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+      codeMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
 
       expect(fourthItem.getAttribute('tabindex')).toBe('0');
       expect(
