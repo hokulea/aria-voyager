@@ -48,9 +48,9 @@ function setupListTest(
   };
 }
 
-export function getItems(parent: HTMLElement) {
-  return getCompositeItems(parent, '[role="option"]', '[role="listbox"]');
-}
+// function getItems(parent: HTMLElement) {
+//   return getCompositeItems(parent, '[role="option"]', '[role="listbox"]');
+// }
 
 //
 // KEYBOARD

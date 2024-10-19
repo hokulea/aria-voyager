@@ -40,7 +40,7 @@ function setupMenuTest(
   };
 }
 
-export function getItems(parent: HTMLElement) {
+function getItems(parent: HTMLElement) {
   return getCompositeItems(
     parent,
     '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]',
