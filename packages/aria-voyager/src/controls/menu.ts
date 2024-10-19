@@ -67,6 +67,7 @@ export class Menu extends Control {
     this.items = Array.from(items).filter((item) => {
       // Check if the closest ancestor with <menu> tag or [role="menu"] is not the root element
       const closestMenu = item.closest('menu,[role="menu"]');
+
       return !closestMenu || closestMenu === this.element;
     });
 
