@@ -23,6 +23,7 @@ function getElement(target: string | IDOMElementDescriptor): Element | null;
 function getElement(target: Element): Element;
 function getElement(target: Document | Window): Document;
 function getElement(target: Target): Element | Document | null;
+
 /**
   Used internally by the DOM interaction helpers to find one element.
 
