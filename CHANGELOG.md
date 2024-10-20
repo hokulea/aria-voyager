@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2024-10-20)
+
+aria-voyager 0.0.4 (patch)
+ember-aria-voyager 0.0.5 (patch)
+
+#### :house: Internal
+* `aria-voyager`, `ember-aria-voyager`, `ember-aria-voyager-test-app`
+  * [#191](https://github.com/hokulea/aria-voyager/pull/191) Update lint deps ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-10-19)
 
 aria-voyager 0.0.3 (patch)
