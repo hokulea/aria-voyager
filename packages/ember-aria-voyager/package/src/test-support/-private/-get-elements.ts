@@ -8,6 +8,7 @@ import {
 
 function getElements(target: string): NodeListOf<Element>;
 function getElements(target: string | IDOMElementDescriptor): Iterable<Element>;
+
 /**
   Used internally by the DOM interaction helpers to find multiple elements.
 
