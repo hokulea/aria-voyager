@@ -2,10 +2,11 @@
   "name": "ember-aria-voyager",
   "version": "0.0.4",
   "description": "Navigation patterns for various aria roles and features in ember.js",
+  "author": "gossi",
+  "license": "MIT",
   "keywords": [
     "ember-addon"
   ],
-  "author": "gossi",
   "files": [
     "addon-main.js",
     "declarations",
