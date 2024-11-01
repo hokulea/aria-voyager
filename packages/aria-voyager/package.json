@@ -1,6 +1,6 @@
 {
   "name": "aria-voyager",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A framework agnostic / universal package that implements navigation patterns for various aria roles and features",
   "author": "gossi",
   "license": "MIT",

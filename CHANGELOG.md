@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2024-11-01)
+
+aria-voyager 0.0.4 (patch)
+ember-aria-voyager 0.0.5 (patch)
+
+#### :house: Internal
+* `aria-voyager`, `ember-aria-voyager`
+  * [#208](https://github.com/hokulea/aria-voyager/pull/208) Set license ([@gossi](https://github.com/gossi))
+* Other
+  * [#201](https://github.com/hokulea/aria-voyager/pull/201) Add `COVERAGE` env var ([@gossi](https://github.com/gossi))
+* `aria-voyager`, `ember-aria-voyager`, `ember-aria-voyager-test-app`
+  * [#191](https://github.com/hokulea/aria-voyager/pull/191) Update lint deps ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-10-19)
 
 aria-voyager 0.0.3 (patch)
