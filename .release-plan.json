@@ -2,13 +2,9 @@
   "solution": {
     "aria-voyager": {
       "impact": "patch",
-      "oldVersion": "0.0.2",
-      "newVersion": "0.0.3",
+      "oldVersion": "0.0.3",
+      "newVersion": "0.0.4",
       "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        },
         {
           "impact": "patch",
           "reason": "Appears in changelog section :house: Internal"
@@ -18,16 +14,12 @@
     },
     "ember-aria-voyager": {
       "impact": "patch",
-      "oldVersion": "0.0.3",
-      "newVersion": "0.0.4",
+      "oldVersion": "0.0.4",
+      "newVersion": "0.0.5",
       "constraints": [
         {
           "impact": "patch",
           "reason": "Has dependency `workspace:*` on aria-voyager"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
         },
         {
           "impact": "patch",
@@ -37,5 +29,5 @@
       "pkgJSONPath": "./packages/ember-aria-voyager/package/package.json"
     }
   },
-  "description": "## Release (2024-10-19)\n\naria-voyager 0.0.3 (patch)\nember-aria-voyager 0.0.4 (patch)\n\n#### :bug: Bug Fix\n* `aria-voyager`, `ember-aria-voyager`\n  * [#172](https://github.com/hokulea/aria-voyager/pull/172) fix: for #168 • add support voyaging wrapped menuitems + menuitemcheckbox menuitemradio ([@johanrd](https://github.com/johanrd))\n* `aria-voyager`, `ember-aria-voyager`, `ember-aria-voyager-test-app`\n  * [#173](https://github.com/hokulea/aria-voyager/pull/173) fix: for #169 • don't close popover if you have clicked on non-menuitems within a popover ([@johanrd](https://github.com/johanrd))\n\n#### :house: Internal\n* `ember-aria-voyager`, `ember-aria-voyager-test-app`\n  * [#188](https://github.com/hokulea/aria-voyager/pull/188) Update `ember-cli-code-coverage` ([@gossi](https://github.com/gossi))\n  * [#185](https://github.com/hokulea/aria-voyager/pull/185) Menu Fixture ([@gossi](https://github.com/gossi))\n* `aria-voyager`\n  * [#186](https://github.com/hokulea/aria-voyager/pull/186) Menu Fixtures for vitest in `aria-navigator` ([@gossi](https://github.com/gossi))\n* `ember-aria-voyager`\n  * [#107](https://github.com/hokulea/aria-voyager/pull/107) Syntax Highlighting of gts codeblocks ([@evoactivity](https://github.com/evoactivity))\n* Other\n  * [#73](https://github.com/hokulea/aria-voyager/pull/73) Update to turborepo v2 ([@gossi](https://github.com/gossi))\n\n#### Committers: 3\n- Liam Potter ([@evoactivity](https://github.com/evoactivity))\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n- [@johanrd](https://github.com/johanrd)\n"
+  "description": "## Release (2024-11-01)\n\naria-voyager 0.0.4 (patch)\nember-aria-voyager 0.0.5 (patch)\n\n#### :house: Internal\n* `aria-voyager`, `ember-aria-voyager`\n  * [#208](https://github.com/hokulea/aria-voyager/pull/208) Set license ([@gossi](https://github.com/gossi))\n* Other\n  * [#201](https://github.com/hokulea/aria-voyager/pull/201) Add `COVERAGE` env var ([@gossi](https://github.com/gossi))\n* `aria-voyager`, `ember-aria-voyager`, `ember-aria-voyager-test-app`\n  * [#191](https://github.com/hokulea/aria-voyager/pull/191) Update lint deps ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }
