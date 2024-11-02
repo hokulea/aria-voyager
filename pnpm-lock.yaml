@@ -303,8 +303,8 @@ importers:
         specifier: 9.0.1
         version: 9.0.1
       ember-auto-import:
-        specifier: 2.8.1
-        version: 2.8.1(@glint/template@1.5.0)(webpack@5.95.0)
+        specifier: 2.9.0
+        version: 2.9.0(@glint/template@1.5.0)(webpack@5.95.0)
       ember-cli:
         specifier: 5.12.0
         version: 5.12.0(handlebars@4.7.8)(underscore@1.13.7)
@@ -4233,8 +4233,8 @@ packages:
   electron-to-chromium@1.5.32:
     resolution: {integrity: sha512-M+7ph0VGBQqqpTT2YrabjNKSQ2fEl9PVx6AK3N558gDH9NO8O6XN9SXXFWRo9u9PbEg/bWq+tjXQr+eXmxubCw==}
 
-  ember-auto-import@2.8.1:
-    resolution: {integrity: sha512-R5RpJmhycU6YKryzsIL/wP42r0e2PPfLRsFECoGvb1st2eEnU1Q7XyLVC1txd/XvURfu7x3Z7hKtZtYUxy61oQ==}
+  ember-auto-import@2.9.0:
+    resolution: {integrity: sha512-iXPq2rJcJaqD+m5Lk1rYAVl7Db2MvT1MMjKJfJbNT3ps4xI2H+3njwwfT6pOKZIUVB/rfeyNPANqbnw3F68Qxg==}
     engines: {node: 12.* || 14.* || >= 16}
 
   ember-cli-app-version@7.0.0:
@@ -13841,7 +13841,7 @@ snapshots:
 
   electron-to-chromium@1.5.32: {}
 
-  ember-auto-import@2.8.1(@glint/template@1.5.0)(webpack@5.95.0):
+  ember-auto-import@2.9.0(@glint/template@1.5.0)(webpack@5.95.0):
     dependencies:
       '@babel/core': 7.26.0(supports-color@8.1.1)
       '@babel/plugin-proposal-class-properties': 7.18.6(@babel/core@7.26.0)
@@ -14394,7 +14394,7 @@ snapshots:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
       chalk: 4.1.2
-      ember-auto-import: 2.8.1(@glint/template@1.5.0)(webpack@5.95.0)
+      ember-auto-import: 2.9.0(@glint/template@1.5.0)(webpack@5.95.0)
       ember-cli-babel: 8.2.0(@babel/core@7.26.0)
       ember-cli-get-component-path-option: 1.0.0
       ember-cli-is-package-missing: 1.0.0
