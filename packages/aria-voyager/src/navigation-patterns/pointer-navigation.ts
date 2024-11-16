@@ -19,7 +19,10 @@ export class PointerNavigation implements NavigationPattern {
 
   handle(bag: NavigationParameterBag): NavigationParameterBag {
     const { event } = bag as NavigationParameterBag & { event: PointerEvent };
-    const item = asItemOf(event.target as HTMLElement, this.control);
+
+    const item = event
+      .composedPath()
+      .find((elem) => asItemOf(elem as HTMLElement, this.control)) as HTMLElement | undefined;
 
     return {
       ...bag,

@@ -2,6 +2,8 @@
 export { Control } from './controls/control';
 export { Listbox } from './controls/listbox';
 export { Menu } from './controls/menu';
+export type { TablistOptions } from './controls/tablist';
+export { Tablist } from './controls/tablist';
 
 // emit strategies
 export type { EmitStrategy } from './emit-strategies/emit-strategy';

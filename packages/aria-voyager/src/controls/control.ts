@@ -30,9 +30,12 @@ interface ControlOptions {
   updater?: UpdateStrategy;
 }
 
+type Orientation = 'horizontal' | 'vertical';
+
 interface Options {
   multiple: boolean;
   disabled: boolean;
+  orientation: Orientation;
 }
 
 export type Item = HTMLElement;
@@ -87,7 +90,8 @@ export abstract class Control {
    */
   options: Options = {
     multiple: false,
-    disabled: false
+    disabled: false,
+    orientation: 'horizontal'
   };
 
   private navigationPatterns: NavigationPattern[] = [];
@@ -150,6 +154,10 @@ export abstract class Control {
       (this.element.hasAttribute('aria-disabled') &&
         this.element.getAttribute('aria-disabled') === 'true') ||
       false;
+
+    this.options.orientation = this.element.hasAttribute('aria-orientation')
+      ? (this.element.getAttribute('aria-orientation') as Orientation)
+      : 'horizontal';
   }
 
   readItems() {
