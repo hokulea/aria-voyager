@@ -10,10 +10,12 @@ import { Control } from './control';
 import type { EmitStrategy, UpdateStrategy } from '..';
 import type { SelectionBehavior } from '../navigation-patterns/selection-strategy';
 
+export type TablistBehavior = SelectionBehavior;
+
 export interface TablistOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
-  behavior?: SelectionBehavior;
+  behavior?: TablistBehavior;
 }
 
 export class Tablist extends Control {

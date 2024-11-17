@@ -30,7 +30,7 @@ interface ControlOptions {
   updater?: UpdateStrategy;
 }
 
-type Orientation = 'horizontal' | 'vertical';
+export type Orientation = 'horizontal' | 'vertical';
 
 interface Options {
   multiple: boolean;
