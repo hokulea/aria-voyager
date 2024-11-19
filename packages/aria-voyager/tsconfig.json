@@ -29,7 +29,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "@vitest/browser/matchers",
+      "@vitest/browser/providers/playwright"
+    ]
   },
   "include": [
     "src/**/*",
