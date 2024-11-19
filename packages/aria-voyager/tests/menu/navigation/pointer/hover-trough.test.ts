@@ -1,44 +1,36 @@
-import { describe, expect, test, vi } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Menu } from '../../../../src';
 import { createCodeMenu, getItems } from '../../-shared';
 
-describe('Menu > Navigation > With Pointer', () => {
-  describe('Hover through items opens and closes submenus', () => {
-    const { codeMenu, shareMenu } = createCodeMenu();
-    const menu = new Menu(codeMenu);
-    const { thirdItem, fourthItem, fifthItem } = getItems(menu);
+describe('Hover through items opens and closes submenus', () => {
+  const { codeMenu, shareMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const { thirdItem, fourthItem, fifthItem } = getItems(menu);
 
+  test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  });
 
-    test('hover third item', async () => {
-      thirdItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  test('hover third item', async () => {
+    await userEvent.hover(thirdItem);
 
-      expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.element(thirdItem).toHaveFocus();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  });
 
-      await vi.waitFor(() => {
-        expect(document.activeElement).toBe(thirdItem);
-      });
-    });
+  test('hover forth item opens its submenu', async () => {
+    await userEvent.hover(fourthItem);
 
-    test('hover forth item opens its submenu', async () => {
-      fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    await expect.element(fourthItem).toHaveFocus();
+    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+  });
 
-      expect(shareMenu.matches(':popover-open')).toBeTruthy();
+  test('hover fifth item closes previous submenu', async () => {
+    await userEvent.hover(fifthItem);
 
-      await vi.waitFor(() => {
-        expect(document.activeElement).toBe(fourthItem);
-      });
-    });
-
-    test('hover fifth item closes previous submenu', async () => {
-      fifthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-
-      expect(shareMenu.matches(':popover-open')).toBeFalsy();
-
-      await vi.waitFor(() => {
-        expect(document.activeElement).toBe(fifthItem);
-      });
-    });
+    await expect.element(fifthItem).toHaveFocus();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
   });
 });

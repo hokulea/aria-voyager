@@ -7,7 +7,6 @@ import { createCodeMenu } from './-shared';
 describe('Menu', () => {
   test('renders', () => {
     const { codeMenu } = createCodeMenu();
-
     const menu = new Menu(codeMenu);
 
     expect(menu.items.length).toBe(11);
@@ -60,8 +59,6 @@ describe('Menu', () => {
       expect(
         menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
       ).toBeTruthy();
-
-      codeMenu.dispatchEvent(new FocusEvent('focusin'));
     });
   });
 });
