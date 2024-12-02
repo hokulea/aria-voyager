@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { List } from '../../../components/list';
 
@@ -20,29 +21,30 @@ const lastItem = list.children[lastIndex - 1];
 describe('Scroll Upwards', () => {
   expect(list.scrollTop).toBe(0);
 
-  it('use `End` key to activate last item', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
+  test('focus list and activate last item', async () => {
+    list.focus();
+    expect(document.activeElement).toBe(list);
 
-    expect(lastItem.getAttribute('aria-selected')).toBe('true');
-    expect(list.scrollTop).toBe(180);
+    await userEvent.keyboard('{End}');
+    expect(list.getAttribute('aria-activedescendant')).toBe(lastItem.id);
   });
 
-  it('use `ArrowUp` to scroll up', () => {
+  test('use `ArrowUp` to scroll up', async () => {
     let i = lastIndex - 1;
 
     while (i >= 11) {
-      list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
+      await userEvent.keyboard('{ArrowUp}');
       i--;
     }
 
     expect(list.scrollTop).toBe(180);
     expect(list.children[i].getAttribute('aria-selected')).toBe('true');
 
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
+    await userEvent.keyboard('{ArrowUp}');
     expect(list.scrollTop).toBe(169);
     expect(list.children[i - 1].getAttribute('aria-selected')).toBe('true');
 
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
+    await userEvent.keyboard('{ArrowUp}');
     expect(list.scrollTop).toBe(150);
     expect(list.children[i - 2].getAttribute('aria-selected')).toBe('true');
   });

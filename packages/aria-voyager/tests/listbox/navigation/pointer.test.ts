@@ -1,66 +1,32 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../src';
-import { createListWithFruits } from '../-shared';
-
-// describe('propagation is stopped for items', () => {
-//   let propagationStopped = false;
-
-//   const event = new PointerEvent('pointerup', { bubbles: true });
-
-//   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//   // @ts-ignore
-//   event.__TEST__ = true;
-
-//   const nativeStopPropagation = event.stopPropagation;
-
-//   event.stopPropagation = function () {
-//     propagationStopped = true;
-//     nativeStopPropagation.call(this);
-//   };
-
-//   const list = createListWithFruits();
-
-//   new Listbox(list);
-
-//   it('propagation stops on item', () => {
-//     propagationStopped = false;
-//     list.children[1].dispatchEvent(event);
-//     expect(propagationStopped).toBeTruthy();
-//   });
-
-//   it('propagation continues when not on item', () => {
-//     propagationStopped = false;
-//     list.dispatchEvent(event);
-//     expect(propagationStopped).toBeFalsy();
-//   });
-// });
+import { createListWithFruits, getItems } from '../-shared';
 
 describe('use pointer to activate items', () => {
   const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
-
-  expect(list.getAttribute('aria-activedescendant')).toBeNull();
-  expect(firstItem.getAttribute('aria-current')).toBeNull();
-  expect(secondItem.getAttribute('aria-current')).toBeNull();
-  expect(thirdItem.getAttribute('aria-current')).toBeNull();
-
-  it('select not an item does nothing', () => {
-    list.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-
+  test('start', () => {
     expect(list.getAttribute('aria-activedescendant')).toBeNull();
     expect(firstItem.getAttribute('aria-current')).toBeNull();
     expect(secondItem.getAttribute('aria-current')).toBeNull();
     expect(thirdItem.getAttribute('aria-current')).toBeNull();
   });
 
-  it('select second item', () => {
-    secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  test('clicking the list activates first item', async () => {
+    await userEvent.click(list);
+
+    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+    expect(firstItem.getAttribute('aria-current')).toBe('true');
+    expect(secondItem.getAttribute('aria-current')).toBeNull();
+    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  });
+
+  test('clicking the second item activates it', async () => {
+    await userEvent.click(secondItem);
 
     expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
     expect(firstItem.getAttribute('aria-current')).toBeNull();
@@ -68,8 +34,8 @@ describe('use pointer to activate items', () => {
     expect(thirdItem.getAttribute('aria-current')).toBeNull();
   });
 
-  it('select third item', () => {
-    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  test('clicking the third item activates it', async () => {
+    await userEvent.click(thirdItem);
 
     expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
     expect(firstItem.getAttribute('aria-current')).toBeNull();
