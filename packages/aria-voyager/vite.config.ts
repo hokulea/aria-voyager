@@ -23,6 +23,7 @@ export default defineConfig({
     },
     browser: {
       enabled: true,
+      screenshotFailures: false,
       name: 'chrome',
       provider: 'preview'
       // provider: 'webdriverio'
