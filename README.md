@@ -22,13 +22,17 @@ apply styling, it will operate on the accessibility tree.
     <td>Role</td>
     <td>Navigation Patterns</td>
     <td>Features</td>
-    <td>Focus Strategy</td>
+    <td>Behavior</td>
   </tr>
 </thead>
 <tbody>
   <tr style="vertical-align: top">
     <td>
-      <a href="https://www.w3.org/TR/wai-aria-1.2/#listbox" target="_blank"><code>listbox</code></a>
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#listbox" target="_blank"><code>listbox</code></a><br><br>
+      Focus Strategy:<br>
+      <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_focus_activedescendant" target="_blank">
+      <code>aria-activedescendant</code>
+      </a>
     </td>
     <td>
       ✅ <code>ArrowUp</code> (prev)<br>
@@ -45,14 +49,14 @@ apply styling, it will operate on the accessibility tree.
       ❌ Checked<br>
     </td>
     <td>
-      <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_focus_activedescendant" target="_blank">
-      <code>aria-activedescendant</code>
-      </a>
+      -
     </td>
   </tr>
   <tr style="vertical-align: top">
     <td>
-      <a href="https://www.w3.org/TR/wai-aria-1.2/#menu" target="_blank"><code>menu</code></a>
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#menu" target="_blank"><code>menu</code></a><br><br>
+      Focus Strategy:<br>
+      <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>
     </td>
     <td>
       ✅ <code>ArrowUp</code> (prev)<br>
@@ -65,13 +69,34 @@ apply styling, it will operate on the accessibility tree.
     </td>
     <td>
       ✅ Disabled<br>
-      ❌ Hover Behavior Configurable<br>
       ✅ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitem" target="_blank"><code>role="menuitem"</code></a><br>
       ❌ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemcheckbox" target="_blank"><code>role="menuitemcheckbox"</code></a><br>
       ❌ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemradio" target="_blank"><code>role="menuitemradio"</code></a>
     </td>
     <td>
+      ❌ Hover Behavior<br>
+    </td>
+  </tr>
+  <tr style="vertical-align: top">
+    <td>
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#tablist" target="_blank"><code>tablist</code></a><br><br>
+      Focus Strategy:<br>
       <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>
+    </td>
+    <td>
+      ✅ <code>ArrowRight</code> / <code>ArrowUp</code> (prev)<br>
+      ✅ <code>ArrowLeft</code> / <code>ArrowDown</code> (next)<br>
+      ✅ <code>Home</code> (first)<br>
+      ✅ <code>End</code> (last)<br>
+      ✅ Pointer Navigation
+    </td>
+    <td>
+      ✅ Disabled<br>
+      ✅ Single selection<br>
+      ❌ Multi selection<br>
+    </td>
+    <td>
+      ✅ <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/#keyboardinteraction">Manual (with spacebar) / Automatic Selection</a><br>
     </td>
   </tr>
 </tbody>

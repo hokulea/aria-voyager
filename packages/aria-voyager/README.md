@@ -104,6 +104,57 @@ interface MenuOptions {
 
 See [updater](#updater) and [emitter](#emitter).
 
+#### `Tablist`
+
+Bring your own markup in at first, here is an example markup for a list:
+
+```html
+<div>
+  <ul role="tablist">
+    <li role="tab" id="tab-1" aria-controls="panel-1">Tab 1</li>
+    <li role="tab" id="tab-2" aria-controls="panel-2">Tab 2</li>
+    <li role="tab" id="tab-3" aria-controls="panel-3">Tab 3</li>
+  </ul>
+
+  <div role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+    Contents Panel 1
+  </div>
+
+  <div role="tabpanel" id="panel-2" aria-labelledby="tab-2">
+    Contents Panel 2
+  </div>
+
+  <div role="tabpanel" id="panel-3" aria-labelledby="tab-3">
+    Contents Panel 3
+  </div>
+<div>
+```
+
+To make it interactive, create a new `Tablist` instance pointing it at your `tablist` element.
+
+```ts
+import { Tablist } from 'aria-voyager';
+
+const tablistElement = document.querySelector('[role="tablist"]');
+new Tablist(tablistElement);
+```
+
+That is already enough to start making your listbox interactive. It will read the options from the provided HTML.
+
+`Tablist` accepts options as second parameter:
+
+```ts
+import type { EmitStrategy, UpdateStrategy, TablistBehavior } from 'aria-voyager';
+
+interface TablistOptions {
+  updater?: UpdateStrategy;
+  emitter?: EmitStrategy;
+  behavior?: TablistBehavior;
+}
+```
+
+See [updater](#updater) and [emitter](#emitter).
+
 ### Strategies
 
 `aria-voyager` supports the concept of input (updater) and output (emitter)
