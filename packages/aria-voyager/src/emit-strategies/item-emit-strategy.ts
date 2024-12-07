@@ -6,6 +6,7 @@ export class ItemEmitStrategy implements EmitStrategy {
     private control: Control,
     private options: EmitterOptions<Item>
   ) {
+    this.control = control;
     this.control.setEmitStrategy(this);
   }
 
@@ -15,5 +16,10 @@ export class ItemEmitStrategy implements EmitStrategy {
 
   itemActivated(item: Item) {
     return this.options.activateItem?.(item);
+  }
+
+  dispose(): void {
+    // @ts-expect-error removing the reference here on purpose
+    this.control = undefined;
   }
 }

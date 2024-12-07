@@ -66,7 +66,8 @@ export class DomObserverUpdateStrategy implements UpdateStrategy {
     this.observe();
   }
 
-  teardown() {
+  dispose() {
+    this.control = undefined;
     this.observer.disconnect();
   }
 }

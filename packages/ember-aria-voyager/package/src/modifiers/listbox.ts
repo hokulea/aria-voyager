@@ -1,3 +1,5 @@
+import { registerDestructor } from '@ember/destroyable';
+
 import { IndexEmitStrategy, ItemEmitStrategy, Listbox, ReactiveUpdateStrategy } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
@@ -10,8 +12,9 @@ import {
   type WithItems
 } from './-emitter';
 
+import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';
-import type { NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
 
 interface ListboxSignature<T> {
   Args: {
@@ -29,6 +32,15 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
   private prevSelection?: T | T[];
   private prevMulti?: boolean;
   private prevDisabled?: boolean;
+
+  constructor(owner: Owner, args: ArgsFor<ListboxSignature<T>>) {
+    super(owner, args);
+
+    registerDestructor(this, () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      this.listbox?.dispose();
+    });
+  }
 
   modify(
     element: Element,

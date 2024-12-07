@@ -6,6 +6,7 @@ export class IndexEmitStrategy implements EmitStrategy {
     private control: Control,
     private options: EmitterOptions<number>
   ) {
+    this.control = control;
     this.control.setEmitStrategy(this);
   }
 
@@ -19,5 +20,10 @@ export class IndexEmitStrategy implements EmitStrategy {
     const index = this.control.items.indexOf(item);
 
     return this.options.activateItem?.(index);
+  }
+
+  dispose(): void {
+    // @ts-expect-error removing the reference here on purpose
+    this.control = undefined;
   }
 }

@@ -109,12 +109,12 @@ export abstract class Control {
   }
 
   setEmitStrategy(emitter: EmitStrategy) {
+    this.emitter?.dispose?.();
     this.emitter = emitter;
   }
 
   setUpdateStrategy(updater: UpdateStrategy) {
-    this.updater.teardown?.();
-
+    this.updater.dispose?.();
     this.updater = updater;
   }
 
@@ -125,6 +125,18 @@ export abstract class Control {
 
     for (const eventName of eventNames) {
       this.element.addEventListener(eventName, this.handleEvent.bind(this));
+    }
+  }
+
+  dispose() {
+    this.updater.dispose?.();
+    this.emitter?.dispose?.();
+
+    // unregister event listeners
+    const eventNames = new Set(this.navigationPatterns.map((p) => p.eventListeners ?? []).flat());
+
+    for (const eventName of eventNames) {
+      this.element.removeEventListener(eventName, this.handleEvent.bind(this));
     }
   }
 

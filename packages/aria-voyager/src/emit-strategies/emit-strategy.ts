@@ -10,4 +10,6 @@ export interface EmitStrategy {
   selected(selection: Item[]): void;
 
   itemActivated(item?: Item): void;
+
+  dispose?(): void;
 }
