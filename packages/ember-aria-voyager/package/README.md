@@ -153,3 +153,48 @@ const items = [
   </div>
 </template>
 ```
+
+### `{{tablist}}`
+
+Basic example:
+
+```glimmer-ts
+import { tablist } from 'ember-aria-voyager';
+const tabs = ['apple', 'banana', 'pineapple'];
+
+<template>
+  <div>
+    <ul role="tablist" {{tablist items=tabs}}>
+      {{#each tabs as |tab id|}}
+        <li role="tab" id="tab-{{id}}" aria-controls="panel-{{id}}">{{tab}}</li>
+      {{/each}}
+    </ul>
+
+    {{#each tabs as |tab id|}}
+      <div role="tabpanel" id="panel-{{id}}" aria-labelledby="tab-{{id}}">
+        Contents Panel {{tab}}
+      </div>
+    {{/each}}
+  <div>
+</template>
+```
+
+Here are the options, you can pass to `{{tablist}}`
+
+```ts
+import type { EmitStrategy, Orientation, TablistBehavior } from 'aria-voyager';
+
+interface TablistSignature<T> {
+  Element: HTMLElement;
+  Args: {
+    Positional: [];
+    Named: {
+      disabled?: boolean;
+      orientation?: Orientation;
+      behavior?: TablistBehavior;
+    } & EmitterSignature<T>;
+  };
+}
+```
+
+When passing `items` the `select()` and `selection` can work off of your passed items, anyway will fall back to the HTMLElement
