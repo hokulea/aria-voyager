@@ -1,5 +1,33 @@
 # Changelog
 
+## Release (2024-12-07)
+
+aria-voyager 0.1.0 (minor)
+ember-aria-voyager 0.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-aria-voyager`, `ember-aria-voyager-test-app`
+  * [#270](https://github.com/hokulea/aria-voyager/pull/270) Prefix ember modifiers with `aria` ([@gossi](https://github.com/gossi))
+* `aria-voyager`, `ember-aria-voyager`
+  * [#269](https://github.com/hokulea/aria-voyager/pull/269) Dispose functionality ([@gossi](https://github.com/gossi))
+* `aria-voyager`, `ember-aria-voyager`, `ember-aria-voyager-test-app`
+  * [#240](https://github.com/hokulea/aria-voyager/pull/240) Support Tabs ([@gossi](https://github.com/gossi))
+
+#### :memo: Documentation
+* `aria-voyager`, `ember-aria-voyager`
+  * [#268](https://github.com/hokulea/aria-voyager/pull/268) Docs for tabs ([@gossi](https://github.com/gossi))
+
+#### :house: Internal
+* Other
+  * [#267](https://github.com/hokulea/aria-voyager/pull/267) Fix Coverage (again) ([@gossi](https://github.com/gossi))
+  * [#266](https://github.com/hokulea/aria-voyager/pull/266) Fix Coverage ([@gossi](https://github.com/gossi))
+* `aria-voyager`
+  * [#265](https://github.com/hokulea/aria-voyager/pull/265) Upgrade to `vite@6` ([@gossi](https://github.com/gossi))
+  * [#258](https://github.com/hokulea/aria-voyager/pull/258) Use vitest interactivity API ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-11-01)
 
 aria-voyager 0.0.4 (patch)
