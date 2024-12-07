@@ -23,8 +23,12 @@ describe('Invoking a menu item closes the menu', () => {
     await userEvent.click(triggerButton);
     expect(codeMenu.matches(':popover-open')).toBeTruthy();
 
-    await userEvent.hover(fourthItem);
-    await userEvent.hover(socialItem);
+    // https://github.com/hokulea/aria-voyager/issues/264
+    // await userEvent.hover(fourthItem);
+    // await userEvent.hover(socialItem);
+
+    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     expect(shareMenu.matches(':popover-open')).toBeTruthy();
     expect(socialMenu.matches(':popover-open')).toBeTruthy();

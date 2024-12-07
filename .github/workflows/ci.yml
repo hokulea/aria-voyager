@@ -61,5 +61,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+        working-directory: packages/aria-voyager
       - name: Test
         run: pnpm run -r --parallel --aggregate-output test

@@ -24,9 +24,8 @@ export default defineConfig({
     browser: {
       enabled: true,
       screenshotFailures: false,
-      name: 'chrome',
+      name: 'firefox',
       provider: 'preview'
-      // provider: 'webdriverio'
     }
   }
 });

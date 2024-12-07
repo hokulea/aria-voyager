@@ -1,5 +1,5 @@
 import { userEvent } from '@vitest/browser/context';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import { Menu } from '../../../../src';
 import { createCodeMenuWithTriggerButton, getItems } from '../../-shared';
@@ -18,10 +18,17 @@ describe('Invoking a menu item closes all submenus', () => {
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);
-    expect(codeMenu.matches(':popover-open')).toBeTruthy();
 
-    await userEvent.hover(fourthItem);
-    await userEvent.hover(socialItem);
+    await vi.waitFor(() => {
+      expect(codeMenu.matches(':popover-open')).toBeTruthy();
+    });
+
+    // https://github.com/hokulea/aria-voyager/issues/264
+    // await userEvent.hover(fourthItem);
+    // await userEvent.hover(socialItem);
+
+    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     expect(shareMenu.matches(':popover-open')).toBeTruthy();
     expect(socialMenu.matches(':popover-open')).toBeTruthy();
