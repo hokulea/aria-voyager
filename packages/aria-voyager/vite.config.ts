@@ -1,8 +1,6 @@
-/// <reference types="vitest" />
-
 import { resolve } from 'node:path';
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   build: {
@@ -10,8 +8,8 @@ export default defineConfig({
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'aria-voyager',
-      // the proper extensions will be added
-      fileName: 'index'
+      fileName: 'index',
+      formats: ['es', 'cjs']
     }
   },
   test: {
