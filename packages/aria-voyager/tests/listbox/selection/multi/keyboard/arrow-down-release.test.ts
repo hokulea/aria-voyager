@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest';
 import { Listbox } from '../../../../../src';
 import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-describe('Select with `ArrowDown` and `Shift`', () => {
+describe('Select with `ArrowDown` and release `Shift`', () => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
@@ -27,11 +27,11 @@ describe('Select with `ArrowDown` and `Shift`', () => {
     expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
-  test('use `ArrowDown` and `Shift` key to select from first to third item', async () => {
-    await keys.keyboard('{ArrowDown}');
+  test('Release shift', async () => {
+    await keys.keyboard('{/Shift}');
 
     expect(firstItem.getAttribute('aria-selected')).toBe('true');
     expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 });
