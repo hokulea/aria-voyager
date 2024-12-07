@@ -26,16 +26,16 @@ pnpm add ember-aria-voyager
 
 ## Usage
 
-### `{{listbox}}`
+### `{{ariaListbox}}`
 
 Basic example:
 
 ```glimmer-ts
-import { listbox } from 'ember-aria-voyager';
+import { ariaListbox } from 'ember-aria-voyager';
 const options = ['apple', 'banana', 'pineapple'];
 
 <template>
-  <ul role="listbox" {{listbox items=options}}>
+  <ul role="listbox" {{ariaListbox items=options}}>
     {{#each options as |option|}}
       <li role="option">{{option}}</li>
     {{/each}}
@@ -43,7 +43,7 @@ const options = ['apple', 'banana', 'pineapple'];
 </template>
 ```
 
-Here are the options, you can pass to `{{listbox}}`
+Here are the options, you can pass to `{{ariaListbox}}`
 
 ```ts
 type ListboxSignature<T = HTMLElement> = {
@@ -67,7 +67,7 @@ When passing `items` the `select()` and `selection` can work off of your passed 
 Full example:
 
 ```glimmer-ts
-import { listbox } from 'ember-aria-voyager';
+import { ariaListbox } from 'ember-aria-voyager';
 const options = ['apple', 'banana', 'pineapple'];
 const context = new class {
   @tracked selection = [options[0]];
@@ -81,7 +81,7 @@ const context = new class {
 const selection = ['banana'];
 
 <template>
-  <ul role="listbox" {{listbox 
+  <ul role="listbox" {{ariaListbox 
     items=options
     multi=true
     disabled=context.disabled
@@ -95,19 +95,19 @@ const selection = ['banana'];
 </template>
 ```
 
-### `{{menu}}`
+### `{{ariaMenu}}`
 
 Basic example:
 
 ```glimmer-ts
-import { menu } from 'ember-aria-voyager';
+import { ariaMenu } from 'ember-aria-voyager';
 
 <template>
-  <div role="menu" {{menu}}>
+  <div role="menu" {{ariaMenu}}>
     <button role="menuitem">Version Info</button>
     <a role="menuitem" href="https://github.com/hokulea/aria-voyager" target="_blank">Github</a>
     <button role="menuitem" popovertarget="authormenu">Author</button>
-    <div role="menu" id="authormenu" popover {{menu}}>
+    <div role="menu" id="authormenu" popover {{ariaMenu}}>
       <a role="menuitem" href="https://gos.si"  target="_blank">Homepage</a>
       <a role="menuitem" href="https://github.com" target="_blank">Github</a>
     </div>
@@ -115,7 +115,7 @@ import { menu } from 'ember-aria-voyager';
 </template>
 ```
 
-Here are the options, you can pass to `{{menu}}`
+Here are the options, you can pass to `{{ariaMenu}}`
 
 ```ts
 interface MenuSignature<T> {
@@ -127,7 +127,7 @@ interface MenuSignature<T> {
 Here is a full example:
 
 ```glimmer-ts
-import { menu } from 'ember-aria-voyager';
+import { ariaMenu } from 'ember-aria-voyager';
 const items = [
   {
     label: 'Version Info',
@@ -140,7 +140,7 @@ const items = [
 ];
 
 <template>
-  <div role="menu" {{menu items=items}}>
+  <div role="menu" {{ariaMenu items=items}}>
     {{#each items as |item|}}
       {{#if item.action}}
         <button type="button" role="menuitem" {{on "click" item.action}}>{{item.label}}</button>
@@ -154,17 +154,17 @@ const items = [
 </template>
 ```
 
-### `{{tablist}}`
+### `{{ariaTablist}}`
 
 Basic example:
 
 ```glimmer-ts
-import { tablist } from 'ember-aria-voyager';
+import { ariaTablist } from 'ember-aria-voyager';
 const tabs = ['apple', 'banana', 'pineapple'];
 
 <template>
   <div>
-    <ul role="tablist" {{tablist items=tabs}}>
+    <ul role="tablist" {{ariaTablist items=tabs}}>
       {{#each tabs as |tab id|}}
         <li role="tab" id="tab-{{id}}" aria-controls="panel-{{id}}">{{tab}}</li>
       {{/each}}
@@ -179,7 +179,7 @@ const tabs = ['apple', 'banana', 'pineapple'];
 </template>
 ```
 
-Here are the options, you can pass to `{{tablist}}`
+Here are the options, you can pass to `{{ariaTablist}}`
 
 ```ts
 import type { EmitStrategy, Orientation, TablistBehavior } from 'aria-voyager';
