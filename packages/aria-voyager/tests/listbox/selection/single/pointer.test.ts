@@ -1,31 +1,30 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../src';
-import { createListWithFruits } from '../../-shared';
+import { createListWithFruits, getItems } from '../../-shared';
 
 describe('With Pointer', () => {
   const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  new Listbox(list);
+  test('start', () => {
+    expect(firstItem.getAttribute('aria-selected')).toBeNull();
+    expect(secondItem.getAttribute('aria-selected')).toBeNull();
+    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+  });
 
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
-
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-  expect(secondItem.getAttribute('aria-selected')).toBeNull();
-  expect(thirdItem.getAttribute('aria-selected')).toBeNull();
-
-  it('select second item', () => {
-    secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  test('select second item', async () => {
+    await userEvent.click(secondItem);
 
     expect(firstItem.getAttribute('aria-selected')).toBeNull();
     expect(secondItem.getAttribute('aria-selected')).toBe('true');
     expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
-  it('select third item', () => {
-    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  test('select third item', async () => {
+    await userEvent.click(thirdItem);
 
     expect(firstItem.getAttribute('aria-selected')).toBeNull();
     expect(secondItem.getAttribute('aria-selected')).toBeNull();

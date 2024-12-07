@@ -1,15 +1,12 @@
 import { expect, test } from 'vitest';
 
 import { Listbox } from '../../../../src';
-import { createListWithFruits } from '../../-shared';
+import { createListWithFruits, getItems } from '../../-shared';
 
 test('focus activates the first item', () => {
   const list = createListWithFruits();
-
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem } = getItems(listbox);
 
   list.dispatchEvent(new FocusEvent('focusin'));
 

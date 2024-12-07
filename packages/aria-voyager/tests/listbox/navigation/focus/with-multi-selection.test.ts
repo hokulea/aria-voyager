@@ -1,29 +1,43 @@
-import { expect, test } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../src';
-import { createMultiSelectListWithFruits } from '../../-shared';
+import { createMultiSelectListWithFruits, getItems } from '../../-shared';
 
-test('focus activates first item of selection (Multi Select)', () => {
+describe('Focus activates first item of selection (Multi Select)', () => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
+  test('select two items', () => {
+    // await user.click(secondItem);
 
-  secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-  thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
+    // https://github.com/hokulea/aria-voyager/issues/259
+    // const user = userEvent.setup();
+    // await user.keyboard('{Shift>}');
+    // await user.click(thirdItem);
+    // await user.keyboard('{/Shift}');
 
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-  expect(secondItem.getAttribute('aria-selected')).toBe('true');
-  expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
-  expect(listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean)).toBeFalsy();
+    expect(firstItem.getAttribute('aria-selected')).toBeNull();
+    expect(secondItem.getAttribute('aria-selected')).toBe('true');
+    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
 
-  list.dispatchEvent(new FocusEvent('focusin'));
+    expect(
+      listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean)
+    ).toBeFalsy();
+  });
 
-  expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
-  expect(firstItem.getAttribute('aria-current')).toBeNull();
-  expect(secondItem.getAttribute('aria-current')).toBe('true');
-  expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  test('refocus keeps selection', async () => {
+    await userEvent.tab();
+    await userEvent.tab({ shift: true });
+    // list.dispatchEvent(new FocusEvent('focusin'));
+
+    expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
+    expect(firstItem.getAttribute('aria-current')).toBeNull();
+    expect(secondItem.getAttribute('aria-current')).toBe('true');
+    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  });
 });

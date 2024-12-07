@@ -1,19 +1,20 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
 import { createMultiSelectListWithFruits } from '../../../-shared';
 
-describe('select all', () => {
+describe('Select all', () => {
   const list = createMultiSelectListWithFruits();
-
   const listbox = new Listbox(list);
 
-  expect(
-    listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)
-  ).toBeFalsy();
+  test('use `Meta` + `A` key to select all items', async () => {
+    expect(
+      listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)
+    ).toBeFalsy();
 
-  it('use `Meta` + `A` key to select all items', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'KeyA', metaKey: true }));
+    list.focus();
+    await userEvent.keyboard('{Meta>}a');
 
     expect(
       listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)

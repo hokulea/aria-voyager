@@ -1,29 +1,34 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../src';
-import { createListWithFruits } from '../../-shared';
+import { createListWithFruits, getItems } from '../../-shared';
 
 describe('navigates with `Home`', () => {
   const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
-
-  expect(list.getAttribute('aria-activedescendant')).toBeNull();
-  expect(firstItem.getAttribute('aria-current')).toBeNull();
-  expect(secondItem.getAttribute('aria-current')).toBeNull();
-  expect(thirdItem.getAttribute('aria-current')).toBeNull();
-
-  list.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
-
-  it('moves aria-activedescendant', () => {
-    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+  test('start', () => {
+    expect(list.getAttribute('aria-activedescendant')).toBeNull();
+    expect(firstItem.getAttribute('aria-current')).toBeNull();
+    expect(secondItem.getAttribute('aria-current')).toBeNull();
+    expect(thirdItem.getAttribute('aria-current')).toBeNull();
   });
 
-  it('marks items with aria-current', () => {
+  test('focus list and activate last item', async () => {
+    list.focus();
+    expect(document.activeElement).toBe(list);
+    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+
+    await userEvent.keyboard('{End}');
+    expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
+  });
+
+  test('use `Home` key to activate last item', async () => {
+    await userEvent.keyboard('{Home}');
+
+    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
     expect(firstItem.getAttribute('aria-current')).toBe('true');
     expect(secondItem.getAttribute('aria-current')).toBeNull();
     expect(thirdItem.getAttribute('aria-current')).toBeNull();
@@ -32,27 +37,31 @@ describe('navigates with `Home`', () => {
 
 describe('navigates with `Home`, skip disabled item', () => {
   const list = createListWithFruits();
-
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
-
-  expect(list.getAttribute('aria-activedescendant')).toBeNull();
-  expect(firstItem.getAttribute('aria-current')).toBeNull();
-  expect(secondItem.getAttribute('aria-current')).toBeNull();
-  expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   firstItem.setAttribute('aria-disabled', 'true');
 
-  list.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
-
-  it('moves aria-activedescendant', () => {
-    expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
+  test('start', () => {
+    expect(list.getAttribute('aria-activedescendant')).toBeNull();
+    expect(firstItem.getAttribute('aria-current')).toBeNull();
+    expect(secondItem.getAttribute('aria-current')).toBeNull();
+    expect(thirdItem.getAttribute('aria-current')).toBeNull();
   });
 
-  it('marks items with aria-current', () => {
+  test('focus list and activate last item', async () => {
+    list.focus();
+    expect(document.activeElement).toBe(list);
+    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+
+    await userEvent.keyboard('{End}');
+    expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
+  });
+
+  test('use `Home` key to activate last item', async () => {
+    await userEvent.keyboard('{Home}');
+
+    expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
     expect(firstItem.getAttribute('aria-current')).toBeNull();
     expect(secondItem.getAttribute('aria-current')).toBe('true');
     expect(thirdItem.getAttribute('aria-current')).toBeNull();

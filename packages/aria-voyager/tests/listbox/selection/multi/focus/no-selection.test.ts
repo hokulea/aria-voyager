@@ -1,15 +1,12 @@
 import { expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
-import { createMultiSelectListWithFruits } from '../../../-shared';
+import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-test('select no items on focus', () => {
+test('Select no items on focus', () => {
   const list = createMultiSelectListWithFruits();
-
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem } = getItems(listbox);
 
   list.dispatchEvent(new FocusEvent('focusin'));
 

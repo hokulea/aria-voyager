@@ -1,17 +1,14 @@
 import { expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
-import { createListWithFruits } from '../../../-shared';
+import { createListWithFruits, getItems } from '../../../-shared';
 
 test('select first item when focus', () => {
   const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem } = getItems(listbox);
 
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-
-  list.dispatchEvent(new FocusEvent('focusin'));
+  list.focus();
 
   expect(firstItem.getAttribute('aria-selected')).toBe('true');
   expect(secondItem.getAttribute('aria-selected')).toBeNull();

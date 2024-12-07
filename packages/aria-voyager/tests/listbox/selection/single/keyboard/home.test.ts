@@ -1,24 +1,28 @@
-import { expect, test } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
-import { createListWithFruits } from '../../../-shared';
+import { createListWithFruits, getItems } from '../../../-shared';
 
-test('select first item with `Home` key', () => {
+describe('select first item with `Home` key', () => {
   const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  new Listbox(list);
+  test('focus list and activate last item', async () => {
+    list.focus();
+    await userEvent.keyboard('{End}');
 
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
+    expect(firstItem.getAttribute('aria-selected')).toBeNull();
+    expect(secondItem.getAttribute('aria-selected')).toBeNull();
+    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+  });
 
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-  expect(secondItem.getAttribute('aria-selected')).toBeNull();
-  expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+  test('use `Home` to select last item', async () => {
+    await userEvent.keyboard('{Home}');
 
-  list.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
-
-  expect(firstItem.getAttribute('aria-selected')).toBe('true');
-  expect(secondItem.getAttribute('aria-selected')).toBeNull();
-  expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    expect(firstItem.getAttribute('aria-selected')).toBe('true');
+    expect(secondItem.getAttribute('aria-selected')).toBeNull();
+    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+  });
 });
