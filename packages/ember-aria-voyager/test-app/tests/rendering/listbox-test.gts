@@ -248,7 +248,8 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
         <template>
           <div role="listbox" {{ariaListbox items=options multi=true}}>
             {{#each options as |option|}}
-              <p role="option" aria-selected="false">{{option}}</p>
+              {{! template-lint-disable require-mandatory-role-attributes  }}
+              <p role="option">{{option}}</p>
             {{/each}}
           </div>
         </template>
