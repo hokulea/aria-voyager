@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import styles from '@hokulea/core/controls.module.css';
 
 import { Tablist } from '../../src';
@@ -9,7 +11,8 @@ import type { TablistOptions } from '../../src';
 export function createTabElement(parent: HTMLElement) {
   const container = document.createElement('div');
 
-  container.classList.add(styles.tabs);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  container.classList.add(styles.tabs as string);
 
   parent.appendChild(container);
 
