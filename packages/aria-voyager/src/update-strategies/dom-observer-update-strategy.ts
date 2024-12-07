@@ -9,7 +9,7 @@ export class DomObserverUpdateStrategy implements UpdateStrategy {
       return;
     }
 
-    const changedItems = changes.every((change) => change.type === 'childList');
+    const changedItems = changes.some((change) => change.type === 'childList');
 
     const itemAttributes = ['aria-disabled'];
     const changedItemAttributes = changes.some(
@@ -24,10 +24,12 @@ export class DomObserverUpdateStrategy implements UpdateStrategy {
     }
 
     const optionAttributes = [...this.control.optionAttributes, 'aria-disabled'];
-    const changedOptions =
-      changes.length === 1 &&
-      changes[0].type === 'attributes' &&
-      optionAttributes.includes(changes[0].attributeName as string);
+    const changedOptions = changes.some(
+      (change) =>
+        change.target === (this.control as Control).element &&
+        change.type === 'attributes' &&
+        optionAttributes.includes(change.attributeName as string)
+    );
 
     if (changedOptions) {
       this.control.readOptions();

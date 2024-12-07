@@ -13,7 +13,7 @@ export class PreviousNavigation implements NavigationPattern {
 
   constructor(
     private control: Control,
-    private keyOrKeys: string | string[]
+    public keyOrKeys: string | string[]
   ) {}
 
   matches(event: Event): boolean {

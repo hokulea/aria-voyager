@@ -15,6 +15,7 @@ export interface MenuSignature<T> {
     };
   };
 }
+
 export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
   private menu?: Menu;
   private declare updater: ReactiveUpdateStrategy;

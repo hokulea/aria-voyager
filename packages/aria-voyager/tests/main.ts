@@ -4,13 +4,27 @@ import './main.css';
 import '@hokulea/core/index.css';
 import '@hokulea/theme-moana/dist/moana.css';
 
-import { List } from './components/list';
+import { Tabs } from './components/tabs';
 
 const app = document.getElementById('app') as HTMLElement;
 
-const list = new List(app);
+// import { List } from './components/list';
 
-list.element.style.height = '300px';
-list.element.style.position = 'relative';
-// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-list.setItems([...Array(20).keys()].map((i) => `Item ${i + 1}`));
+// const list = new List(app);
+
+// list.element.style.height = '300px';
+// list.element.style.position = 'relative';
+// // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+// list.setItems([...Array(20).keys()].map((i) => `Item ${i + 1}`));
+
+const tabs = new Tabs(app, {
+  behavior: {
+    singleSelection: 'manual'
+  }
+});
+
+tabs.tablist.element.setAttribute('aria-orientation', 'vertical');
+
+for (let i = 1; i <= 5; i++) {
+  tabs.addTab(`Tab ${i.toString()}`, `Content ${i.toString()}`);
+}

@@ -4,18 +4,42 @@ import type { Control } from '..';
 import type { Item } from '../controls/control';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
+export interface SelectionBehavior {
+  /**
+   * Selection behavior:
+   *
+   * - `automatic`: active item becomes selected item
+   * - `manual`: user must select manually with spacebar
+   *
+   * @defaultValue `automatic`
+   */
+  singleSelection?: 'automatic' | 'manual';
+}
+
+const DEFAULT_BEHAVIOR: Required<SelectionBehavior> = {
+  singleSelection: 'automatic'
+};
+
 export class SelectionStrategy implements NavigationPattern {
   eventListeners: EventNames[] = ['focusin', 'keydown', 'keyup', 'pointerup', 'change'];
 
   #selection: Item[] = [];
 
-  get selection() {
+  get selection(): Item[] {
     return this.#selection;
   }
 
   private shiftItem?: Item;
+  private behavior: Required<SelectionBehavior>;
 
-  constructor(private control: Control) {
+  constructor(
+    private control: Control,
+    behavior?: SelectionBehavior
+  ) {
+    this.behavior = {
+      ...DEFAULT_BEHAVIOR,
+      ...(behavior ?? {})
+    };
     this.readSelection();
   }
 
@@ -48,7 +72,7 @@ export class SelectionStrategy implements NavigationPattern {
 
     // keyboard
     else if (event instanceof KeyboardEvent) {
-      this.handleKeyboard(bag);
+      this.handleKeyboard(event, bag.item);
     }
 
     // this is usually triggered when testing
@@ -107,14 +131,13 @@ export class SelectionStrategy implements NavigationPattern {
     }
   }
 
-  private handleKeyboard(bag: NavigationParameterBag) {
-    const { event, item } = bag as NavigationParameterBag & { event: KeyboardEvent };
-
+  private handleKeyboard(event: KeyboardEvent, item?: Item) {
     if (event.type === 'keydown') {
       if (item) {
         this.handleItem(event, item);
       }
 
+      this.handleKeys(event);
       this.handleKeyCombinations(event);
     } else if (event.type === 'keyup' && !event.shiftKey) {
       this.shiftItem = undefined;
@@ -127,7 +150,23 @@ export class SelectionStrategy implements NavigationPattern {
         this.selectShift(item);
       }
     } else {
-      this.selectSingle(item);
+      if (
+        this.behavior.singleSelection === 'automatic' ||
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (this.behavior.singleSelection === 'manual' && event.key === ' ')
+      ) {
+        this.selectSingle(item);
+      }
+    }
+  }
+
+  private handleKeys(event: KeyboardEvent) {
+    if (
+      this.behavior.singleSelection === 'manual' &&
+      event.key === ' ' &&
+      this.control.activeItem
+    ) {
+      this.selectSingle(this.control.activeItem);
     }
   }
 

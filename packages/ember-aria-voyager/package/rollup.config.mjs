@@ -34,13 +34,15 @@ export default defineConfig({
       'test-support/index.js',
       // from here on, it is only required for classic ember builds
       'template-registry.js',
-      'modifiers/**/*.js'
+      'modifiers/listbox.js',
+      'modifiers/menu.js',
+      'modifiers/tablist.js'
     ]),
 
     // These are the modules that should get reexported into the traditional
     // "app" tree. Things in here should also be in publicEntrypoints above, but
     // not everything in publicEntrypoints necessarily needs to go here.
-    addon.appReexports(['modifiers/**/*.js']),
+    addon.appReexports(['modifiers/listbox.js', 'modifiers/menu.js', 'modifiers/tablist.js']),
 
     nodeResolve({
       extensions

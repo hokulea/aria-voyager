@@ -1,4 +1,4 @@
-import { IndexEmitStrategy, ItemEmitStrategy, Listbox, ReactiveUpdateStrategy } from 'aria-voyager';
+import { IndexEmitStrategy, ItemEmitStrategy, ReactiveUpdateStrategy, Tablist } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
 
@@ -10,43 +10,50 @@ import {
   type WithItems
 } from './-emitter';
 
-import type { EmitStrategy } from 'aria-voyager';
+import type { EmitStrategy, Orientation, TablistBehavior } from 'aria-voyager';
 import type { NamedArgs, PositionalArgs } from 'ember-modifier';
 
-interface ListboxSignature<T> {
+export interface TablistSignature<T> {
+  Element: HTMLElement;
   Args: {
     Positional: [];
-    Named: { disabled?: boolean } & EmitterSignature<T>;
+    Named: {
+      disabled?: boolean;
+      orientation?: Orientation;
+      behavior?: TablistBehavior;
+    } & EmitterSignature<T>;
   };
 }
 
-export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
-  private listbox?: Listbox;
+export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
+  private tablist?: Tablist;
   private declare updater: ReactiveUpdateStrategy;
   private declare emitter: EmitStrategy;
 
   private prevItems?: T[];
   private prevSelection?: T | T[];
-  private prevMulti?: boolean;
   private prevDisabled?: boolean;
+  private prevOrientation?: Orientation;
 
   modify(
     element: Element,
-    _: PositionalArgs<ListboxSignature<T>>,
-    options: NamedArgs<ListboxSignature<T>>
+    _: PositionalArgs<TablistSignature<T>>,
+    options: NamedArgs<TablistSignature<T>>
   ) {
-    if (!this.listbox) {
+    if (!this.tablist) {
       this.updater = new ReactiveUpdateStrategy();
 
-      this.listbox = new Listbox(element as HTMLElement, {
-        updater: this.updater
+      this.tablist = new Tablist(element as HTMLElement, {
+        updater: this.updater,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        behavior: options.behavior
       });
     }
 
     if (options.items && !(this.emitter instanceof IndexEmitStrategy)) {
-      this.emitter = createIndexEmitter<T>(this.listbox, options);
+      this.emitter = createIndexEmitter<T>(this.tablist, options);
     } else if (!options.items && !(this.emitter instanceof ItemEmitStrategy)) {
-      this.emitter = createItemEmitter<T>(this.listbox, options);
+      this.emitter = createItemEmitter<T>(this.tablist, options);
     }
 
     if (options.items && !isEqual(this.prevItems, (options as WithItems<T>).items)) {
@@ -61,16 +68,17 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
 
     let optionsChanged = false;
 
-    if (this.prevMulti !== options.multi) {
-      if (options.multi) {
-        element.setAttribute('aria-multiselectable', 'true');
+    if (this.prevOrientation !== options.orientation) {
+      if (options.orientation) {
+        element.setAttribute('aria-orientation', options.orientation as string);
       } else {
-        element.removeAttribute('aria-multiselectable');
+        element.removeAttribute('aria-orientation');
       }
 
       optionsChanged = true;
 
-      this.prevMulti = options.multi;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      this.prevOrientation = options.orientation;
     }
 
     if (this.prevDisabled !== options.disabled) {
