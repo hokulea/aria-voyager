@@ -1,5 +1,15 @@
-import { default as listbox } from './modifiers/listbox';
-import { default as menu } from './modifiers/menu';
-import { default as tablist } from './modifiers/tablist';
+import { default as ariaListbox } from './modifiers/aria-listbox';
+import { default as ariaMenu } from './modifiers/aria-menu';
+import { default as ariaTablist } from './modifiers/aria-tablist';
 
-export { listbox, menu, tablist };
+export {
+  ariaListbox,
+  ariaMenu,
+  ariaTablist,
+  /** @deprecated use `ariaListbox` */
+  ariaListbox as listbox,
+  /** @deprecated use `ariaMenu` */
+  ariaMenu as menu,
+  /** @deprecated use `ariaTablist` */
+  ariaTablist as tablist
+};

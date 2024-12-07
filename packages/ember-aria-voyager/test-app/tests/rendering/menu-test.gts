@@ -3,7 +3,7 @@ import { render, rerender } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { menu } from 'ember-aria-voyager';
+import { ariaMenu } from 'ember-aria-voyager';
 
 import {
   testMenuKeyboardNavigation,
@@ -21,17 +21,17 @@ interface CodeMenuSignature {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const CodeMenu: TOC<CodeMenuSignature> = <template>
-  <div role="menu" ...attributes {{menu disabled=(if @disabled @disabled false)}}>
+  <div role="menu" ...attributes {{ariaMenu disabled=(if @disabled @disabled false)}}>
     <span>Refactor</span>
     <button type="button" role="menuitem">Format Document</button>
     <button type="button" role="menuitem">Refactor...</button>
     <button type="button" role="menuitem">Source Action...</button>
     <hr />
     <button type="button" role="menuitem" popovertarget="sharemenu">Share</button>
-    <div role="menu" id="sharemenu" popover {{menu}}>
+    <div role="menu" id="sharemenu" popover {{ariaMenu}}>
       <button type="button" role="menuitem">Code</button>
       <button type="button" role="menuitem" popovertarget="socialmenu">Social</button>
-      <div role="menu" id="socialmenu" popover {{menu}}>
+      <div role="menu" id="socialmenu" popover {{ariaMenu}}>
         <button type="button" role="menuitem">Twitter</button>
         <button type="button" role="menuitem">Mastodon</button>
         <button type="button" role="menuitem">Bsky</button>
@@ -51,7 +51,7 @@ const CodeMenu: TOC<CodeMenuSignature> = <template>
     </div>
     <hr />
     <button type="button" role="menuitem" popovertarget="panelpositionmenu">Panel Position</button>
-    <div role="menu" id="panelpositionmenu" popover {{menu}}>
+    <div role="menu" id="panelpositionmenu" popover {{ariaMenu}}>
       <button type="button" role="menuitemradio" aria-checked="false">Top</button>
       <button type="button" role="menuitemradio" aria-checked="false">Left</button>
       <button type="button" role="menuitemradio" aria-checked="false">Right</button>

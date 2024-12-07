@@ -92,6 +92,7 @@ apply styling, it will operate on the accessibility tree.
     </td>
     <td>
       ✅ Disabled<br>
+      ✅ Orientation<br>
       ✅ Single selection<br>
       ❌ Multi selection<br>
     </td>
