@@ -1,5 +1,5 @@
 import { userEvent } from '@vitest/browser/context';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
 import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
