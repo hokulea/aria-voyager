@@ -19,4 +19,8 @@ export class ReactiveUpdateStrategy implements UpdateStrategy {
   updateOptions() {
     this.control?.readOptions();
   }
+
+  dispose() {
+    this.control = undefined;
+  }
 }

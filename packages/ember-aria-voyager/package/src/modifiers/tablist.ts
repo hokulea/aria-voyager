@@ -1,3 +1,5 @@
+import { registerDestructor } from '@ember/destroyable';
+
 import { IndexEmitStrategy, ItemEmitStrategy, ReactiveUpdateStrategy, Tablist } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
@@ -10,8 +12,9 @@ import {
   type WithItems
 } from './-emitter';
 
+import type Owner from '@ember/owner';
 import type { EmitStrategy, Orientation, TablistBehavior } from 'aria-voyager';
-import type { NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
 
 export interface TablistSignature<T> {
   Element: HTMLElement;
@@ -34,6 +37,15 @@ export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
   private prevSelection?: T | T[];
   private prevDisabled?: boolean;
   private prevOrientation?: Orientation;
+
+  constructor(owner: Owner, args: ArgsFor<TablistSignature<T>>) {
+    super(owner, args);
+
+    registerDestructor(this, () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      this.tablist?.dispose();
+    });
+  }
 
   modify(
     element: Element,

@@ -1,9 +1,12 @@
+import { registerDestructor } from '@ember/destroyable';
+
 import { Menu, ReactiveUpdateStrategy } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import isEqual from 'lodash.isequal';
 
+import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';
-import type { NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
 
 export interface MenuSignature<T> {
   Element: HTMLElement;
@@ -23,6 +26,15 @@ export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
 
   private prevItems?: T[];
   private prevDisabled?: boolean;
+
+  constructor(owner: Owner, args: ArgsFor<MenuSignature<T>>) {
+    super(owner, args);
+
+    registerDestructor(this, () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      this.menu?.dispose();
+    });
+  }
 
   modify(
     element: Element,
