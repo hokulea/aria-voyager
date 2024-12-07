@@ -16,6 +16,8 @@ jobs:
         uses: ./.github/actions/setup
         env:
           COVERAGE: true
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
       - name: coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:
