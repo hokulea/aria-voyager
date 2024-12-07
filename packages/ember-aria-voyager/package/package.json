@@ -70,7 +70,7 @@
     "ember-template-lint": "6.0.0",
     "eslint": "8.57.1",
     "postcss": "8.4.49",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "qunit-dom": "3.4.0",
     "rollup": "4.28.1",
     "rollup-plugin-postcss": "4.0.2",
