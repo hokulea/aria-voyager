@@ -1,36 +1,32 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
-import { createMultiSelectListWithFruits } from '../../../-shared';
+import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-describe('select with `ArrowDown` and `Shift`', () => {
+describe('Select with `ArrowDown` and `Shift`', () => {
   const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
-
-  // activate first item
-  it('focus the list to activate first item', () => {
-    list.dispatchEvent(new FocusEvent('focusin'));
+  test('focus the list to activate first item', () => {
+    list.focus();
 
     expect(firstItem.getAttribute('aria-selected')).toBeNull();
     expect(secondItem.getAttribute('aria-selected')).toBeNull();
     expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
-  it('use `ArrowDown` and `Shift` key to select from first to second item', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', shiftKey: true }));
+  test('use `ArrowDown` and `Shift` key to select from first to second item', async () => {
+    await userEvent.keyboard('{Shift>}{ArrowDown}');
 
     expect(firstItem.getAttribute('aria-selected')).toBe('true');
     expect(secondItem.getAttribute('aria-selected')).toBe('true');
     expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
-  it('use `ArrowDown` and `Shift` key to select from first to third item', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', shiftKey: true }));
+  test('use `ArrowDown` and `Shift` key to select from first to third item', async () => {
+    await userEvent.keyboard('{Shift>}{ArrowDown}');
 
     expect(firstItem.getAttribute('aria-selected')).toBe('true');
     expect(secondItem.getAttribute('aria-selected')).toBe('true');
@@ -38,34 +34,31 @@ describe('select with `ArrowDown` and `Shift`', () => {
   });
 });
 
-describe('select with `ArrowDown` and release `Shift`', () => {
+describe('Select with `ArrowDown` and release `Shift`', () => {
   const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  new Listbox(list);
+  const keys = userEvent.setup();
 
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
-
-  // activate first item
-  it('focus the list to activate first item', () => {
-    list.dispatchEvent(new FocusEvent('focusin'));
+  test('focus the list to activate first item', () => {
+    list.focus();
 
     expect(firstItem.getAttribute('aria-selected')).toBeNull();
     expect(secondItem.getAttribute('aria-selected')).toBeNull();
     expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
-  it('use `ArrowDown` and `Shift` key to select from first to second item', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', shiftKey: true }));
+  test('use `ArrowDown` and `Shift` key to select from first to second item', async () => {
+    await keys.keyboard('{Shift>}{ArrowDown}');
 
     expect(firstItem.getAttribute('aria-selected')).toBe('true');
     expect(secondItem.getAttribute('aria-selected')).toBe('true');
     expect(thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
-  it('Release shift', () => {
-    list.dispatchEvent(new KeyboardEvent('keyup'));
+  test('Release shift', async () => {
+    await keys.keyboard('{/Shift}');
 
     expect(firstItem.getAttribute('aria-selected')).toBe('true');
     expect(secondItem.getAttribute('aria-selected')).toBe('true');

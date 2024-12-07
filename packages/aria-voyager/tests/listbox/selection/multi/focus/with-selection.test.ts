@@ -1,15 +1,12 @@
 import { expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
-import { createMultiSelectListWithFruits } from '../../../-shared';
+import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-test('select first selection item when focus', () => {
+test('Select first selection item when focus', () => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
-
-  const firstItem = list.children[0];
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   secondItem.setAttribute('aria-selected', 'true');
   thirdItem.setAttribute('aria-selected', 'true');

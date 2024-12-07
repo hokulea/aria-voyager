@@ -1,26 +1,27 @@
-import { describe, expect, it } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
-import { createMultiSelectListWithFruits } from '../../../-shared';
+import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-describe('toggle selection with `Space` key', () => {
+describe('Toggle selection with `Space` key', () => {
   const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem } = getItems(listbox);
 
-  new Listbox(list);
+  test('focus list', () => {
+    list.focus();
 
-  const firstItem = list.children[0];
+    expect(firstItem.getAttribute('aria-selected')).toBeNull();
+  });
 
-  list.dispatchEvent(new FocusEvent('focusin'));
-
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-
-  it('use `Space` to select active item', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+  test('use `Space` to select active item', async () => {
+    await userEvent.keyboard(' ');
     expect(firstItem.getAttribute('aria-selected')).toBe('true');
   });
 
-  it('use `Space` to deselect active item', () => {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+  test('use `Space` to deselect active item', async () => {
+    await userEvent.keyboard(' ');
     expect(firstItem.getAttribute('aria-selected')).toBeNull();
   });
 });
