@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 
 import { createTabs, getTabItems } from '../../-shared';
 
-describe('navigate with `ArrowUp`', () => {
+describe('Navigate with `ArrowUp`', () => {
   const { tabs, tablist } = createTabs();
   const { firstItem, secondLastItem, thirdLastItem, lastItem } = getTabItems(tabs);
 

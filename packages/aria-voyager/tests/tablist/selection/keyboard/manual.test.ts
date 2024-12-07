@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 
 import { createTabs, getTabItems } from '../../-shared';
 
-describe('select manually with spacebar`', () => {
+describe('Select manually with spacebar`', () => {
   const { tabs } = createTabs({
     behavior: {
       singleSelection: 'manual'

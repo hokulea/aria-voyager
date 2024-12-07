@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 
 import { createTabs, getTabItems } from '../-shared';
 
-describe('use pointer to select items', () => {
+describe('Use pointer to select items', () => {
   const { tabs, tablist } = createTabs();
   const { firstItem, secondItem, thirdItem } = getTabItems(tabs);
 
