@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import styles from '@hokulea/core/controls.module.css';
 
 import { Listbox } from '../../src';
@@ -7,7 +9,8 @@ export function createListElement(parent: HTMLElement) {
   const element = document.createElement('div');
 
   element.role = 'listbox';
-  element.classList.add(styles.list);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  element.classList.add(styles.list as string);
 
   parent.appendChild(element);
 
