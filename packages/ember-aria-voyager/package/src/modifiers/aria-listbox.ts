@@ -25,8 +25,8 @@ interface ListboxSignature<T> {
 
 export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
   private listbox?: Listbox;
-  private declare updater: ReactiveUpdateStrategy;
-  private declare emitter: EmitStrategy;
+  declare private updater: ReactiveUpdateStrategy;
+  declare private emitter: EmitStrategy;
 
   private prevItems?: T[];
   private prevSelection?: T | T[];

@@ -21,8 +21,8 @@ export interface MenuSignature<T> {
 
 export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
   private menu?: Menu;
-  private declare updater: ReactiveUpdateStrategy;
-  private declare emitter: EmitStrategy;
+  declare private updater: ReactiveUpdateStrategy;
+  declare private emitter: EmitStrategy;
 
   private prevItems?: T[];
   private prevDisabled?: boolean;
