@@ -3,7 +3,7 @@ import { render, rerender } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { listbox } from 'ember-aria-voyager';
+import { ariaListbox } from 'ember-aria-voyager';
 import sinon from 'sinon';
 
 import {
@@ -30,9 +30,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
     await render(
       <template>
-        <div role="listbox" {{listbox items=options}}>
+        <div role="listbox" {{ariaListbox items=options}}>
           {{#each options as |option|}}
-            <p role="option">{{option}}</p>
+            <p role="option" aria-selected="false">{{option}}</p>
           {{/each}}
         </div>
       </template>
@@ -51,9 +51,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
     await render(
       <template>
-        <div role="listbox" {{listbox items=options disabled=context.disabled}}>
+        <div role="listbox" {{ariaListbox items=options disabled=context.disabled}}>
           {{#each options as |option|}}
-            <p role="option">{{option}}</p>
+            <p role="option" aria-selected="false">{{option}}</p>
           {{/each}}
         </div>
       </template>
@@ -74,9 +74,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options}}>
+          <div role="listbox" {{ariaListbox items=options}}>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -90,9 +90,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options}}>
+          <div role="listbox" {{ariaListbox items=options}}>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -109,9 +109,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox select=selectSpy}} data-test-listbox>
+          <div role="listbox" {{ariaListbox select=selectSpy}} data-test-listbox>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -134,9 +134,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options select=selectSpy}} data-test-listbox>
+          <div role="listbox" {{ariaListbox items=options select=selectSpy}} data-test-listbox>
             {{#each options as |option|}}
-              <p role="option">{{option.value}}</p>
+              <p role="option" aria-selected="false">{{option.value}}</p>
             {{/each}}
           </div>
         </template>
@@ -152,9 +152,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options}}>
+          <div role="listbox" {{ariaListbox items=options}}>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -168,9 +168,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options}}>
+          <div role="listbox" {{ariaListbox items=options}}>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -187,9 +187,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox select=selectSpy multi=true}} data-test-listbox>
+          <div role="listbox" {{ariaListbox select=selectSpy multi=true}} data-test-listbox>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -221,11 +221,11 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
         <template>
           <div
             role="listbox"
-            {{listbox items=options select=selectSpy multi=true}}
+            {{ariaListbox items=options select=selectSpy multi=true}}
             data-test-listbox
           >
             {{#each options as |option|}}
-              <p role="option">{{option.value}}</p>
+              <p role="option" aria-selected="false">{{option.value}}</p>
             {{/each}}
           </div>
         </template>
@@ -246,9 +246,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options multi=true}}>
+          <div role="listbox" {{ariaListbox items=options multi=true}}>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>
@@ -262,9 +262,9 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
 
       await render(
         <template>
-          <div role="listbox" {{listbox items=options multi=true}}>
+          <div role="listbox" {{ariaListbox items=options multi=true}}>
             {{#each options as |option|}}
-              <p role="option">{{option}}</p>
+              <p role="option" aria-selected="false">{{option}}</p>
             {{/each}}
           </div>
         </template>

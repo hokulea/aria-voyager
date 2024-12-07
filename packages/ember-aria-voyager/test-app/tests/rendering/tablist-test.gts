@@ -4,7 +4,7 @@ import { render, rerender } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { tablist } from 'ember-aria-voyager';
+import { ariaTablist } from 'ember-aria-voyager';
 
 import {
   testTablistKeyboardAutomaticSelection,
@@ -37,7 +37,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
   setupRenderingTest(hooks);
 
   test('tabindex attribute is set', async (assert) => {
-    await render(<template><Tabs @amount={{5}} {{tablist}} /></template>);
+    await render(<template><Tabs @amount={{5}} {{ariaTablist}} /></template>);
 
     assert.dom('[role="tab"]').hasAttribute('tabindex', '0');
   });
@@ -51,7 +51,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
       })();
 
       await render(
-        <template><Tabs @amount={{5}} {{tablist disabled=context.disabled}} /></template>
+        <template><Tabs @amount={{5}} {{ariaTablist disabled=context.disabled}} /></template>
       );
 
       assert.dom('[role="tab"]').hasAttribute('tabindex', '0');
@@ -71,7 +71,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
       })();
 
       await render(
-        <template><Tabs @amount={{5}} {{tablist orientation=context.orientation}} /></template>
+        <template><Tabs @amount={{5}} {{ariaTablist orientation=context.orientation}} /></template>
       );
 
       assert.dom('[role="tablist"]').doesNotHaveAria('orientation');
@@ -86,13 +86,13 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
   module('Navigation', () => {
     test('it supports keyboard navigation', async (assert) => {
-      await render(<template><Tabs @amount={{5}} {{tablist}} /></template>);
+      await render(<template><Tabs @amount={{5}} {{ariaTablist}} /></template>);
 
       await testTablistKeyboardNavigation(assert);
     });
 
     test('it supports mouse navigation', async (assert) => {
-      await render(<template><Tabs @amount={{5}} {{tablist}} /></template>);
+      await render(<template><Tabs @amount={{5}} {{ariaTablist}} /></template>);
 
       await testTablistPointerNavigation(assert);
     });
@@ -100,7 +100,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
   module('Selection', () => {
     test('it supports automatic keyboard selection', async (assert) => {
-      await render(<template><Tabs @amount={{5}} {{tablist}} /></template>);
+      await render(<template><Tabs @amount={{5}} {{ariaTablist}} /></template>);
 
       await testTablistKeyboardAutomaticSelection(assert);
     });
@@ -108,7 +108,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
     test('it supports manual keyboard selection', async (assert) => {
       await render(
         <template>
-          <Tabs @amount={{5}} {{tablist behavior=(hash singleSelection="manual")}} />
+          <Tabs @amount={{5}} {{ariaTablist behavior=(hash singleSelection="manual")}} />
         </template>
       );
 
@@ -116,7 +116,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
     });
 
     test('it supports pointer selection', async (assert) => {
-      await render(<template><Tabs @amount={{5}} {{tablist}} /></template>);
+      await render(<template><Tabs @amount={{5}} {{ariaTablist}} /></template>);
 
       await testTablistPointerSelection(assert);
     });
