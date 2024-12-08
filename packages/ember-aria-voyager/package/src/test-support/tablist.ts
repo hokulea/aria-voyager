@@ -7,7 +7,6 @@ import {
 } from '@ember/test-helpers';
 
 import { getCompositeItems } from './-private/composite';
-import { select } from './-private/selection';
 
 type Selectors = {
   tablist: string;
