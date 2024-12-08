@@ -1,6 +1,13 @@
-import { focus, getRootElement, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  focus,
+  getRootElement,
+  type Target,
+  triggerEvent,
+  triggerKeyEvent
+} from '@ember/test-helpers';
 
 import { getCompositeItems } from './-private/composite';
+import { select } from './-private/selection';
 
 type Selectors = {
   tablist: string;
@@ -183,4 +190,12 @@ export async function testTablistPointerSelection(
   await triggerEvent(third, 'pointerup');
   assert.dom(third).hasAria('selected', 'true', 'Clicking last option selects it');
   assert.dom(second).doesNotHaveAria('selected', '... and deselects second option');
+}
+
+//
+// BEHAVIOR
+//
+
+export async function selectTab(target: Target, options: Record<string, unknown> = {}) {
+  await triggerEvent(target, 'pointerup', options);
 }

@@ -1,10 +1,12 @@
 import { tracked } from '@glimmer/tracking';
 import { hash } from '@ember/helper';
 import { render, rerender } from '@ember/test-helpers';
+import { click } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { ariaTablist } from 'ember-aria-voyager';
+import sinon from 'sinon';
 
 import {
   testTablistKeyboardAutomaticSelection,
@@ -13,6 +15,7 @@ import {
   testTablistPointerNavigation,
   testTablistPointerSelection
 } from 'ember-aria-voyager/test-support';
+import { selectTab } from 'ember-aria-voyager/test-support';
 
 import type { TOC } from '@ember/component/template-only';
 import type { Orientation } from 'aria-voyager';
@@ -21,7 +24,7 @@ const range = (amount: number) => [...Array(amount).keys()];
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Tabs: TOC<{ Element: HTMLElement; Args: { amount: number } }> = <template>
-  <div>
+  <div data-test-tab>
     <div role="tablist" ...attributes>
       {{#each (range @amount) as |i|}}
         <p role="tab" id="tab-{{i}}" aria-controls="panel-{{i}}">Tab {{i}}</p>
@@ -96,6 +99,20 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
       await testTablistPointerNavigation(assert);
     });
+
+    test('it updates about navigation', async (assert) => {
+      const handleNavigation = sinon.spy();
+
+      await render(
+        <template><Tabs @amount={{5}} {{ariaTablist activateItem=handleNavigation}} /></template>
+      );
+
+      const tab = document.querySelector('[role="tab"]:nth-child(2)') as HTMLElement;
+
+      await selectTab(tab);
+
+      assert.ok(handleNavigation.calledOnceWith(tab));
+    });
   });
 
   module('Selection', () => {
@@ -119,6 +136,18 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
       await render(<template><Tabs @amount={{5}} {{ariaTablist}} /></template>);
 
       await testTablistPointerSelection(assert);
+    });
+
+    test('it updates about selection', async (assert) => {
+      const handleUpdate = sinon.spy();
+
+      await render(<template><Tabs @amount={{5}} {{ariaTablist select=handleUpdate}} /></template>);
+
+      const tab = document.querySelector('[role="tab"]:nth-child(2)') as HTMLElement;
+
+      await selectTab(tab);
+
+      assert.ok(handleUpdate.calledOnceWith(tab));
     });
   });
 });

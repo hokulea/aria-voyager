@@ -30,8 +30,8 @@ export interface TablistSignature<T> {
 
 export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
   private tablist?: Tablist;
-  declare private updater: ReactiveUpdateStrategy;
-  declare private emitter: EmitStrategy;
+  private declare updater: ReactiveUpdateStrategy;
+  private declare emitter: EmitStrategy;
 
   private prevItems?: T[];
   private prevSelection?: T | T[];
