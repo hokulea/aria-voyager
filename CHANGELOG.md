@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2024-12-08)
+
+ember-aria-voyager 0.2.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-aria-voyager`, `ember-aria-voyager-test-app`
+  * [#271](https://github.com/hokulea/aria-voyager/pull/271) Test support for `{{tablist}}` ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-07)
 
 aria-voyager 0.1.0 (minor)
