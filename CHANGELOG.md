@@ -2,6 +2,17 @@
 
 ## Release (2024-12-08)
 
+ember-aria-voyager 0.2.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-aria-voyager`
+  * [#273](https://github.com/hokulea/aria-voyager/pull/273) Re-export tab types ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
+## Release (2024-12-08)
+
 ember-aria-voyager 0.2.0 (minor)
 
 #### :rocket: Enhancement
