@@ -4,17 +4,17 @@
       "oldVersion": "0.1.0"
     },
     "ember-aria-voyager": {
-      "impact": "minor",
-      "oldVersion": "0.1.0",
-      "newVersion": "0.2.0",
+      "impact": "patch",
+      "oldVersion": "0.2.0",
+      "newVersion": "0.2.1",
       "constraints": [
         {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-aria-voyager/package/package.json"
     }
   },
-  "description": "## Release (2024-12-08)\n\nember-aria-voyager 0.2.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-aria-voyager`, `ember-aria-voyager-test-app`\n  * [#271](https://github.com/hokulea/aria-voyager/pull/271) Test support for `{{tablist}}` ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "## Release (2024-12-08)\n\nember-aria-voyager 0.2.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-aria-voyager`\n  * [#273](https://github.com/hokulea/aria-voyager/pull/273) Re-export tab types ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }
