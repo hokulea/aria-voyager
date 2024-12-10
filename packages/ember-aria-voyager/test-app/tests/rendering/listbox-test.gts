@@ -1,5 +1,8 @@
 import { tracked } from '@glimmer/tracking';
 import { render, rerender } from '@ember/test-helpers';
+import { settled } from '@ember/test-helpers';
+import { focus } from '@ember/test-helpers';
+import { triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -41,31 +44,71 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
     assert.dom('[role="listbox"]').hasAttribute('tabindex', '0');
   });
 
-  test('disabling sets tabindex to -1', async function (this: TestContext, assert) {
-    const options = ['apple', 'banana', 'pineapple'];
-    const context = new (class {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-      // @ts-ignore
-      @tracked disabled = false;
-    })();
+  module('Reactivity', () => {
+    test('disabling sets tabindex to -1', async function (this: TestContext, assert) {
+      const options = ['apple', 'banana', 'pineapple'];
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked disabled = false;
+      })();
 
-    await render(
-      <template>
-        <div role="listbox" {{ariaListbox items=options disabled=context.disabled}}>
-          {{#each options as |option|}}
-            <p role="option" aria-selected="false">{{option}}</p>
-          {{/each}}
-        </div>
-      </template>
-    );
+      await render(
+        <template>
+          <div role="listbox" {{ariaListbox items=options disabled=context.disabled}}>
+            {{#each options as |option|}}
+              <p role="option" aria-selected="false">{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
 
-    assert.dom('[role="listbox"]').hasAttribute('tabindex', '0');
+      assert.dom('[role="listbox"]').hasAttribute('tabindex', '0');
 
-    context.disabled = true;
+      context.disabled = true;
 
-    await rerender();
+      await rerender();
 
-    assert.dom('[role="listbox"]').hasAttribute('tabindex', '-1');
+      assert.dom('[role="listbox"]').hasAttribute('tabindex', '-1');
+    });
+
+    test('selection updates', async (assert) => {
+      const handleUpdate = sinon.spy();
+      const options = ['apple', 'banana', 'pineapple'];
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked selection?: string = undefined;
+      })();
+
+      const isSelected = (item: string, selection?: string) => {
+        return item === selection;
+      };
+
+      await render(
+        <template>
+          <div
+            role="listbox"
+            {{ariaListbox items=options selection=context.selection select=handleUpdate}}
+          >
+            {{#each options as |option|}}
+              <p
+                role="option"
+                aria-selected={{if (isSelected option context.selection) "true"}}
+              >{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      context.selection = 'banana';
+
+      await settled();
+      await focus('[role="listbox"]');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', 'ArrowRight');
+
+      assert.ok(handleUpdate.calledWith('pineapple'));
+    });
   });
 
   module('Navigation', () => {

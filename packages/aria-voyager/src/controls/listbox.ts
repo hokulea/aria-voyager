@@ -17,7 +17,10 @@ interface ListboxOptions {
 
 export class Listbox extends Control {
   #selectionStrategy: SelectionStrategy = new SelectionStrategy(this);
-  protected focusStrategy: ActiveDescendentStrategy = new ActiveDescendentStrategy(this);
+  protected focusStrategy: ActiveDescendentStrategy = new ActiveDescendentStrategy(
+    this,
+    this.#selectionStrategy
+  );
 
   get selection() {
     return this.#selectionStrategy.selection;
@@ -61,6 +64,12 @@ export class Listbox extends Control {
 
     this.readOptions();
     this.readItems();
+  }
+
+  dispose() {
+    super.dispose();
+
+    this.#selectionStrategy.dispose();
   }
 
   readItems() {

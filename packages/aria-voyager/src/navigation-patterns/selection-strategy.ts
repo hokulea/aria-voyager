@@ -20,7 +20,13 @@ const DEFAULT_BEHAVIOR: Required<SelectionBehavior> = {
   singleSelection: 'automatic'
 };
 
+type EventHandler = (...args: unknown[]) => void;
+
 export class SelectionStrategy implements NavigationPattern {
+  #listeners = {
+    read: new Set<EventHandler>()
+  };
+
   eventListeners: EventNames[] = ['focusin', 'keydown', 'keyup', 'pointerup', 'change'];
 
   #selection: Item[] = [];
@@ -41,6 +47,18 @@ export class SelectionStrategy implements NavigationPattern {
       ...(behavior ?? {})
     };
     this.readSelection();
+  }
+
+  dispose() {
+    Object.values(this.#listeners).forEach((listeners) => listeners.clear());
+  }
+
+  addListener(event: 'read', handler: EventHandler) {
+    this.#listeners[event].add(handler);
+  }
+
+  removeListener(event: 'read', handler: EventHandler) {
+    this.#listeners[event].delete(handler);
   }
 
   matches(event: Event): boolean {
@@ -100,6 +118,10 @@ export class SelectionStrategy implements NavigationPattern {
     this.#selection = [
       ...this.control.element.querySelectorAll('[aria-selected="true"]')
     ] as HTMLElement[];
+
+    for (const listener of this.#listeners.read) {
+      listener();
+    }
   }
 
   private handleChange() {
@@ -110,7 +132,7 @@ export class SelectionStrategy implements NavigationPattern {
 
   private handleFocus() {
     const multiple = this.control.options.multiple;
-    const selectionPresent = this.control.selection.length > 0;
+    const selectionPresent = this.#selection.length > 0;
 
     if (this.control.capabilities.singleSelection && !multiple && !selectionPresent) {
       this.selectSingle(this.control.items[0]);
@@ -121,7 +143,7 @@ export class SelectionStrategy implements NavigationPattern {
     if (event.shiftKey) {
       this.selectShift(item);
     } else if (event.metaKey) {
-      if (this.control.selection.includes(item)) {
+      if (this.#selection.includes(item)) {
         this.deselect(item);
       } else {
         this.selectAdd(item);
@@ -177,7 +199,7 @@ export class SelectionStrategy implements NavigationPattern {
   private handleKeyCombinations(event: KeyboardEvent) {
     if (event.key === ' ' && this.control.activeItem && this.control.options.multiple) {
       // handle select and active item
-      if (this.control.selection.includes(this.control.activeItem)) {
+      if (this.#selection.includes(this.control.activeItem)) {
         this.deselect(this.control.activeItem);
       } else {
         this.selectAdd(this.control.activeItem);
@@ -195,8 +217,8 @@ export class SelectionStrategy implements NavigationPattern {
   // selection logic
 
   private deselect(item: HTMLElement) {
-    if (this.control.selection.includes(item)) {
-      const selection = this.control.selection.slice();
+    if (this.#selection.includes(item)) {
+      const selection = this.#selection.slice();
 
       selection.splice(selection.indexOf(item), 1);
       this.persistSelection(selection);
@@ -210,7 +232,7 @@ export class SelectionStrategy implements NavigationPattern {
   }
 
   private selectAdd(item: HTMLElement) {
-    const selection = this.control.options.multiple ? this.control.selection.slice() : [];
+    const selection = this.control.options.multiple ? this.#selection.slice() : [];
 
     selection.push(item);
 
