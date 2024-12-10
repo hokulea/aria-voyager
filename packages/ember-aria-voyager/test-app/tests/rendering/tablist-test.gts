@@ -1,6 +1,8 @@
 import { tracked } from '@glimmer/tracking';
 import { hash } from '@ember/helper';
 import { render, rerender } from '@ember/test-helpers';
+import { settled } from '@ember/test-helpers';
+import { triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -83,6 +85,53 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
       await rerender();
 
       assert.dom('[role="tablist"]').hasAria('orientation', 'vertical');
+    });
+
+    test('selection updates', async (assert) => {
+      const handleUpdate = sinon.spy();
+      const items = ['1', '2', '3', '4'];
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked selection?: string = undefined;
+      })();
+
+      const isSelected = (item: string, selection?: string) => {
+        return item === selection;
+      };
+
+      await render(
+        <template>
+          <div data-test-tab>
+            <div
+              role="tablist"
+              {{ariaTablist items=items selection=context.selection select=handleUpdate}}
+            >
+              {{#each items as |t i|}}
+                <p
+                  role="tab"
+                  id="tab-{{i}}"
+                  aria-controls="panel-{{i}}"
+                  aria-selected={{if (isSelected t context.selection) "true"}}
+                >{{t}}</p>
+              {{/each}}
+            </div>
+            {{#each items as |t i|}}
+              <div role="tabpanel" id="panel-{{i}}" aria-labelledby="tab-{{i}}">Content {{i}}</div>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      context.selection = '3';
+
+      await settled();
+
+      (document.querySelector('[role="tab"]:nth-child(2)') as HTMLElement).focus();
+
+      await triggerKeyEvent('[role="tablist"]', 'keydown', 'ArrowRight');
+
+      assert.ok(handleUpdate.calledWith('4'));
     });
   });
 

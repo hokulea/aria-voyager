@@ -12,6 +12,7 @@ describe('Reactive Updater', () => {
   const { container, tablist, tabs } = createTabs({
     updater
   });
+
   const { firstItem, secondItem } = getTabItems(tabs);
 
   test('reads elements on appending', () => {
@@ -25,7 +26,15 @@ describe('Reactive Updater', () => {
   });
 
   test('reads selection on external update', () => {
+    const focusDecoy = document.createElement('button');
+
+    document.body.append(focusDecoy);
+    focusDecoy.focus();
+
     expect(tabs.selection[0]).toBe(firstItem);
+    expect(secondItem).toHaveAttribute('tabindex', '-1');
+
+    document.body.focus();
 
     firstItem.removeAttribute('aria-selected');
     secondItem.setAttribute('aria-selected', 'true');
@@ -33,6 +42,7 @@ describe('Reactive Updater', () => {
     updater.updateSelection();
 
     expect(tabs.selection[0]).toBe(secondItem);
+    expect(secondItem).toHaveAttribute('tabindex', '0');
   });
 
   describe('read options', () => {

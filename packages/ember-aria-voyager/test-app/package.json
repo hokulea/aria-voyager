@@ -11,9 +11,7 @@
     "test": "tests"
   },
   "scripts": {
-    "dev": "concurrently 'npm:dev:*'",
-    "dev:test-app": "ember serve -e test -p 4300",
-    "dev:package": "pnpm run --filter='@hokulea/ember-controls' start",
+    "dev": "ember serve -p 4300",
     "lint": "concurrently -g 'npm:lint:*(!fix)'",
     "lint:fix": "concurrently -g 'npm:lint:*:fix'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",

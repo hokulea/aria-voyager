@@ -20,7 +20,7 @@ export interface TablistOptions {
 
 export class Tablist extends Control {
   #selectionStrategy: SelectionStrategy;
-  protected focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+  protected focusStrategy: RovingTabindexStrategy;
   #nextNavigation = new NextNavigation(this, 'ArrowRight');
   #prevNavigation = new PreviousNavigation(this, 'ArrowLeft');
 
@@ -47,6 +47,7 @@ export class Tablist extends Control {
     });
 
     this.#selectionStrategy = new SelectionStrategy(this, options?.behavior ?? {});
+    this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
       this.#nextNavigation,
@@ -63,6 +64,12 @@ export class Tablist extends Control {
 
     this.readOptions();
     this.readItems();
+  }
+
+  dispose() {
+    super.dispose();
+
+    this.#selectionStrategy.dispose();
   }
 
   readItems() {
