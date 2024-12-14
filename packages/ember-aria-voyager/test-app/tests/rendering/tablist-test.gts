@@ -102,7 +102,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
       await render(
         <template>
-          <div data-test-tab>
+          <div>
             <div
               role="tablist"
               {{ariaTablist items=items selection=context.selection select=handleUpdate}}
@@ -127,7 +127,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
       await settled();
 
-      (document.querySelector('[role="tab"]:nth-child(2)') as HTMLElement).focus();
+      (document.querySelector('[role="tab"]:nth-child(3)') as HTMLElement).focus();
 
       await triggerKeyEvent('[role="tablist"]', 'keydown', 'ArrowRight');
 
