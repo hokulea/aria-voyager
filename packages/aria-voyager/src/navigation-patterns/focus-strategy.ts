@@ -64,25 +64,23 @@ export abstract class AbstractFocusStrategy implements NavigationPattern, FocusS
     }
 
     if (item) {
-      this.activateItem(item);
+      this.activateItem(item, event.type === 'pointerover');
     }
 
     return bag;
   }
 
   handleFocus(event: FocusEvent) {
-    // const multiSelection =
-    //   this.control.capabilities.multiSelection && this.control.options.multiple;
-    const selectionPresent = this.selection.length > 0;
+    if (this.control.element === event.target) {
+      const selectionPresent = this.selection.length > 0;
 
-    if (selectionPresent) {
-      this.activateSelection();
-    } else {
-      if (this.control.element === event.target) {
+      if (selectionPresent) {
+        this.activateSelection();
+      } else {
         this.activateItem(this.control.enabledItems[0]);
-      } else if (this.control.enabledItems.includes(event.target as Item)) {
-        this.activateItem(event.target as Item);
       }
+    } else if (this.control.enabledItems.includes(event.target as Item)) {
+      this.activateItem(event.target as Item);
     }
   }
 
@@ -90,7 +88,7 @@ export abstract class AbstractFocusStrategy implements NavigationPattern, FocusS
     this.activateItem(this.selection[0]);
   }
 
-  abstract activateItem(item: Item): void;
+  abstract activateItem(item: Item, forceFocus?: boolean): void;
 
   abstract updateItems(): void;
 }

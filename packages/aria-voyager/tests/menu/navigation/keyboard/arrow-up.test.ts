@@ -15,7 +15,7 @@ describe('Navigate with `ArrowUp`', () => {
       menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
     ).toBeTruthy();
 
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
   });
 
   test('use `ArrowUp` at first item does nothing', async () => {
@@ -72,7 +72,7 @@ describe('navigate with `ArrowUp`, skip disabled items', () => {
       menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
     ).toBeTruthy();
 
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
   });
 
   test('use `END` to jump to the last item', async () => {

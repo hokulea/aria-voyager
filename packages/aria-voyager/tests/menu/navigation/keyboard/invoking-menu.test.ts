@@ -23,6 +23,7 @@ describe('Invoking a menu item closes all submenus', () => {
       expect(codeMenu.matches(':popover-open')).toBeTruthy();
     });
 
+    // does not work under playwright
     // https://github.com/hokulea/aria-voyager/issues/264
     // await userEvent.hover(fourthItem);
     // await userEvent.hover(socialItem);

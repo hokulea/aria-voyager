@@ -14,7 +14,7 @@ describe('Open with `ArrowRight`', () => {
   test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
 
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
   });
 

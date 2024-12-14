@@ -9,12 +9,12 @@ describe('Close with `ArrowLeft`', () => {
   const menu = new Menu(codeMenu);
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
-  const { fourthItem } = getItems(menu);
+  const { firstItem, fourthItem } = getItems(menu);
 
   test('open share menu', async () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
 
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
 
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');

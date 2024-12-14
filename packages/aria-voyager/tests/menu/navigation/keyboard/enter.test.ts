@@ -7,13 +7,13 @@ import { createCodeMenu, getItems } from '../../-shared';
 describe('Open with `Enter`', () => {
   const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
-  const { fourthItem } = getItems(menu);
+  const { firstItem, fourthItem } = getItems(menu);
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
 
   test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
   });
 
   test('use `Enter` to open submenu', async () => {

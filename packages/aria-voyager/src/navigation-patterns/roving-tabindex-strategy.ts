@@ -7,20 +7,32 @@ import type { Item } from '../controls/control';
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  */
 export class RovingTabindexStrategy extends AbstractFocusStrategy {
-  activateItem(item: Item) {
+  activateItem(item: Item, forceFocus: boolean = false) {
     if (item !== this.activeItem) {
-      // turn passed item active
       item.setAttribute('tabindex', '0');
 
-      this.prevActiveItem = this.activeItem;
-
       // mark the previous one not active anymore
-      this.control.prevActiveItem?.setAttribute('tabindex', '-1');
+      if (this.activeItem) {
+        this.prevActiveItem = this.activeItem;
+        this.prevActiveItem.setAttribute('tabindex', '-1');
+      }
     }
 
-    item.focus();
+    // `forceFocus` may be coming in, when using `pointerover` event in a menu.
+    // In that situation the focus can be on a parent menu and as such, the
+    // `hasFocus` check will fail.
+    // this is a very critical and unsafe implementation, but the only one known
+    // so far.
+    // To improve the situation:
+    // 1. become aware of other situations triggering the same behavior
+    // 2. use DOM relationships to do "parent" checks (`popovertarget` or
+    //    `aria-controls` attributes)
+    if (this.hasFocus() || forceFocus) {
+      item.focus();
+    }
 
     if (item !== this.activeItem) {
+      // turn passed item active
       this.activeItem = item;
       this.control.emitter?.itemActivated(item);
     }
