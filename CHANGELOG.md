@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2024-12-14)
+
+aria-voyager 0.1.1 (patch)
+ember-aria-voyager 0.2.2 (patch)
+
+#### :bug: Bug Fix
+* `aria-voyager`, `ember-aria-voyager-test-app`
+  * [#277](https://github.com/hokulea/aria-voyager/pull/277) Fix reactivity with selection ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-08)
 
 ember-aria-voyager 0.2.1 (patch)
