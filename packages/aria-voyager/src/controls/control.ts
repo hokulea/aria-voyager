@@ -2,7 +2,7 @@ import { DomObserverUpdateStrategy } from '../update-strategies/dom-observer-upd
 import { isItemEnabled } from './-utils';
 
 import type { EmitStrategy } from '../emit-strategies/emit-strategy';
-import type { FocusStrategy } from '../navigation-patterns/focus-strategy';
+import type { AbstractFocusStrategy } from '../navigation-patterns/focus-strategy';
 import type {
   NavigationParameterBag,
   NavigationPattern
@@ -47,7 +47,7 @@ export type TreeItem = {
 };
 
 export abstract class Control {
-  protected abstract focusStrategy: FocusStrategy;
+  protected abstract focusStrategy: AbstractFocusStrategy;
 
   items: Item[] = [];
 
@@ -59,7 +59,6 @@ export abstract class Control {
     return this.items.filter(isItemEnabled);
   }
 
-  abstract get selection(): Item[];
   abstract get activeItem(): Item | undefined;
   abstract get prevActiveItem(): Item | undefined;
 
@@ -131,6 +130,7 @@ export abstract class Control {
   dispose() {
     this.updater.dispose?.();
     this.emitter?.dispose?.();
+    this.focusStrategy.dispose();
 
     // unregister event listeners
     const eventNames = new Set(this.navigationPatterns.map((p) => p.eventListeners ?? []).flat());

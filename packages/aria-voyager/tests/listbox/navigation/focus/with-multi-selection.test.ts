@@ -33,9 +33,8 @@ describe('Focus activates first item of selection (Multi Select)', () => {
   test('refocus keeps selection', async () => {
     await userEvent.tab();
     await userEvent.tab({ shift: true });
-    // list.dispatchEvent(new FocusEvent('focusin'));
 
-    expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
+    expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
     expect(firstItem.getAttribute('aria-current')).toBeNull();
     expect(secondItem.getAttribute('aria-current')).toBe('true');
     expect(thirdItem.getAttribute('aria-current')).toBeNull();

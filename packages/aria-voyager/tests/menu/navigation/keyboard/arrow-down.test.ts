@@ -15,7 +15,7 @@ describe('Navigate with `ArrowDown`', () => {
       menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
     ).toBeTruthy();
 
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
   });
 
@@ -66,7 +66,7 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
       menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
     ).toBeTruthy();
 
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
   });
 

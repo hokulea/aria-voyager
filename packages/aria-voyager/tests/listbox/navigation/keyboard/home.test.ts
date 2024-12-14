@@ -51,8 +51,9 @@ describe('navigates with `Home`, skip disabled item', () => {
 
   test('focus list and activate last item', async () => {
     list.focus();
+
     expect(document.activeElement).toBe(list);
-    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+    expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
 
     await userEvent.keyboard('{End}');
     expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);

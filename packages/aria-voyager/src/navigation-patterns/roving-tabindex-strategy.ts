@@ -1,58 +1,38 @@
 import { isItemEnabled } from '../controls/-utils';
-import { type Control, type Item } from '../controls/control';
+import { AbstractFocusStrategy } from './focus-strategy';
 
-import type { FocusStrategy } from './focus-strategy';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Item } from '../controls/control';
 
 /**
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  */
-export class RovingTabindexStrategy implements NavigationPattern, FocusStrategy {
-  eventListeners: EventNames[] = ['focus', 'focusin'];
-
-  activeItem?: Item;
-  prevActiveItem?: Item;
-
-  constructor(private control: Control) {}
-
-  matches() {
-    return this.control.enabledItems.length > 0;
-  }
-
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
-    const { event, item } = bag;
-
-    if (event.type === 'focusin' && !this.activeItem) {
-      if (this.control.element === event.target) {
-        this.activateItem(this.control.enabledItems[0]);
-      } else if (this.control.enabledItems.includes(event.target as Item)) {
-        this.activateItem(event.target as Item);
-      }
-
-      return bag;
-    }
-
-    if (item) {
-      this.activateItem(item);
-    }
-
-    return bag;
-  }
-
-  activateItem(item: Item) {
+export class RovingTabindexStrategy extends AbstractFocusStrategy {
+  activateItem(item: Item, forceFocus: boolean = false) {
     if (item !== this.activeItem) {
-      // turn passed item active
       item.setAttribute('tabindex', '0');
 
-      this.prevActiveItem = this.activeItem;
-
       // mark the previous one not active anymore
-      this.control.prevActiveItem?.setAttribute('tabindex', '-1');
+      if (this.activeItem) {
+        this.prevActiveItem = this.activeItem;
+        this.prevActiveItem.setAttribute('tabindex', '-1');
+      }
     }
 
-    item.focus();
+    // `forceFocus` may be coming in, when using `pointerover` event in a menu.
+    // In that situation the focus can be on a parent menu and as such, the
+    // `hasFocus` check will fail.
+    // this is a very critical and unsafe implementation, but the only one known
+    // so far.
+    // To improve the situation:
+    // 1. become aware of other situations triggering the same behavior
+    // 2. use DOM relationships to do "parent" checks (`popovertarget` or
+    //    `aria-controls` attributes)
+    if (this.hasFocus() || forceFocus) {
+      item.focus();
+    }
 
     if (item !== this.activeItem) {
+      // turn passed item active
       this.activeItem = item;
       this.control.emitter?.itemActivated(item);
     }

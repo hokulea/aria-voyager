@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 
 import { Listbox, ReactiveUpdateStrategy } from '../../../src';
 import { appendItemToList } from '../../components/list';
-import { createListWithFruits } from '../-shared';
+import { createListWithFruits, getItems } from '../-shared';
 
 // simulating a framework with a reactive library
 describe('Reactive Updater', () => {
@@ -25,7 +25,7 @@ describe('Reactive Updater', () => {
   });
 
   test('reads selection on external update', () => {
-    const secondItem = list.children[1];
+    const { secondItem } = getItems(listbox);
 
     expect(listbox.selection.length).toBe(0);
 
@@ -34,6 +34,7 @@ describe('Reactive Updater', () => {
     updater.updateSelection();
 
     expect(listbox.selection.length).toBe(1);
+    expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
   });
 
   describe('read options', () => {

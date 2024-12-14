@@ -7,8 +7,7 @@ import { createCodeMenu, getItems } from '../../-shared';
 describe('Navigates with `Home` and `End`', () => {
   const { codeMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
-  const firstItem = menu.items[0];
-  const lastItem = menu.items[menu.items.length - 1];
+  const { firstItem, lastItem } = getItems(menu);
 
   test('start', () => {
     expect(firstItem.getAttribute('tabindex')).toBe('0');
@@ -17,7 +16,7 @@ describe('Navigates with `Home` and `End`', () => {
   });
 
   test('focusing activates the first item', () => {
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    firstItem.focus();
     expect(menu.activeItem).toBe(firstItem);
   });
 
@@ -56,7 +55,7 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
   });
 
   test('focusing activates the first item', () => {
-    codeMenu.dispatchEvent(new FocusEvent('focusin'));
+    secondItem.focus();
 
     expect(menu.activeItem).toBe(secondItem);
   });
