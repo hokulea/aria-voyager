@@ -89,13 +89,57 @@ module('Rendering | Modifier | {{menu}}', (hooks) => {
         </template>
       );
 
+      assert.dom('[role="menu"]').doesNotHaveAria('disabled');
       assert.dom('[role="menuitem"]:first-of-type').hasAttribute('tabindex', '0');
 
       context.disabled = true;
 
       await rerender();
 
+      assert.dom('[role="menu"]').hasAria('disabled', 'true');
       assert.dom('[role="menuitem"]:first-of-type').hasAttribute('tabindex', '-1');
+    });
+  });
+
+  module('Reactivity', () => {
+    test('@items to be reactive with @disabled', async (assert) => {
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked disabled = false;
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked items = ['jackfruit'];
+      })();
+
+      await render(
+        <template>
+          <div role="menu" {{ariaMenu items=context.items disabled=context.disabled}}>
+            {{#each context.items as |i|}}
+              <button type="button" role="menuitem">{{i}}</button>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="menu"]').doesNotHaveAria('disabled');
+      assert.dom('[role="menuitem"]').exists({ count: 1 });
+      assert.dom('[role="menuitem"]').hasAttribute('tabindex', '0');
+
+      context.disabled = true;
+
+      await rerender();
+
+      assert.dom('[role="menu"]').hasAria('disabled', 'true');
+      assert.dom('[role="menuitem"]').hasAttribute('tabindex', '-1');
+
+      context.items = ['apple', 'banana', 'pineapple'];
+
+      await rerender();
+
+      assert.dom('[role="menuitem"]').exists({ count: 3 });
+      assert.dom('[role="menuitem"]').hasAttribute('tabindex', '-1');
     });
   });
 

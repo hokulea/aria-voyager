@@ -78,10 +78,9 @@ export class Tablist extends Control {
     this.#selectionStrategy.select(
       this.selection.filter((selection) => this.items.includes(selection))
     );
+    this.ensureSelection();
 
     this.focusStrategy.updateItems();
-
-    this.ensureSelection();
   }
 
   readSelection(): void {

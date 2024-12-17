@@ -58,12 +58,14 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
         <template><Tabs @amount={{5}} {{ariaTablist disabled=context.disabled}} /></template>
       );
 
+      assert.dom('[role="tablist"]').doesNotHaveAria('disabled');
       assert.dom('[role="tab"]').hasAttribute('tabindex', '0');
 
       context.disabled = true;
 
       await rerender();
 
+      assert.dom('[role="tablist"]').hasAria('disabled', 'true');
       assert.dom('[role="tab"]').hasAttribute('tabindex', '-1');
     });
 
@@ -132,6 +134,51 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
       await triggerKeyEvent('[role="tablist"]', 'keydown', 'ArrowRight');
 
       assert.ok(handleUpdate.calledWith('4'));
+    });
+
+    test('@items to be reactive with @disabled', async (assert) => {
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked disabled = false;
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // @ts-ignore
+        @tracked items = ['1'];
+      })();
+
+      await render(
+        <template>
+          <div>
+            <div role="tablist" {{ariaTablist items=context.items disabled=context.disabled}}>
+              {{#each context.items as |t i|}}
+                <p role="tab" id="tab-{{i}}" aria-controls="panel-{{i}}">{{t}}</p>
+              {{/each}}
+            </div>
+            {{#each context.items as |t i|}}
+              <div role="tabpanel" id="panel-{{i}}" aria-labelledby="tab-{{i}}">Content {{i}}</div>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="tablist"]').doesNotHaveAria('disabled');
+      assert.dom('[role="tab"]').exists({ count: 1 });
+      assert.dom('[role="tab"]').hasAttribute('tabindex', '0');
+
+      context.disabled = true;
+
+      await rerender();
+
+      assert.dom('[role="tablist"]').hasAria('disabled', 'true');
+      assert.dom('[role="tab"]').hasAttribute('tabindex', '-1');
+
+      context.items = ['2', '3', '4'];
+
+      await rerender();
+
+      assert.dom('[role="tab"]').exists({ count: 3 });
+      assert.dom('[role="tab"]').hasAttribute('tabindex', '-1');
     });
   });
 

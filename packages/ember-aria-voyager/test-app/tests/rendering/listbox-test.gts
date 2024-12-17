@@ -63,12 +63,14 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
         </template>
       );
 
+      assert.dom('[role="listbox"]').doesNotHaveAria('disabled');
       assert.dom('[role="listbox"]').hasAttribute('tabindex', '0');
 
       context.disabled = true;
 
       await rerender();
 
+      assert.dom('[role="listbox"]').hasAria('disabled', 'true');
       assert.dom('[role="listbox"]').hasAttribute('tabindex', '-1');
     });
 

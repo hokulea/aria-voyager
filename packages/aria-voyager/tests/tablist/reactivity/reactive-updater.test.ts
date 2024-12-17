@@ -2,7 +2,7 @@ import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
 import { ReactiveUpdateStrategy } from '../../../src';
-import { appendTab } from '../../components/tabs';
+import { appendTab, removeTab } from '../../components/tabs';
 import { createTabs, getTabItems } from '../-shared';
 
 // simulating a framework with a reactive library
@@ -95,6 +95,36 @@ describe('Reactive Updater', () => {
           .slice(1)
           .map((item) => item.getAttribute('tabindex') === '-1')
           .every(Boolean)
+      ).toBeTruthy();
+    });
+  });
+
+  describe('items', () => {
+    test('adding items to a disabled tablist will receive tabindex -1', () => {
+      const { lastItem, secondLastItem } = getTabItems(tabs);
+
+      removeTab(lastItem);
+      removeTab(secondLastItem);
+
+      tablist.setAttribute('aria-disabled', 'true');
+      updater.updateOptions();
+
+      expect(
+        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
+      ).toBeTruthy();
+
+      appendTab(container, 'Tab 4', 'Content 4');
+      appendTab(container, 'Tab 5', 'Content 5');
+
+      firstItem.setAttribute('aria-selected', 'false');
+      lastItem.setAttribute('aria-selected', 'true');
+
+      updater.updateSelection();
+
+      updater.updateItems();
+
+      expect(
+        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
       ).toBeTruthy();
     });
   });

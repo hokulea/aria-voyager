@@ -57,6 +57,16 @@ export function appendTab(parent: HTMLElement, label: string, contents: string |
   return elem;
 }
 
+export function removeTab(tab: HTMLElement) {
+  const panel = document.getElementById(tab.getAttribute('aria-controls') as string);
+
+  tab.parentElement?.removeChild(tab);
+
+  if (panel) {
+    panel.parentElement?.removeChild(panel);
+  }
+}
+
 export class Tabs {
   element: HTMLDivElement;
   tablist: Tablist;
