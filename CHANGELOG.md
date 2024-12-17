@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2024-12-17)
+
+aria-voyager 0.1.2 (patch)
+ember-aria-voyager 0.2.3 (patch)
+
+#### :bug: Bug Fix
+* `aria-voyager`, `ember-aria-voyager-test-app`
+  * [#286](https://github.com/hokulea/aria-voyager/pull/286) Fix bug with `aria-disabled` and `aria-selected` ([@gossi](https://github.com/gossi))
+
+#### :house: Internal
+* `aria-voyager`
+  * [#287](https://github.com/hokulea/aria-voyager/pull/287) Remove `uuid` ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-14)
 
 aria-voyager 0.1.1 (patch)
