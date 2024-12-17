@@ -1,5 +1,4 @@
-import { v4 as uuid } from 'uuid';
-
+import { uniqueId } from '../../src/utils';
 import {
   appendCheckboxItemToMenu,
   appendItemToMenu,
@@ -82,7 +81,7 @@ export function createCodeMenu() {
 }
 
 export function withTriggerButton(menu: HTMLElement) {
-  const id = uuid();
+  const id = uniqueId();
   const button = document.createElement('button');
 
   button.setAttribute('popovertarget', id);

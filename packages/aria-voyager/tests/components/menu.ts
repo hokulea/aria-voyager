@@ -1,7 +1,6 @@
-import { v4 as uuid } from 'uuid';
-
 // import styles from '@hokulea/core/navigation.module.css';
 import { Menu as MenuBehavior } from '../../src';
+import { uniqueId } from '../../src/utils';
 import { getCompositeItems } from './-composites';
 
 export function createMenuElement(parent: HTMLElement) {
@@ -50,7 +49,7 @@ export function appendRadioItemToMenu(parent: HTMLElement, item: string, checked
 }
 
 export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTMLElement) {
-  menu.id = uuid();
+  menu.id = uniqueId();
   menu.setAttribute('popover', '');
 
   const elem = appendItemToMenu(parent, item);
@@ -61,7 +60,7 @@ export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTM
 }
 
 export function withTriggerButton(parent: HTMLElement, menu: HTMLElement) {
-  menu.id = uuid();
+  menu.id = uniqueId();
   menu.setAttribute('popover', '');
 
   const trigger = document.createElement('button');

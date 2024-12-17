@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-
+import { uniqueId } from '../utils';
 import { AbstractFocusStrategy } from './focus-strategy';
 
 import type { Item } from '../controls/control';
@@ -27,7 +26,7 @@ export class ActiveDescendentStrategy extends AbstractFocusStrategy {
     // @TODO
     for (const item of this.control.items) {
       if (!item.id) {
-        item.id = uuidv4();
+        item.id = uniqueId();
       }
     }
   }
