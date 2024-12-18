@@ -8,6 +8,10 @@ import type { Item } from '../controls/control';
  */
 export class RovingTabindexStrategy extends AbstractFocusStrategy {
   activateItem(item: Item, forceFocus: boolean = false) {
+    if (this.control.options.disabled) {
+      return;
+    }
+
     if (item !== this.activeItem) {
       item.setAttribute('tabindex', '0');
 
