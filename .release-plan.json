@@ -2,24 +2,20 @@
   "solution": {
     "aria-voyager": {
       "impact": "patch",
-      "oldVersion": "0.1.1",
-      "newVersion": "0.1.2",
+      "oldVersion": "0.1.2",
+      "newVersion": "0.1.3",
       "constraints": [
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./packages/aria-voyager/package.json"
     },
     "ember-aria-voyager": {
       "impact": "patch",
-      "oldVersion": "0.2.2",
-      "newVersion": "0.2.3",
+      "oldVersion": "0.2.3",
+      "newVersion": "0.2.4",
       "constraints": [
         {
           "impact": "patch",
@@ -29,5 +25,5 @@
       "pkgJSONPath": "./packages/ember-aria-voyager/package/package.json"
     }
   },
-  "description": "## Release (2024-12-17)\n\naria-voyager 0.1.2 (patch)\nember-aria-voyager 0.2.3 (patch)\n\n#### :bug: Bug Fix\n* `aria-voyager`, `ember-aria-voyager-test-app`\n  * [#286](https://github.com/hokulea/aria-voyager/pull/286) Fix bug with `aria-disabled` and `aria-selected` ([@gossi](https://github.com/gossi))\n\n#### :house: Internal\n* `aria-voyager`\n  * [#287](https://github.com/hokulea/aria-voyager/pull/287) Remove `uuid` ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "## Release (2024-12-18)\n\naria-voyager 0.1.3 (patch)\nember-aria-voyager 0.2.4 (patch)\n\n#### :bug: Bug Fix\n* `aria-voyager`\n  * [#288](https://github.com/hokulea/aria-voyager/pull/288) Don't activate selection, when control is disabled ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }
