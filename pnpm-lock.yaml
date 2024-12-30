@@ -70,8 +70,8 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(vitest@2.1.8)
       concurrently:
-        specifier: 9.1.0
-        version: 9.1.0
+        specifier: 9.1.1
+        version: 9.1.1
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -173,8 +173,8 @@ importers:
         specifier: 17.0.3
         version: 17.0.3
       concurrently:
-        specifier: 9.1.0
-        version: 9.1.0
+        specifier: 9.1.1
+        version: 9.1.1
       ember-cli-code-coverage:
         specifier: 3.1.0
         version: 3.1.0(@embroider/compat@3.7.1(@embroider/core@3.4.20(@glint/template@1.5.0))(@glint/template@1.5.0))(@embroider/core@3.4.20(@glint/template@1.5.0))
@@ -300,8 +300,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       concurrently:
-        specifier: 9.1.0
-        version: 9.1.0
+        specifier: 9.1.1
+        version: 9.1.1
       ember-auto-import:
         specifier: 2.10.0
         version: 2.10.0(@glint/template@1.5.0)(webpack@5.97.1)
@@ -3593,8 +3593,8 @@ packages:
   concat-with-sourcemaps@1.1.0:
     resolution: {integrity: sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==}
 
-  concurrently@9.1.0:
-    resolution: {integrity: sha512-VxkzwMAn4LP7WyMnJNbHN5mKV9L2IbyDjpzemKr99sXNR3GqRNMMHdm7prV1ws9wg7ETj6WUkNOigZVsptwbgg==}
+  concurrently@9.1.1:
+    resolution: {integrity: sha512-6VX8lrBIycgZKTwBsWS+bLrmkGRkDmvtGsYylRN9b93CygN6CbK46HmnQ3rdSOR8HRjdahDrxb5MqD9cEFOg5Q==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -13397,7 +13397,7 @@ snapshots:
     dependencies:
       source-map: 0.6.1
 
-  concurrently@9.1.0:
+  concurrently@9.1.1:
     dependencies:
       chalk: 4.1.2
       lodash: 4.17.21
