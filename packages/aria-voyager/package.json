@@ -64,7 +64,7 @@
     "typescript": "5.7.2",
     "vite": "^6.0.7",
     "vitest": "^2.1.8",
-    "webdriverio": "^9.4.5"
+    "webdriverio": "^9.5.1"
   },
   "engines": {
     "node": ">= 18.*"
