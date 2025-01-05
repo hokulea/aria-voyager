@@ -62,7 +62,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/qunit": "2.19.12",
     "@types/sinon": "17.0.3",
-    "concurrently": "9.1.1",
+    "concurrently": "9.1.2",
     "ember-cli-code-coverage": "3.1.0",
     "ember-cli-htmlbars": "6.3.0",
     "eslint-plugin-ember": "12.3.3",
