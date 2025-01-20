@@ -53,9 +53,9 @@
     "@types/css-modules": "1.0.5",
     "@types/eslint": "9.6.1",
     "@types/lodash.isequal": "4.5.8",
-    "@vitest/browser": "^2.1.8",
-    "@vitest/coverage-istanbul": "^2.1.8",
-    "@vitest/ui": "^2.1.8",
+    "@vitest/browser": "^3.0.2",
+    "@vitest/coverage-istanbul": "^3.0.2",
+    "@vitest/ui": "^3.0.2",
     "concurrently": "9.1.2",
     "eslint": "8.57.1",
     "playwright": "^1.49.1",
@@ -63,7 +63,7 @@
     "tsup": "8.3.5",
     "typescript": "5.7.3",
     "vite": "^6.0.7",
-    "vitest": "^2.1.8",
+    "vitest": "^3.0.2",
     "webdriverio": "^9.5.7"
   },
   "engines": {
