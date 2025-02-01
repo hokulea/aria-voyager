@@ -161,8 +161,8 @@ importers:
         specifier: 16.0.0
         version: 16.0.0(rollup@4.31.0)
       '@tsconfig/ember':
-        specifier: 3.0.8
-        version: 3.0.8
+        specifier: 3.0.9
+        version: 3.0.9
       '@types/lodash.isequal':
         specifier: 4.5.8
         version: 4.5.8
@@ -279,8 +279,8 @@ importers:
         specifier: 0.8.1
         version: 0.8.1(ember-template-lint@6.0.0)(prettier@3.4.2)
       '@tsconfig/ember':
-        specifier: 3.0.8
-        version: 3.0.8
+        specifier: 3.0.9
+        version: 3.0.9
       '@types/qunit':
         specifier: 2.19.12
         version: 2.19.12
@@ -2099,8 +2099,8 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
 
-  '@tsconfig/ember@3.0.8':
-    resolution: {integrity: sha512-OVnIsZIt/8q0VEtcdz3rRryNrm6gdJTxXlxefkGIrkZnME0wqslmwHlUEZ7mvh377df9FqBhNKrYNarhCW8zJA==}
+  '@tsconfig/ember@3.0.9':
+    resolution: {integrity: sha512-0B44GyEafxJLAZSixH9VBnm9kDFCpaLXu86httaJSDEm1nfl3WWI/XfY4diPsOyOg+pc9N1/YfqH7uKM2dF0lA==}
 
   '@types/aria-query@5.0.4':
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
@@ -11336,7 +11336,7 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@tsconfig/ember@3.0.8': {}
+  '@tsconfig/ember@3.0.9': {}
 
   '@types/aria-query@5.0.4': {}
 
