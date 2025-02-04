@@ -24,7 +24,7 @@
     "@gossi/config-prettier": "0.9.1",
     "eslint": "8.57.1",
     "release-plan": "0.11.0",
-    "turbo": "^2.3.3"
+    "turbo": "^2.4.0"
   },
   "packageManager": "pnpm@9.15.0",
   "engines": {
