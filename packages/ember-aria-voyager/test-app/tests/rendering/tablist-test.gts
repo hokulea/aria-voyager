@@ -1,7 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { hash } from '@ember/helper';
 import { render, rerender } from '@ember/test-helpers';
-import { settled } from '@ember/test-helpers';
 import { triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -125,9 +124,18 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
         </template>
       );
 
+      assert.dom('[role="tab"]:nth-child(1)').hasAttribute('tabindex', '0');
+      assert.dom('[role="tab"]:nth-child(1)').hasAria('selected', 'true');
+
       context.selection = '3';
 
-      await settled();
+      await rerender();
+
+      assert.dom('[role="tab"]:nth-child(1)').hasAttribute('tabindex', '-1');
+      assert.dom('[role="tab"]:nth-child(1)').doesNotHaveAria('selected');
+
+      assert.dom('[role="tab"]:nth-child(3)').hasAttribute('tabindex', '0');
+      assert.dom('[role="tab"]:nth-child(3)').hasAria('selected', 'true');
 
       (document.querySelector('[role="tab"]:nth-child(3)') as HTMLElement).focus();
 
