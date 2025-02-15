@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2025-02-15)
+
+
+
+#### :house: Internal
+* `ember-aria-voyager-test-app`
+  * [#357](https://github.com/hokulea/aria-voyager/pull/357) Improve tests for tabs ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-18)
 
 aria-voyager 0.1.3 (patch)
