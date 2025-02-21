@@ -69,7 +69,7 @@
     "ember-source": "6.2.0",
     "ember-template-lint": "6.0.0",
     "eslint": "8.57.1",
-    "postcss": "8.5.1",
+    "postcss": "8.5.3",
     "prettier": "3.4.2",
     "qunit-dom": "3.4.0",
     "rollup": "4.34.6",
