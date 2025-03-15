@@ -131,8 +131,8 @@ importers:
         specifier: 7.26.0
         version: 7.26.0(@babel/core@7.26.9)
       '@babel/runtime':
-        specifier: 7.26.9
-        version: 7.26.9
+        specifier: 7.26.10
+        version: 7.26.10
       '@ember/test-helpers':
         specifier: 5.1.0
         version: 5.1.0(@babel/core@7.26.9)(@glint/template@1.5.2)(ember-source@6.2.0(@glimmer/component@2.0.0)(@glint/template@1.5.2)(rsvp@4.8.5)(webpack@5.97.1))
@@ -1028,8 +1028,8 @@ packages:
   '@babel/runtime@7.12.18':
     resolution: {integrity: sha512-BogPQ7ciE6SYAUPtlm9tWbgI9+2AgqSam6QivMgXgAT+fKbgppaj4ZX15MHeLC1PVF5sNk70huBu20XxWOs8Cg==}
 
-  '@babel/runtime@7.26.9':
-    resolution: {integrity: sha512-aA63XwOkcl4xxQa3HjPMqOP6LiK0ZDv3mUPYEFXkpHbaFjtGggE1A61FjFzJnB+p7/oy2gA8E+rcBNl/zC1tMg==}
+  '@babel/runtime@7.26.10':
+    resolution: {integrity: sha512-2WJMeRQPHKSPemqk/awGrAiuFfzBmOIPXKizAsVhWH9YJqLZ0H+HS4c8loHGgW6utJ3E/ejXQUsiGaQy2NZ9Fw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.26.9':
@@ -10258,7 +10258,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.13.11
 
-  '@babel/runtime@7.26.9':
+  '@babel/runtime@7.26.10':
     dependencies:
       regenerator-runtime: 0.14.1
 
@@ -10418,7 +10418,7 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.25.9(@babel/core@7.26.9)
       '@babel/plugin-transform-runtime': 7.25.4(@babel/core@7.26.9)
       '@babel/preset-env': 7.25.4(@babel/core@7.26.9)(supports-color@8.1.1)
-      '@babel/runtime': 7.26.9
+      '@babel/runtime': 7.26.10
       '@babel/traverse': 7.26.9(supports-color@8.1.1)
       '@embroider/core': 3.5.2(@glint/template@1.5.2)
       '@embroider/macros': 1.16.11(@glint/template@1.5.2)
@@ -11535,7 +11535,7 @@ snapshots:
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/runtime': 7.26.9
+      '@babel/runtime': 7.26.10
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       chalk: 4.1.2
@@ -16433,7 +16433,7 @@ snapshots:
 
   is-language-code@3.1.0:
     dependencies:
-      '@babel/runtime': 7.26.9
+      '@babel/runtime': 7.26.10
 
   is-map@2.0.3: {}
 
@@ -18301,7 +18301,7 @@ snapshots:
 
   regenerator-transform@0.15.2:
     dependencies:
-      '@babel/runtime': 7.26.9
+      '@babel/runtime': 7.26.10
 
   regex-not@1.0.2:
     dependencies:
