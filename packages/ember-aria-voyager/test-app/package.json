@@ -25,7 +25,7 @@
     "ember-aria-voyager": "workspace:*"
   },
   "devDependencies": {
-    "@babel/core": "7.26.9",
+    "@babel/core": "7.26.10",
     "@ember/optional-features": "2.2.0",
     "@ember/test-helpers": "5.1.0",
     "@embroider/broccoli-side-watch": "1.0.1",
