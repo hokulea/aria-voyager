@@ -12,7 +12,6 @@ export default defineConfig({
       screenshotFailures: false,
       provider: 'preview',
       instances: [{ browser: 'firefox' }, { browser: 'chromium' }]
-    },
-    open: false
+    }
   }
 });
