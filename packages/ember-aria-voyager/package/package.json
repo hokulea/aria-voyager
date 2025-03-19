@@ -57,7 +57,7 @@
     "@gossi/config-targets": "0.9.1",
     "@gossi/config-template-lint": "0.8.1",
     "@rollup/plugin-babel": "6.0.4",
-    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-node-resolve": "16.0.1",
     "@tsconfig/ember": "3.0.9",
     "@types/lodash.isequal": "4.5.8",
     "@types/qunit": "2.19.12",
