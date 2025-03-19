@@ -39,7 +39,6 @@
   "include": [
     "src/**/*",
     "tests",
-    "vite.config.ts",
-    "vitxest.config.ts"
+    "vite.config.ts"
   ]
 }
