@@ -4,7 +4,7 @@ import { render } from 'vitest-browser-svelte/pure';
 import List from '../components/List.svelte';
 import { testListboxForPointerMultiSelection } from './-list';
 
-describe.only('Selection (Multi): Pointer', () => {
+describe('Selection (Multi): Pointer', () => {
   const screen = render(List, {
     items: ['Banana', 'Apple', 'Pear'],
     multi: true
