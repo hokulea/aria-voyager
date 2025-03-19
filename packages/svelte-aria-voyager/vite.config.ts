@@ -9,10 +9,17 @@ export default defineConfig({
     // if the types are not picked up, add `vitest-browser-svelte` to
     // "compilerOptions.types" in your tsconfig or
     // import `vitest-browser-svelte` manually so TypeScript can pick it up
-    setupFiles: ['vitest-browser-svelte'],
+    setupFiles: ['./tests/test-setup.ts'],
+    // browser: {
+    //   name: 'chromium',
+    //   enabled: true
+    // },
     browser: {
-      name: 'chromium',
-      enabled: true
+      enabled: true,
+      screenshotFailures: false,
+      // name: 'firefox',
+      provider: 'preview',
+      instances: [{ browser: 'chromium' }]
     },
     open: false
   }
