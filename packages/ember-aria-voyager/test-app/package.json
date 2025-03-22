@@ -81,7 +81,7 @@
     "qunit-dom": "3.4.0",
     "sinon": "19.0.4",
     "typescript": "5.8.2",
-    "webpack": "5.97.1"
+    "webpack": "5.98.0"
   },
   "ember": {
     "edition": "octane"
