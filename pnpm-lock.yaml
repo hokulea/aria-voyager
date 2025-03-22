@@ -409,7 +409,7 @@ importers:
         specifier: 0.9.1
         version: 0.9.1(prettier@3.4.2)
       '@hokulea/core':
-        specifier: ^0.3.1
+        specifier: ^0.3.2
         version: 0.3.2
       '@hokulea/theme-moana':
         specifier: ^0.0.3
@@ -14767,7 +14767,7 @@ snapshots:
   ember-template-lint@6.0.0:
     dependencies:
       '@lint-todo/utils': 13.1.1
-      aria-query: 5.3.0
+      aria-query: 5.3.2
       chalk: 5.4.1
       ci-info: 4.0.0
       date-fns: 3.6.0
@@ -20435,7 +20435,7 @@ snapshots:
       '@wdio/types': 9.10.1
       '@wdio/utils': 9.11.0
       archiver: 7.0.1
-      aria-query: 5.3.0
+      aria-query: 5.3.2
       cheerio: 1.0.0
       css-shorthand-properties: 1.1.1
       css-value: 0.0.1
