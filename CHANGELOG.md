@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2025-03-22)
+
+* aria-voyager 0.2.0 (minor)
+* ember-aria-voyager 0.2.5 (patch)
+* svelte-aria-voyager 0.1.0 (minor)
+
+#### :rocket: Enhancement
+* `aria-voyager`, `svelte-aria-voyager`
+  * [#376](https://github.com/hokulea/aria-voyager/pull/376) hi svelte 👋 with `ariaListbox` ([@gossi](https://github.com/gossi))
+
+#### :house: Internal
+* [#357](https://github.com/hokulea/aria-voyager/pull/357) Improve tests for tabs ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-18)
 
 aria-voyager 0.1.3 (patch)
