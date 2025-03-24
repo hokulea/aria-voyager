@@ -61,7 +61,7 @@
     "@tsconfig/ember": "3.0.9",
     "@types/lodash.isequal": "4.5.8",
     "@types/qunit": "2.19.12",
-    "@types/sinon": "17.0.3",
+    "@types/sinon": "17.0.4",
     "concurrently": "9.1.2",
     "ember-cli-code-coverage": "3.1.0",
     "ember-cli-htmlbars": "6.3.0",
