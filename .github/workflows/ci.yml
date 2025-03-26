@@ -64,4 +64,4 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium firefox
       - name: Test
-        run: pnpm run -r --parallel --aggregate-output test
+        run: pnpm run -r --aggregate-output test
