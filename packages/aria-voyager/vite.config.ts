@@ -2,6 +2,9 @@ import { resolve } from 'node:path';
 
 import { defineConfig } from 'vitest/config';
 
+// https://vite.dev/config/
+// https://vitest.dev/config/
+// https://vitest.dev/guide/browser/config.html
 export default defineConfig({
   build: {
     lib: {
@@ -24,7 +27,8 @@ export default defineConfig({
       screenshotFailures: false,
       provider: 'preview',
       instances: [
-        { browser: 'firefox' },
+        // https://github.com/hokulea/aria-voyager/issues/396
+        // { browser: 'firefox' },
         // chromium is flaky with playwright
         // { browser: 'chromiun' },
         { browser: 'webkit' }
