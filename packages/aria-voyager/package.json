@@ -58,7 +58,7 @@
     "@vitest/ui": "^3.0.9",
     "concurrently": "9.1.2",
     "eslint": "8.57.1",
-    "playwright": "^1.50.1",
+    "playwright": "^1.51.1",
     "prettier": "3.4.2",
     "tsup": "8.4.0",
     "typescript": "5.8.2",
