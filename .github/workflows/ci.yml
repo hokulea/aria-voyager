@@ -57,6 +57,16 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Test
+        run: pnpm run -r --parallel --aggregate-output test
+
+  vitest:
+    name: vitest
+    runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.51.1-noble
       options: --user 1001
@@ -67,4 +77,4 @@ jobs:
       # - name: Install Playwright Browsers
       #   run: pnpm exec playwright install --with-deps chromium firefox webkit
       - name: Test
-        run: pnpm run -r --parallel --aggregate-output test
+        run: pnpm run -r --parallel --aggregate-output vitest
