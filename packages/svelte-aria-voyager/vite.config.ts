@@ -11,8 +11,8 @@ export default defineConfig({
       enabled: true,
       screenshotFailures: false,
       provider: 'preview',
-      name: 'firefox'
-      // instances: [{ browser: 'firefox' }, { browser: 'chromium' }]
+      // name: 'firefox'
+      instances: [{ browser: 'firefox' }, { browser: 'chromium' }, { browser: 'webkit' }]
     }
   }
 });

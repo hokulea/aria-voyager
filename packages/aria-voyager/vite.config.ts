@@ -1,3 +1,4 @@
+/// <reference types="@vitest/browser/providers/playwright" />
 import { resolve } from 'node:path';
 
 import { defineConfig } from 'vitest/config';
@@ -23,8 +24,13 @@ export default defineConfig({
       enabled: true,
       screenshotFailures: false,
       provider: 'preview',
-      name: 'firefox'
-      // instances: [{ browser: 'firefox' }, { browser: 'chromium' }]
+      // name: 'firefox'
+      instances: [
+        { browser: 'firefox' },
+        // chromium is flaky with playwright
+        // { browser: 'chromiun' },
+        { browser: 'webkit' }
+      ]
     }
   }
 });
