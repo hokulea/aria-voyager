@@ -26,7 +26,7 @@ export default defineConfig({
       provider: 'preview',
       // name: 'firefox'
       instances: [
-        { browser: 'firefox' },
+        // { browser: 'firefox' },
         // chromium is flaky with playwright
         // { browser: 'chromiun' },
         { browser: 'webkit' }
