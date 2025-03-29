@@ -416,7 +416,7 @@ importers:
         version: 0.0.3
       '@sveltejs/vite-plugin-svelte':
         specifier: ^5.0.3
-        version: 5.0.3(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
+        version: 5.0.3(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
       '@testing-library/dom':
         specifier: 10.4.0
         version: 10.4.0
@@ -454,8 +454,8 @@ importers:
         specifier: 3.4.2
         version: 3.4.2
       svelte:
-        specifier: ^5.25.2
-        version: 5.25.2
+        specifier: ^5.25.3
+        version: 5.25.3
       typescript:
         specifier: 5.8.2
         version: 5.8.2
@@ -467,7 +467,7 @@ importers:
         version: 3.0.9(@types/node@22.5.0)(@vitest/browser@3.0.9)(@vitest/ui@3.0.9)(jsdom@25.0.1)(msw@2.7.3(@types/node@22.5.0)(typescript@5.8.2))(terser@5.31.6)
       vitest-browser-svelte:
         specifier: ^0.1.0
-        version: 0.1.0(@vitest/browser@3.0.9)(svelte@5.25.2)(vitest@3.0.9)
+        version: 0.1.0(@vitest/browser@3.0.9)(svelte@5.25.3)(vitest@3.0.9)
 
 packages:
 
@@ -8465,8 +8465,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svelte@5.25.2:
-    resolution: {integrity: sha512-IxmBz4x15+bNbowhygUlwoVgqMLfEIDtyjUFDfOwb1f+7Fe5qeLfwGJHMql7QUSJBqNtXcOCPsZDDmuieZcpfA==}
+  svelte@5.25.3:
+    resolution: {integrity: sha512-J9rcZ/xVJonAoESqVGHHZhrNdVbrCfkdB41BP6eiwHMoFShD9it3yZXApVYMHdGfCshBsZCKsajwJeBbS/M1zg==}
     engines: {node: '>=18'}
 
   svg-tags@1.0.0:
@@ -11399,23 +11399,23 @@ snapshots:
     dependencies:
       acorn: 8.14.0
 
-  '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6)))(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))':
+  '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6)))(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
+      '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
       debug: 4.4.0(supports-color@8.1.1)
-      svelte: 5.25.2
+      svelte: 5.25.3
       vite: 6.2.3(@types/node@22.5.0)(terser@5.31.6)
     transitivePeerDependencies:
       - supports-color
 
-  '@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))':
+  '@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6)))(svelte@5.25.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
+      '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6)))(svelte@5.25.3)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
       debug: 4.4.0(supports-color@8.1.1)
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.17
-      svelte: 5.25.2
+      svelte: 5.25.3
       vite: 6.2.3(@types/node@22.5.0)(terser@5.31.6)
       vitefu: 1.0.6(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))
     transitivePeerDependencies:
@@ -19320,7 +19320,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte@5.25.2:
+  svelte@5.25.3:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -20015,10 +20015,10 @@ snapshots:
     optionalDependencies:
       vite: 6.2.3(@types/node@22.5.0)(terser@5.31.6)
 
-  vitest-browser-svelte@0.1.0(@vitest/browser@3.0.9)(svelte@5.25.2)(vitest@3.0.9):
+  vitest-browser-svelte@0.1.0(@vitest/browser@3.0.9)(svelte@5.25.3)(vitest@3.0.9):
     dependencies:
       '@vitest/browser': 3.0.9(@types/node@22.5.0)(playwright@1.51.1)(typescript@5.8.2)(vite@6.2.3(@types/node@22.5.0)(terser@5.31.6))(vitest@3.0.9)(webdriverio@9.12.2)
-      svelte: 5.25.2
+      svelte: 5.25.3
       vitest: 3.0.9(@types/node@22.5.0)(@vitest/browser@3.0.9)(@vitest/ui@3.0.9)(jsdom@25.0.1)(msw@2.7.3(@types/node@22.5.0)(typescript@5.8.2))(terser@5.31.6)
 
   vitest@3.0.9(@types/node@22.5.0)(@vitest/browser@3.0.9)(@vitest/ui@3.0.9)(jsdom@25.0.1)(msw@2.7.3(@types/node@22.5.0)(typescript@5.8.2))(terser@5.31.6):
