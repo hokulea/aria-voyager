@@ -29,8 +29,7 @@ export default defineConfig({
       instances: [
         // https://github.com/hokulea/aria-voyager/issues/396
         // { browser: 'firefox' },
-        // chromium is flaky with playwright
-        // { browser: 'chromiun' },
+        { browser: 'chromiun' },
         { browser: 'webkit' }
       ]
     }
