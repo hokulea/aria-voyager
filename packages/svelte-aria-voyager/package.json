@@ -28,7 +28,7 @@
     "lint:types": "tsc --noEmit",
     "build": "vite build",
     "preview": "vite preview",
-    "vitest": "vitest run --browser.headless --browser.provider=playwright",
+    "test": "vitest run --browser.headless --browser.provider=playwright",
     "test:ui": "vitest"
   },
   "dependencies": {
