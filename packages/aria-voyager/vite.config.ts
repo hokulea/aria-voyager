@@ -29,7 +29,7 @@ export default defineConfig({
       instances: [
         // https://github.com/hokulea/aria-voyager/issues/396
         // { browser: 'firefox' },
-        { browser: 'chromiun' },
+        { browser: 'chromium' },
         { browser: 'webkit' }
       ]
     }
