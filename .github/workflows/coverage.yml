@@ -17,8 +17,7 @@ jobs:
         env:
           COVERAGE: true
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
-        working-directory: packages/aria-voyager
+        uses: ./.github/actions/playwright-browser-install
       - name: coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:
