@@ -19,3 +19,8 @@ runs:
       run: pnpm exec playwright install --with-deps chromium firefox webkit
       shell: bash
       if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+    - name: Install Browser Deps
+      run: pnpm exec playwright install-deps chromium firefox webkit
+      shell: bash
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
