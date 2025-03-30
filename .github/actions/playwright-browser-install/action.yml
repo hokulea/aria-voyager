@@ -1,0 +1,17 @@
+name: 'Playwright Browser Install'
+runs:
+  using: 'composite'
+  steps:
+    - name: Get installed Playwright version
+      id: playwright-version
+      run: echo "PLAYWRIGHT_VERSION=$(jq .devDependencies.playwright package.json | sed 's/["\^]//g')" >> $GITHUB_ENV
+    - name: Cache playwright binaries
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+    - name: Install Playwright Browsers
+      run: pnpm exec playwright install --with-deps chromium firefox webkit
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
