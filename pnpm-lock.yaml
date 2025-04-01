@@ -91,7 +91,7 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
       vite:
-        specifier: ^6.2.3
+        specifier: ^6.2.4
         version: 6.2.4(@types/node@22.5.0)(terser@5.31.6)
       vitest:
         specifier: ^3.0.9
@@ -460,7 +460,7 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
       vite:
-        specifier: ^6.2.3
+        specifier: ^6.2.4
         version: 6.2.4(@types/node@22.5.0)(terser@5.31.6)
       vitest:
         specifier: ^3.0.9
