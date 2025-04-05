@@ -80,7 +80,7 @@
     "qunit": "2.23.1",
     "qunit-dom": "3.4.0",
     "sinon": "19.0.5",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "webpack": "5.98.0"
   },
   "ember": {
