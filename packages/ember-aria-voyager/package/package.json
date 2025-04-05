@@ -49,7 +49,7 @@
     "@babel/plugin-transform-typescript": "7.27.0",
     "@babel/preset-typescript": "7.27.0",
     "@babel/runtime": "7.27.0",
-    "@ember/test-helpers": "5.2.0",
+    "@ember/test-helpers": "5.2.1",
     "@embroider/addon-dev": "7.1.3",
     "@glint/template": "1.5.2",
     "@gossi/config-eslint": "0.13.0",
