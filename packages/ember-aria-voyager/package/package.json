@@ -74,7 +74,7 @@
     "qunit-dom": "3.4.0",
     "rollup": "4.38.0",
     "rollup-plugin-postcss": "4.0.2",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "webpack": "5.98.0"
   },
   "ember": {
