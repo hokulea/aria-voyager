@@ -79,7 +79,7 @@
     "prettier": "3.4.2",
     "qunit": "2.23.1",
     "qunit-dom": "3.4.0",
-    "sinon": "19.0.5",
+    "sinon": "20.0.0",
     "typescript": "5.8.3",
     "webpack": "5.98.0"
   },
