@@ -1,5 +1,28 @@
 # Changelog
 
+## Release (2025-04-11)
+
+* aria-voyager 0.2.0 (minor)
+* ember-aria-voyager 0.2.5 (patch)
+* svelte-aria-voyager 0.1.0 (minor)
+
+#### :rocket: Enhancement
+* `aria-voyager`, `svelte-aria-voyager`
+  * [#376](https://github.com/hokulea/aria-voyager/pull/376) hi svelte 👋 with `ariaListbox` ([@gossi](https://github.com/gossi))
+
+#### :house: Internal
+* Other
+  * [#402](https://github.com/hokulea/aria-voyager/pull/402) Report svelte coverage ([@gossi](https://github.com/gossi))
+  * [#401](https://github.com/hokulea/aria-voyager/pull/401) Cache playwright browser install ([@gossi](https://github.com/gossi))
+  * [#357](https://github.com/hokulea/aria-voyager/pull/357) Improve tests for tabs ([@gossi](https://github.com/gossi))
+* `svelte-aria-voyager`
+  * [#397](https://github.com/hokulea/aria-voyager/pull/397) Add coverage for svelte package ([@gossi](https://github.com/gossi))
+* `aria-voyager`, `svelte-aria-voyager`
+  * [#377](https://github.com/hokulea/aria-voyager/pull/377) Update vite configs ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-18)
 
 aria-voyager 0.1.3 (patch)
