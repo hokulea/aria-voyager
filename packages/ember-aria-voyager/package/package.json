@@ -75,7 +75,7 @@
     "rollup": "4.40.0",
     "rollup-plugin-postcss": "4.0.2",
     "typescript": "5.8.3",
-    "webpack": "5.99.5"
+    "webpack": "5.99.7"
   },
   "ember": {
     "edition": "octane"
