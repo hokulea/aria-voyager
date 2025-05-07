@@ -409,7 +409,7 @@ importers:
         specifier: 0.9.1
         version: 0.9.1(prettier@3.4.2)
       '@hokulea/core':
-        specifier: ^0.3.1
+        specifier: ^0.3.2
         version: 0.3.2
       '@hokulea/theme-moana':
         specifier: ^0.0.3
