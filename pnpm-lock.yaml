@@ -40,8 +40,8 @@ importers:
         specifier: 0.9.1
         version: 0.9.1(prettier@3.4.2)
       '@hokulea/core':
-        specifier: ^0.3.2
-        version: 0.3.2
+        specifier: ^0.4.0
+        version: 0.4.0
       '@hokulea/theme-moana':
         specifier: ^0.0.3
         version: 0.0.3
@@ -409,8 +409,8 @@ importers:
         specifier: 0.9.1
         version: 0.9.1(prettier@3.4.2)
       '@hokulea/core':
-        specifier: ^0.3.1
-        version: 0.3.2
+        specifier: ^0.4.0
+        version: 0.4.0
       '@hokulea/theme-moana':
         specifier: ^0.0.3
         version: 0.0.3
@@ -1631,9 +1631,9 @@ packages:
   '@handlebars/parser@2.0.0':
     resolution: {integrity: sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA==}
 
-  '@hokulea/core@0.3.2':
-    resolution: {integrity: sha512-YgVMrDzVQEe54kCwFxzXw6eEH2S8RANvQBy41e/7X5orAFWph8eW72ZoDiIYUGTeUxzhxGbj1P+Dme0E4DOVMw==}
-    engines: {node: '>= 20.*'}
+  '@hokulea/core@0.4.0':
+    resolution: {integrity: sha512-vnFil+sS0rrgGWZJ201bmgdIv6mIYBtM6ASiHScusFzymeda+aX64I6s1h6AFMLfrT7LUbJN2+mPE+ntOCAPjg==}
+    engines: {node: ^20.11.0 || >=22}
 
   '@hokulea/theme-moana@0.0.3':
     resolution: {integrity: sha512-C7id2WKen1GnuRgFZBKAj/b2nZsIctT0n6FN33rsdDCAeJw7bTjM9dNBwGBTQ4MkbNwQn5yn581DIAOw6zTRFw==}
@@ -10955,7 +10955,7 @@ snapshots:
 
   '@handlebars/parser@2.0.0': {}
 
-  '@hokulea/core@0.3.2': {}
+  '@hokulea/core@0.4.0': {}
 
   '@hokulea/theme-moana@0.0.3': {}
 

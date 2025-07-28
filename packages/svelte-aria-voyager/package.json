@@ -38,7 +38,7 @@
   "devDependencies": {
     "@gossi/config-eslint": "0.13.0",
     "@gossi/config-prettier": "0.9.1",
-    "@hokulea/core": "^0.3.1",
+    "@hokulea/core": "^0.4.0",
     "@hokulea/theme-moana": "^0.0.3",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@testing-library/dom": "10.4.0",
