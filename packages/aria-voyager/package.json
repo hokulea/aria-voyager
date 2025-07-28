@@ -43,8 +43,8 @@
     "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
-    "@gossi/config-eslint": "0.13.0",
-    "@gossi/config-prettier": "0.9.1",
+    "@gossi/config-eslint": "0.14.0",
+    "@gossi/config-prettier": "0.10.0",
     "@hokulea/core": "^0.3.2",
     "@hokulea/theme-moana": "^0.0.3",
     "@swc/cli": "0.6.0",
@@ -59,7 +59,7 @@
     "concurrently": "9.1.2",
     "eslint": "8.57.1",
     "playwright": "^1.51.1",
-    "prettier": "3.4.2",
+    "prettier": "3.6.2",
     "tsup": "8.4.0",
     "typescript": "5.8.3",
     "vite": "^6.2.4",
