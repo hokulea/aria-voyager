@@ -1,6 +1,6 @@
-import { appendItemToList, createListElement } from '../components/list';
+import { appendItemToList, createListElement } from '#tests/components/list';
 
-import type { Listbox } from '../../src';
+import type { Listbox } from '#src';
 
 export function withMultiSelect(list: HTMLElement): HTMLElement {
   list.setAttribute('aria-multiselectable', 'true');

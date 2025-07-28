@@ -33,7 +33,18 @@
     "types": [
       "@vitest/browser/matchers",
       "@vitest/browser/providers/playwright"
-    ]
+    ],
+    "paths": {
+      "#src": [
+        "./index.ts"
+      ],
+      "#src/*": [
+        "./*"
+      ],
+      "#tests/*": [
+        "../tests/*"
+      ]
+    },
   },
   "include": [
     "src/**/*",

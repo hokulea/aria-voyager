@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import { Menu } from '../../../src';
-import { createCodeMenu, getItems } from '../-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
 describe('When Focus', () => {
   const { codeMenu } = createCodeMenu();

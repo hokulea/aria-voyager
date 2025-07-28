@@ -1,8 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { Listbox } from '#src';
+
 import styles from '@hokulea/core/controls.module.css';
 
-import { Listbox } from '../../src';
 import { getCompositeItems } from './-composites';
 
 export function createListElement(parent: HTMLElement) {
