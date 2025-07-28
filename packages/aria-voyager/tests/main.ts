@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unassigned-import */
 import './main.css';
 
 import '@hokulea/core/index.css';
@@ -6,7 +5,7 @@ import '@hokulea/theme-moana/dist/moana.css';
 
 import { Tabs } from './components/tabs';
 
-const app = document.getElementById('app') as HTMLElement;
+const app = document.querySelector('#app') as HTMLElement;
 
 // import { List } from './components/list';
 

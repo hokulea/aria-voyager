@@ -9,7 +9,9 @@ describe('ItemEmitter', () => {
   const { secondItem, thirdItem } = getTabItems(tabs);
 
   const listeners = {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     select() {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     activateItem() {}
   };
 

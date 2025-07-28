@@ -44,13 +44,13 @@ export class SelectionStrategy implements NavigationPattern {
   ) {
     this.behavior = {
       ...DEFAULT_BEHAVIOR,
-      ...(behavior ?? {})
+      ...behavior
     };
     this.readSelection();
   }
 
   dispose() {
-    Object.values(this.#listeners).forEach((listeners) => listeners.clear());
+    for (const listeners of Object.values(this.#listeners)) listeners.clear();
   }
 
   addListener(event: 'read', handler: EventHandler) {
@@ -105,6 +105,7 @@ export class SelectionStrategy implements NavigationPattern {
   }
 
   select(selection: Item[]) {
+    // eslint-disable-next-line unicorn/no-array-callback-reference
     const items = selection.every(Number)
       ? selection
           .map((sel) => this.control.items.find((item) => item === sel))
@@ -218,7 +219,7 @@ export class SelectionStrategy implements NavigationPattern {
 
   private deselect(item: HTMLElement) {
     if (this.#selection.includes(item)) {
-      const selection = this.#selection.slice();
+      const selection = [...this.#selection];
 
       selection.splice(selection.indexOf(item), 1);
       this.persistSelection(selection);
@@ -232,7 +233,7 @@ export class SelectionStrategy implements NavigationPattern {
   }
 
   private selectAdd(item: HTMLElement) {
-    const selection = this.control.options.multiple ? this.#selection.slice() : [];
+    const selection = this.control.options.multiple ? [...this.#selection] : [];
 
     selection.push(item);
 

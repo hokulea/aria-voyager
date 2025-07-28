@@ -11,9 +11,8 @@ list.style.position = 'relative';
 list.style.display = 'grid';
 list.style.overflow = 'auto';
 
-// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-listbox.setItems([...Array(20).keys()].map((i) => `Item ${i + 1}`));
-listbox.items.forEach((item) => (item.style.height = '19px'));
+listbox.setItems([...Array.from({ length: 20 }).keys()].map((i) => `Item ${i + 1}`));
+for (const item of listbox.items) item.style.height = '19px';
 
 const lastIndex = list.children.length;
 const lastItem = list.children[lastIndex - 1];

@@ -22,6 +22,7 @@ function isPointerEvent(event: Event): event is PointerEvent {
 }
 
 function getMenuFromItem(item: Item): MenuElement | null {
+  // eslint-disable-next-line unicorn/prefer-query-selector
   return document.getElementById(
     item.getAttribute('popovertarget') as string
   ) as MenuElement | null;
@@ -96,49 +97,53 @@ export class MenuNavigation implements NavigationPattern {
     const target = event.target as HTMLElement;
 
     // hover ...
-    if (event.type === 'pointerover') {
-      // close sibling menus
-      this.control.items
-        .filter((item) => item !== this.control.activeItem)
-        .filter((item) => item.hasAttribute('popovertarget'))
-        .forEach((item) => {
+    switch (event.type) {
+      case 'pointerover': {
+        // close sibling menus
+        for (const item of this.control.items
+          .filter((i) => i !== this.control.activeItem)
+          .filter((i) => i.hasAttribute('popovertarget'))) {
           const menu = getMenuFromItem(item);
 
           if (menu) {
             menu[FOCUS_TRIGGER_ON_CLOSE] = false;
             menu.hidePopover();
           }
-        });
+        }
 
-      if (this.control.activeItem?.hasAttribute('popovertarget')) {
-        this.showSubmenu();
-      }
-    }
+        if (this.control.activeItem?.hasAttribute('popovertarget')) {
+          this.showSubmenu();
+        }
 
-    // ... and out
-    else if (event.type === 'pointerout') {
-      // moving pointer from menu to trigger
-      if (
-        target === this.control.element &&
-        event.relatedTarget === (this.control.element as MenuElement)[OPENER]
-      ) {
-        (event.relatedTarget as HTMLElement).focus();
+        break;
       }
-    }
+      case 'pointerout': {
+        // moving pointer from menu to trigger
+        if (
+          target === this.control.element &&
+          event.relatedTarget === (this.control.element as MenuElement)[OPENER]
+        ) {
+          (event.relatedTarget as HTMLElement).focus();
+        }
 
-    // close on invocation
-    else if (event.type === 'pointerup') {
-      // only close the menu if we have clicked a menuitem
-      if (
-        this.control.items.find((item) => item.contains(target)) &&
-        !this.control.activeItem?.hasAttribute('popovertarget')
-      ) {
-        // firefox wouldn't execute the default click handler from a menuitem,
-        // when `this.closeRootMenu()` is invoked directly.
-        // As such, pushing this on the event loop gives firefox "time to breath"
-        // and execute the default click handler as well as closing the menu
-        window.setTimeout(() => this.closeRootMenu(), 0);
+        break;
       }
+      case 'pointerup': {
+        // only close the menu if we have clicked a menuitem
+        if (
+          this.control.items.some((item) => item.contains(target)) &&
+          !this.control.activeItem?.hasAttribute('popovertarget')
+        ) {
+          // firefox wouldn't execute the default click handler from a menuitem,
+          // when `this.closeRootMenu()` is invoked directly.
+          // As such, pushing this on the event loop gives firefox "time to breath"
+          // and execute the default click handler as well as closing the menu
+          globalThis.setTimeout(() => this.closeRootMenu(), 0);
+        }
+
+        break;
+      }
+      // No default
     }
   }
 
@@ -168,10 +173,11 @@ export class MenuNavigation implements NavigationPattern {
     }
 
     // move focus to first element
-    if ((this.control.element as MenuElement)[FOCUS_ON_OPEN] !== false) {
-      if (this.control.enabledItems.length > 0) {
-        this.control.enabledItems[0].focus();
-      }
+    if (
+      (this.control.element as MenuElement)[FOCUS_ON_OPEN] !== false &&
+      this.control.enabledItems.length > 0
+    ) {
+      this.control.enabledItems[0].focus();
     }
   }
 

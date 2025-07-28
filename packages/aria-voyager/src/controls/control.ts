@@ -12,7 +12,7 @@ import type { UpdateStrategy } from '../update-strategies/update-strategy';
 function pipe<Value>(input: Value, ...fns: ((input: Value) => Value)[]) {
   let lastResult = input;
 
-  for (let fn of fns) {
+  for (const fn of fns) {
     lastResult = fn(lastResult);
   }
 
@@ -56,7 +56,7 @@ export abstract class Control {
       return [];
     }
 
-    return this.items.filter(isItemEnabled);
+    return this.items.filter((item) => isItemEnabled(item));
   }
 
   abstract get activeItem(): Item | undefined;
@@ -95,12 +95,16 @@ export abstract class Control {
 
   private navigationPatterns: NavigationPattern[] = [];
 
+  #handler: (event: Event) => void;
+
   constructor(element: HTMLElement, options: ControlOptions) {
     this.element = element;
 
     this.#capabilities = options.capabilities ?? this.#capabilities;
     this.#optionAttributes = options.optionAttributes ?? this.#optionAttributes;
     this.updater = options.updater ?? new DomObserverUpdateStrategy(this);
+
+    this.#handler = this.handleEvent.bind(this);
 
     if (options.updater) {
       options.updater.setControl(this);
@@ -120,10 +124,10 @@ export abstract class Control {
   protected registerNavigationPatterns(patterns: NavigationPattern[]) {
     this.navigationPatterns = patterns;
 
-    const eventNames = new Set(this.navigationPatterns.map((p) => p.eventListeners ?? []).flat());
+    const eventNames = new Set(this.navigationPatterns.flatMap((p) => p.eventListeners ?? []));
 
     for (const eventName of eventNames) {
-      this.element.addEventListener(eventName, this.handleEvent.bind(this));
+      this.element.addEventListener(eventName, this.#handler);
     }
   }
 
@@ -133,10 +137,10 @@ export abstract class Control {
     this.focusStrategy.dispose();
 
     // unregister event listeners
-    const eventNames = new Set(this.navigationPatterns.map((p) => p.eventListeners ?? []).flat());
+    const eventNames = new Set(this.navigationPatterns.flatMap((p) => p.eventListeners ?? []));
 
     for (const eventName of eventNames) {
-      this.element.removeEventListener(eventName, this.handleEvent.bind(this));
+      this.element.removeEventListener(eventName, this.#handler);
     }
   }
 
@@ -147,7 +151,7 @@ export abstract class Control {
 
     const patterns = this.navigationPatterns.filter((p) => p.matches(event));
 
-    patterns.forEach((p) => p.prepare?.(event));
+    for (const p of patterns) p.prepare?.(event);
 
     pipe({ event } as NavigationParameterBag, ...patterns.map((p) => p.handle.bind(p)));
 

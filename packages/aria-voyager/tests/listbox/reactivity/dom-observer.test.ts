@@ -38,7 +38,7 @@ describe('DOM Observer', () => {
 
     const secondItem = list.children[1];
 
-    list.removeChild(secondItem);
+    secondItem.remove();
 
     await vi.waitUntil(() => getItems(list).length === 3);
 

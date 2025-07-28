@@ -7,7 +7,7 @@ import type { Item } from '../controls/control';
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  */
 export class RovingTabindexStrategy extends AbstractFocusStrategy {
-  activateItem(item: Item, forceFocus: boolean = false) {
+  activateItem(item: Item, forceFocus = false) {
     if (this.control.options.disabled) {
       return;
     }
