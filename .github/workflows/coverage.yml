@@ -19,13 +19,10 @@ jobs:
       - name: Install Playwright Browsers
         uses: ./.github/actions/playwright-browser-install
       - name: coverage
-        uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          COVERAGE: true
+        uses: qltysh/qlty-action/coverage@v1
         with:
-          coverageCommand: pnpm run -r --parallel --aggregate-output test
-          coverageLocations: |
+          token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          files: |
             ${{github.workspace}}/packages/aria-voyager/coverage/lcov.info:lcov
             ${{github.workspace}}/packages/svelte-aria-voyager/coverage/lcov.info:lcov
-            ${{github.workspace}}/packages/ember-aria-voyager/test-app/coverage/lcov.info:lcov
+          # ${{github.workspace}}/packages/ember-aria-voyager/test-app/coverage/lcov.info:lcov
