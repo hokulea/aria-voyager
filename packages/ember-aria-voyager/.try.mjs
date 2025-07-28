@@ -3,8 +3,10 @@ export default scenarios();
 function scenarios() {
   return {
     scenarios: [
-      compatEmberScenario('ember-lts-3.28', '^3.28.0'),
-      compatEmberScenario('ember-lts-4.4', '~4.4.0'),
+      // the two older won't work as the tests use functions as helpers and the
+      // polyfill does not work under vite
+      // compatEmberScenario('ember-lts-3.28', '^3.28.0'),
+      // compatEmberScenario('ember-lts-4.4', '~4.4.0'),
       compatEmberScenario('ember-lts-4.12', '^4.12.0'),
       compatEmberScenario('ember-lts-5.4', '~5.4.0'),
       compatEmberScenario('ember-lts-5.12', '^5.12.0'),
@@ -52,8 +54,7 @@ function compatEmberScenario(name, emberVersion) {
         '@embroider/compat': '^4.0.3',
         'ember-cli': cliVersion,
         'ember-auto-import': '^2.10.0',
-        '@ember/optional-features': '^2.2.0',
-        'ember-functions-as-helper-polyfill': '2.1.3'
+        '@ember/optional-features': '^2.2.0'
       }
     },
     env: {
