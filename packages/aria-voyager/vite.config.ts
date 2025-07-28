@@ -24,13 +24,13 @@ export default defineConfig({
     },
     browser: {
       enabled: true,
+      headless: true,
       screenshotFailures: false,
-      provider: 'preview',
+      provider: 'playwright',
       instances: [
-        // https://github.com/hokulea/aria-voyager/issues/396
-        // { browser: 'firefox' },
+        { browser: 'firefox' },
         // tests are flaky in chromium + playwright
-        // { browser: 'chromium' },
+        { browser: 'chromium' },
         { browser: 'webkit' }
       ]
     }
