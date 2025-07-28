@@ -50,7 +50,7 @@
     "@babel/preset-typescript": "7.27.0",
     "@babel/runtime": "7.27.0",
     "@ember/test-helpers": "5.2.2",
-    "@embroider/addon-dev": "7.1.4",
+    "@embroider/addon-dev": "8.1.0",
     "@glint/template": "1.5.2",
     "@gossi/config-eslint": "0.13.0",
     "@gossi/config-prettier": "0.9.1",
