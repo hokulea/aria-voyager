@@ -11,10 +11,9 @@ import type { TablistOptions } from '../../src';
 export function createTabElement(parent: HTMLElement) {
   const container = document.createElement('div');
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  container.classList.add(styles.tabs as string);
+  container.classList.add(styles.tabs);
 
-  parent.appendChild(container);
+  parent.append(container);
 
   const tablist = document.createElement('div');
 
@@ -50,7 +49,7 @@ export function appendTab(parent: HTMLElement, label: string, contents: string |
 
   const tablist = parent.querySelector('[role="tablist"]') as HTMLDivElement;
 
-  tablist.appendChild(elem);
+  tablist.append(elem);
 
   parent.append(panel);
 
@@ -58,12 +57,13 @@ export function appendTab(parent: HTMLElement, label: string, contents: string |
 }
 
 export function removeTab(tab: HTMLElement) {
+  // eslint-disable-next-line unicorn/prefer-query-selector
   const panel = document.getElementById(tab.getAttribute('aria-controls') as string);
 
-  tab.parentElement?.removeChild(tab);
+  tab.remove();
 
   if (panel) {
-    panel.parentElement?.removeChild(panel);
+    panel.remove();
   }
 }
 

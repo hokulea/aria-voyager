@@ -26,7 +26,7 @@ test('add items when disabled', () => {
   updater.updateItems();
   updater.updateSelection();
 
-  tabs.items.forEach((tab) => expect(tab).toHaveAttribute('tabindex', '-1'));
+  for (const tab of tabs.items) expect(tab).toHaveAttribute('tabindex', '-1');
 
   expect(tabs.selection).toEqual([firstItem]);
 });

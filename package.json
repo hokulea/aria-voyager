@@ -1,6 +1,7 @@
 {
   "name": "hokulea",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -20,9 +21,6 @@
     "start": "turbo run start --parallel"
   },
   "devDependencies": {
-    "@gossi/config-eslint": "0.13.0",
-    "@gossi/config-prettier": "0.9.1",
-    "eslint": "8.57.1",
     "playwright": "^1.51.1",
     "release-plan": "0.16.0",
     "turbo": "^2.5.4"

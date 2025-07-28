@@ -9,10 +9,10 @@ export function createListElement(parent: HTMLElement) {
   const element = document.createElement('div');
 
   element.role = 'listbox';
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  element.classList.add(styles.list as string);
 
-  parent.appendChild(element);
+  element.classList.add(styles.list);
+
+  parent.append(element);
 
   return element;
 }
@@ -23,7 +23,7 @@ export function appendItemToList(item: string, parent: HTMLElement) {
   elem.append(item);
   elem.role = 'option';
 
-  parent.appendChild(elem);
+  parent.append(elem);
 
   return elem;
 }
@@ -48,7 +48,7 @@ export class List {
       elem.append(item);
       elem.role = 'option';
 
-      this.element.appendChild(elem);
+      this.element.append(elem);
     }
 
     this.listbox.readItems();

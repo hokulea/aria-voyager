@@ -64,7 +64,7 @@ export class Menu extends Control {
     );
 
     // Filter out elements that are within a nested menu but not the root menu
-    this.items = Array.from(items).filter((item) => {
+    this.items = [...items].filter((item) => {
       // Check if the closest ancestor with <menu> tag or [role="menu"] is not the root element
       const closestMenu = item.closest('menu,[role="menu"]');
 

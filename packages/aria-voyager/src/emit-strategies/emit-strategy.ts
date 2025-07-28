@@ -5,7 +5,6 @@ export interface EmitterOptions<T> {
   activateItem?(item: T): void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface EmitStrategy {
   selected(selection: Item[]): void;
 

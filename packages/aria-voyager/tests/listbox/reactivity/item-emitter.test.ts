@@ -12,7 +12,9 @@ describe('ItemEmitter', () => {
   const thirdItem = list.children[2];
 
   const listeners = {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     select() {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     activateItem() {}
   };
 

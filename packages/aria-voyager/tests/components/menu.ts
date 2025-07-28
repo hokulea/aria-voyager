@@ -26,11 +26,7 @@ export function appendItemToMenu(parent: HTMLElement, item: string) {
   return elem;
 }
 
-export function appendCheckboxItemToMenu(
-  parent: HTMLElement,
-  item: string,
-  checked: boolean = false
-) {
+export function appendCheckboxItemToMenu(parent: HTMLElement, item: string, checked = false) {
   const elem = appendItemToMenu(parent, item);
 
   elem.role = 'menuitemcheckbox';
@@ -39,7 +35,7 @@ export function appendCheckboxItemToMenu(
   return elem;
 }
 
-export function appendRadioItemToMenu(parent: HTMLElement, item: string, checked: boolean = false) {
+export function appendRadioItemToMenu(parent: HTMLElement, item: string, checked = false) {
   const elem = appendItemToMenu(parent, item);
 
   elem.role = 'menuitemcheckbox';

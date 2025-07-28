@@ -31,7 +31,7 @@ describe('DOM Observer', () => {
     expect(tabs.selection.length).toBe(1);
     expect(tabs.items.length).toBe(6);
 
-    tablist.removeChild(secondItem);
+    secondItem.remove();
 
     await vi.waitUntil(() => getItems(tablist).length === 5);
 
