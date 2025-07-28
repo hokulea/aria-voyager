@@ -1,7 +1,7 @@
-import { Tablist } from '../../src';
-import { appendTab, createTabElement } from '../components/tabs';
+import { Tablist } from '#src';
+import { appendTab, createTabElement } from '#tests/components/tabs';
 
-import type { TablistOptions } from '../../src';
+import type { TablistOptions } from '#src';
 
 export function createTabs(options?: TablistOptions) {
   const { container, tablist } = createTabElement(document.body);

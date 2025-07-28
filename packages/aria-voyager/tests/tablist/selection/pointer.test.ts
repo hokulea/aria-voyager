@@ -1,7 +1,7 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { createTabs, getTabItems } from '../-shared';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
 describe('Use pointer to select items', () => {
   const { tabs, tablist } = createTabs();

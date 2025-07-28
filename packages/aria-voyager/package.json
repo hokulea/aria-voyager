@@ -11,6 +11,11 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
+  "imports": {
+    "#src": "./src/index",
+    "#src/*": "./src/*",
+    "#tests/": "./tests/*"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

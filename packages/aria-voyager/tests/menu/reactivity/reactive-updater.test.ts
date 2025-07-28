@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 
-import { Menu, ReactiveUpdateStrategy } from '../../../src';
-import { appendItemToMenu } from '../../components/menu';
-import { createCodeMenu } from '../-shared';
+import { Menu, ReactiveUpdateStrategy } from '#src';
+import { appendItemToMenu } from '#tests/components/menu';
+import { createCodeMenu } from '#tests/menu/-shared';
 
 describe('Reactive Updater', () => {
   const { codeMenu } = createCodeMenu();

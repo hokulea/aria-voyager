@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 
-import { Menu } from '../../src';
-import { createMenuElement } from '../components/menu';
-import { createCodeMenu } from './-shared';
+import { Menu } from '#src';
+import { createMenuElement } from '#tests/components/menu';
+import { createCodeMenu } from '#tests/menu/-shared';
 
 describe('Menu', () => {
   test('renders', () => {

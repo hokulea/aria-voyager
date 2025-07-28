@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 
-import { Listbox, ReactiveUpdateStrategy } from '../../../src';
-import { appendItemToList } from '../../components/list';
-import { createListWithFruits, getItems } from '../-shared';
+import { Listbox, ReactiveUpdateStrategy } from '#src';
+import { appendItemToList } from '#tests/components/list';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 // simulating a framework with a reactive library
 describe('Reactive Updater', () => {

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { Listbox } from '../../src';
-import { createListElement } from '../components/list';
+import { Listbox } from '#src';
+import { createListElement } from '#tests/components/list';
+
 import { createListWithFruits } from './-shared';
 
 describe('Listbox', () => {

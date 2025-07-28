@@ -1,7 +1,7 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { createTabs, getTabItems } from '../../-shared';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
 describe('Select with `ArrowUp`', () => {
   const { tabs, tablist } = createTabs();
