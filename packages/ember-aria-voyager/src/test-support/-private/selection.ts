@@ -6,7 +6,7 @@ import getElement from './-get-element.ts';
 import type { Target } from '@ember/test-helpers';
 
 function errorMessage(message: string, target: Target, name: string) {
-  let description = getDescription(target);
+  const description = getDescription(target);
 
   return `${message} when calling \`${name}('${description}')\`.`;
 }
@@ -29,7 +29,7 @@ function findOption(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (typeof text === 'undefined' || text === null) {
+  if (text === undefined || text === null) {
     throw new Error(`Must provide an \`text\` to select when calling \`findOption\`.`);
   }
 
@@ -58,7 +58,7 @@ export function findOptions(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (typeof texts === 'undefined' || texts === null) {
+  if (texts === undefined || texts === null) {
     throw new Error(`Must provide an \`texts\` to select when calling \`findOption\`.`);
   }
 
@@ -91,7 +91,7 @@ export async function select(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (typeof options === 'undefined' || options === null) {
+  if (options === undefined || options === null) {
     throw new Error(
       `Must provide an \`option\` or \`options\` to select when calling \`${name}\`.`
     );

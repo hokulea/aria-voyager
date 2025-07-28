@@ -62,7 +62,6 @@ export default defineConfig({
       configFile: configs.babel
     }),
 
-
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     // addon.hbs(),
 

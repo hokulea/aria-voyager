@@ -1,21 +1,18 @@
 import { tracked } from '@glimmer/tracking';
-import { render, rerender } from '@ember/test-helpers';
-import { settled } from '@ember/test-helpers';
-import { focus } from '@ember/test-helpers';
-import { triggerKeyEvent } from '@ember/test-helpers';
+import { focus, render, rerender, settled, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { ariaListbox } from 'ember-aria-voyager';
 import sinon from 'sinon';
 
+import { ariaListbox } from '#src';
 import {
   selectListbox,
   testListKeyboardNavigation,
   testListKeyboardSelection,
   testListPointerNavigation,
   testListPointerSelection
-} from 'ember-aria-voyager/test-support';
+} from '#test-support';
 
 import type { TestContext as BaseTestContext } from '@ember/test-helpers';
 
@@ -48,7 +45,7 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
     test('disabling sets tabindex to -1', async function (this: TestContext, assert) {
       const options = ['apple', 'banana', 'pineapple'];
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked disabled = false;
       })();
@@ -78,11 +75,12 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
       const handleUpdate = sinon.spy();
       const options = ['apple', 'banana', 'pineapple'];
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked selection?: string = undefined;
       })();
 
+      // eslint-disable-next-line unicorn/consistent-function-scoping
       const isSelected = (item: string, selection?: string) => {
         return item === selection;
       };

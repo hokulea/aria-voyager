@@ -42,7 +42,6 @@ export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
     super(owner, args);
 
     registerDestructor(this, () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this.tablist?.dispose();
     });
   }
@@ -57,7 +56,7 @@ export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
 
       this.tablist = new Tablist(element as HTMLElement, {
         updater: this.updater,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
         behavior: options.behavior
       });
     }
@@ -89,7 +88,6 @@ export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
 
       optionsChanged = true;
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       this.prevOrientation = options.orientation;
     }
 

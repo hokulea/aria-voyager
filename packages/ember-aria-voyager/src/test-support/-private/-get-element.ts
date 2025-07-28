@@ -33,7 +33,7 @@ function getElement(target: Target): Element | Document | null;
 */
 function getElement(target: Target): Element | Document | null {
   if (typeof target === 'string') {
-    let rootElement = getRootElement();
+    const rootElement = getRootElement();
 
     return rootElement.querySelector(target);
   } else if (isElement(target) || isDocument(target)) {
@@ -41,7 +41,7 @@ function getElement(target: Target): Element | Document | null {
   } else if (target instanceof Window) {
     return target.document;
   } else {
-    let descriptorData = lookupDescriptorData(target);
+    const descriptorData = lookupDescriptorData(target);
 
     if (descriptorData) {
       return resolveDOMElement(descriptorData);

@@ -1,28 +1,27 @@
 import { tracked } from '@glimmer/tracking';
 import { hash } from '@ember/helper';
-import { render, rerender } from '@ember/test-helpers';
-import { triggerKeyEvent } from '@ember/test-helpers';
+import { render, rerender, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { ariaTablist } from 'ember-aria-voyager';
 import sinon from 'sinon';
 
+import { ariaTablist } from '#src';
 import {
+  selectTab,
   testTablistKeyboardAutomaticSelection,
   testTablistKeyboardManualSelection,
   testTablistKeyboardNavigation,
   testTablistPointerNavigation,
   testTablistPointerSelection
-} from 'ember-aria-voyager/test-support';
-import { selectTab } from 'ember-aria-voyager/test-support';
+} from '#test-support';
 
 import type { TOC } from '@ember/component/template-only';
 import type { Orientation } from 'aria-voyager';
 
-const range = (amount: number) => [...Array(amount).keys()];
+// eslint-disable-next-line unicorn/no-new-array
+const range = (amount: number) => [...new Array(amount).keys()];
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const Tabs: TOC<{ Element: HTMLElement; Args: { amount: number } }> = <template>
   <div data-test-tab>
     <div role="tablist" ...attributes>
@@ -48,7 +47,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
   module('Reactivity', () => {
     test('disabling sets tabindex to -1', async (assert) => {
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked disabled = false;
       })();
@@ -70,7 +69,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
     test('orientation changes are passed down', async (assert) => {
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked orientation?: Orientation = undefined;
       })();
@@ -92,11 +91,12 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
       const handleUpdate = sinon.spy();
       const items = ['1', '2', '3', '4'];
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked selection?: string = undefined;
       })();
 
+      // eslint-disable-next-line unicorn/consistent-function-scoping
       const isSelected = (item: string, selection?: string) => {
         return item === selection;
       };
@@ -146,11 +146,11 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
     test('@items to be reactive with @disabled', async (assert) => {
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked disabled = false;
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked items = ['1'];
       })();

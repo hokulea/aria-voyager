@@ -3,12 +3,8 @@ import { render, rerender } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { ariaMenu } from 'ember-aria-voyager';
-
-import {
-  testMenuKeyboardNavigation,
-  testMenuPointerNavigation
-} from 'ember-aria-voyager/test-support';
+import { ariaMenu } from '#src';
+import { testMenuKeyboardNavigation, testMenuPointerNavigation } from '#test-support';
 
 import type { TOC } from '@ember/component/template-only';
 
@@ -19,7 +15,6 @@ interface CodeMenuSignature {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const CodeMenu: TOC<CodeMenuSignature> = <template>
   <div role="menu" ...attributes {{ariaMenu disabled=(if @disabled @disabled false)}}>
     <span>Refactor</span>
@@ -77,7 +72,7 @@ module('Rendering | Modifier | {{menu}}', (hooks) => {
 
     test('no tabindex attribute when disabled', async function (assert) {
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked disabled = false;
       })();
@@ -104,11 +99,11 @@ module('Rendering | Modifier | {{menu}}', (hooks) => {
   module('Reactivity', () => {
     test('@items to be reactive with @disabled', async (assert) => {
       const context = new (class {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked disabled = false;
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         @tracked items = ['jackfruit'];
       })();

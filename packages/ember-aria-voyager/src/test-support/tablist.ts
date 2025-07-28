@@ -85,7 +85,7 @@ export async function testTablistKeyboardAutomaticSelection(
   const { tablist } = elements;
   const options = getCompositeItems(tablist, fullSelectors.item);
   const [first, second, third] = options;
-  const last = options[options.length - 1];
+  const last = options.at(-1);
 
   assert.dom(first).hasAria('selected', 'true', 'First option is selected');
 
@@ -111,7 +111,7 @@ export async function testTablistKeyboardManualSelection(
   const { tablist } = elements;
   const options = getCompositeItems(tablist, fullSelectors.item);
   const [first, second, third] = options;
-  const last = options[options.length - 1];
+  const last = options.at(-1);
 
   assert.dom(first).hasAria('selected', 'true', 'First option is selected');
 

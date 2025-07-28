@@ -31,7 +31,6 @@ export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
     super(owner, args);
 
     registerDestructor(this, () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this.menu?.dispose();
     });
   }

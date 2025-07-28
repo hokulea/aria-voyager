@@ -20,11 +20,11 @@ function getElements(
   target: string | IDOMElementDescriptor
 ): NodeListOf<Element> | Iterable<Element> {
   if (typeof target === 'string') {
-    let rootElement = getRootElement();
+    const rootElement = getRootElement();
 
     return rootElement.querySelectorAll(target);
   } else {
-    let descriptorData = lookupDescriptorData(target);
+    const descriptorData = lookupDescriptorData(target);
 
     if (descriptorData) {
       return resolveDOMElements(descriptorData);

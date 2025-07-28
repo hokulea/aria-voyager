@@ -37,7 +37,6 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
     super(owner, args);
 
     registerDestructor(this, () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this.listbox?.dispose();
     });
   }
