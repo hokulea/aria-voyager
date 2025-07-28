@@ -2,7 +2,8 @@ import { registerDestructor } from '@ember/destroyable';
 
 import { Menu, ReactiveUpdateStrategy } from 'aria-voyager';
 import Modifier from 'ember-modifier';
-import isEqual from 'lodash.isequal';
+
+import { isEqual } from '../-utils';
 
 import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';

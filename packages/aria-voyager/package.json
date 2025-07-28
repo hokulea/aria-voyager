@@ -32,9 +32,6 @@
     "test": "vitest run",
     "test:ui": "vitest --browser.provider=preview --no-browser.headless --browser.name=firefox"
   },
-  "dependencies": {
-    "fast-is-equal": "^1.2.3"
-  },
   "devDependencies": {
     "@gossi/config-eslint": "1.3.0",
     "@gossi/config-prettier": "1.1.0",

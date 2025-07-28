@@ -1,5 +1,4 @@
 import { IndexEmitStrategy, ItemEmitStrategy, Listbox, ReactiveUpdateStrategy } from 'aria-voyager';
-import isEqual from 'lodash.isequal';
 
 import {
   asArray,
@@ -8,6 +7,7 @@ import {
   type EmitterSignature,
   type WithItems
 } from './-emitter';
+import { isEqual } from './-utils';
 
 import type { EmitStrategy } from 'aria-voyager';
 
