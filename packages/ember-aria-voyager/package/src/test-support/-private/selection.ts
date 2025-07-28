@@ -1,7 +1,7 @@
 import { triggerEvent } from '@ember/test-helpers';
 
-import getDescription from './-get-description';
-import getElement from './-get-element';
+import getDescription from './-get-description.ts';
+import getElement from './-get-element.ts';
 
 import type { Target } from '@ember/test-helpers';
 

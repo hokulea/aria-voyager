@@ -1,6 +1,6 @@
-import { default as ariaListbox } from './modifiers/aria-listbox';
-import { default as ariaMenu } from './modifiers/aria-menu';
-import { default as ariaTablist } from './modifiers/aria-tablist';
+import { default as ariaListbox } from './modifiers/aria-listbox.ts';
+import { default as ariaMenu } from './modifiers/aria-menu.ts';
+import { default as ariaTablist } from './modifiers/aria-tablist.ts';
 
 export type { Orientation, TablistBehavior } from 'aria-voyager';
 

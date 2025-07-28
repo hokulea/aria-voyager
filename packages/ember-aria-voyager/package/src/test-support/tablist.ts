@@ -6,7 +6,7 @@ import {
   triggerKeyEvent
 } from '@ember/test-helpers';
 
-import { getCompositeItems } from './-private/composite';
+import { getCompositeItems } from './-private/composite.ts';
 
 type Selectors = {
   tablist: string;

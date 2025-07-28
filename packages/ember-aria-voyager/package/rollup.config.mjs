@@ -3,21 +3,20 @@
 // import { browsers as targets } from '@gossi/config-targets';
 
 import { Addon } from '@embroider/addon-dev/rollup';
+import { resolve } from 'node:path';
 
 import { babel } from '@rollup/plugin-babel';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { defineConfig } from 'rollup';
-
-// const development = Boolean(process.env.ROLLUP_WATCH);
-// const production = !development;
 
 const addon = new Addon({
   srcDir: 'src',
   destDir: 'dist'
 });
 
-// Add extensions here, such as ts, gjs, etc that you may import
-const extensions = ['.js', '.ts'];
+const configs = {
+  babel: resolve(import.meta.dirname, './babel.publish.config.mjs'),
+  ts: resolve(import.meta.dirname, './tsconfig.publish.json')
+};
 
 export default defineConfig({
   // This provides defaults that work well alongside `publicEntrypoints` below.
@@ -48,23 +47,29 @@ export default defineConfig({
       'modifiers/aria-tablist.js'
     ]),
 
-    nodeResolve({
-      extensions
-    }),
-    babel({
-      babelHelpers: 'bundled',
-      extensions
-    }),
-
     // Follow the V2 Addon rules about dependencies. Your code can import from
     // `dependencies` and `peerDependencies` as well as standard Ember-provided
     // package names.
     addon.dependencies(),
 
+    // This babel config should *not* apply presets or compile away ES modules.
+    // It exists only to provide development niceties for you, like automatic
+    // template colocation.
+    // compile TypeScript to latest JavaScript, including Babel transpilation
+    babel({
+      extensions: ['.js', '.gjs', '.ts', '.gts'],
+      babelHelpers: 'bundled',
+      configFile: configs.babel
+    }),
+
+
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     // addon.hbs(),
 
     // addon.gjs({ inline_source_map: true }),
+
+    // Emit .d.ts declaration files
+    addon.declarations('declarations', `glint --declaration --project ${configs.ts}`),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.

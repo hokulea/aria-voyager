@@ -10,7 +10,7 @@ import {
   createItemEmitter,
   type EmitterSignature,
   type WithItems
-} from './-emitter';
+} from './-emitter.ts';
 
 import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';

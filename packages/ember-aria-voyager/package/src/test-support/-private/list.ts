@@ -1,6 +1,6 @@
 import { triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 
-import { getOptions } from './selection';
+import { getOptions } from './selection.ts';
 
 //
 // KEYBOARD

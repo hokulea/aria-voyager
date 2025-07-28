@@ -1,5 +1,5 @@
 // Widgets
 
-export * from './listbox';
-export * from './menu';
-export * from './tablist';
+export * from './listbox.ts';
+export * from './menu.ts';
+export * from './tablist.ts';

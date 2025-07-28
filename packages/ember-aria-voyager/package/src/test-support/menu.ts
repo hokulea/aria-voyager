@@ -2,7 +2,7 @@ import { click, getRootElement, triggerEvent, triggerKeyEvent } from '@ember/tes
 
 import sinon from 'sinon';
 
-import { getCompositeItems } from './-private/composite';
+import { getCompositeItems } from './-private/composite.ts';
 
 type Selectors = {
   trigger: string;
@@ -64,11 +64,11 @@ export async function testMenuKeyboardNavigation(
 
   await click(trigger);
 
-  assert.true(menu.matches(':popover-open'), 'Main menu opened');
+  assert.ok(menu.matches(':popover-open'), 'Main menu opened');
 
   const items = getItems(menu);
   const [first, second, , fourth] = items;
-  const last = items[items.length - 1];
+  const last = items.at(-1);
 
   assert.dom(first).hasAttribute('tabindex', '0', 'First item is activated');
 
@@ -84,19 +84,19 @@ export async function testMenuKeyboardNavigation(
 
   // open and close menu with ArrowRight / ArrowLeft
 
-  assert.false(shareMenu.matches(':popover-open'), 'Share menu is closed');
+  assert.notOk(shareMenu.matches(':popover-open'), 'Share menu is closed');
 
   await triggerKeyEvent(menu, 'keydown', 'ArrowRight');
-  assert.true(shareMenu.matches(':popover-open'), '`ArrowRight` opens share menu');
+  assert.ok(shareMenu.matches(':popover-open'), '`ArrowRight` opens share menu');
 
   await triggerKeyEvent(shareMenu, 'keydown', 'ArrowLeft');
-  assert.false(shareMenu.matches(':popover-open'), '`ArrowLeft` closes share menu');
+  assert.notOk(shareMenu.matches(':popover-open'), '`ArrowLeft` closes share menu');
 
   // open sub-submenu and closing all of it
   const shareItems = getItems(shareMenu);
 
   await triggerKeyEvent(menu, 'keydown', 'ArrowRight');
-  assert.true(shareMenu.matches(':popover-open'), '`ArrowRight` opens share menu again');
+  assert.ok(shareMenu.matches(':popover-open'), '`ArrowRight` opens share menu again');
 
   await triggerKeyEvent(shareMenu, 'keydown', 'ArrowDown');
 
@@ -105,7 +105,7 @@ export async function testMenuKeyboardNavigation(
     .hasAttribute('tabindex', '0', '`ArrowDown` moves to the next item in the submenu');
 
   await triggerKeyEvent(shareMenu, 'keydown', 'ArrowRight');
-  assert.true(socialMenu.matches(':popover-open'), '`ArrowRight` opens social menu');
+  assert.ok(socialMenu.matches(':popover-open'), '`ArrowRight` opens social menu');
 
   const socialItems = getItems(socialMenu);
   const spy = sinon.spy();
@@ -115,11 +115,11 @@ export async function testMenuKeyboardNavigation(
   // await click(socialItems[0] as HTMLElement);
   await triggerKeyEvent(socialMenu, 'keydown', 'Enter');
 
-  assert.true(spy.calledOnce, '`Enter` invokes menu item');
+  assert.ok(spy.calledOnce, '`Enter` invokes menu item');
 
-  assert.false(socialMenu.matches(':popover-open'), 'Social menu is closed');
-  assert.false(shareMenu.matches(':popover-open'), 'Share menu closed');
-  assert.false(menu.matches(':popover-open'), 'Main menu closed');
+  assert.notOk(socialMenu.matches(':popover-open'), 'Social menu is closed');
+  assert.notOk(shareMenu.matches(':popover-open'), 'Share menu closed');
+  assert.notOk(menu.matches(':popover-open'), 'Main menu closed');
 
   // Home + End
   await click(trigger);
@@ -147,7 +147,7 @@ export async function testMenuPointerNavigation(
 
   await click(trigger);
 
-  assert.true(menu.matches(':popover-open'), 'Main menu opened');
+  assert.ok(menu.matches(':popover-open'), 'Main menu opened');
 
   const items = getItems(menu);
   const [first, second, , fourth, fifth] = items;
@@ -162,28 +162,28 @@ export async function testMenuPointerNavigation(
   //   assert.dom(fourth).hasAttribute('tabindex', '0', '`ArrowDown` 2x activates fourth item');
 
   await click('[role="menu"] span');
-  assert.true(
+  assert.ok(
     menu.matches(':popover-open'),
     'Main menu still open after clicking a non-item inside the popover'
   );
 
   // open and close menu with Pointerover
 
-  assert.false(shareMenu.matches(':popover-open'), 'Share menu is closed');
+  assert.notOk(shareMenu.matches(':popover-open'), 'Share menu is closed');
 
   await triggerEvent(fourth as HTMLElement, 'pointerover');
   assert.dom(fourth).hasAttribute('tabindex', '0', '`pointerover` activates fourth item');
-  assert.true(shareMenu.matches(':popover-open'), '`pointerover` fourth element opens share menu');
+  assert.ok(shareMenu.matches(':popover-open'), '`pointerover` fourth element opens share menu');
 
   await triggerEvent(fifth as HTMLElement, 'pointerover');
   assert.dom(fifth).hasAttribute('tabindex', '0', '`pointerover` activates fifth item');
-  assert.false(shareMenu.matches(':popover-open'), '`pointerover` fifth element closes share menu');
+  assert.notOk(shareMenu.matches(':popover-open'), '`pointerover` fifth element closes share menu');
 
   // open sub-submenu and closing all of it
   const shareItems = getItems(shareMenu);
 
   await triggerEvent(fourth as HTMLElement, 'pointerover');
-  assert.true(
+  assert.ok(
     shareMenu.matches(':popover-open'),
     '`pointerover` fourth element opens share menu again'
   );
@@ -198,7 +198,7 @@ export async function testMenuPointerNavigation(
     .dom(shareItems[1] as HTMLElement)
     .hasAttribute('tabindex', '0', '`pointerover` activates second item');
 
-  assert.true(socialMenu.matches(':popover-open'), '... and opens social menu');
+  assert.ok(socialMenu.matches(':popover-open'), '... and opens social menu');
 
   const socialItems = getItems(socialMenu);
   const spy = sinon.spy();
@@ -209,9 +209,9 @@ export async function testMenuPointerNavigation(
   await triggerEvent(socialItems[0] as HTMLElement, 'pointerup');
   (socialItems[0] as HTMLElement).click();
 
-  assert.true(spy.calledOnce, '`Enter` invokes menu item');
+  assert.ok(spy.calledOnce, '`Enter` invokes menu item');
 
-  assert.false(socialMenu.matches(':popover-open'), 'Social menu is closed');
-  assert.false(shareMenu.matches(':popover-open'), 'Share menu closed');
-  assert.false(menu.matches(':popover-open'), 'Main menu closed');
+  assert.notOk(socialMenu.matches(':popover-open'), 'Social menu is closed');
+  assert.notOk(shareMenu.matches(':popover-open'), 'Share menu closed');
+  assert.notOk(menu.matches(':popover-open'), 'Main menu closed');
 }

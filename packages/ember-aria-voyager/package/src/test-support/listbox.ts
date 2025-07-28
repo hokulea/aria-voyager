@@ -7,8 +7,8 @@ import {
   testListboxForPointerSingleSelection,
   testListboxKeyboardNavigation,
   testListboxPointerNavigation
-} from './-private/list';
-import { select } from './-private/selection';
+} from './-private/list.ts';
+import { select } from './-private/selection.ts';
 
 import type { Target } from '@ember/test-helpers';
 

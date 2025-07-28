@@ -6,7 +6,7 @@ import {
   resolveDOMElement
 } from 'dom-element-descriptors';
 
-import { isDocument, isElement } from './-target';
+import { isDocument, isElement } from './-target.ts';
 
 import type { Target } from '@ember/test-helpers';
 
