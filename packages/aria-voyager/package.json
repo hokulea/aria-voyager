@@ -33,6 +33,7 @@
     "_build:types": "tsc -d --emitDeclarationOnly",
     "lint": "pnpm run '/^lint:(?!.*(fix)).*$/'",
     "lint:fix": "pnpm run '/^lint:[^:]*:fix/'",
+    "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "tsc --noEmit",
     "test": "vitest run --browser.headless --browser.provider=playwright",
