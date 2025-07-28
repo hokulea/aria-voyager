@@ -32,9 +32,6 @@
     "test": "vitest run",
     "test:ui": "vitest --browser.provider=preview --no-browser.headless --browser.name=firefox"
   },
-  "dependencies": {
-    "lodash.isequal": "^4.5.0"
-  },
   "devDependencies": {
     "@gossi/config-eslint": "1.3.0",
     "@gossi/config-prettier": "1.1.0",
@@ -43,7 +40,6 @@
     "@testing-library/dom": "10.4.0",
     "@types/css-modules": "1.0.5",
     "@types/eslint": "9.6.1",
-    "@types/lodash.isequal": "4.5.8",
     "@vitest/browser": "^3.2.4",
     "@vitest/coverage-istanbul": "^3.2.4",
     "@vitest/ui": "^3.2.4",

@@ -2,8 +2,8 @@ import { registerDestructor } from '@ember/destroyable';
 
 import { IndexEmitStrategy, ItemEmitStrategy, ReactiveUpdateStrategy, Tablist } from 'aria-voyager';
 import Modifier from 'ember-modifier';
-import isEqual from 'lodash.isequal';
 
+import { isEqual } from '../-utils.ts';
 import {
   asArray,
   createIndexEmitter,
