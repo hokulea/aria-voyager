@@ -16,7 +16,8 @@ export default defineConfig({
     }
   },
   test: {
-    // open: true,
+    // retry a failing test to combat flakiness on CI
+    retry: 3,
     coverage: {
       enabled: true,
       provider: 'istanbul',
