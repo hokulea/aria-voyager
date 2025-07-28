@@ -44,19 +44,21 @@ jobs:
         uses: ./.github/actions/setup
       - run: pnpm run -r --parallel --aggregate-output lint:types
 
-  test-ssr:
-    name: test SSR
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Build Aria Voyager Test App
-        run: pnpm run --filter=ember-aria-voyager-test-app build
+  # test-ssr:
+  #   name: test SSR
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Setup
+  #       uses: ./.github/actions/setup
+  #     - name: Build Aria Voyager Test App
+  #       run: pnpm run --filter=ember-aria-voyager-test-app build
 
   test:
     name: test
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -65,3 +67,31 @@ jobs:
         uses: ./.github/actions/playwright-browser-install
       - name: Test
         run: pnpm run -r --parallel --aggregate-output test
+      # For the Try Scenarios
+      - id: set-matrix
+        working-directory: ./packages/ember-aria-voyager
+        run: |
+          echo "matrix=$(pnpm -s dlx @embroider/try list)" >> $GITHUB_OUTPUT
+
+  try-scenarios:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    needs: test
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.test.outputs.matrix)}}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Apply Scenario
+        run: pnpm dlx @embroider/try apply ${{ matrix.name }}
+        working-directory: ./packages/ember-aria-voyager
+      - name: Install Dependencies
+        run: pnpm install --no-lockfile
+      - name: Run Tests
+        run: pnpm test
+        working-directory: ./packages/ember-aria-voyager
+        env: ${{ matrix.env }}

@@ -12,6 +12,27 @@
     "declarations",
     "dist"
   ],
+  "imports": {
+    "#src": "./src/index.ts",
+    "#src/*": "./src/*",
+    "#test-support": "./src/test-support/index.ts",
+    "#tests/*": "./tests/*"
+  },
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./test-support": {
+      "types": "./declarations/test-support/index.d.ts",
+      "default": "./dist/test-support/index.js"
+    },
+    "./addon-main.js": "./addon-main.cjs",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*"
+    }
+  },
   "scripts": {
     "build": "rollup --config",
     "dev": "vite dev",
@@ -100,21 +121,6 @@
       "./modifiers/aria-listbox.js": "./dist/_app_/modifiers/aria-listbox.js",
       "./modifiers/aria-menu.js": "./dist/_app_/modifiers/aria-menu.js",
       "./modifiers/aria-tablist.js": "./dist/_app_/modifiers/aria-tablist.js"
-    }
-  },
-  "exports": {
-    ".": {
-      "types": "./declarations/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./test-support": {
-      "types": "./declarations/test-support/index.d.ts",
-      "default": "./dist/test-support/index.js"
-    },
-    "./addon-main.js": "./addon-main.cjs",
-    "./*": {
-      "types": "./declarations/*.d.ts",
-      "default": "./dist/*"
     }
   },
   "engines": {
