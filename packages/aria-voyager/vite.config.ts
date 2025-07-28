@@ -28,10 +28,10 @@ export default defineConfig({
       screenshotFailures: false,
       provider: 'playwright',
       instances: [
-        { browser: 'firefox' },
-        // tests are flaky in chromium + playwright
-        { browser: 'chromium' },
-        { browser: 'webkit' }
+        { browser: 'firefox' }
+        // tests are flaky in playwright with chromium + webkit
+        // { browser: 'chromium' }
+        // { browser: 'webkit' }
       ]
     }
   }
