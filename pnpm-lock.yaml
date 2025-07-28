@@ -19,6 +19,10 @@ importers:
         version: 2.5.4
 
   packages/aria-voyager:
+    dependencies:
+      fast-is-equal:
+        specifier: ^1.2.3
+        version: 1.2.3
     devDependencies:
       '@gossi/config-eslint':
         specifier: 1.3.0
@@ -4232,6 +4236,9 @@ packages:
   fast-glob@3.3.3:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
+
+  fast-is-equal@1.2.3:
+    resolution: {integrity: sha512-vWQ41+xXhcgq6FWUCAvI9PYjAQnVg32k8SpGE4X3qgNPSnlcOWXS67dXxSQrK2PX8UaEawsma24TLuNFY/Dsqg==}
 
   fast-json-stable-stringify@2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
@@ -12829,6 +12836,8 @@ snapshots:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.8
+
+  fast-is-equal@1.2.3: {}
 
   fast-json-stable-stringify@2.1.0: {}
 

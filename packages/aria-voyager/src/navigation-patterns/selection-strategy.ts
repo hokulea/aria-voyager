@@ -1,4 +1,5 @@
-import { isEqual } from '../utils';
+// import { isEqual } from '../utils';
+import { fastIsEqual as isEqual } from 'fast-is-equal';
 
 import type { Control } from '..';
 import type { Item } from '../controls/control';
