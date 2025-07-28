@@ -14,8 +14,7 @@ function isLocator(elements: Elements): elements is Locator {
 }
 
 function getElements(elements: Elements) {
-  let list = undefined,
-    target = undefined;
+  let list, target;
 
   if (elements instanceof HTMLElement) {
     list = target = elements;
