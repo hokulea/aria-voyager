@@ -52,7 +52,8 @@ function compatEmberScenario(name, emberVersion) {
         '@embroider/compat': '^4.0.3',
         'ember-cli': cliVersion,
         'ember-auto-import': '^2.10.0',
-        '@ember/optional-features': '^2.2.0'
+        '@ember/optional-features': '^2.2.0',
+        'ember-functions-as-helper-polyfill': '2.1.3'
       }
     },
     env: {
