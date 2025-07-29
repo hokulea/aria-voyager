@@ -19,7 +19,9 @@ describe('use pointer to activate items', () => {
   test('clicking the list activates first item', async () => {
     await userEvent.click(list);
 
-    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', firstItem.id);
+    await expect
+      .poll(() => expect.element(list))
+      .toHaveAttribute('aria-activedescendant', firstItem.id);
     await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-current', 'true');
     await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
@@ -28,7 +30,9 @@ describe('use pointer to activate items', () => {
   test('clicking the second item activates it', async () => {
     await userEvent.click(secondItem);
 
-    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', secondItem.id);
+    await expect
+      .poll(() => expect.element(list))
+      .toHaveAttribute('aria-activedescendant', secondItem.id);
     await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-current', 'true');
     await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
@@ -37,7 +41,9 @@ describe('use pointer to activate items', () => {
   test('clicking the third item activates it', async () => {
     await userEvent.click(thirdItem);
 
-    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', thirdItem.id);
+    await expect
+      .poll(() => expect.element(list))
+      .toHaveAttribute('aria-activedescendant', thirdItem.id);
     await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-current', 'true');

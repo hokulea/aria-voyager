@@ -14,7 +14,7 @@ describe('Select with `ArrowLeft`', () => {
       .toBeFalsy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toBeFocused();
+    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
   });
 
   test('use `ArrowUp` at first item does nothing', async () => {
@@ -38,7 +38,9 @@ describe('Select with `ArrowLeft`', () => {
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowLeft}');
 
-    await expect.poll(() => expect.element(secondLastItem)).toHaveAttribute('aria-selected', 'true');
+    await expect
+      .poll(() => expect.element(secondLastItem))
+      .toHaveAttribute('aria-selected', 'true');
     await expect
       .poll(() =>
         tabs.items
@@ -75,7 +77,7 @@ describe('select with `ArrowLeft`, skipping disabled items', () => {
       .toBeFalsy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toBeFocused();
+    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
   });
 
   test('use `END` to jump to the last item', async () => {
@@ -90,7 +92,9 @@ describe('select with `ArrowLeft`, skipping disabled items', () => {
   test('use `ArrowLeft` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowLeft}');
 
-    await expect.poll(() => expect.element(secondLastItem)).toHaveAttribute('aria-selected', 'true');
+    await expect
+      .poll(() => expect.element(secondLastItem))
+      .toHaveAttribute('aria-selected', 'true');
     await expect
       .poll(() =>
         tabs.items
@@ -103,7 +107,9 @@ describe('select with `ArrowLeft`, skipping disabled items', () => {
   test('use `ArrowLeft` key to activate fourth last item', async () => {
     await userEvent.keyboard('{ArrowLeft}');
 
-    await expect.poll(() => expect.element(fourthLastItem)).toHaveAttribute('aria-selected', 'true');
+    await expect
+      .poll(() => expect.element(fourthLastItem))
+      .toHaveAttribute('aria-selected', 'true');
     await expect
       .poll(() =>
         tabs.items

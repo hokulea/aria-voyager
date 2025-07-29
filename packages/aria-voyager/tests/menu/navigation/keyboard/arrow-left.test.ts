@@ -21,7 +21,7 @@ describe('Close with `ArrowLeft`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowRight}');
     await expect.poll(() => expect.element(codeItem)).toHaveAttribute('tabindex', '0');
-    await expect.poll(() => expect.element(codeItem)).toBeFocused();
+    await expect.poll(() => expect.element(codeItem)).toHaveFocus();
   });
 
   test('use `ArrowLeft` to close submenu', async () => {
@@ -30,6 +30,6 @@ describe('Close with `ArrowLeft`', () => {
   });
 
   test('has focus moved to the trigger of the submenu', async () => {
-    await expect.poll(() => expect.element(fourthItem)).toBeFocused();
+    await expect.poll(() => expect.element(fourthItem)).toHaveFocus();
   });
 });
