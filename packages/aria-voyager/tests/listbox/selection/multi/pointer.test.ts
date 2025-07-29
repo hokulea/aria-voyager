@@ -9,11 +9,11 @@ describe('Select with Pointer', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
-  await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
-
   test('select second item', async () => {
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
+
     await userEvent.click(secondItem);
 
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
@@ -36,7 +36,7 @@ describe('Select with Pointer', () => {
     await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 
-  test('deselect second item with `Meta` key', () => {
+  test('deselect second item with `Meta` key', async () => {
     secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
 
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
@@ -44,7 +44,7 @@ describe('Select with Pointer', () => {
     await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 
-  test('select third to first item with `Shift` key', () => {
+  test('select third to first item with `Shift` key', async () => {
     firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');

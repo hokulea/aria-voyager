@@ -12,7 +12,7 @@ describe('Listbox', () => {
   });
 
   describe('setup', () => {
-    it('has listbox role', () => {
+    it('has listbox role', async () => {
       const list = createListElement(document.body);
 
       new Listbox(list);
@@ -20,7 +20,7 @@ describe('Listbox', () => {
       await expect.poll(() => list.getAttribute('role')).toBe('listbox');
     });
 
-    it('sets tabindex', () => {
+    it('sets tabindex', async () => {
       const list = createListElement(document.body);
 
       new Listbox(list);
@@ -46,7 +46,7 @@ describe('Listbox', () => {
   });
 
   describe('disabled', () => {
-    it('focus does not work', () => {
+    it('focus does not work', async () => {
       const list = createListElement(document.body);
 
       list.setAttribute('aria-disabled', 'true');
@@ -55,7 +55,9 @@ describe('Listbox', () => {
 
       list.dispatchEvent(new FocusEvent('focusin'));
 
-    await expect.poll(() => [...list.children].every((elem) => !elem.hasAttribute('aria-selected'))).toBeTruthy();
+      await expect
+        .poll(() => [...list.children].every((elem) => !elem.hasAttribute('aria-selected')))
+        .toBeTruthy();
     });
   });
 });

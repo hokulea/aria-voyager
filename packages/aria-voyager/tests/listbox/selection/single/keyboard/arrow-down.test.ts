@@ -15,7 +15,7 @@ describe('Select with `ArrowDown`', () => {
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
     await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
-  }));
+  });
 
   test('use `ArrowDown` key to select second item', async () => {
     await userEvent.keyboard('{ArrowDown}');

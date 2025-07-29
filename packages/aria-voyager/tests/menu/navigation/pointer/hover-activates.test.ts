@@ -10,7 +10,9 @@ describe('Hover activates item', () => {
   const { firstItem, secondItem } = getItems(menu);
 
   test('start', async () => {
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
 
     await expect.poll(() => menu.activeItem).toBeFalsy();
   });
@@ -29,8 +31,12 @@ describe('Hover activates item', () => {
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
     await expect.poll(() => menu.activeItem).toBe(secondItem);
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== 1)
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 });

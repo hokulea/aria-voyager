@@ -23,7 +23,7 @@ describe('Scroll Downwards', () => {
     list.focus();
     await expect.poll(() => document.activeElement).toBe(list);
     await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-  }));
+  });
 
   test('use `ArrowDown` to scroll down', async () => {
     let i = 0;

@@ -13,13 +13,15 @@ describe('Invoking a menu item closes all submenus', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
-  await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
+  });
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);
 
-    await vi.waitFor(() => {
+    await vi.waitFor(async () => {
       await expect.poll(() => codeMenu.matches(':popover-open')).toBeTruthy();
     });
 

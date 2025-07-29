@@ -14,7 +14,7 @@ describe('Open with `Enter`', () => {
   test('start', async () => {
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
     firstItem.focus();
-  }));
+  });
 
   test('use `Enter` to open submenu', async () => {
     await userEvent.keyboard('{ArrowDown}');

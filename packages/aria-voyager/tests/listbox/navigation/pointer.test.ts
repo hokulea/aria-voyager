@@ -14,7 +14,7 @@ describe('use pointer to activate items', () => {
     await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
-  }));
+  });
 
   test('clicking the list activates first item', async () => {
     await userEvent.click(list);

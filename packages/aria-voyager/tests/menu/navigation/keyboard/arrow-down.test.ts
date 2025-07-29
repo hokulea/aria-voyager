@@ -11,7 +11,9 @@ describe('Navigate with `ArrowDown`', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
 
     firstItem.focus();
     await expect.poll(() => document.activeElement).toBe(firstItem);
@@ -21,9 +23,13 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== 1)
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 
   test('use `ArrowDown` key to activate third item', async () => {
@@ -31,9 +37,13 @@ describe('Navigate with `ArrowDown`', () => {
 
     await expect.poll(() => thirdItem.getAttribute('tabindex')).toBe('0');
 
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== 2)
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== 2)
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 
   test('use `ArrowDown` key at the last item does nothing', async () => {
@@ -41,7 +51,9 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
   });
 });
 
@@ -54,7 +66,9 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
 
     firstItem.focus();
     await expect.poll(() => document.activeElement).toBe(firstItem);
@@ -64,17 +78,25 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== 1)
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 
   test('use `ArrowDown` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => fourthItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== 3)
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== 3)
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 });

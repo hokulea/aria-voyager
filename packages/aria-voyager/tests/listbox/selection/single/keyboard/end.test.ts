@@ -15,7 +15,7 @@ describe('Select last item with `End` key', () => {
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
     await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
-  }));
+  });
 
   test('use `End` to select last item', async () => {
     await userEvent.keyboard('{End}');

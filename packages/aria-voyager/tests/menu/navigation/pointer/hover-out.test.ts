@@ -4,7 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { Menu } from '../../../../src';
 import { createCodeMenu, getItems } from '../../-shared';
 
-describe('Hover out to trigger keeps submenu open', () => {
+describe('Hover out to trigger keeps submenu open', async () => {
   const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
   const share = new Menu(shareMenu);
@@ -30,7 +30,7 @@ describe('Hover out to trigger keeps submenu open', () => {
       new PointerEvent('pointerout', { bubbles: true, relatedTarget: fourthItem })
     );
 
-    await vi.waitFor(() => {
+    await vi.waitFor(async () => {
       await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
       await expect.poll(() => document.activeElement).toBe(fourthItem);
     });

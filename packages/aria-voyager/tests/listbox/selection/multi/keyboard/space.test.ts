@@ -13,7 +13,7 @@ describe('Toggle selection with `Space` key', () => {
     list.focus();
 
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-  }));
+  });
 
   test('use `Space` to select active item', async () => {
     await userEvent.keyboard(' ');

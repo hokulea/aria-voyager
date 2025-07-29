@@ -14,7 +14,7 @@ describe('navigates with `Home`', () => {
     await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
-  }));
+  });
 
   test('focus list and activate last item', async () => {
     list.focus();
@@ -47,7 +47,7 @@ describe('navigates with `Home`, skip disabled item', () => {
     await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
-  }));
+  });
 
   test('focus list and activate last item', async () => {
     list.focus();

@@ -18,7 +18,7 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
     // this await pleases playwright to pass the test when run as part of the
     // whole suite. Whem run alone, its all fine.
     // Some race conditions?
-    await vi.waitFor(() => {
+    await vi.waitFor(async () => {
       await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
       await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
       await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();

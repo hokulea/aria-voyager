@@ -12,11 +12,11 @@ describe('Reactive Updater', () => {
     updater
   });
 
-  test('start', async () => {
+  test('start', () => {
     expect(listbox.items.length).toBe(3);
   });
 
-  test('reads elements on appending', async () => {
+  test('reads elements on appending', () => {
     appendItemToList('Grapefruit', list);
 
     updater.updateItems();
@@ -24,7 +24,7 @@ describe('Reactive Updater', () => {
     expect(listbox.items.length).toBe(4);
   });
 
-  test('reads selection on external update', async () => {
+  test('reads selection on external update', () => {
     const { secondItem } = getItems(listbox);
 
     expect(listbox.selection.length).toBe(0);
@@ -38,7 +38,7 @@ describe('Reactive Updater', () => {
   });
 
   describe('read options', () => {
-    test('detects multi-select', async () => {
+    test('detects multi-select', () => {
       expect(listbox.options.multiple).toBeFalsy();
 
       list.setAttribute('aria-multiselectable', 'true');
@@ -48,7 +48,7 @@ describe('Reactive Updater', () => {
       expect(listbox.options.multiple).toBeTruthy();
     });
 
-    test('detects single-select', async () => {
+    test('detects single-select', () => {
       expect(listbox.options.multiple).toBeTruthy();
 
       list.removeAttribute('aria-multiselectable');

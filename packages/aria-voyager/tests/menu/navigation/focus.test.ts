@@ -10,9 +10,9 @@ describe('When Focus', () => {
 
   test('start', async () => {
     await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() =>
-      menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
 
     await expect.poll(() => menu.activeItem).toBeUndefined();
   });

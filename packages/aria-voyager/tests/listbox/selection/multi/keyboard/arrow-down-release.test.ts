@@ -17,7 +17,7 @@ describe('Select with `ArrowDown` and release `Shift`', () => {
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
     await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
-  }));
+  });
 
   test('use `ArrowDown` and `Shift` key to select from first to second item', async () => {
     await keys.keyboard('{Shift>}{ArrowDown}');

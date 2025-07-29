@@ -12,7 +12,7 @@ describe('Hover opens submenu', () => {
   test('start', async () => {
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
     await expect.poll(() => menu.activeItem).toBeUndefined();
-  }));
+  });
 
   test('hover item to show submenu', async () => {
     await userEvent.hover(fourthItem);

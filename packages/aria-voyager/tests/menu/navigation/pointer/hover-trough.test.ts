@@ -10,7 +10,7 @@ describe('Hover through items opens and closes submenus', () => {
 
   test('start', async () => {
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
-  }));
+  });
 
   test('hover third item', async () => {
     // does not work under playwright

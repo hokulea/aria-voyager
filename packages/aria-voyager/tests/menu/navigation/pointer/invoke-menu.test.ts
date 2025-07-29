@@ -17,7 +17,7 @@ describe('Invoking a menu item closes the menu', () => {
     await expect.poll(() => codeMenu.matches(':popover-open')).toBeFalsy();
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
     await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
-  }));
+  });
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);
@@ -50,7 +50,7 @@ describe('Invoking a descending menu item closes the menu', () => {
 
   test('start', async () => {
     await expect.poll(() => codeMenu.matches(':popover-open')).toBeFalsy();
-  }));
+  });
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);

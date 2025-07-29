@@ -11,7 +11,9 @@ describe('Select with `ArrowDown`', () => {
 
   test('start', async () => {
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() => tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected')))
+      .toBeFalsy();
 
     firstItem.focus();
     await expect.poll(() => document.activeElement).toBe(firstItem);
@@ -21,14 +23,22 @@ describe('Select with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() =>
+        tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
+      )
+      .toBeFalsy();
   });
 
   test('use `ArrowDown` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() =>
+        tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))
+      )
+      .toBeFalsy();
   });
 
   test('use `ArrowDown` key at the last item does nothing', async () => {
@@ -36,7 +46,9 @@ describe('Select with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => lastItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.slice(0, -1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() => tabs.items.slice(0, -1).every((item) => item.hasAttribute('aria-selected')))
+      .toBeFalsy();
   });
 });
 
@@ -49,7 +61,9 @@ describe('select with `ArrowDown`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() => tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected')))
+      .toBeFalsy();
     await expect.poll(() => tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
@@ -60,13 +74,21 @@ describe('select with `ArrowDown`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() =>
+        tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
+      )
+      .toBeFalsy();
   });
 
   test('use `ArrowDown` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.poll(() => fourthItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => tabs.items.filter((_, idx) => idx !== 3).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect
+      .poll(() =>
+        tabs.items.filter((_, idx) => idx !== 3).every((item) => item.hasAttribute('aria-selected'))
+      )
+      .toBeFalsy();
   });
 });

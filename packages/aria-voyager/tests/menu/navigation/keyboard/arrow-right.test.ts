@@ -16,7 +16,7 @@ describe('Open with `ArrowRight`', () => {
 
     firstItem.focus();
     await expect.poll(() => document.activeElement).toBe(firstItem);
-  }));
+  });
 
   test('use `ArrowRight` to open submenu', async () => {
     await userEvent.keyboard('{ArrowDown}');

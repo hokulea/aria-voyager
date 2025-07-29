@@ -11,7 +11,9 @@ describe('Navigate with `ArrowUp`', () => {
 
   test('start', async () => {
     await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
 
     firstItem.focus();
   });
@@ -20,32 +22,44 @@ describe('Navigate with `ArrowUp`', () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
   });
 
   test('use `END` to jump to the last item', async () => {
     await userEvent.keyboard('{End}');
 
     await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
   });
 
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.poll(() => secondLastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 
   test('use `ArrowUp` key to activate third last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.poll(() => thirdLastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(thirdLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== menu.items.indexOf(thirdLastItem))
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 });
 
@@ -58,7 +72,9 @@ describe('navigate with `ArrowUp`, skip disabled items', () => {
 
   test('start', async () => {
     await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
 
     firstItem.focus();
   });
@@ -67,24 +83,34 @@ describe('navigate with `ArrowUp`, skip disabled items', () => {
     await userEvent.keyboard('{End}');
 
     await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
   });
 
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.poll(() => secondLastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 
   test('use `ArrowUp` key to activate fourth last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.poll(() => fourthLastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(fourthLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== menu.items.indexOf(fourthLastItem))
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 });

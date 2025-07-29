@@ -5,7 +5,7 @@ import { createMenuElement } from '../components/menu';
 import { createCodeMenu } from './-shared';
 
 describe('Menu', () => {
-  test('renders', async () => {
+  test('renders', () => {
     const { codeMenu } = createCodeMenu();
     const menu = new Menu(codeMenu);
 
@@ -31,7 +31,7 @@ describe('Menu', () => {
       await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
     });
 
-    test('reads items', async () => {
+    test('reads items', () => {
       const { codeMenu } = createCodeMenu();
 
       const menu = new Menu(codeMenu);
@@ -44,7 +44,9 @@ describe('Menu', () => {
 
       const menu = new Menu(codeMenu);
 
-    await expect.poll(() => menu.items.map((item) => item.getAttribute('tabindex')).every(Boolean)).toBeTruthy();
+      await expect
+        .poll(() => menu.items.map((item) => item.getAttribute('tabindex')).every(Boolean))
+        .toBeTruthy();
     });
   });
 
@@ -56,7 +58,9 @@ describe('Menu', () => {
 
       const menu = new Menu(codeMenu);
 
-    await expect.poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
+      await expect
+        .poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean))
+        .toBeTruthy();
     });
   });
 });

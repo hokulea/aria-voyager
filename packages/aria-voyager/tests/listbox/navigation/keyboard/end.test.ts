@@ -14,13 +14,13 @@ describe('Navigates with `End`', () => {
     await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
-  }));
+  });
 
   test('focus list to activate first item', async () => {
     list.focus();
     await expect.poll(() => document.activeElement).toBe(list);
     await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-  }));
+  });
 
   test('use `End` key to activate last item', async () => {
     await userEvent.keyboard('{End}');
@@ -44,13 +44,13 @@ describe('Navigates with `End`, skip disabled item', () => {
     await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
     await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
-  }));
+  });
 
   test('focus list to activate first item', async () => {
     list.focus();
     await expect.poll(() => document.activeElement).toBe(list);
     await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-  }));
+  });
 
   test('use `End` key to activate second last item', async () => {
     await userEvent.keyboard('{End}');

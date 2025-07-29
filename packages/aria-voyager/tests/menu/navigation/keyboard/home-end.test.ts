@@ -24,14 +24,18 @@ describe('Navigates with `Home` and `End`', () => {
     await userEvent.keyboard('{End}');
 
     await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
   });
 
   test('activates the first item with HOME', async () => {
     await userEvent.keyboard('{Home}');
 
     await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
+      .toBeTruthy();
   });
 });
 
@@ -60,17 +64,25 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
     await userEvent.keyboard('{End}');
 
     await expect.poll(() => secondLastItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 
   test('activates the first item with HOME', async () => {
     await userEvent.keyboard('{Home}');
 
     await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect
+      .poll(() =>
+        menu.items
+          .filter((_, idx) => idx !== 1)
+          .every((item) => item.getAttribute('tabindex') === '-1')
+      )
+      .toBeTruthy();
   });
 });

@@ -31,5 +31,5 @@ describe('Close with `ArrowLeft`', () => {
 
   test('has focus moved to the trigger of the submenu', async () => {
     await expect.poll(() => document.activeElement).toBe(fourthItem);
-  }));
+  });
 });

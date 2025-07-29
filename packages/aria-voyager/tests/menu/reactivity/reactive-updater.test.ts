@@ -11,11 +11,11 @@ describe('Reactive Updater', () => {
     updater
   });
 
-  test('start', async () => {
+  test('start', () => {
     expect(menu.items.length).toBe(11);
   });
 
-  test('reads elements on appending', async () => {
+  test('reads elements on appending', () => {
     appendItemToMenu(codeMenu, 'Command Palette');
 
     updater.updateItems();
@@ -26,30 +26,42 @@ describe('Reactive Updater', () => {
   describe('read options', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)).toBeTruthy();
+      await expect
+        .poll(() =>
+          menu.items
+            .slice(1)
+            .map((item) => item.getAttribute('tabindex') === '-1')
+            .every(Boolean)
+        )
+        .toBeTruthy();
 
       codeMenu.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-    await expect.poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
+      await expect
+        .poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean))
+        .toBeTruthy();
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-    await expect.poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
+      await expect
+        .poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean))
+        .toBeTruthy();
 
       codeMenu.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
       await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => menu.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)).toBeTruthy();
+      await expect
+        .poll(() =>
+          menu.items
+            .slice(1)
+            .map((item) => item.getAttribute('tabindex') === '-1')
+            .every(Boolean)
+        )
+        .toBeTruthy();
     });
   });
 });
