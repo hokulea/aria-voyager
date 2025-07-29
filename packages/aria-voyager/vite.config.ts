@@ -16,7 +16,8 @@ export default defineConfig({
     }
   },
   test: {
-    // open: true,
+    // retry: 2,
+    // fileParallelism: false,
     coverage: {
       enabled: true,
       provider: 'istanbul',
@@ -27,6 +28,7 @@ export default defineConfig({
       headless: true,
       screenshotFailures: false,
       provider: 'playwright',
+      testerHtmlPath: './tests/index.html',
       instances: [
         { browser: 'firefox' }
         // tests are flaky in playwright with chromium + webkit

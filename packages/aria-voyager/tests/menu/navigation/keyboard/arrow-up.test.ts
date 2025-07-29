@@ -43,22 +43,20 @@ describe('Navigate with `ArrowUp`', () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use `ArrowUp` key to activate third last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(thirdLastItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(thirdLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(thirdLastItem))) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 });
 
@@ -93,21 +91,19 @@ describe('navigate with `ArrowUp`, skip disabled items', () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use `ArrowUp` key to activate fourth last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(fourthLastItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== menu.items.indexOf(fourthLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(fourthLastItem))) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 });

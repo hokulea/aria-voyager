@@ -24,11 +24,10 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use `ArrowDown` key to activate third item', async () => {
@@ -77,21 +76,19 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use `ArrowDown` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== 3)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.filter((_, idx) => idx !== 3)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 });
