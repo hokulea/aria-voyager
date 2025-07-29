@@ -8,11 +8,12 @@ describe('When Focus', () => {
   const menu = new Menu(codeMenu);
   const { firstItem } = getItems(menu);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+  test('start', async () => {
+    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+    
+    for (const item of menu.items.slice(1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
 
     expect(menu.activeItem).toBeUndefined();
   });

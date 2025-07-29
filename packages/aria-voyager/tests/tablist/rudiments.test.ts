@@ -10,37 +10,39 @@ test('renders', () => {
 });
 
 describe('setup', () => {
-  test('has menu role', () => {
+  test('has menu role', async () => {
     const { tablist } = createTabs();
 
-    expect(tablist.getAttribute('role')).toBe('tablist');
+    await expect.element(tablist).toHaveAttribute('role', 'tablist');
   });
 
-  test('sets tabindex on the first item', () => {
+  test('sets tabindex on the first item', async () => {
     const { tabs } = createTabs();
 
     const { firstItem } = getTabItems(tabs);
 
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
   });
 
-  test('items have tabindex', () => {
+  test('items have tabindex', async () => {
     const { tabs } = createTabs();
 
-    expect(tabs.items.map((item) => item.getAttribute('tabindex')).every(Boolean)).toBeTruthy();
+    for (const item of tabs.items) {
+      await expect.element(item).toHaveAttribute('tabindex');
+    }
   });
 });
 
 describe('disabled', () => {
-  test('focus does not work', () => {
+  test('focus does not work', async () => {
     const { tablist } = createTabs();
 
     tablist.setAttribute('aria-disabled', 'true');
 
     const tabs = new Tablist(tablist);
 
-    expect(
-      tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-    ).toBeTruthy();
+    for (const item of tabs.items) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 });

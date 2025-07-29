@@ -12,20 +12,20 @@ describe('Listbox', () => {
   });
 
   describe('setup', () => {
-    it('has listbox role', () => {
+    it('has listbox role', async () => {
       const list = createListElement(document.body);
 
       new Listbox(list);
 
-      expect(list.getAttribute('role')).toBe('listbox');
+      await expect.element(list).toHaveAttribute('role', 'listbox');
     });
 
-    it('sets tabindex', () => {
+    it('sets tabindex', async () => {
       const list = createListElement(document.body);
 
       new Listbox(list);
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
     });
 
     it('reads items', () => {
@@ -41,12 +41,14 @@ describe('Listbox', () => {
 
       const listbox = new Listbox(list);
 
-      expect(listbox.items.map((item) => item.id).every(Boolean)).toBeTruthy();
+      for (const item of listbox.items) {
+        expect(item.id).toBeTruthy();
+      }
     });
   });
 
   describe('disabled', () => {
-    it('focus does not work', () => {
+    it('focus does not work', async () => {
       const list = createListElement(document.body);
 
       list.setAttribute('aria-disabled', 'true');
@@ -55,7 +57,9 @@ describe('Listbox', () => {
 
       list.dispatchEvent(new FocusEvent('focusin'));
 
-      expect([...list.children].every((elem) => !elem.hasAttribute('aria-selected'))).toBeTruthy();
+      for (const elem of list.children) {
+        await expect.element(elem as Element).not.toHaveAttribute('aria-selected');
+      }
     });
   });
 });

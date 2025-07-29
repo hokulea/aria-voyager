@@ -12,7 +12,7 @@ describe('Close with `ArrowLeft`', () => {
   const { firstItem, fourthItem } = getItems(menu);
 
   test('open share menu', async () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.element(shareMenu).not.toBeVisible();
 
     firstItem.focus();
 
@@ -20,16 +20,16 @@ describe('Close with `ArrowLeft`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowRight}');
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
-    expect(document.activeElement).toBe(codeItem);
+    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
+    await expect.element(codeItem).toBeFocused();
   });
 
   test('use `ArrowLeft` to close submenu', async () => {
     await userEvent.keyboard('{ArrowLeft}');
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.element(shareMenu).not.toBeVisible();
   });
 
-  test('has focus moved to the trigger of the submenu', () => {
-    expect(document.activeElement).toBe(fourthItem);
+  test('has focus moved to the trigger of the submenu', async () => {
+    await expect.element(fourthItem).toBeFocused();
   });
 });
