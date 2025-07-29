@@ -21,9 +21,9 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
-    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
-    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
 
     await expect
       .poll(() => listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean))
@@ -35,8 +35,8 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     await userEvent.tab({ shift: true });
 
     expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
-    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-current', 'true');
-    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-current')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
   });
 });

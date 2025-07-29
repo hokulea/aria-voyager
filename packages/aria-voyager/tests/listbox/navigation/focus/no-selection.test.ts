@@ -10,7 +10,7 @@ test('focus activates the first item', async () => {
 
   list.dispatchEvent(new FocusEvent('focusin'));
 
-  await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', firstItem.id);
-  await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-current', 'true');
-  await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
+  await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+  await expect.poll(() => firstItem.getAttribute('aria-current')).toBe('true');
+  await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
 });

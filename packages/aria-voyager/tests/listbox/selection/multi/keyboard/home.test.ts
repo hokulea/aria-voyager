@@ -9,19 +9,19 @@ test('select from third to first item with `Home` and `Shift` key', async () => 
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-  await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
-  await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-selected');
+  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+  await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
 
   await userEvent.click(thirdItem);
 
-  await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-  await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
-  await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+  await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
 
   await userEvent.keyboard('{Shift>}{Home}');
 
-  await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-selected', 'true');
-  await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
-  await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
+  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+  await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
 });

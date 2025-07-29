@@ -13,7 +13,7 @@ describe('setup', () => {
   test('has menu role', async () => {
     const { tablist } = createTabs();
 
-    await expect.poll(() => expect.element(tablist)).toHaveAttribute('role', 'tablist');
+    await expect.poll(() => tablist.getAttribute('role')).toBe('tablist');
   });
 
   test('sets tabindex on the first item', async () => {
@@ -21,7 +21,7 @@ describe('setup', () => {
 
     const { firstItem } = getTabItems(tabs);
 
-    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
   });
 
   test('items have tabindex', async () => {

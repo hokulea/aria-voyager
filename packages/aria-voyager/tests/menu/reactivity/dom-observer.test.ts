@@ -22,7 +22,7 @@ describe('DOM Observer', () => {
 
   describe('read options', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      await expect.poll(() => expect.element(menu.items[0])).toHaveAttribute('tabindex', '0');
+      await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
       await expect
         .poll(() =>
           menu.items
@@ -50,7 +50,7 @@ describe('DOM Observer', () => {
 
       await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === null);
 
-      await expect.poll(() => expect.element(menu.items[0])).toHaveAttribute('tabindex', '0');
+      await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
       await expect
         .poll(() =>
           menu.items

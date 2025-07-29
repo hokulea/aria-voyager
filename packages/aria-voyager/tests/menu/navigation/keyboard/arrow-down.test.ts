@@ -16,13 +16,13 @@ describe('Navigate with `ArrowDown`', () => {
       .toBeTruthy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toBeFocused();
+    await expect.poll(() => document.activeElement).toBe(firstItem);
   });
 
   test('use `ArrowDown` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() =>
         menu.items
@@ -35,7 +35,7 @@ describe('Navigate with `ArrowDown`', () => {
   test('use `ArrowDown` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => thirdItem.getAttribute('tabindex')).toBe('0');
 
     await expect
       .poll(() =>
@@ -50,7 +50,7 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{End}');
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect.poll(() => expect.element(lastItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1'))
       .toBeTruthy();
@@ -65,19 +65,19 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
   thirdItem.setAttribute('aria-disabled', 'true');
 
   test('start', async () => {
-    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
       .toBeTruthy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toBeFocused();
+    await expect.poll(() => document.activeElement).toBe(firstItem);
   });
 
   test('use `ArrowDown` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() =>
         menu.items
@@ -90,7 +90,7 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
   test('use `ArrowDown` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect.poll(() => expect.element(fourthItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => fourthItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() =>
         menu.items

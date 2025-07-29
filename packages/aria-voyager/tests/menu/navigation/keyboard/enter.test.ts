@@ -20,11 +20,11 @@ describe('Open with `Enter`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
-    await expect.poll(() => expect.element(fourthItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => fourthItem.getAttribute('tabindex')).toBe('0');
 
     await userEvent.keyboard('{Enter}');
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
-    await expect.poll(() => expect.element(codeItem)).toHaveAttribute('tabindex', '0');
-    await expect.poll(() => expect.element(codeItem)).toBeFocused();
+    await expect.poll(() => codeItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => document.activeElement).toBe(codeItem);
   });
 });

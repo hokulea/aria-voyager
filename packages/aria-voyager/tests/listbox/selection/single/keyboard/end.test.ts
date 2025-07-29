@@ -12,16 +12,16 @@ describe('Select last item with `End` key', () => {
   test('focus list to select first item', async () => {
     list.focus();
 
-    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-selected', 'true');
-    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
-    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
   test('use `End` to select last item', async () => {
     await userEvent.keyboard('{End}');
 
-    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
-    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 });

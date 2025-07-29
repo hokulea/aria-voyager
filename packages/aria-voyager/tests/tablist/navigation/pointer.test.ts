@@ -8,7 +8,7 @@ describe('Use pointer to activate items', () => {
   const { firstItem, secondItem, thirdItem } = getTabItems(tabs);
 
   test('start', async () => {
-    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() => tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
       .toBeTruthy();
@@ -29,7 +29,7 @@ describe('Use pointer to activate items', () => {
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() =>
         tabs.items
@@ -42,7 +42,7 @@ describe('Use pointer to activate items', () => {
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
-    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => thirdItem.getAttribute('tabindex')).toBe('0');
     await expect
       .poll(() =>
         tabs.items

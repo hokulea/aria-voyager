@@ -20,7 +20,7 @@ describe('Select manually with spacebar`', () => {
       .toBeFalsy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toBeFocused();
+    await expect.poll(() => document.activeElement).toBe(firstItem);
   });
 
   test('use `ArrowRight` key to activate second item', async () => {

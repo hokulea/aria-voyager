@@ -19,25 +19,25 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
     // whole suite. Whem run alone, its all fine.
     // Some race conditions?
     await vi.waitFor(async () => {
-      await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-      await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
-      await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-selected');
+      await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+      await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+      await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
     });
   });
 
   test('use `ArrowUp` and `Shift` key to select third and second item', async () => {
     await keys.keyboard('{Shift>}{ArrowUp}');
 
-    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
-    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 
   test('Release shift', async () => {
     await keys.keyboard('{/Shift}');
 
-    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
-    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
-    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 });

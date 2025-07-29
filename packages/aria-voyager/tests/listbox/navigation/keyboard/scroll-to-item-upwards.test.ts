@@ -22,10 +22,10 @@ describe('Scroll Upwards', () => {
 
   test('focus list and activate last item', async () => {
     list.focus();
-    await expect.poll(() => expect.element(list)).toBeFocused();
+    await expect.poll(() => document.activeElement).toBe(list);
 
     await userEvent.keyboard('{End}');
-    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', lastItem.id);
+    await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(lastItem.id);
   });
 
   test('use `ArrowUp` to scroll up', async () => {
@@ -37,14 +37,14 @@ describe('Scroll Upwards', () => {
     }
 
     expect(list.scrollTop).toBe(180);
-    await expect.poll(() => expect.element(list.children[i])).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => list.children[i].getAttribute('aria-selected')).toBe('true');
 
     await userEvent.keyboard('{ArrowUp}');
     expect(list.scrollTop).toBe(169);
-    await expect.poll(() => expect.element(list.children[i - 1])).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => list.children[i - 1].getAttribute('aria-selected')).toBe('true');
 
     await userEvent.keyboard('{ArrowUp}');
     expect(list.scrollTop).toBe(150);
-    await expect.poll(() => expect.element(list.children[i - 2])).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => list.children[i - 2].getAttribute('aria-selected')).toBe('true');
   });
 });
