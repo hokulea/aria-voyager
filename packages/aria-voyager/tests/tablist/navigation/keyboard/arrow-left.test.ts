@@ -15,7 +15,7 @@ describe('Navigate with `ArrowLeft`', () => {
     expect(tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowUp` at first item does nothing', async () => {
@@ -73,7 +73,7 @@ describe('navigate with `ArrowLeft`, skipping disabled items', () => {
     expect(tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `END` to jump to the last item', async () => {

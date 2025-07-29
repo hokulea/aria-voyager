@@ -12,7 +12,7 @@ describe('Select with `ArrowLeft`', () => {
     expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowUp` at first item does nothing', async () => {
@@ -63,7 +63,7 @@ describe('select with `ArrowLeft`, skipping disabled items', () => {
     expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `END` to jump to the last item', async () => {

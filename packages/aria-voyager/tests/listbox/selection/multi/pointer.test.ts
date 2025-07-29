@@ -9,9 +9,11 @@ describe('Select with Pointer', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+  test('start - no items selected', async () => {
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+  });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);

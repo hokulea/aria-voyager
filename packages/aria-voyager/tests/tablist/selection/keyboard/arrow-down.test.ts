@@ -14,7 +14,7 @@ describe('Select with `ArrowDown`', () => {
     expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowDown` key to activate second item', async () => {
@@ -57,7 +57,7 @@ describe('select with `ArrowDown`, skipping disabled items', () => {
     expect(tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowDown` key to activate second item', async () => {

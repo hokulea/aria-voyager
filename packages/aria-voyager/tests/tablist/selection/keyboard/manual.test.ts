@@ -18,7 +18,7 @@ describe('Select manually with spacebar`', () => {
     expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowRight` key to activate second item', async () => {

@@ -18,7 +18,7 @@ describe('navigates with `Home`', () => {
 
   test('focus list and activate last item', async () => {
     list.focus();
-    await expect.element(list).toBeFocused();
+    await expect.element(list).toHaveFocus();
     await expect.element(list).toHaveAttribute('aria-activedescendant', firstItem.id);
 
     await userEvent.keyboard('{End}');
@@ -52,7 +52,7 @@ describe('navigates with `Home`, skip disabled item', () => {
   test('focus list and activate last item', async () => {
     list.focus();
 
-    await expect.element(list).toBeFocused();
+    await expect.element(list).toHaveFocus();
     await expect.element(list).toHaveAttribute('aria-activedescendant', secondItem.id);
 
     await userEvent.keyboard('{End}');

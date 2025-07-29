@@ -31,10 +31,9 @@ describe('Hover activates item', () => {
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
     expect(menu.activeItem).toBe(secondItem);
-    expect(
-      menu.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    
+    for (const item of menu.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 });

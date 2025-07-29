@@ -16,7 +16,7 @@ describe('Navigate with `ArrowDown`', () => {
     };
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowDown` key to activate second item', async () => {
@@ -67,7 +67,7 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
     };
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowDown` key to activate second item', async () => {

@@ -25,6 +25,6 @@ describe('Open with `Enter`', () => {
     await userEvent.keyboard('{Enter}');
     await expect.element(shareMenu).toBeVisible();
     await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    await expect.element(codeItem).toBeFocused();
+    await expect.element(codeItem).toHaveFocus();
   });
 });

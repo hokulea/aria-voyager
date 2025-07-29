@@ -23,7 +23,7 @@ describe('Close with `Escape`', () => {
 
     await expect.element(shareMenu).toBeVisible();
     await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    await expect.element(codeItem).toBeFocused();
+    await expect.element(codeItem).toHaveFocus();
   });
 
   test('use `Escape` to close submenu', async () => {
@@ -31,6 +31,6 @@ describe('Close with `Escape`', () => {
 
     shareMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
     await expect.element(shareMenu).not.toBeVisible();
-    await expect.element(fourthItem).toBeFocused();
+    await expect.element(fourthItem).toHaveFocus();
   });
 });

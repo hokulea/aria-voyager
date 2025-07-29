@@ -15,7 +15,7 @@ describe('Open with `ArrowRight`', () => {
     await expect.element(shareMenu).not.toBeVisible();
 
     firstItem.focus();
-    await expect.element(firstItem).toBeFocused();
+    await expect.element(firstItem).toHaveFocus();
   });
 
   test('use `ArrowRight` to open submenu', async () => {
@@ -27,6 +27,6 @@ describe('Open with `ArrowRight`', () => {
     await userEvent.keyboard('{ArrowRight}');
     await expect.element(shareMenu).toBeVisible();
     await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    await expect.element(codeItem).toBeFocused();
+    await expect.element(codeItem).toHaveFocus();
   });
 });

@@ -19,7 +19,7 @@ describe('Hover through items opens and closes submenus', () => {
 
     thirdItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    await expect.element(thirdItem).toBeFocused();
+    await expect.element(thirdItem).toHaveFocus();
     await expect.element(shareMenu).not.toBeVisible();
   });
 
@@ -30,7 +30,7 @@ describe('Hover through items opens and closes submenus', () => {
 
     fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    await expect.element(fourthItem).toBeFocused();
+    await expect.element(fourthItem).toHaveFocus();
     await expect.element(shareMenu).toBeVisible();
   });
 
@@ -41,7 +41,7 @@ describe('Hover through items opens and closes submenus', () => {
 
     fifthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    await expect.element(fifthItem).toBeFocused();
+    await expect.element(fifthItem).toHaveFocus();
     await expect.element(shareMenu).not.toBeVisible();
   });
 });

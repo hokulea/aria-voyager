@@ -25,9 +25,9 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-    expect(
-      listbox.(await Promise.all(items.map(async (item) => await expect.element(item).toHaveAttribute('aria-current')))).every(Boolean)
-    ).toBeFalsy();
+    for (const item of listbox.items) {
+      await expect.element(item).not.toHaveAttribute('aria-current');
+    }
   });
 
   test('refocus keeps selection', async () => {

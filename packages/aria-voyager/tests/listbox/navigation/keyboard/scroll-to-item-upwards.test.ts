@@ -22,7 +22,7 @@ describe('Scroll Upwards', () => {
 
   test('focus list and activate last item', async () => {
     list.focus();
-    await expect.element(list).toBeFocused();
+    await expect.element(list).toHaveFocus();
 
     await userEvent.keyboard('{End}');
     await expect.element(list).toHaveAttribute('aria-activedescendant', lastItem.id);

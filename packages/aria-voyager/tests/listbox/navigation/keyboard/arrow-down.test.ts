@@ -18,7 +18,7 @@ describe('Navigate with `ArrowDown`', () => {
 
   test('focus list to activate first item', async () => {
     list.focus();
-    await expect.element(list).toBeFocused();
+    await expect.element(list).toHaveFocus();
     await expect.element(list).toHaveAttribute('aria-activedescendant', firstItem.id);
   });
 
@@ -66,7 +66,7 @@ describe('Navigate with `ArrowDown`, skip disabled item', () => {
 
   test('focus list to activate first item', async () => {
     list.focus();
-    await expect.element(list).toBeFocused();
+    await expect.element(list).toHaveFocus();
     await expect.element(list).toHaveAttribute('aria-activedescendant', firstItem.id);
   });
 
