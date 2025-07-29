@@ -11,9 +11,10 @@ describe('Navigate with `ArrowUp`', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
 
     firstItem.focus();
   });
@@ -22,18 +23,20 @@ describe('Navigate with `ArrowUp`', () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
   });
 
   test('use `END` to jump to the last item', async () => {
     await userEvent.keyboard('{End}');
 
     await expect.element(lastItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(0, -1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
   });
 
   test('use `ArrowUp` key to activate second last item', async () => {
@@ -68,9 +71,10 @@ describe('navigate with `ArrowUp`, skip disabled items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
 
     firstItem.focus();
   });
@@ -79,9 +83,10 @@ describe('navigate with `ArrowUp`, skip disabled items', () => {
     await userEvent.keyboard('{End}');
 
     await expect.element(lastItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(0, -1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
   });
 
   test('use `ArrowUp` key to activate second last item', async () => {

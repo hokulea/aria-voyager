@@ -10,7 +10,7 @@ describe('When Focus', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
-    
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }

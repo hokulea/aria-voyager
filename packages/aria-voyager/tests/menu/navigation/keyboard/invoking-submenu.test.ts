@@ -13,12 +13,12 @@ describe('Invoking a menu item closes all submenus', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  test('start', async () => {
+  test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
     expect(socialMenu.matches(':popover-open')).toBeFalsy();
   });
 
-  test('open submenus', async () => {
+  test('open submenus', () => {
     // does not work under playwright
     // https://github.com/hokulea/aria-voyager/issues/264
     // await userEvent.hover(fourthItem);

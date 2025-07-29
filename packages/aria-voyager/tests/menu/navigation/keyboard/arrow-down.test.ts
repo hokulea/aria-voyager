@@ -11,9 +11,10 @@ describe('Navigate with `ArrowDown`', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
 
     firstItem.focus();
     await expect.element(firstItem).toHaveFocus();
@@ -47,9 +48,10 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(lastItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(0, -1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
   });
 });
 
@@ -62,9 +64,10 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
 
     firstItem.focus();
     await expect.element(firstItem).toHaveFocus();

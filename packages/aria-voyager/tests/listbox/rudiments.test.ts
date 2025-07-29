@@ -58,7 +58,7 @@ describe('Listbox', () => {
       list.dispatchEvent(new FocusEvent('focusin'));
 
       for (const elem of list.children) {
-        await expect.element(elem as Element).not.toHaveAttribute('aria-selected');
+        await expect.element(elem).not.toHaveAttribute('aria-selected');
       }
     });
   });

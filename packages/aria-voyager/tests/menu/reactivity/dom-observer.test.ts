@@ -8,7 +8,7 @@ describe('DOM Observer', () => {
   const { codeMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
 
-  test('start', async () => {
+  test('start', () => {
     expect(menu.items.length).toBe(11);
   });
 
@@ -35,14 +35,14 @@ describe('DOM Observer', () => {
       await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === 'true');
 
       for (const item of menu.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
       for (const item of menu.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       codeMenu.removeAttribute('aria-disabled');
 

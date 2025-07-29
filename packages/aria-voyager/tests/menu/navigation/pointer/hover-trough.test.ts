@@ -8,7 +8,7 @@ describe('Hover through items opens and closes submenus', () => {
   const menu = new Menu(codeMenu);
   const { thirdItem, fourthItem, fifthItem } = getItems(menu);
 
-  test('start', async () => {
+  test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
   });
 

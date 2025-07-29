@@ -12,7 +12,7 @@ describe('Hover activates item', () => {
   test('start', async () => {
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
 
     expect(menu.activeItem).toBeFalsy();
   });
@@ -31,7 +31,7 @@ describe('Hover activates item', () => {
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
     expect(menu.activeItem).toBe(secondItem);
-    
+
     for (const item of menu.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }

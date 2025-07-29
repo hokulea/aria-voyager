@@ -8,7 +8,7 @@ describe('DOM Observer', () => {
   const list = createListWithFruits();
   const listbox = new Listbox(list);
 
-  test('start', async () => {
+  test('start', () => {
     expect(listbox.items.length).toBe(3);
   });
 

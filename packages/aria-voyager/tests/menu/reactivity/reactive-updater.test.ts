@@ -11,11 +11,11 @@ describe('Reactive Updater', () => {
     updater
   });
 
-  test('start', async () => {
+  test('start', () => {
     expect(menu.items.length).toBe(11);
   });
 
-  test('reads elements on appending', async () => {
+  test('reads elements on appending', () => {
     appendItemToMenu(codeMenu, 'Command Palette');
 
     updater.updateItems();
@@ -38,14 +38,14 @@ describe('Reactive Updater', () => {
       updater.updateOptions();
 
       for (const item of menu.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
       for (const item of menu.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       codeMenu.removeAttribute('aria-disabled');
 

@@ -15,7 +15,7 @@ describe('Reactive Updater', () => {
 
   const { firstItem, secondItem } = getTabItems(tabs);
 
-  test('reads elements on appending', async () => {
+  test('reads elements on appending', () => {
     expect(tabs.items.length).toBe(5);
 
     appendTab(container, 'Grapefruit', 'for summer');
@@ -25,7 +25,7 @@ describe('Reactive Updater', () => {
     expect(tabs.items.length).toBe(6);
   });
 
-  test('reads selection on external update', async () => {
+  test('reads selection on external update', () => {
     const focusDecoy = document.createElement('button');
 
     document.body.append(focusDecoy);
@@ -46,7 +46,7 @@ describe('Reactive Updater', () => {
   });
 
   describe('read options', () => {
-    test('detects vertical orientation', async () => {
+    test('detects vertical orientation', () => {
       expect(tabs.options.orientation).toBe('horizontal');
 
       tablist.setAttribute('aria-orientation', 'vertical');
@@ -56,7 +56,7 @@ describe('Reactive Updater', () => {
       expect(tabs.options.orientation).toBe('vertical');
     });
 
-    test('detects horizontal orientation', async () => {
+    test('detects horizontal orientation', () => {
       expect(tabs.options.orientation).toBe('vertical');
 
       tablist.removeAttribute('aria-orientation');
@@ -76,14 +76,14 @@ describe('Reactive Updater', () => {
       updater.updateOptions();
 
       for (const item of tabs.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
       for (const item of tabs.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       tablist.removeAttribute('aria-disabled');
 
@@ -110,8 +110,8 @@ describe('Reactive Updater', () => {
       updater.updateOptions();
 
       for (const item of tabs.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       appendTab(container, 'Tab 4', 'Content 4');
       appendTab(container, 'Tab 5', 'Content 5');
@@ -124,8 +124,8 @@ describe('Reactive Updater', () => {
       updater.updateItems();
 
       for (const item of tabs.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
   });
 });

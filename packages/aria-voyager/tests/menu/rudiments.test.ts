@@ -5,7 +5,7 @@ import { createMenuElement } from '../components/menu';
 import { createCodeMenu } from './-shared';
 
 describe('Menu', () => {
-  test('renders', async () => {
+  test('renders', () => {
     const { codeMenu } = createCodeMenu();
     const menu = new Menu(codeMenu);
 
@@ -31,7 +31,7 @@ describe('Menu', () => {
       await expect.element(firstItem).toHaveAttribute('tabindex', '0');
     });
 
-    test('reads items', async () => {
+    test('reads items', () => {
       const { codeMenu } = createCodeMenu();
 
       const menu = new Menu(codeMenu);

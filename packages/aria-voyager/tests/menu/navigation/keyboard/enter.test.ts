@@ -11,7 +11,7 @@ describe('Open with `Enter`', () => {
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
 
-  test('start', async () => {
+  test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
     firstItem.focus();
   });

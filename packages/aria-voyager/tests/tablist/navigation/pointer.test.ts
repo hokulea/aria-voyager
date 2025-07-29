@@ -9,9 +9,11 @@ describe('Use pointer to activate items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of tabs.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
+
     expect(tabs.activeItem).toBeTruthy();
   });
 
@@ -21,9 +23,10 @@ describe('Use pointer to activate items', () => {
     await userEvent.click(tablist);
 
     expect(tabs.activeItem).toBeTruthy();
+
     for (const item of tabs.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
-    };
+    }
   });
 
   test('select second item', async () => {

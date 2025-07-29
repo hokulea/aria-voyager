@@ -9,7 +9,7 @@ describe('Hover opens submenu', () => {
   const menu = new Menu(codeMenu);
   const { fourthItem } = getItems(menu);
 
-  test('start', async () => {
+  test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
     expect(menu.activeItem).toBeUndefined();
   });

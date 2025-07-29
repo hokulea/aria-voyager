@@ -30,7 +30,7 @@ describe('Hover out to trigger keeps submenu open', () => {
       new PointerEvent('pointerout', { bubbles: true, relatedTarget: fourthItem })
     );
 
-    await vi.waitFor(() => {
+    await vi.waitFor(async () => {
       expect(shareMenu.matches(':popover-open')).toBeTruthy();
       await expect.element(fourthItem).toHaveFocus();
     });

@@ -13,12 +13,12 @@ describe('Invoking a menu item closes all submenus', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  test('start', async () => {
+  test('start', () => {
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
     expect(socialMenu.matches(':popover-open')).toBeFalsy();
   });
 
-  test('open the sub-submenu', async () => {
+  test('open the sub-submenu', () => {
     // https://github.com/hokulea/aria-voyager/issues/264
     // await userEvent.hover(fourthItem);
     // await userEvent.hover(socialItem);

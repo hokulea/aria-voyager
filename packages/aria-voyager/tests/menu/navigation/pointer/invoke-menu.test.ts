@@ -13,7 +13,7 @@ describe('Invoking a menu item closes the menu', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  test('start', async () => {
+  test('start', () => {
     expect(codeMenu.matches(':popover-open')).toBeFalsy();
     expect(shareMenu.matches(':popover-open')).toBeFalsy();
     expect(socialMenu.matches(':popover-open')).toBeFalsy();
@@ -48,7 +48,7 @@ describe('Invoking a descending menu item closes the menu', () => {
   const menu = new Menu(codeMenu);
   const { secondItem } = getItems(menu);
 
-  test('start', async () => {
+  test('start', () => {
     expect(codeMenu.matches(':popover-open')).toBeFalsy();
   });
 
