@@ -11,22 +11,22 @@ describe('Open with `ArrowRight`', () => {
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.element(shareMenu).not.toBeVisible();
 
     firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    await expect.element(firstItem).toBeFocused();
   });
 
   test('use `ArrowRight` to open submenu', async () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
-    expect(fourthItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 
     await userEvent.keyboard('{ArrowRight}');
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
-    expect(document.activeElement).toBe(codeItem);
+    await expect.element(shareMenu).toBeVisible();
+    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
+    await expect.element(codeItem).toBeFocused();
   });
 });

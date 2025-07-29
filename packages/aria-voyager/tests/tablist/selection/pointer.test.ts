@@ -7,8 +7,8 @@ describe('Use pointer to select items', () => {
   const { tabs, tablist } = createTabs();
   const { firstItem, secondItem, thirdItem } = getTabItems(tabs);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
+  test('start', async () => {
+    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
     expect(tabs.items.slice(1).every((item) => item.getAttribute('aria-selected'))).toBeFalsy();
   });
 
@@ -22,7 +22,7 @@ describe('Use pointer to select items', () => {
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
     expect(
       tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
     ).toBeFalsy();
@@ -31,7 +31,7 @@ describe('Use pointer to select items', () => {
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
     expect(
       tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))
     ).toBeFalsy();

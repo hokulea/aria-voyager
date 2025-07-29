@@ -9,8 +9,8 @@ describe('Hover opens submenu', () => {
   const menu = new Menu(codeMenu);
   const { fourthItem } = getItems(menu);
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.element(shareMenu).not.toBeVisible();
     expect(menu.activeItem).toBeUndefined();
   });
 
@@ -18,6 +18,6 @@ describe('Hover opens submenu', () => {
     await userEvent.hover(fourthItem);
 
     await expect.element(fourthItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.element(shareMenu).toBeVisible();
   });
 });

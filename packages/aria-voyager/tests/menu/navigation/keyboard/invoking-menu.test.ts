@@ -13,14 +13,14 @@ describe('Invoking a menu item closes all submenus', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  expect(socialMenu.matches(':popover-open')).toBeFalsy();
+  await expect.element(shareMenu).not.toBeVisible();
+  await expect.element(socialMenu).not.toBeVisible();
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);
 
     await vi.waitFor(() => {
-      expect(codeMenu.matches(':popover-open')).toBeTruthy();
+      await expect.element(codeMenu).toBeVisible();
     });
 
     // does not work under playwright
@@ -31,16 +31,16 @@ describe('Invoking a menu item closes all submenus', () => {
     fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
     socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(socialMenu.matches(':popover-open')).toBeTruthy();
+    await expect.element(shareMenu).toBeVisible();
+    await expect.element(socialMenu).toBeVisible();
   });
 
   test('use `Enter` on a menu item closes all submenus', async () => {
     await userEvent.hover(mastodonItem);
     await userEvent.keyboard('{Enter}');
 
-    expect(codeMenu.matches(':popover-open')).toBeFalsy();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
+    await expect.element(codeMenu).not.toBeVisible();
+    await expect.element(shareMenu).not.toBeVisible();
+    await expect.element(socialMenu).not.toBeVisible();
   });
 });

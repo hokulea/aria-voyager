@@ -9,10 +9,10 @@ describe('Hover activates item', () => {
   const menu = new Menu(codeMenu);
   const { firstItem, secondItem } = getItems(menu);
 
-  test('start', () => {
-    expect(
-      menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+  test('start', async () => {
+    for (const item of menu.items.slice(1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    };
 
     expect(menu.activeItem).toBeFalsy();
   });

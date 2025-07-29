@@ -10,14 +10,14 @@ describe('Select all', () => {
 
   test('use `Meta` + `A` key to select all items', async () => {
     expect(
-      listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)
+      listbox.(await Promise.all(items.map(async (item) => await expect.element(item).toHaveAttribute('aria-selected')))).every(Boolean)
     ).toBeFalsy();
 
     list.focus();
     await userEvent.keyboard('{Meta>}a');
 
     expect(
-      listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)
+      listbox.(await Promise.all(items.map(async (item) => await expect.element(item).toHaveAttribute('aria-selected')))).every(Boolean)
     ).toBeTruthy();
   });
 });

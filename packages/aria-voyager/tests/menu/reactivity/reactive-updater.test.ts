@@ -11,11 +11,11 @@ describe('Reactive Updater', () => {
     updater
   });
 
-  test('start', () => {
+  test('start', async () => {
     expect(menu.items.length).toBe(11);
   });
 
-  test('reads elements on appending', () => {
+  test('reads elements on appending', async () => {
     appendItemToMenu(codeMenu, 'Command Palette');
 
     updater.updateItems();
@@ -24,8 +24,8 @@ describe('Reactive Updater', () => {
   });
 
   describe('read options', () => {
-    test('sets tabindex to -1 when the aria-disabled is `true`', () => {
-      expect(menu.items[0].getAttribute('tabindex')).toBe('0');
+    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
+      await expect.element(menu.items[0]).toHaveAttribute('tabindex', '0');
       expect(
         menu.items
           .slice(1)
@@ -37,21 +37,21 @@ describe('Reactive Updater', () => {
 
       updater.updateOptions();
 
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of menu.items) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
+      for (const item of menu.items) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
 
       codeMenu.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
-      expect(menu.items[0].getAttribute('tabindex')).toBe('0');
+      await expect.element(menu.items[0]).toHaveAttribute('tabindex', '0');
       expect(
         menu.items
           .slice(1)

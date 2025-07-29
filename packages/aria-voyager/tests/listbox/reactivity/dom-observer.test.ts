@@ -8,7 +8,7 @@ describe('DOM Observer', () => {
   const list = createListWithFruits();
   const listbox = new Listbox(list);
 
-  test('start', () => {
+  test('start', async () => {
     expect(listbox.items.length).toBe(3);
   });
 
@@ -68,23 +68,23 @@ describe('DOM Observer', () => {
     });
 
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
 
       list.setAttribute('aria-disabled', 'true');
 
       await vi.waitUntil(() => list.getAttribute('aria-disabled') === 'true');
 
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.element(list).toHaveAttribute('tabindex', '-1');
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.element(list).toHaveAttribute('tabindex', '-1');
 
       list.removeAttribute('aria-disabled');
 
       await vi.waitUntil(() => list.getAttribute('aria-disabled') === null);
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
     });
   });
 });

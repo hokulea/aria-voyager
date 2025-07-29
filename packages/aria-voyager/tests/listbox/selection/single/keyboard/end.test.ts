@@ -9,19 +9,19 @@ describe('Select last item with `End` key', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('focus list to select first item', () => {
+  test('focus list to select first item', async () => {
     list.focus();
 
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
   });
 
   test('use `End` to select last item', async () => {
     await userEvent.keyboard('{End}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 });

@@ -11,8 +11,8 @@ describe('Open with `Enter`', () => {
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.element(shareMenu).not.toBeVisible();
     firstItem.focus();
   });
 
@@ -20,11 +20,11 @@ describe('Open with `Enter`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
-    expect(fourthItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 
     await userEvent.keyboard('{Enter}');
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
-    expect(document.activeElement).toBe(codeItem);
+    await expect.element(shareMenu).toBeVisible();
+    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
+    await expect.element(codeItem).toBeFocused();
   });
 });

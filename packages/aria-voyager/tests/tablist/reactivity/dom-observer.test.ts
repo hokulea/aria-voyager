@@ -56,7 +56,7 @@ describe('DOM Observer', () => {
 
       tablist.removeAttribute('aria-orientation');
 
-      await vi.waitUntil(() => !tablist.hasAttribute('aria-orientation'));
+      await vi.waitUntil(() => !(await expect.element(tablist).toHaveAttribute('aria-orientation')));
 
       expect(tabs.options.orientation).toBe('horizontal');
     });
@@ -64,27 +64,27 @@ describe('DOM Observer', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       await userEvent.click(firstItem);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
       tablist.setAttribute('aria-disabled', 'true');
 
       await vi.waitUntil(() => tablist.getAttribute('aria-disabled') === 'true');
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of tabs.items) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of tabs.items) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
 
       tablist.removeAttribute('aria-disabled');
 
       await vi.waitUntil(() => tablist.getAttribute('aria-disabled') === null);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
       expect(
         tabs.items
           .slice(1)

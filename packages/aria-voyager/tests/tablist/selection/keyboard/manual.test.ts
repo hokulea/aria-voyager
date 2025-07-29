@@ -13,12 +13,12 @@ describe('Select manually with spacebar`', () => {
 
   thirdItem.setAttribute('aria-disabled', 'true');
 
-  test('start', () => {
+  test('start', async () => {
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
     expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
 
     firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    await expect.element(firstItem).toBeFocused();
   });
 
   test('use `ArrowRight` key to activate second item', async () => {
