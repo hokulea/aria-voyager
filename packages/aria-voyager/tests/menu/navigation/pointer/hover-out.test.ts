@@ -1,17 +1,19 @@
 import { userEvent } from '@vitest/browser/context';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { Menu } from '../../../../src';
 import { createCodeMenu, getItems } from '../../-shared';
 
-describe('Hover out to trigger keeps submenu open', async () => {
+describe('Hover out to trigger keeps submenu open', () => {
   const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
   const { fourthItem } = getItems(menu);
 
-  await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+  });
 
   test('hover item to show submenu', async () => {
     await userEvent.hover(fourthItem);
@@ -30,9 +32,7 @@ describe('Hover out to trigger keeps submenu open', async () => {
       new PointerEvent('pointerout', { bubbles: true, relatedTarget: fourthItem })
     );
 
-    await vi.waitFor(async () => {
-      await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
-      await expect.poll(() => document.activeElement).toBe(fourthItem);
-    });
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => document.activeElement).toBe(fourthItem);
   });
 });
