@@ -10,15 +10,15 @@ describe('Select with Pointer', () => {
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   test('select second item', async () => {
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
-    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-selected');
 
     await userEvent.click(secondItem);
 
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-selected');
   });
 
   test('select third item with `Meta` key', async () => {
@@ -31,24 +31,24 @@ describe('Select with Pointer', () => {
 
     thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
 
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
   });
 
   test('deselect second item with `Meta` key', async () => {
     secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
 
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
-    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
+    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
   });
 
   test('select third to first item with `Shift` key', async () => {
     firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
-    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
+    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
   });
 });

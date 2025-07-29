@@ -10,8 +10,8 @@ describe('Navigates with `Home` and `End`', () => {
   const { firstItem, lastItem } = getItems(menu);
 
   test('start', async () => {
-    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('-1');
+    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => expect.element(lastItem)).toHaveAttribute('tabindex', '-1');
     await expect.poll(() => menu.activeItem).toBeUndefined();
   });
 
@@ -23,7 +23,7 @@ describe('Navigates with `Home` and `End`', () => {
   test('activates the last item with END', async () => {
     await userEvent.keyboard('{End}');
 
-    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => expect.element(lastItem)).toHaveAttribute('tabindex', '0');
     await expect
       .poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1'))
       .toBeTruthy();
@@ -32,7 +32,7 @@ describe('Navigates with `Home` and `End`', () => {
   test('activates the first item with HOME', async () => {
     await userEvent.keyboard('{Home}');
 
-    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
     await expect
       .poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1'))
       .toBeTruthy();
@@ -45,8 +45,8 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
   const { firstItem, secondItem, secondLastItem, lastItem } = getItems(menu);
 
   test('start', async () => {
-    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
-    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('-1');
+    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
+    await expect.poll(() => expect.element(lastItem)).toHaveAttribute('tabindex', '-1');
 
     firstItem.setAttribute('aria-disabled', 'true');
     lastItem.setAttribute('aria-disabled', 'true');
@@ -63,7 +63,7 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
   test('activates the last item with END', async () => {
     await userEvent.keyboard('{End}');
 
-    await expect.poll(() => secondLastItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => expect.element(secondLastItem)).toHaveAttribute('tabindex', '0');
     await expect
       .poll(() =>
         menu.items
@@ -76,7 +76,7 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
   test('activates the first item with HOME', async () => {
     await userEvent.keyboard('{Home}');
 
-    await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('tabindex', '0');
     await expect
       .poll(() =>
         menu.items

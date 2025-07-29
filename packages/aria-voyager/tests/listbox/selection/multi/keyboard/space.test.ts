@@ -12,16 +12,16 @@ describe('Toggle selection with `Space` key', () => {
   test('focus list', async () => {
     list.focus();
 
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
   });
 
   test('use `Space` to select active item', async () => {
     await userEvent.keyboard(' ');
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-selected', 'true');
   });
 
   test('use `Space` to deselect active item', async () => {
     await userEvent.keyboard(' ');
-    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
   });
 });

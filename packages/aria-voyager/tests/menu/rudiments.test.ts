@@ -18,7 +18,7 @@ describe('Menu', () => {
 
       new Menu(menu);
 
-      await expect.poll(() => menu.getAttribute('role')).toBe('menu');
+      await expect.poll(() => expect.element(menu)).toHaveAttribute('role', 'menu');
     });
 
     test('sets tabindex on the first item', async () => {
@@ -28,7 +28,7 @@ describe('Menu', () => {
 
       const firstItem = codeMenu.querySelector('[role="menuitem"]') as HTMLElement;
 
-      await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => expect.element(firstItem)).toHaveAttribute('tabindex', '0');
     });
 
     test('reads items', () => {

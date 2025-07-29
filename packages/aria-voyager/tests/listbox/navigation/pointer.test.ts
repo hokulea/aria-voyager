@@ -10,36 +10,36 @@ describe('use pointer to activate items', () => {
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   test('start', async () => {
-    await expect.poll(() => list.getAttribute('aria-activedescendant')).toBeNull();
-    await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
-    await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.poll(() => expect.element(list)).not.toHaveAttribute('aria-activedescendant');
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
   });
 
   test('clicking the list activates first item', async () => {
     await userEvent.click(list);
 
-    await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-    await expect.poll(() => firstItem.getAttribute('aria-current')).toBe('true');
-    await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
-    await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', firstItem.id);
+    await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-current', 'true');
+    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
   });
 
   test('clicking the second item activates it', async () => {
     await userEvent.click(secondItem);
 
-    await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
-    await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-current')).toBe('true');
-    await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', secondItem.id);
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-current', 'true');
+    await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
   });
 
   test('clicking the third item activates it', async () => {
     await userEvent.click(thirdItem);
 
-    await expect.poll(() => list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
-    await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
-    await expect.poll(() => secondItem.getAttribute('aria-current')).toBeNull();
-    await expect.poll(() => thirdItem.getAttribute('aria-current')).toBe('true');
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', thirdItem.id);
+    await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
+    await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-current', 'true');
   });
 });

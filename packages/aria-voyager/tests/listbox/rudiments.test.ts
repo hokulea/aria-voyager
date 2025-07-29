@@ -17,7 +17,7 @@ describe('Listbox', () => {
 
       new Listbox(list);
 
-      await expect.poll(() => list.getAttribute('role')).toBe('listbox');
+      await expect.poll(() => expect.element(list)).toHaveAttribute('role', 'listbox');
     });
 
     it('sets tabindex', async () => {
@@ -25,7 +25,7 @@ describe('Listbox', () => {
 
       new Listbox(list);
 
-      await expect.poll(() => list.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => expect.element(list)).toHaveAttribute('tabindex', '0');
     });
 
     it('reads items', () => {

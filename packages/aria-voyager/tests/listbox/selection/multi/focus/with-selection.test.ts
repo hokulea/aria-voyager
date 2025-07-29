@@ -14,7 +14,7 @@ test('Select first selection item when focus', async () => {
 
   list.dispatchEvent(new FocusEvent('focusin'));
 
-  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
-  await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
+  await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
+  await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-selected', 'true');
 });

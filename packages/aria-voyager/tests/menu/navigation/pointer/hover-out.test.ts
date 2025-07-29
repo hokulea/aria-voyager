@@ -33,6 +33,6 @@ describe('Hover out to trigger keeps submenu open', () => {
     );
 
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
-    await expect.poll(() => document.activeElement).toBe(fourthItem);
+    await expect.poll(() => expect.element(fourthItem)).toBeFocused();
   });
 });

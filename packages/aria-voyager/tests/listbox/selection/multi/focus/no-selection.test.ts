@@ -10,6 +10,6 @@ test('Select no items on focus', async () => {
 
   list.dispatchEvent(new FocusEvent('focusin'));
 
-  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
-  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+  await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-selected');
+  await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
 });

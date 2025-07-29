@@ -10,6 +10,6 @@ test('select first item when focus', async () => {
 
   list.focus();
 
-  await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
-  await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+  await expect.poll(() => expect.element(firstItem)).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-selected');
 });

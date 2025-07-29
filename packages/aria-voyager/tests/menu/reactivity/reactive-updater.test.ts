@@ -25,7 +25,7 @@ describe('Reactive Updater', () => {
 
   describe('read options', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => expect.element(menu.items[0])).toHaveAttribute('tabindex', '0');
       await expect
         .poll(() =>
           menu.items
@@ -53,7 +53,7 @@ describe('Reactive Updater', () => {
 
       updater.updateOptions();
 
-      await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => expect.element(menu.items[0])).toHaveAttribute('tabindex', '0');
       await expect
         .poll(() =>
           menu.items
