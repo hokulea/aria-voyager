@@ -25,6 +25,6 @@ describe('Open with `Enter`', () => {
     await userEvent.keyboard('{Enter}');
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
     await expect.poll(() => expect.element(codeItem)).toHaveAttribute('tabindex', '0');
-    await expect.poll(() => expect.element(codeItem)).toHaveFocus();
+    await expect.poll(() => expect.element(codeItem)).toBeFocused();
   });
 });

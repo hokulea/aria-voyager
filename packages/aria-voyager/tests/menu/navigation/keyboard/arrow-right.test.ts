@@ -15,7 +15,7 @@ describe('Open with `ArrowRight`', () => {
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `ArrowRight` to open submenu', async () => {
@@ -27,6 +27,6 @@ describe('Open with `ArrowRight`', () => {
     await userEvent.keyboard('{ArrowRight}');
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
     await expect.poll(() => expect.element(codeItem)).toHaveAttribute('tabindex', '0');
-    await expect.poll(() => expect.element(codeItem)).toHaveFocus();
+    await expect.poll(() => expect.element(codeItem)).toBeFocused();
   });
 });

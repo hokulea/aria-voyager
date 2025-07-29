@@ -15,7 +15,7 @@ describe('Navigate with `ArrowRight`', () => {
     await expect.poll(() => tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `ArrowRight` key to activate second item', async () => {
@@ -69,7 +69,7 @@ describe('navigate with `ArrowRight`, skipping disabled items', () => {
     await expect.poll(() => tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `ArrowRight` key to activate second item', async () => {

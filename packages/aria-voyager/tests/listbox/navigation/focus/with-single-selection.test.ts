@@ -13,9 +13,7 @@ test('focus activates the first selection item', async () => {
 
   list.focus();
 
-  await expect
-    .poll(() => expect.element(list))
-    .toHaveAttribute('aria-activedescendant', secondItem.id);
+  await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', secondItem.id);
   await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
   await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-current', 'true');
 });

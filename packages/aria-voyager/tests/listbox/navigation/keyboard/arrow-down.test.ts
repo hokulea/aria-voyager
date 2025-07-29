@@ -18,18 +18,14 @@ describe('Navigate with `ArrowDown`', () => {
 
   test('focus list to activate first item', async () => {
     list.focus();
-    await expect.poll(() => expect.element(list)).toHaveFocus();
-    await expect
-      .poll(() => expect.element(list))
-      .toHaveAttribute('aria-activedescendant', firstItem.id);
+    await expect.poll(() => expect.element(list)).toBeFocused();
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', firstItem.id);
   });
 
   test('use `ArrowDown` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect
-      .poll(() => expect.element(list))
-      .toHaveAttribute('aria-activedescendant', secondItem.id);
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', secondItem.id);
     await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(secondItem)).toHaveAttribute('aria-current', 'true');
     await expect.poll(() => expect.element(thirdItem)).not.toHaveAttribute('aria-current');
@@ -38,9 +34,7 @@ describe('Navigate with `ArrowDown`', () => {
   test('use `ArrowDown` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect
-      .poll(() => expect.element(list))
-      .toHaveAttribute('aria-activedescendant', thirdItem.id);
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', thirdItem.id);
     await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-current', 'true');
@@ -49,9 +43,7 @@ describe('Navigate with `ArrowDown`', () => {
   test('use `ArrowDown` key, but keep third item activated (hit end of list)', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect
-      .poll(() => expect.element(list))
-      .toHaveAttribute('aria-activedescendant', thirdItem.id);
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', thirdItem.id);
     await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-current', 'true');
@@ -74,18 +66,14 @@ describe('Navigate with `ArrowDown`, skip disabled item', () => {
 
   test('focus list to activate first item', async () => {
     list.focus();
-    await expect.poll(() => expect.element(list)).toHaveFocus();
-    await expect
-      .poll(() => expect.element(list))
-      .toHaveAttribute('aria-activedescendant', firstItem.id);
+    await expect.poll(() => expect.element(list)).toBeFocused();
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', firstItem.id);
   });
 
   test('use `ArrowDown` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    await expect
-      .poll(() => expect.element(list))
-      .toHaveAttribute('aria-activedescendant', thirdItem.id);
+    await expect.poll(() => expect.element(list)).toHaveAttribute('aria-activedescendant', thirdItem.id);
     await expect.poll(() => expect.element(firstItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(secondItem)).not.toHaveAttribute('aria-current');
     await expect.poll(() => expect.element(thirdItem)).toHaveAttribute('aria-current', 'true');

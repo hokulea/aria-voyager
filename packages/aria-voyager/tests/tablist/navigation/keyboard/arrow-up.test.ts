@@ -17,7 +17,7 @@ describe('Navigate with `ArrowUp`', () => {
     await expect.poll(() => tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `ArrowUp` at first item does nothing', async () => {
@@ -80,7 +80,7 @@ describe('navigate with `ArrowUp`, skipping disabled items', () => {
     await expect.poll(() => tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `END` to jump to the last item', async () => {

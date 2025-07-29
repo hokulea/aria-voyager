@@ -14,7 +14,7 @@ describe('Select with `ArrowRight`', () => {
       .toBeFalsy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `ArrowRight` key to activate second item', async () => {
@@ -63,7 +63,7 @@ describe('select with `ArrowRight`, skipping disabled items', () => {
       .toBeFalsy();
 
     firstItem.focus();
-    await expect.poll(() => expect.element(firstItem)).toHaveFocus();
+    await expect.poll(() => expect.element(firstItem)).toBeFocused();
   });
 
   test('use `ArrowRight` key to activate second item', async () => {

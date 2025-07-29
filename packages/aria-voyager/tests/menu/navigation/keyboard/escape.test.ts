@@ -23,7 +23,7 @@ describe('Close with `Escape`', () => {
 
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
     await expect.poll(() => expect.element(codeItem)).toHaveAttribute('tabindex', '0');
-    await expect.poll(() => expect.element(codeItem)).toHaveFocus();
+    await expect.poll(() => expect.element(codeItem)).toBeFocused();
   });
 
   test('use `Escape` to close submenu', async () => {
@@ -31,6 +31,6 @@ describe('Close with `Escape`', () => {
 
     shareMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
     await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
-    await expect.poll(() => expect.element(fourthItem)).toHaveFocus();
+    await expect.poll(() => expect.element(fourthItem)).toBeFocused();
   });
 });
