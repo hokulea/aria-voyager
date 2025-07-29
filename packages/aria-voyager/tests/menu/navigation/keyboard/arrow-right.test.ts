@@ -12,7 +12,7 @@ describe('Open with `ArrowRight`', () => {
   const codeItem = share.items[0];
 
   test('start', async () => {
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
 
     firstItem.focus();
     await expect.element(firstItem).toHaveFocus();
@@ -25,7 +25,7 @@ describe('Open with `ArrowRight`', () => {
     await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 
     await userEvent.keyboard('{ArrowRight}');
-    await expect.element(shareMenu).toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeTruthy();
     await expect.element(codeItem).toHaveAttribute('tabindex', '0');
     await expect.element(codeItem).toHaveFocus();
   });

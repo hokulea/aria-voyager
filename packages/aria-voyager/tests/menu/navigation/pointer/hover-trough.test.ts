@@ -9,7 +9,7 @@ describe('Hover through items opens and closes submenus', () => {
   const { thirdItem, fourthItem, fifthItem } = getItems(menu);
 
   test('start', async () => {
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
   });
 
   test('hover third item', async () => {
@@ -20,7 +20,7 @@ describe('Hover through items opens and closes submenus', () => {
     thirdItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     await expect.element(thirdItem).toHaveFocus();
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
   });
 
   test('hover forth item opens its submenu', async () => {
@@ -31,7 +31,7 @@ describe('Hover through items opens and closes submenus', () => {
     fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     await expect.element(fourthItem).toHaveFocus();
-    await expect.element(shareMenu).toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('hover fifth item closes previous submenu', async () => {
@@ -42,6 +42,6 @@ describe('Hover through items opens and closes submenus', () => {
     fifthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     await expect.element(fifthItem).toHaveFocus();
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
   });
 });

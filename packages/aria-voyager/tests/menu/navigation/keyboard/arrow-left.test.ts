@@ -12,7 +12,7 @@ describe('Close with `ArrowLeft`', () => {
   const { firstItem, fourthItem } = getItems(menu);
 
   test('open share menu', async () => {
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
 
     firstItem.focus();
 
@@ -26,7 +26,7 @@ describe('Close with `ArrowLeft`', () => {
 
   test('use `ArrowLeft` to close submenu', async () => {
     await userEvent.keyboard('{ArrowLeft}');
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
   });
 
   test('has focus moved to the trigger of the submenu', async () => {

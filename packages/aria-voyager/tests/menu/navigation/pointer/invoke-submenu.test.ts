@@ -14,8 +14,8 @@ describe('Invoking a menu item closes all submenus', () => {
   const mastodonItem = social.items[1];
 
   test('start', async () => {
-    await expect.element(shareMenu).not.toBeVisible();
-    await expect.element(socialMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    expect(socialMenu.matches(':popover-open')).toBeFalsy();
   });
 
   test('open the sub-submenu', async () => {
@@ -26,14 +26,14 @@ describe('Invoking a menu item closes all submenus', () => {
     fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
     socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    await expect.element(shareMenu).toBeVisible();
-    await expect.element(socialMenu).toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    expect(socialMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('clicking a menu item closes all submenus', async () => {
     await userEvent.click(mastodonItem);
 
-    await expect.element(shareMenu).not.toBeVisible();
-    await expect.element(socialMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    expect(socialMenu.matches(':popover-open')).toBeFalsy();
   });
 });

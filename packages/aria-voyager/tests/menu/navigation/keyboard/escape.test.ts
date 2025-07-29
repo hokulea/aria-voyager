@@ -13,7 +13,7 @@ describe('Close with `Escape`', () => {
   const { firstItem, fourthItem } = getItems(menu);
 
   test('start', async () => {
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
     firstItem.focus();
 
     await userEvent.keyboard('{ArrowDown}');
@@ -21,7 +21,7 @@ describe('Close with `Escape`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowRight}');
 
-    await expect.element(shareMenu).toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeTruthy();
     await expect.element(codeItem).toHaveAttribute('tabindex', '0');
     await expect.element(codeItem).toHaveFocus();
   });
@@ -30,7 +30,7 @@ describe('Close with `Escape`', () => {
     await userEvent.keyboard('{Escape}');
 
     shareMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
-    await expect.element(shareMenu).not.toBeVisible();
+    expect(shareMenu.matches(':popover-open')).toBeFalsy();
     await expect.element(fourthItem).toHaveFocus();
   });
 });
