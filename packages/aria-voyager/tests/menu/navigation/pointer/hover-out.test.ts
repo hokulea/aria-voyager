@@ -11,18 +11,18 @@ describe('Hover out to trigger keeps submenu open', () => {
   const codeItem = share.items[0];
   const { fourthItem } = getItems(menu);
 
-  expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
 
   test('hover item to show submenu', async () => {
     await userEvent.hover(fourthItem);
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('hover into submenu moves focus', async () => {
     await userEvent.hover(codeItem);
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('hover back to trigger moves focus and keeps the submenu open', async () => {
@@ -31,8 +31,8 @@ describe('Hover out to trigger keeps submenu open', () => {
     );
 
     await vi.waitFor(() => {
-      expect(shareMenu.matches(':popover-open')).toBeTruthy();
-      expect(document.activeElement).toBe(fourthItem);
+      await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
+      await expect.poll(() => document.activeElement).toBe(fourthItem);
     });
   });
 });

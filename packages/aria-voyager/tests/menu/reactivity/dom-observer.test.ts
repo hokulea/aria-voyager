@@ -8,7 +8,7 @@ describe('DOM Observer', () => {
   const { codeMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
 
-  test('start', () => {
+  test('start', async () => {
     expect(menu.items.length).toBe(11);
   });
 
@@ -22,39 +22,31 @@ describe('DOM Observer', () => {
 
   describe('read options', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      expect(menu.items[0].getAttribute('tabindex')).toBe('0');
-      expect(
-        menu.items
+      await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => menu.items
           .slice(1)
           .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+          .every(Boolean)).toBeTruthy();
 
       codeMenu.setAttribute('aria-disabled', 'true');
 
       await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === 'true');
 
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
 
       codeMenu.removeAttribute('aria-disabled');
 
       await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === null);
 
-      expect(menu.items[0].getAttribute('tabindex')).toBe('0');
-      expect(
-        menu.items
+      await expect.poll(() => menu.items[0].getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => menu.items
           .slice(1)
           .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+          .every(Boolean)).toBeTruthy();
     });
   });
 });

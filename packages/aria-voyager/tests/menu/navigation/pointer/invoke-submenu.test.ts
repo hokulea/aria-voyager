@@ -13,27 +13,27 @@ describe('Invoking a menu item closes all submenus', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
-  });
+  test('start', async () => {
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
+  }));
 
-  test('open the sub-submenu', () => {
+  test('open the sub-submenu', async () => {
     // https://github.com/hokulea/aria-voyager/issues/264
     // await userEvent.hover(fourthItem);
     // await userEvent.hover(socialItem);
 
-    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true })));
     socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(socialMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('clicking a menu item closes all submenus', async () => {
     await userEvent.click(mastodonItem);
 
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
   });
 });

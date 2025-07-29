@@ -9,12 +9,10 @@ describe('Hover activates item', () => {
   const menu = new Menu(codeMenu);
   const { firstItem, secondItem } = getItems(menu);
 
-  test('start', () => {
-    expect(
-      menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+  test('start', async () => {
+    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
 
-    expect(menu.activeItem).toBeFalsy();
+    await expect.poll(() => menu.activeItem).toBeFalsy();
   });
 
   test('hovers first item to make it active', async () => {
@@ -22,7 +20,7 @@ describe('Hover activates item', () => {
 
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    expect(menu.activeItem).toBe(firstItem);
+    await expect.poll(() => menu.activeItem).toBe(firstItem);
   });
 
   test('hovers second item to make it active', async () => {
@@ -30,11 +28,9 @@ describe('Hover activates item', () => {
 
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
-    expect(menu.activeItem).toBe(secondItem);
-    expect(
-      menu.items
+    await expect.poll(() => menu.activeItem).toBe(secondItem);
+    await expect.poll(() => menu.items
         .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 });

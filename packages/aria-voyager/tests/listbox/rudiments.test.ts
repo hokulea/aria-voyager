@@ -17,7 +17,7 @@ describe('Listbox', () => {
 
       new Listbox(list);
 
-      expect(list.getAttribute('role')).toBe('listbox');
+      await expect.poll(() => list.getAttribute('role')).toBe('listbox');
     });
 
     it('sets tabindex', () => {
@@ -25,7 +25,7 @@ describe('Listbox', () => {
 
       new Listbox(list);
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('0');
     });
 
     it('reads items', () => {
@@ -55,7 +55,7 @@ describe('Listbox', () => {
 
       list.dispatchEvent(new FocusEvent('focusin'));
 
-      expect([...list.children].every((elem) => !elem.hasAttribute('aria-selected'))).toBeTruthy();
+    await expect.poll(() => [...list.children].every((elem) => !elem.hasAttribute('aria-selected'))).toBeTruthy();
     });
   });
 });

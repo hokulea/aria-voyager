@@ -9,15 +9,15 @@ describe('Hover opens submenu', () => {
   const menu = new Menu(codeMenu);
   const { fourthItem } = getItems(menu);
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(menu.activeItem).toBeUndefined();
-  });
+  test('start', async () => {
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => menu.activeItem).toBeUndefined();
+  }));
 
   test('hover item to show submenu', async () => {
     await userEvent.hover(fourthItem);
 
     await expect.element(fourthItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
   });
 });

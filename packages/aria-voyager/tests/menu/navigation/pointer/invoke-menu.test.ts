@@ -13,15 +13,15 @@ describe('Invoking a menu item closes the menu', () => {
   const social = new Menu(socialMenu);
   const mastodonItem = social.items[1];
 
-  test('start', () => {
-    expect(codeMenu.matches(':popover-open')).toBeFalsy();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
-  });
+  test('start', async () => {
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
+  }));
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);
-    expect(codeMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeTruthy();
 
     // https://github.com/hokulea/aria-voyager/issues/264
     // await userEvent.hover(fourthItem);
@@ -30,16 +30,16 @@ describe('Invoking a menu item closes the menu', () => {
     fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
     socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(socialMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('clicking a menu item closes the menu', async () => {
     await userEvent.click(mastodonItem);
 
-    expect(codeMenu.matches(':popover-open')).toBeFalsy();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
   });
 });
 
@@ -48,22 +48,22 @@ describe('Invoking a descending menu item closes the menu', () => {
   const menu = new Menu(codeMenu);
   const { secondItem } = getItems(menu);
 
-  test('start', () => {
-    expect(codeMenu.matches(':popover-open')).toBeFalsy();
-  });
+  test('start', async () => {
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeFalsy();
+  }));
 
   test('open the menus', async () => {
     await userEvent.click(triggerButton);
-    expect(codeMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('clicking a non-menu item keeps the menu open', async () => {
     await userEvent.click(refactorHeader);
-    expect(codeMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('clicking a descendend menu item closes the menu', async () => {
     await userEvent.click(secondItem);
-    expect(codeMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => codeMenu.matches(':popover-open')).toBeFalsy();
   });
 });

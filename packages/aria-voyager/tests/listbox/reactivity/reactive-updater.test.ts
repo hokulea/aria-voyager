@@ -12,11 +12,11 @@ describe('Reactive Updater', () => {
     updater
   });
 
-  test('start', () => {
+  test('start', async () => {
     expect(listbox.items.length).toBe(3);
   });
 
-  test('reads elements on appending', () => {
+  test('reads elements on appending', async () => {
     appendItemToList('Grapefruit', list);
 
     updater.updateItems();
@@ -24,7 +24,7 @@ describe('Reactive Updater', () => {
     expect(listbox.items.length).toBe(4);
   });
 
-  test('reads selection on external update', () => {
+  test('reads selection on external update', async () => {
     const { secondItem } = getItems(listbox);
 
     expect(listbox.selection.length).toBe(0);
@@ -38,7 +38,7 @@ describe('Reactive Updater', () => {
   });
 
   describe('read options', () => {
-    test('detects multi-select', () => {
+    test('detects multi-select', async () => {
       expect(listbox.options.multiple).toBeFalsy();
 
       list.setAttribute('aria-multiselectable', 'true');
@@ -48,7 +48,7 @@ describe('Reactive Updater', () => {
       expect(listbox.options.multiple).toBeTruthy();
     });
 
-    test('detects single-select', () => {
+    test('detects single-select', async () => {
       expect(listbox.options.multiple).toBeTruthy();
 
       list.removeAttribute('aria-multiselectable');
@@ -58,24 +58,24 @@ describe('Reactive Updater', () => {
       expect(listbox.options.multiple).toBeFalsy();
     });
 
-    test('sets tabindex to -1 when the aria-disabled is `true`', () => {
-      expect(list.getAttribute('tabindex')).toBe('0');
+    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('0');
 
       list.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('-1');
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
-      expect(list.getAttribute('tabindex')).toBe('-1');
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('-1');
 
       list.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('0');
     });
   });
 });

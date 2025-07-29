@@ -8,9 +8,9 @@ describe('Hover through items opens and closes submenus', () => {
   const menu = new Menu(codeMenu);
   const { thirdItem, fourthItem, fifthItem } = getItems(menu);
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  });
+  test('start', async () => {
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+  }));
 
   test('hover third item', async () => {
     // does not work under playwright
@@ -20,7 +20,7 @@ describe('Hover through items opens and closes submenus', () => {
     thirdItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     await expect.element(thirdItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
   });
 
   test('hover forth item opens its submenu', async () => {
@@ -31,7 +31,7 @@ describe('Hover through items opens and closes submenus', () => {
     fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     await expect.element(fourthItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
   });
 
   test('hover fifth item closes previous submenu', async () => {
@@ -42,6 +42,6 @@ describe('Hover through items opens and closes submenus', () => {
     fifthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
     await expect.element(fifthItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
   });
 });

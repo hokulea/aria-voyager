@@ -9,33 +9,29 @@ describe('Navigates with `Home` and `End`', () => {
   const menu = new Menu(codeMenu);
   const { firstItem, lastItem } = getItems(menu);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
-    expect(lastItem.getAttribute('tabindex')).toBe('-1');
-    expect(menu.activeItem).toBeUndefined();
+  test('start', async () => {
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('-1');
+    await expect.poll(() => menu.activeItem).toBeUndefined();
   });
 
-  test('focusing activates the first item', () => {
+  test('focusing activates the first item', async () => {
     firstItem.focus();
-    expect(menu.activeItem).toBe(firstItem);
+    await expect.poll(() => menu.activeItem).toBe(firstItem);
   });
 
   test('activates the last item with END', async () => {
     await userEvent.keyboard('{End}');
 
-    expect(lastItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => menu.items.slice(0, -1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 
   test('activates the first item with HOME', async () => {
     await userEvent.keyboard('{Home}');
 
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 });
 
@@ -44,41 +40,37 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
   const menu = new Menu(codeMenu);
   const { firstItem, secondItem, secondLastItem, lastItem } = getItems(menu);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
-    expect(lastItem.getAttribute('tabindex')).toBe('-1');
+  test('start', async () => {
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => lastItem.getAttribute('tabindex')).toBe('-1');
 
     firstItem.setAttribute('aria-disabled', 'true');
     lastItem.setAttribute('aria-disabled', 'true');
 
-    expect(menu.activeItem).toBeUndefined();
+    await expect.poll(() => menu.activeItem).toBeUndefined();
   });
 
-  test('focusing activates the first item', () => {
+  test('focusing activates the first item', async () => {
     secondItem.focus();
 
-    expect(menu.activeItem).toBe(secondItem);
+    await expect.poll(() => menu.activeItem).toBe(secondItem);
   });
 
   test('activates the last item with END', async () => {
     await userEvent.keyboard('{End}');
 
-    expect(secondLastItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      menu.items
+    await expect.poll(() => secondLastItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => menu.items
         .filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 
   test('activates the first item with HOME', async () => {
     await userEvent.keyboard('{Home}');
 
-    expect(secondItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      menu.items
+    await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => menu.items
         .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 });

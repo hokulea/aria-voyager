@@ -15,7 +15,7 @@ describe('Reactive Updater', () => {
 
   const { firstItem, secondItem } = getTabItems(tabs);
 
-  test('reads elements on appending', () => {
+  test('reads elements on appending', async () => {
     expect(tabs.items.length).toBe(5);
 
     appendTab(container, 'Grapefruit', 'for summer');
@@ -25,7 +25,7 @@ describe('Reactive Updater', () => {
     expect(tabs.items.length).toBe(6);
   });
 
-  test('reads selection on external update', () => {
+  test('reads selection on external update', async () => {
     const focusDecoy = document.createElement('button');
 
     document.body.append(focusDecoy);
@@ -46,7 +46,7 @@ describe('Reactive Updater', () => {
   });
 
   describe('read options', () => {
-    test('detects vertical orientation', () => {
+    test('detects vertical orientation', async () => {
       expect(tabs.options.orientation).toBe('horizontal');
 
       tablist.setAttribute('aria-orientation', 'vertical');
@@ -56,7 +56,7 @@ describe('Reactive Updater', () => {
       expect(tabs.options.orientation).toBe('vertical');
     });
 
-    test('detects horizontal orientation', () => {
+    test('detects horizontal orientation', async () => {
       expect(tabs.options.orientation).toBe('vertical');
 
       tablist.removeAttribute('aria-orientation');
@@ -69,38 +69,32 @@ describe('Reactive Updater', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       await userEvent.click(firstItem);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
 
       tablist.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
+    await expect.poll(() => tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
 
       tablist.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
-      expect(
-        tabs.items
+      await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => tabs.items
           .slice(1)
           .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+          .every(Boolean)).toBeTruthy();
     });
   });
 
   describe('items', () => {
-    test('adding items to a disabled tablist will receive tabindex -1', () => {
+    test('adding items to a disabled tablist will receive tabindex -1', async () => {
       const { lastItem, secondLastItem } = getTabItems(tabs);
 
       removeTab(lastItem);
@@ -109,9 +103,7 @@ describe('Reactive Updater', () => {
       tablist.setAttribute('aria-disabled', 'true');
       updater.updateOptions();
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
 
       appendTab(container, 'Tab 4', 'Content 4');
       appendTab(container, 'Tab 5', 'Content 5');
@@ -123,9 +115,7 @@ describe('Reactive Updater', () => {
 
       updater.updateItems();
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
     });
   });
 });

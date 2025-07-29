@@ -7,12 +7,10 @@ describe('Use pointer to activate items', () => {
   const { tabs, tablist } = createTabs();
   const { firstItem, secondItem, thirdItem } = getTabItems(tabs);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
-    expect(tabs.activeItem).toBeTruthy();
+  test('start', async () => {
+    await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
+    await expect.poll(() => tabs.activeItem).toBeTruthy();
   });
 
   // does not run in CLI mode
@@ -20,31 +18,25 @@ describe('Use pointer to activate items', () => {
   test.skip('select not an item does nothing', async () => {
     await userEvent.click(tablist);
 
-    expect(tabs.activeItem).toBeTruthy();
-    expect(
-      tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    await expect.poll(() => tabs.activeItem).toBeTruthy();
+    await expect.poll(() => tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
-    expect(secondItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      tabs.items
+    await expect.poll(() => secondItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => tabs.items
         .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
-    expect(thirdItem.getAttribute('tabindex')).toBe('0');
-    expect(
-      tabs.items
+    await expect.poll(() => thirdItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => tabs.items
         .filter((_, idx) => idx !== 2)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+        .every((item) => item.getAttribute('tabindex') === '-1')).toBeTruthy();
   });
 });

@@ -13,7 +13,7 @@ describe('Close with `Escape`', () => {
   const { firstItem, fourthItem } = getItems(menu);
 
   test('start', async () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
     firstItem.focus();
 
     await userEvent.keyboard('{ArrowDown}');
@@ -21,16 +21,16 @@ describe('Close with `Escape`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowRight}');
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
-    expect(document.activeElement).toBe(codeItem);
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => codeItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => document.activeElement).toBe(codeItem);
   });
 
   test('use `Escape` to close submenu', async () => {
     await userEvent.keyboard('{Escape}');
 
     shareMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(document.activeElement).toBe(fourthItem);
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => document.activeElement).toBe(fourthItem);
   });
 });

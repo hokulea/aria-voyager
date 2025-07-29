@@ -68,23 +68,23 @@ describe('DOM Observer', () => {
     });
 
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('0');
 
       list.setAttribute('aria-disabled', 'true');
 
       await vi.waitUntil(() => list.getAttribute('aria-disabled') === 'true');
 
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('-1');
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('-1');
 
       list.removeAttribute('aria-disabled');
 
       await vi.waitUntil(() => list.getAttribute('aria-disabled') === null);
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => list.getAttribute('tabindex')).toBe('0');
     });
   });
 });

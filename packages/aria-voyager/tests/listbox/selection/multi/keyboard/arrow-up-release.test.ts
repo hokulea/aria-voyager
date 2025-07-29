@@ -19,25 +19,25 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
     // whole suite. Whem run alone, its all fine.
     // Some race conditions?
     await vi.waitFor(() => {
-      expect(firstItem.getAttribute('aria-selected')).toBeNull();
-      expect(secondItem.getAttribute('aria-selected')).toBeNull();
-      expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+      await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+      await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+      await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
     });
   });
 
   test('use `ArrowUp` and `Shift` key to select third and second item', async () => {
     await keys.keyboard('{Shift>}{ArrowUp}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 
   test('Release shift', async () => {
     await keys.keyboard('{/Shift}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 });

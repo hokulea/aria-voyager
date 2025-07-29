@@ -11,20 +11,20 @@ describe('Open with `Enter`', () => {
   const share = new Menu(shareMenu);
   const codeItem = share.items[0];
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
     firstItem.focus();
-  });
+  }));
 
   test('use `Enter` to open submenu', async () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
-    expect(fourthItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => fourthItem.getAttribute('tabindex')).toBe('0');
 
     await userEvent.keyboard('{Enter}');
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
-    expect(document.activeElement).toBe(codeItem);
+    await expect.poll(() => shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => codeItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => document.activeElement).toBe(codeItem);
   });
 });

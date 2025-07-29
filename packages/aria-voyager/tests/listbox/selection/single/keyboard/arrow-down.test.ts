@@ -9,35 +9,35 @@ describe('Select with `ArrowDown`', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('focus list to select first item', () => {
+  test('focus list to select first item', async () => {
     list.focus();
 
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
-  });
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
+  }));
 
   test('use `ArrowDown` key to select second item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
   test('use `ArrowDown` key to select third item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 
   test('use `ArrowDown` key, but keep third item selected (hit end of list)', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 });

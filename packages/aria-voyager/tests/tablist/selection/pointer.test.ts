@@ -7,33 +7,29 @@ describe('Use pointer to select items', () => {
   const { tabs, tablist } = createTabs();
   const { firstItem, secondItem, thirdItem } = getTabItems(tabs);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
-    expect(tabs.items.slice(1).every((item) => item.getAttribute('aria-selected'))).toBeFalsy();
+  test('start', async () => {
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => tabs.items.slice(1).every((item) => item.getAttribute('aria-selected'))).toBeFalsy();
   });
 
   test('select not an item does nothing', async () => {
     await userEvent.click(tablist);
-    expect(tabs.activeItem).toBeTruthy();
+    await expect.poll(() => tabs.activeItem).toBeTruthy();
 
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    await expect.poll(() => tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
   });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
   });
 
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
   });
 });

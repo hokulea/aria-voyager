@@ -9,25 +9,25 @@ describe('With Pointer', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+  test('start', async () => {
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 });

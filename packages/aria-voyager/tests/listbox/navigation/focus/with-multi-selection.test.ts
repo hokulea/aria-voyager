@@ -9,7 +9,7 @@ describe('Focus activates first item of selection (Multi Select)', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('select two items', () => {
+  test('select two items', async () => {
     // await user.click(secondItem);
 
     // https://github.com/hokulea/aria-voyager/issues/259
@@ -21,13 +21,11 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
 
-    expect(
-      listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean)
-    ).toBeFalsy();
+    await expect.poll(() => listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean)).toBeFalsy();
   });
 
   test('refocus keeps selection', async () => {
@@ -35,8 +33,8 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     await userEvent.tab({ shift: true });
 
     expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBe('true');
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.poll(() => firstItem.getAttribute('aria-current')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-current')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-current')).toBeNull();
   });
 });

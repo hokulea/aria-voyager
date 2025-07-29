@@ -15,24 +15,24 @@ describe('Select with `ArrowUp` and `Shift`', () => {
     list.focus();
     await userEvent.keyboard('{End}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBeNull();
   });
 
   test('use `ArrowUp` and `Shift` key to select third and second item', async () => {
     await keys.keyboard('{Shift>}{ArrowUp}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBeNull();
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 
   test('use `ArrowUp` and `Shift` key to select thirdt to first item', async () => {
     await keys.keyboard('{ArrowUp}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => firstItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => secondItem.getAttribute('aria-selected')).toBe('true');
+    await expect.poll(() => thirdItem.getAttribute('aria-selected')).toBe('true');
   });
 });

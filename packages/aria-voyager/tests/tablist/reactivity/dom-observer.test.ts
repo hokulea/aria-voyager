@@ -64,33 +64,27 @@ describe('DOM Observer', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       await userEvent.click(firstItem);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
 
       tablist.setAttribute('aria-disabled', 'true');
 
       await vi.waitUntil(() => tablist.getAttribute('aria-disabled') === 'true');
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    await expect.poll(() => tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)).toBeTruthy();
 
       tablist.removeAttribute('aria-disabled');
 
       await vi.waitUntil(() => tablist.getAttribute('aria-disabled') === null);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
-      expect(
-        tabs.items
+      await expect.poll(() => firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.poll(() => tabs.items
           .slice(1)
           .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+          .every(Boolean)).toBeTruthy();
     });
   });
 });
