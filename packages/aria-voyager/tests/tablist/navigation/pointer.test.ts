@@ -15,8 +15,8 @@ describe('Use pointer to activate items', () => {
     expect(tabs.activeItem).toBeTruthy();
   });
 
-  // seems like, when clicking the tablist with playwright, then it also clicks
-  // the last button in there. This behavior is different, than in a browser
+  // does not run in CLI mode
+  // update vitest and activate again
   test.skip('select not an item does nothing', async () => {
     await userEvent.click(tablist);
 
