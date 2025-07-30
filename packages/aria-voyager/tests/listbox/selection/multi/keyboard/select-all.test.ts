@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { Listbox } from '../../../../../src';
-import { createMultiSelectListWithFruits } from '../../../-shared';
+import { Listbox } from '#src';
+import { createMultiSelectListWithFruits } from '#tests/listbox/-shared';
 
 describe('Select all', () => {
   const list = createMultiSelectListWithFruits();

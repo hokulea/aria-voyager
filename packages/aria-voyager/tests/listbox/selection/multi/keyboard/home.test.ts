@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { expect, test } from 'vitest';
 
-import { Listbox } from '../../../../../src';
-import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
+import { Listbox } from '#src';
+import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('select from third to first item with `Home` and `Shift` key', async () => {
   const list = createMultiSelectListWithFruits();

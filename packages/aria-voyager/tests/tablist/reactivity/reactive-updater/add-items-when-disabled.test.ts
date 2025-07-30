@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
-import { ReactiveUpdateStrategy, Tablist } from '../../../../src';
-import { appendTab, createTabElement, getItems } from '../../../components/tabs';
+import { ReactiveUpdateStrategy, Tablist } from '#src';
+import { appendTab, createTabElement, getItems } from '#tests/components/tabs';
 
 test('add items when disabled', () => {
   const updater = new ReactiveUpdateStrategy();

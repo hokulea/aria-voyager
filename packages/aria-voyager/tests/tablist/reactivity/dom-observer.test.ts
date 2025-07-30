@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
 
-import { appendTab, getItems } from '../../components/tabs';
-import { createTabs, getTabItems } from '../-shared';
+import { appendTab, getItems } from '#tests/components/tabs';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
 describe('DOM Observer', () => {
   const { container, tablist, tabs } = createTabs();
