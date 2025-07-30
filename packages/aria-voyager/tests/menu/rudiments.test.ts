@@ -13,22 +13,22 @@ describe('Menu', () => {
   });
 
   describe('setup', () => {
-    test('has menu role', () => {
+    test('has menu role', async () => {
       const menu = createMenuElement(document.body);
 
       new Menu(menu);
 
-      expect(menu.getAttribute('role')).toBe('menu');
+      await expect.element(menu).toHaveAttribute('role', 'menu');
     });
 
-    test('sets tabindex on the first item', () => {
+    test('sets tabindex on the first item', async () => {
       const { codeMenu } = createCodeMenu();
 
       new Menu(codeMenu);
 
       const firstItem = codeMenu.querySelector('[role="menuitem"]') as HTMLElement;
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
     });
 
     test('reads items', () => {
