@@ -11,9 +11,10 @@ describe('Navigate with `ArrowDown`', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
-    expect(
-      menu.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of menu.items.slice(1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
 
     firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
