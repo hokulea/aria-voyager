@@ -22,7 +22,7 @@ describe('Close with `Escape`', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
     expect(document.activeElement).toBe(codeItem);
   });
 
