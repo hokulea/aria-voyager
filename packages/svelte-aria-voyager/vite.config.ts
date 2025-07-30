@@ -15,14 +15,10 @@ export default defineConfig({
     },
     browser: {
       enabled: true,
+      headless: true,
       screenshotFailures: false,
-      provider: 'preview',
-      instances: [
-        // https://github.com/hokulea/aria-voyager/issues/396
-        // { browser: 'firefox' },
-        { browser: 'chromium' },
-        { browser: 'webkit' }
-      ]
+      provider: 'playwright',
+      instances: [{ browser: 'firefox' }, { browser: 'chromium' }, { browser: 'webkit' }]
     }
   }
 });

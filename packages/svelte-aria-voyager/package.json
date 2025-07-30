@@ -28,8 +28,8 @@
     "lint:types": "tsc --noEmit",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run --browser.headless --browser.provider=playwright",
-    "test:ui": "vitest"
+    "test": "vitest run",
+    "test:ui": "vitest --browser.provider=preview --no-browser.headless --browser.name=firefox"
   },
   "dependencies": {
     "aria-voyager": "workspace:*",
@@ -49,7 +49,7 @@
     "@vitest/coverage-istanbul": "^3.1.1",
     "@vitest/ui": "^3.1.1",
     "eslint": "9.32.0",
-    "playwright": "^1.51.1",
+    "playwright": "^1.54.1",
     "prettier": "3.6.2",
     "svelte": "^5.26.2",
     "typescript": "5.8.3",
