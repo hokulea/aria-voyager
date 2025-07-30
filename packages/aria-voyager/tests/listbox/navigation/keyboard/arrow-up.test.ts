@@ -9,11 +9,11 @@ describe('Navigate with `ArrowUp`', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('start', () => {
-    expect(list.getAttribute('aria-activedescendant')).toBeNull();
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  test('start', async () => {
+    await expect.element(list).not.toHaveAttribute('aria-activedescendant');
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('focus list to activate first item', () => {
@@ -26,36 +26,36 @@ describe('Navigate with `ArrowUp`', () => {
     await userEvent.keyboard('{End}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBe('true');
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
   });
 
   test('use `ArrowUp` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBe('true');
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('use `ArrowUp` key to activate first item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBe('true');
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('use `ArrowUp` key to, but keep first item activated (hit beginning of list)', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBe('true');
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 });
 
@@ -66,11 +66,11 @@ describe('Navigate with `ArrowUp`, skip disabled item', () => {
 
   secondItem.setAttribute('aria-disabled', 'true');
 
-  test('start', () => {
-    expect(list.getAttribute('aria-activedescendant')).toBeNull();
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  test('start', async () => {
+    await expect.element(list).not.toHaveAttribute('aria-activedescendant');
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('focus list to activate first item', () => {
@@ -83,17 +83,17 @@ describe('Navigate with `ArrowUp`, skip disabled item', () => {
     await userEvent.keyboard('{End}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBe('true');
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
   });
 
   test('use `ArrowUp` key to activate first item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBe('true');
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 });

@@ -14,6 +14,6 @@ test('focus activates the first selection item', () => {
   list.focus();
 
   expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
-  expect(firstItem.getAttribute('aria-current')).toBeNull();
-  expect(secondItem.getAttribute('aria-current')).toBe('true');
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
 });

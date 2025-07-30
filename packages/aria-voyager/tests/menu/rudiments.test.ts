@@ -21,7 +21,7 @@ describe('Menu', () => {
       await expect.element(menu).toHaveAttribute('role', 'menu');
     });
 
-    test('sets tabindex on the first item', async () => {
+    test('sets tabindex on the first item', () => {
       const { codeMenu } = createCodeMenu();
 
       new Menu(codeMenu);

@@ -4,24 +4,24 @@ import { expect, test } from 'vitest';
 import { Listbox } from '../../../../../src';
 import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-test('Select from first to third item with `End` and `Shift` key', async () => {
+test('Select from first to third item with `End` and `Shift` key', () => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-  expect(secondItem.getAttribute('aria-selected')).toBeNull();
-  expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await userEvent.click(firstItem);
 
-  expect(firstItem.getAttribute('aria-selected')).toBe('true');
-  expect(secondItem.getAttribute('aria-selected')).toBeNull();
-  expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await userEvent.keyboard('{Shift>}{End}');
 
-  expect(firstItem.getAttribute('aria-selected')).toBe('true');
-  expect(secondItem.getAttribute('aria-selected')).toBe('true');
-  expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

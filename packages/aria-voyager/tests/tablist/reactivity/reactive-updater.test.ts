@@ -69,7 +69,7 @@ describe('Reactive Updater', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       await userEvent.click(firstItem);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
       tablist.setAttribute('aria-disabled', 'true');
 
@@ -80,7 +80,7 @@ describe('Reactive Updater', () => {
       ).toBeTruthy();
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
       expect(
         tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
       ).toBeTruthy();
@@ -89,7 +89,7 @@ describe('Reactive Updater', () => {
 
       updater.updateOptions();
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
       expect(
         tabs.items
           .slice(1)

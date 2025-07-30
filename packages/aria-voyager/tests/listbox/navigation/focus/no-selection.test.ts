@@ -11,6 +11,6 @@ test('focus activates the first item', () => {
   list.dispatchEvent(new FocusEvent('focusin'));
 
   expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-  expect(firstItem.getAttribute('aria-current')).toBe('true');
-  expect(secondItem.getAttribute('aria-current')).toBeNull();
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
 });
