@@ -27,7 +27,7 @@ describe('DOM Observer', () => {
 
     secondItem.setAttribute('aria-selected', 'true');
 
-    await vi.waitUntil(() => secondItem.getAttribute('aria-selected') === 'true');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
 
     expect(listbox.selection.length).toBe(1);
   });
@@ -52,7 +52,7 @@ describe('DOM Observer', () => {
 
       list.setAttribute('aria-multiselectable', 'true');
 
-      await vi.waitUntil(() => list.getAttribute('aria-multiselectable') === 'true');
+      await expect.element(list).toHaveAttribute('aria-multiselectable', 'true');
 
       expect(listbox.options.multiple).toBeTruthy();
     });
@@ -62,29 +62,29 @@ describe('DOM Observer', () => {
 
       list.removeAttribute('aria-multiselectable');
 
-      await vi.waitUntil(() => list.getAttribute('aria-multiselectable') === null);
+      await expect.element(list).not.toHaveAttribute('aria-multiselectable');
 
       expect(listbox.options.multiple).toBeFalsy();
     });
 
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
 
       list.setAttribute('aria-disabled', 'true');
 
-      await vi.waitUntil(() => list.getAttribute('aria-disabled') === 'true');
+      await expect.element(list).toHaveAttribute('aria-disabled', 'true');
 
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.element(list).toHaveAttribute('tabindex', '-1');
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.element(list).toHaveAttribute('tabindex', '-1');
 
       list.removeAttribute('aria-disabled');
 
-      await vi.waitUntil(() => list.getAttribute('aria-disabled') === null);
+      await expect.element(list).not.toHaveAttribute('aria-disabled');
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
     });
   });
 });

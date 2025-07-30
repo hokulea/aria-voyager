@@ -22,39 +22,35 @@ describe('DOM Observer', () => {
 
   describe('read options', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      expect(menu.items[0].getAttribute('tabindex')).toBe('0');
-      expect(
-        menu.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+      await expect.element(menu.items[0]).toHaveAttribute('tabindex', '0');
+
+      for (const item of menu.items.slice(1)) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       codeMenu.setAttribute('aria-disabled', 'true');
 
-      await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === 'true');
+      await expect.element(codeMenu).toHaveAttribute('aria-disabled', 'true');
 
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       codeMenu.removeAttribute('aria-disabled');
 
-      await vi.waitUntil(() => codeMenu.getAttribute('aria-disabled') === null);
+      await expect.element(codeMenu).not.toHaveAttribute('aria-disabled');
 
-      expect(menu.items[0].getAttribute('tabindex')).toBe('0');
-      expect(
-        menu.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+      await expect.element(menu.items[0]).toHaveAttribute('tabindex', '0');
+
+      for (const item of menu.items.slice(1)) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
   });
 });
