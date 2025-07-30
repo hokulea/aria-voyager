@@ -25,14 +25,15 @@ describe('Hover out to trigger keeps submenu open', () => {
     expect(shareMenu.matches(':popover-open')).toBeTruthy();
   });
 
-  test('hover back to trigger moves focus and keeps the submenu open', () => {
+  test('hover back to trigger moves focus and keeps the submenu open', async () => {
     shareMenu.dispatchEvent(
       new PointerEvent('pointerout', { bubbles: true, relatedTarget: fourthItem })
     );
 
     await vi.waitFor(() => {
       expect(shareMenu.matches(':popover-open')).toBeTruthy();
-      expect(document.activeElement).toBe(fourthItem);
     });
+
+    await expect.element(fourthItem).toHaveFocus();
   });
 });
