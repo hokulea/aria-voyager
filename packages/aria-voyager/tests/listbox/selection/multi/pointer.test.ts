@@ -9,9 +9,11 @@ describe('Select with Pointer', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+  test('start', async () => {
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+  });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);
@@ -36,7 +38,7 @@ describe('Select with Pointer', () => {
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 
-  test('deselect second item with `Meta` key', () => {
+  test('deselect second item with `Meta` key', async () => {
     secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
 
     await expect.element(firstItem).not.toHaveAttribute('aria-selected');
@@ -44,7 +46,7 @@ describe('Select with Pointer', () => {
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 
-  test('select third to first item with `Shift` key', () => {
+  test('select third to first item with `Shift` key', async () => {
     firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');

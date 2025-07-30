@@ -3,7 +3,7 @@ import { expect, test } from 'vitest';
 import { Listbox } from '../../../../../src';
 import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-test('Select no items on focus', () => {
+test('Select no items on focus', async () => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem } = getItems(listbox);
