@@ -11,27 +11,27 @@ describe('Select with `ArrowDown` and `Shift`', () => {
 
   const keys = userEvent.setup();
 
-  test('focus the list to activate first item', () => {
+  test('focus the list to activate first item', async () => {
     list.focus();
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBeNull();
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
   });
 
   test('use `ArrowDown` and `Shift` key to select from first to second item', async () => {
     await keys.keyboard('{Shift>}{ArrowDown}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBeNull();
+    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
   });
 
   test('use `ArrowDown` and `Shift` key to select from first to third item', async () => {
     await keys.keyboard('{ArrowDown}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBe('true');
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 });

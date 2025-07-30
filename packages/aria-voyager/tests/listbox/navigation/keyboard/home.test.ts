@@ -9,11 +9,11 @@ describe('navigates with `Home`', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('start', () => {
-    expect(list.getAttribute('aria-activedescendant')).toBeNull();
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  test('start', async () => {
+    await expect.element(list).not.toHaveAttribute('aria-activedescendant');
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('focus list and activate last item', async () => {
@@ -29,9 +29,9 @@ describe('navigates with `Home`', () => {
     await userEvent.keyboard('{Home}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBe('true');
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 });
 
@@ -42,11 +42,11 @@ describe('navigates with `Home`, skip disabled item', () => {
 
   firstItem.setAttribute('aria-disabled', 'true');
 
-  test('start', () => {
-    expect(list.getAttribute('aria-activedescendant')).toBeNull();
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBeNull();
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+  test('start', async () => {
+    await expect.element(list).not.toHaveAttribute('aria-activedescendant');
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('focus list and activate last item', async () => {
@@ -63,8 +63,8 @@ describe('navigates with `Home`, skip disabled item', () => {
     await userEvent.keyboard('{Home}');
 
     expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBe('true');
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 });

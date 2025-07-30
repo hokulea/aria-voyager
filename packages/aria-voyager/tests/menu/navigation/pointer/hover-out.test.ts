@@ -25,7 +25,7 @@ describe('Hover out to trigger keeps submenu open', () => {
     expect(shareMenu.matches(':popover-open')).toBeTruthy();
   });
 
-  test('hover back to trigger moves focus and keeps the submenu open', async () => {
+  test('hover back to trigger moves focus and keeps the submenu open', () => {
     shareMenu.dispatchEvent(
       new PointerEvent('pointerout', { bubbles: true, relatedTarget: fourthItem })
     );

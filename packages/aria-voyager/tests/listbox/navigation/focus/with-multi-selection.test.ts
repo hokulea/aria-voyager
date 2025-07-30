@@ -9,7 +9,7 @@ describe('Focus activates first item of selection (Multi Select)', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('select two items', () => {
+  test('select two items', async () => {
     // await user.click(secondItem);
 
     // https://github.com/hokulea/aria-voyager/issues/259
@@ -21,9 +21,9 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
     expect(
       listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean)
@@ -35,8 +35,8 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     await userEvent.tab({ shift: true });
 
     expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBe('true');
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 });

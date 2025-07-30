@@ -10,6 +10,6 @@ test('Select no items on focus', () => {
 
   list.dispatchEvent(new FocusEvent('focusin'));
 
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-  expect(secondItem.getAttribute('aria-selected')).toBeNull();
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
 });

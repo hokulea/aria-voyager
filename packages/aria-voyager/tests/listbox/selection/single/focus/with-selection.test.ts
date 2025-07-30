@@ -13,6 +13,6 @@ test('select first selection item when focus', () => {
 
   list.focus();
 
-  expect(firstItem.getAttribute('aria-selected')).toBeNull();
-  expect(secondItem.getAttribute('aria-selected')).toBe('true');
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
 });

@@ -7,8 +7,8 @@ describe('Use pointer to activate items', () => {
   const { tabs, tablist } = createTabs();
   const { firstItem, secondItem, thirdItem } = getTabItems(tabs);
 
-  test('start', () => {
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
+  test('start', async () => {
+    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
     expect(
       tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
     ).toBeTruthy();
@@ -29,7 +29,7 @@ describe('Use pointer to activate items', () => {
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
-    expect(secondItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(secondItem).toHaveAttribute('tabindex', '0');
     expect(
       tabs.items
         .filter((_, idx) => idx !== 1)
@@ -40,7 +40,7 @@ describe('Use pointer to activate items', () => {
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
-    expect(thirdItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
     expect(
       tabs.items
         .filter((_, idx) => idx !== 2)
