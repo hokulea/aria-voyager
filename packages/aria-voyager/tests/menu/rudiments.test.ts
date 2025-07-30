@@ -21,7 +21,7 @@ describe('Menu', () => {
       await expect.element(menu).toHaveAttribute('role', 'menu');
     });
 
-    test('sets tabindex on the first item', () => {
+    test('sets tabindex on the first item', async () => {
       const { codeMenu } = createCodeMenu();
 
       new Menu(codeMenu);
@@ -39,26 +39,28 @@ describe('Menu', () => {
       expect(menu.items.length).toBe(11);
     });
 
-    test('items have tabindex', () => {
+    test('items have tabindex', async () => {
       const { codeMenu } = createCodeMenu();
 
       const menu = new Menu(codeMenu);
 
-      expect(menu.items.map((item) => item.getAttribute('tabindex')).every(Boolean)).toBeTruthy();
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex');
+      }
     });
   });
 
   describe('disabled', () => {
-    test('focus does not work', () => {
+    test('focus does not work', async () => {
       const { codeMenu } = createCodeMenu();
 
       codeMenu.setAttribute('aria-disabled', 'true');
 
       const menu = new Menu(codeMenu);
 
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
   });
 });

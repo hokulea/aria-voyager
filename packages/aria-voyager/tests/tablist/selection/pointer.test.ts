@@ -9,31 +9,38 @@ describe('Use pointer to select items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.getAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('select not an item does nothing', async () => {
     await userEvent.click(tablist);
     expect(tabs.activeItem).toBeTruthy();
 
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 2)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });
