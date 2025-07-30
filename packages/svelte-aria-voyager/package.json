@@ -45,17 +45,17 @@
     "@tsconfig/svelte": "^5.0.4",
     "@types/css-modules": "1.0.5",
     "@types/lodash.isequal": "4.5.8",
-    "@vitest/browser": "^3.2.4",
-    "@vitest/coverage-istanbul": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/browser": "^3.1.1",
+    "@vitest/coverage-istanbul": "^3.1.1",
+    "@vitest/ui": "^3.1.1",
     "eslint": "9.32.0",
     "playwright": "^1.54.1",
     "prettier": "3.6.2",
     "svelte": "^5.26.2",
     "typescript": "5.8.3",
-    "vite": "^7.0.6",
-    "vitest": "^3.2.4",
-    "vitest-browser-svelte": "^1.0.0"
+    "vite": "^6.2.4",
+    "vitest": "^3.1.1",
+    "vitest-browser-svelte": "^0.1.0"
   },
   "engines": {
     "node": "^20.11.0 || >=22"
