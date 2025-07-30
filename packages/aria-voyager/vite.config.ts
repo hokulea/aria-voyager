@@ -23,14 +23,15 @@ export default defineConfig({
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
     browser: {
-      headless: true,
+      enabled: true,
       screenshotFailures: false,
-      provider: 'playwright',
+      provider: 'preview',
       instances: [
-        { browser: 'firefox' }
-        // tests are flaky in playwright with chromium + webkit
-        // { browser: 'chromium' }
-        // { browser: 'webkit' }
+        // https://github.com/hokulea/aria-voyager/issues/396
+        // { browser: 'firefox' },
+        // tests are flaky in chromium + playwright
+        // { browser: 'chromium' },
+        { browser: 'webkit' }
       ]
     }
   }

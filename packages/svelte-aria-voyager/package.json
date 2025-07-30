@@ -28,8 +28,8 @@
     "lint:types": "tsc --noEmit",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run",
-    "test:ui": "vitest --browser.provider=preview --no-browser.headless --browser.name=firefox"
+    "test": "vitest run --browser.headless --browser.provider=playwright",
+    "test:ui": "vitest"
   },
   "dependencies": {
     "aria-voyager": "workspace:*",
