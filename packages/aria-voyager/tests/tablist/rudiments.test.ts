@@ -10,18 +10,18 @@ test('renders', () => {
 });
 
 describe('setup', () => {
-  test('has menu role', () => {
+  test('has menu role', async () => {
     const { tablist } = createTabs();
 
-    expect(tablist.getAttribute('role')).toBe('tablist');
+    await expect.element(tablist).toHaveAttribute('role', 'tablist');
   });
 
-  test('sets tabindex on the first item', () => {
+  test('sets tabindex on the first item', async () => {
     const { tabs } = createTabs();
 
     const { firstItem } = getTabItems(tabs);
 
-    expect(firstItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
   });
 
   test('items have tabindex', () => {

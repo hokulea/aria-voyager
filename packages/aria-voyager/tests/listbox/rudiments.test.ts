@@ -12,20 +12,20 @@ describe('Listbox', () => {
   });
 
   describe('setup', () => {
-    it('has listbox role', () => {
+    it('has listbox role', async () => {
       const list = createListElement(document.body);
 
       new Listbox(list);
 
-      expect(list.getAttribute('role')).toBe('listbox');
+      await expect.element(list).toHaveAttribute('role', 'listbox');
     });
 
-    it('sets tabindex', () => {
+    it('sets tabindex', async () => {
       const list = createListElement(document.body);
 
       new Listbox(list);
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
     });
 
     it('reads items', () => {
