@@ -41,7 +41,9 @@ describe('Listbox', () => {
 
       const listbox = new Listbox(list);
 
-      expect(listbox.items.map((item) => item.id).every(Boolean)).toBeTruthy();
+      for (const item of listbox.items) {
+      expect(item.id).toBeTruthy();
+    }
     });
   });
 
@@ -55,7 +57,9 @@ describe('Listbox', () => {
 
       list.dispatchEvent(new FocusEvent('focusin'));
 
-      expect([...list.children].every((elem) => !elem.hasAttribute('aria-selected'))).toBeTruthy();
+      for (const elem of [...list.children]) {
+      await expect.element(elem).not.toHaveAttribute('aria-selected');
+    }
     });
   });
 });
