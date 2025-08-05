@@ -137,7 +137,7 @@ importers:
         specifier: ^1.1.5
         version: 1.1.6(@embroider/core@4.1.2(@glint/template@1.6.0-alpha.2))(@glint/template@1.6.0-alpha.2)(rollup@4.46.1)(vite@6.2.4(@types/node@22.5.0)(jiti@2.5.1)(terser@5.31.6))
       '@glint/core':
-        specifier: ^2.0.0-alpha.2
+        specifier: ^2.0.0-alpha.3
         version: 2.0.0-alpha.3(typescript@5.8.3)
       '@glint/environment-ember-loose':
         specifier: ^2.0.0-alpha.2
