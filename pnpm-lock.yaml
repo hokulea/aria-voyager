@@ -12,8 +12,8 @@ importers:
         specifier: ^1.54.2
         version: 1.54.2
       release-plan:
-        specifier: 0.17.0
-        version: 0.17.0
+        specifier: 0.17.2
+        version: 0.17.2
       turbo:
         specifier: ^2.5.4
         version: 2.5.4
@@ -4530,8 +4530,8 @@ packages:
     resolution: {integrity: sha512-Ln0UQDlxH1BapMu3GPtf7CuYNwRZf2gwCuPqbyG6pB8WfmFpzqcy4xtAaAMUhnNqjMKTiCPZG2oMT3YSx8U2NA==}
     engines: {node: '>=0.10.0'}
 
-  github-changelog@2.0.0:
-    resolution: {integrity: sha512-JdAwddNCvHkZY/pTMqpoaLEfksaWiTc+beDjBkPEnr7iVlKfu8SeyCT8Sef+KsonRgIj6pl3SiWDPSefWmeicw==}
+  github-changelog@2.1.1:
+    resolution: {integrity: sha512-MRJXYVBJi5EUtIvaMokAIMAOmDwx8EtO2xK2yhK/jSHQBRGVwuhVGYhSCWPSnku8MTtL4mfk2qFNqUhx2ZC98A==}
     engines: {node: 18.* || 20.* || >= 22}
     hasBin: true
 
@@ -6299,8 +6299,8 @@ packages:
     resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
     hasBin: true
 
-  release-plan@0.17.0:
-    resolution: {integrity: sha512-mE6ZKEC2FLl0bMeHcd0mKXTxM8rb+gaiaLaEyL6pUmo8zKLAtJxpj6dufaoLd7peKtiw4rDyKKB2IreoGJoqXQ==}
+  release-plan@0.17.2:
+    resolution: {integrity: sha512-LgE/3CU8sFZt28uJR886xvWdw/CL0g5g5YSFTAJUvUy5qdERZdcc1pu317nKpYFs/yEDjiUasLj3rxnXBJf1zA==}
     hasBin: true
 
   remove-trailing-separator@1.1.0:
@@ -13216,7 +13216,7 @@ snapshots:
 
   get-value@2.0.6: {}
 
-  github-changelog@2.0.0:
+  github-changelog@2.1.1:
     dependencies:
       '@manypkg/get-packages': 2.2.2
       chalk: 4.1.2
@@ -15089,7 +15089,7 @@ snapshots:
     dependencies:
       jsesc: 0.5.0
 
-  release-plan@0.17.0:
+  release-plan@0.17.2:
     dependencies:
       '@manypkg/get-packages': 2.2.2
       '@npmcli/package-json': 6.1.1
@@ -15099,7 +15099,7 @@ snapshots:
       cli-highlight: 2.1.11
       execa: 9.5.2
       fs-extra: 11.3.0
-      github-changelog: 2.0.0
+      github-changelog: 2.1.1
       js-yaml: 4.1.0
       latest-version: 9.0.0
       parse-github-repo-url: 1.4.1
