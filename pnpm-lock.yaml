@@ -140,7 +140,7 @@ importers:
         specifier: ^2.0.0-alpha.3
         version: 2.0.0-alpha.3(typescript@5.8.3)
       '@glint/environment-ember-loose':
-        specifier: ^2.0.0-alpha.2
+        specifier: ^2.0.0-alpha.3
         version: 2.0.0-alpha.3(@glimmer/component@2.0.0)(@glint/core@2.0.0-alpha.3(typescript@5.8.3))(@glint/template@1.6.0-alpha.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.28.0))
       '@glint/environment-ember-template-imports':
         specifier: ^2.0.0-alpha.2
