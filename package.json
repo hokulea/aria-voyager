@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "playwright": "^1.54.2",
-    "release-plan": "0.17.0",
+    "release-plan": "0.17.2",
     "turbo": "^2.5.4"
   },
   "packageManager": "pnpm@10.13.1",
