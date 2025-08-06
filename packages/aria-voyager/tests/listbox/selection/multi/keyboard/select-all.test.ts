@@ -9,15 +9,15 @@ describe('Select all', () => {
   const listbox = new Listbox(list);
 
   test('use `Meta` + `A` key to select all items', async () => {
-    expect(
-      listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)
-    ).toBeFalsy();
+    for (const item of listbox.items) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     list.focus();
     await userEvent.keyboard('{Meta>}a');
 
-    expect(
-      listbox.items.map((item) => item.getAttribute('aria-selected')).every(Boolean)
-    ).toBeTruthy();
+    for (const item of listbox.items) {
+      await expect.element(item).toHaveAttribute('aria-selected', 'true');
+    }
   });
 });
