@@ -40,7 +40,7 @@
     "@gossi/config-prettier": "1.1.0",
     "@hokulea/core": "^0.4.0",
     "@hokulea/theme-moana": "^0.1.0",
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
     "@testing-library/dom": "10.4.1",
     "@tsconfig/svelte": "^5.0.4",
     "@types/css-modules": "1.0.5",
