@@ -164,8 +164,8 @@ importers:
         specifier: 4.5.8
         version: 4.5.8
       '@types/qunit':
-        specifier: 2.19.12
-        version: 2.19.12
+        specifier: 2.19.13
+        version: 2.19.13
       '@types/sinon':
         specifier: 17.0.4
         version: 17.0.4
@@ -2034,8 +2034,8 @@ packages:
   '@types/qs@6.9.15':
     resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
 
-  '@types/qunit@2.19.12':
-    resolution: {integrity: sha512-II+C1wgzUia0g+tGAH+PBb4XiTm8/C/i6sN23r21NNskBYOYrv+qnW0tFQ/IxZzKVwrK4CTglf8YO3poJUclQA==}
+  '@types/qunit@2.19.13':
+    resolution: {integrity: sha512-N4xp3v4s7f0jb2Oij6+6xw5QhH7/IgHCoGIFLCWtbEWoPkGYp8Te4mIwIP21qaurr6ed5JiPMiy2/ZoiGPkLIw==}
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
@@ -9969,7 +9969,7 @@ snapshots:
 
   '@types/qs@6.9.15': {}
 
-  '@types/qunit@2.19.12': {}
+  '@types/qunit@2.19.13': {}
 
   '@types/range-parser@1.2.7': {}
 
