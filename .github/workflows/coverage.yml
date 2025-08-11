@@ -19,7 +19,7 @@ jobs:
       - name: Install Playwright Browsers
         uses: ./.github/actions/playwright-browser-install
       - name: coverage
-        uses: qltysh/qlty-action/coverage@v1
+        uses: qltysh/qlty-action/coverage@v2
         with:
           token: ${{secrets.QLTY_COVERAGE_TOKEN}}
           files: |
