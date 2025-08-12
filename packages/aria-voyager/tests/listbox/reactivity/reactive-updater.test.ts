@@ -58,24 +58,24 @@ describe('Reactive Updater', () => {
       expect(listbox.options.multiple).toBeFalsy();
     });
 
-    test('sets tabindex to -1 when the aria-disabled is `true`', () => {
-      expect(list.getAttribute('tabindex')).toBe('0');
+    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
+      await expect.element(list).toHaveAttribute('tabindex', '0');
 
       list.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-      expect(list.getAttribute('tabindex')).toBe('-1');
+      await expect.element(list).toHaveAttribute('tabindex', '-1');
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
-      expect(list.getAttribute('tabindex')).toBe('-1');
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
+      await expect.element(list).toHaveAttribute('tabindex', '-1');
 
       list.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
-      expect(list.getAttribute('tabindex')).toBe('0');
+      await expect.element(list).toHaveAttribute('tabindex', '0');
     });
   });
 });

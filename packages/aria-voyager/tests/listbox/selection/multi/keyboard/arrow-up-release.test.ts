@@ -1,5 +1,5 @@
 import { userEvent } from '@vitest/browser/context';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { Listbox } from '../../../../../src';
 import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
@@ -15,29 +15,25 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
     list.focus();
     await userEvent.keyboard('{End}');
 
-    // this await pleases playwright to pass the test when run as part of the
-    // whole suite. Whem run alone, its all fine.
-    // Some race conditions?
-    await vi.waitFor(() => {
-      expect(firstItem.getAttribute('aria-selected')).toBeNull();
-      expect(secondItem.getAttribute('aria-selected')).toBeNull();
-      expect(thirdItem.getAttribute('aria-selected')).toBeNull();
-    });
+    // these assertions will wait for the expected state due to built-in retrying
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
   });
 
   test('use `ArrowUp` and `Shift` key to select third and second item', async () => {
     await keys.keyboard('{Shift>}{ArrowUp}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 
   test('Release shift', async () => {
     await keys.keyboard('{/Shift}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 });
