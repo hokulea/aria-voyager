@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { Listbox } from '../../../../src';
-import { createListWithFruits, getItems } from '../../-shared';
+import { Listbox } from '#src';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 describe('Navigate with `ArrowDown`', () => {
   const list = createListWithFruits();

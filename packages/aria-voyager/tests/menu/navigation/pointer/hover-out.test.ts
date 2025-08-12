@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
 
-import { Menu } from '../../../../src';
-import { createCodeMenu, getItems } from '../../-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
 describe('Hover out to trigger keeps submenu open', () => {
   const { codeMenu, shareMenu } = createCodeMenu();
