@@ -52,7 +52,7 @@
     "playwright": "^1.54.2",
     "prettier": "3.6.2",
     "svelte": "^5.38.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vite": "^6.2.4",
     "vitest": "^3.1.1",
     "vitest-browser-svelte": "^1.1.0"
