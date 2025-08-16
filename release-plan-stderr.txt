@@ -1,0 +1,48 @@
+release prepare
+
+Edits the package.json and changelog files to prepare for release.
+
+Options:
+  --version        Show version number                                 [boolean]
+  --help           Show help                                           [boolean]
+  --fromStdin      Read the summary of changes from stdin instead of building
+                   them from scratch.                                  [boolean]
+  --singlePackage  Allows you to run this command in a non monorepo and define
+                   the package name                                     [string]
+
+ExecaError: Command failed with exit code 1: node '/home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/github-changelog@2.1.1/node_modules/github-changelog/bin/cli.js' --ignore-releases --next-version Release
+
+Fetch error: Not Found.
+{"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+    at getFinalError (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/execa@9.5.2/node_modules/execa/lib/return/final-error.js:6:9)
+    at makeError (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/execa@9.5.2/node_modules/execa/lib/return/result.js:108:16)
+    at getAsyncResult (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/execa@9.5.2/node_modules/execa/lib/methods/main-async.js:167:4)
+    at handlePromise (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/execa@9.5.2/node_modules/execa/lib/methods/main-async.js:150:17)
+    at async gatherChanges (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/release-plan@0.17.2/node_modules/release-plan/dist/gather-changes.js:8:20)
+    at async newChangelogContent (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/release-plan@0.17.2/node_modules/release-plan/dist/cli.js:90:19)
+    at async Object.handler (file:///home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/release-plan@0.17.2/node_modules/release-plan/dist/cli.js:14:36) {
+  shortMessage: "Command failed with exit code 1: node '/home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/github-changelog@2.1.1/node_modules/github-changelog/bin/cli.js' --ignore-releases --next-version Release",
+  command: 'node /home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/github-changelog@2.1.1/node_modules/github-changelog/bin/cli.js --ignore-releases --next-version Release',
+  escapedCommand: "node '/home/runner/work/aria-voyager/aria-voyager/node_modules/.pnpm/github-changelog@2.1.1/node_modules/github-changelog/bin/cli.js' --ignore-releases --next-version Release",
+  cwd: '/home/runner/work/aria-voyager/aria-voyager',
+  durationMs: 6813.896399,
+  failed: true,
+  timedOut: false,
+  isCanceled: false,
+  isGracefullyCanceled: false,
+  isTerminated: false,
+  isMaxBuffer: false,
+  isForcefullyTerminated: false,
+  exitCode: 1,
+  stdout: 'Fetch error: Not Found.\n' +
+    '{"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}',
+  stderr: '',
+  stdio: [
+    undefined,
+    'Fetch error: Not Found.\n' +
+      '{"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}',
+    ''
+  ],
+  ipcOutput: [],
+  pipedFrom: []
+}
