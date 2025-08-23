@@ -42,7 +42,7 @@
     "@hokulea/theme-moana": "^0.1.0",
     "@sveltejs/vite-plugin-svelte": "^5.1.1",
     "@testing-library/dom": "10.4.1",
-    "@tsconfig/svelte": "^5.0.4",
+    "@tsconfig/svelte": "^5.0.5",
     "@types/css-modules": "1.0.5",
     "@types/lodash.isequal": "4.5.8",
     "@vitest/browser": "^3.1.1",
