@@ -21,7 +21,7 @@
     "start": "turbo run start --parallel"
   },
   "devDependencies": {
-    "playwright": "^1.54.2",
+    "playwright": "^1.55.0",
     "release-plan": "0.17.2",
     "turbo": "^2.5.6"
   },
