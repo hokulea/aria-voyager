@@ -13,9 +13,11 @@ describe('Select manually with spacebar`', () => {
 
   thirdItem.setAttribute('aria-disabled', 'true');
 
-  test('start', () => {
+  test('start', async () => {
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
@@ -25,61 +27,59 @@ describe('Select manually with spacebar`', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     expect(secondItem).toHaveAttribute('tabindex', '0');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use `ArrowRight` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     expect(fourthItem).toHaveAttribute('tabindex', '0');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== 3)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use spacebar to select fourth item', async () => {
     await userEvent.keyboard('{ }');
 
     expect(fourthItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 4).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+    for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowLeft` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowLeft}');
 
     expect(fourthItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 4).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+    for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     expect(secondItem).toHaveAttribute('tabindex', '0');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('use spacebar to select second item', async () => {
     await userEvent.keyboard('{ }');
 
     expect(secondItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });

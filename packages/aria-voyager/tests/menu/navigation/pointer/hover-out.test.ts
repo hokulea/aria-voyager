@@ -32,7 +32,8 @@ describe('Hover out to trigger keeps submenu open', () => {
 
     await vi.waitFor(() => {
       expect(shareMenu.matches(':popover-open')).toBeTruthy();
-      expect(document.activeElement).toBe(fourthItem);
     });
+
+    await expect.element(fourthItem).toHaveFocus();
   });
 });
