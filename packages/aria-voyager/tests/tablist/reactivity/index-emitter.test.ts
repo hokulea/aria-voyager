@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
 
-import { IndexEmitStrategy } from '../../../src';
-import { createTabs, getTabItems } from '../-shared';
+import { IndexEmitStrategy } from '#src';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
 describe('IndexEmitter', () => {
   const { tabs } = createTabs();

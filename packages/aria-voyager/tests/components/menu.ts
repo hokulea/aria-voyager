@@ -1,6 +1,7 @@
 // import styles from '@hokulea/core/navigation.module.css';
-import { Menu as MenuBehavior } from '../../src';
-import { uniqueId } from '../../src/utils';
+import { Menu as MenuBehavior } from '#src';
+import { uniqueId } from '#src/utils';
+
 import { getCompositeItems } from './-composites';
 
 export function createMenuElement(parent: HTMLElement) {

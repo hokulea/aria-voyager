@@ -1,9 +1,9 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { ReactiveUpdateStrategy } from '../../../src';
-import { appendTab, removeTab } from '../../components/tabs';
-import { createTabs, getTabItems } from '../-shared';
+import { ReactiveUpdateStrategy } from '#src';
+import { appendTab, removeTab } from '#tests/components/tabs';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
 // simulating a framework with a reactive library
 describe('Reactive Updater', () => {

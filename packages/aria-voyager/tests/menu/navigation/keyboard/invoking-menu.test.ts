@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
 
-import { Menu } from '../../../../src';
-import { createCodeMenuWithTriggerButton, getItems } from '../../-shared';
+import { Menu } from '#src';
+import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
 
 describe('Invoking a menu item closes all submenus', () => {
   const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();

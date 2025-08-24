@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { Listbox } from '../../../src';
-import { appendItemToList, getItems } from '../../components/list';
-import { createListWithFruits } from '../-shared';
+import { Listbox } from '#src';
+import { appendItemToList, getItems } from '#tests/components/list';
+import { createListWithFruits } from '#tests/listbox/-shared';
 
 describe('DOM Observer', () => {
   const list = createListWithFruits();

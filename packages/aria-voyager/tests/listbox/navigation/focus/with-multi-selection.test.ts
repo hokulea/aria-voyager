@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { Listbox } from '../../../../src';
-import { createMultiSelectListWithFruits, getItems } from '../../-shared';
+import { Listbox } from '#src';
+import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
 
 describe('Focus activates first item of selection (Multi Select)', () => {
   const list = createMultiSelectListWithFruits();

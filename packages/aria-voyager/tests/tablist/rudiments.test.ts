@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import { Tablist } from '../../src';
-import { createTabs, getTabItems } from './-shared';
+import { Tablist } from '#src';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
 test('renders', () => {
   const { tabs } = createTabs();
