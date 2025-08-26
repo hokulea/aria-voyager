@@ -1,7 +1,7 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { List } from '../../../components/list';
+import { List } from '#tests/components/list';
 
 const listbox = new List(document.body);
 const list = listbox.element;

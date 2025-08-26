@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
 
-import { IndexEmitStrategy, Listbox } from '../../../src';
-import { createListWithFruits } from '../-shared';
+import { IndexEmitStrategy, Listbox } from '#src';
+import { createListWithFruits } from '#tests/listbox/-shared';
 
 describe('IndexEmitter', () => {
   const list = createListWithFruits();

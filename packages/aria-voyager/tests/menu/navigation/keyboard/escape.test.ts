@@ -1,8 +1,8 @@
 import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
 
-import { Menu } from '../../../../src';
-import { createCodeMenu, getItems } from '../../-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
 describe('Close with `Escape`', () => {
   const { codeMenu, shareMenu } = createCodeMenu();

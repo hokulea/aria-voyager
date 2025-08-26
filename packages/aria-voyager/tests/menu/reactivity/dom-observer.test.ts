@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { Menu } from '../../../src';
-import { appendItemToMenu, getItems } from '../../components/menu';
-import { createCodeMenu } from '../-shared';
+import { Menu } from '#src';
+import { appendItemToMenu, getItems } from '#tests/components/menu';
+import { createCodeMenu } from '#tests/menu/-shared';
 
 describe('DOM Observer', () => {
   const { codeMenu } = createCodeMenu();

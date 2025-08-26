@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
-import { Listbox } from '../../../../../src';
-import { createListWithFruits, getItems } from '../../../-shared';
+import { Listbox } from '#src';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('select first item when focus', async () => {
   const list = createListWithFruits();

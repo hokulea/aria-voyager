@@ -1,13 +1,13 @@
-import { uniqueId } from '../../src/utils';
+import { uniqueId } from '#src/utils';
 import {
   appendCheckboxItemToMenu,
   appendItemToMenu,
   appendRadioItemToMenu,
   appendSubmenuToMenu,
   createMenuElement
-} from '../components/menu';
+} from '#tests/components/menu';
 
-import type { Menu } from '../../src';
+import type { Menu } from '#src';
 
 export function createCodeMenu() {
   const codeMenu = createMenuElement(document.body);
