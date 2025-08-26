@@ -28,8 +28,11 @@ export default defineConfig({
       screenshotFailures: false,
       provider: 'playwright',
       instances: [
-        { browser: 'firefox', launch: { slowMo: 100 } }
-        // tests are flaky in chromium + playwright
+        {
+          browser: 'firefox'
+          // launch: { slowMo: 100 }
+        }
+        // tests are flaky in playwright + chromium/webkit
         // { browser: 'chromium' }
         // { browser: 'webkit' }
       ]

@@ -20,7 +20,7 @@ describe('Close with `ArrowLeft`', () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowRight}');
-    expect(codeItem.getAttribute('tabindex')).toBe('0');
+    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
     expect(document.activeElement).toBe(codeItem);
   });
 

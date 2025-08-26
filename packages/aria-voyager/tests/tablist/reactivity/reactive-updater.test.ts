@@ -69,38 +69,36 @@ describe('Reactive Updater', () => {
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       await userEvent.click(firstItem);
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
       tablist.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of tabs.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
+      for (const item of tabs.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       tablist.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
-      expect(firstItem.getAttribute('tabindex')).toBe('0');
-      expect(
-        tabs.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
+      for (const item of tabs.items.slice(1)) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
   });
 
   describe('items', () => {
-    test('adding items to a disabled tablist will receive tabindex -1', () => {
+    test('adding items to a disabled tablist will receive tabindex -1', async () => {
       const { lastItem, secondLastItem } = getTabItems(tabs);
 
       removeTab(lastItem);
@@ -109,9 +107,9 @@ describe('Reactive Updater', () => {
       tablist.setAttribute('aria-disabled', 'true');
       updater.updateOptions();
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of tabs.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       appendTab(container, 'Tab 4', 'Content 4');
       appendTab(container, 'Tab 5', 'Content 5');
@@ -123,9 +121,9 @@ describe('Reactive Updater', () => {
 
       updater.updateItems();
 
-      expect(
-        tabs.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of tabs.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
   });
 });

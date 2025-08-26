@@ -24,40 +24,36 @@ describe('Reactive Updater', () => {
   });
 
   describe('read options', () => {
-    test('sets tabindex to -1 when the aria-disabled is `true`', () => {
+    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
       expect(menu.items[0].getAttribute('tabindex')).toBe('0');
-      expect(
-        menu.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+
+      for (const item of menu.items.slice(1)) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       codeMenu.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', () => {
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
 
       codeMenu.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
       expect(menu.items[0].getAttribute('tabindex')).toBe('0');
-      expect(
-        menu.items
-          .slice(1)
-          .map((item) => item.getAttribute('tabindex') === '-1')
-          .every(Boolean)
-      ).toBeTruthy();
+
+      for (const item of menu.items.slice(1)) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
   });
 });

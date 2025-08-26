@@ -9,25 +9,28 @@ describe('Focus activates first item of selection (Multi Select)', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('select two items', () => {
+  test('select two items', async () => {
     // await user.click(secondItem);
 
     // https://github.com/hokulea/aria-voyager/issues/259
-    // const user = userEvent.setup();
-    // await user.keyboard('{Shift>}');
-    // await user.click(thirdItem);
-    // await user.keyboard('{/Shift}');
+    const user = userEvent.setup();
 
-    secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
+    await user.click(secondItem);
+    await user.keyboard('{Shift>}');
+    await user.click(thirdItem);
+    await user.keyboard('{/Shift}');
 
-    expect(firstItem.getAttribute('aria-selected')).toBeNull();
-    expect(secondItem.getAttribute('aria-selected')).toBe('true');
-    expect(thirdItem.getAttribute('aria-selected')).toBe('true');
+    // secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+    // thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
-    expect(
-      listbox.items.map((item) => item.getAttribute('aria-current')).every(Boolean)
-    ).toBeFalsy();
+    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
+
+    for (const item of listbox.items) {
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-current'));
+    }
   });
 
   test('refocus keeps selection', async () => {
@@ -35,8 +38,8 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     await userEvent.tab({ shift: true });
 
     expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
-    expect(firstItem.getAttribute('aria-current')).toBeNull();
-    expect(secondItem.getAttribute('aria-current')).toBe('true');
-    expect(thirdItem.getAttribute('aria-current')).toBeNull();
+    await expect.element(firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
   });
 });
