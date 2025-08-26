@@ -11,7 +11,10 @@ describe('Select with `ArrowUp`', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
@@ -21,36 +24,40 @@ describe('Select with `ArrowUp`', () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `END` to jump to the last item', async () => {
     await userEvent.keyboard('{End}');
 
     await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(0, -1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(0, -1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))
-        .every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowUp` key to activate third last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(thirdLastItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== tabs.items.indexOf(thirdLastItem))
-        .every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(thirdLastItem))) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });
 
@@ -63,7 +70,11 @@ describe('select with `ArrowUp`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
+
     expect(tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
@@ -74,28 +85,29 @@ describe('select with `ArrowUp`, skipping disabled items', () => {
     await userEvent.keyboard('{End}');
 
     await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(0, -1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(0, -1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))
-        .every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowUp` key to activate fourth last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
     await expect.element(fourthLastItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== tabs.items.indexOf(fourthLastItem))
-        .every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(fourthLastItem))) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });

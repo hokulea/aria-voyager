@@ -9,9 +9,11 @@ describe('Use pointer to activate items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
-    expect(
-      tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
+
     expect(tabs.activeItem).toBeTruthy();
   });
 
@@ -21,30 +23,29 @@ describe('Use pointer to activate items', () => {
     await userEvent.click(tablist);
 
     expect(tabs.activeItem).toBeTruthy();
-    expect(
-      tabs.items.slice(1).every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('select second item', async () => {
     await userEvent.click(secondItem);
 
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== 1)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 
   test('select third item', async () => {
     await userEvent.click(thirdItem);
 
     await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
-    expect(
-      tabs.items
-        .filter((_, idx) => idx !== 2)
-        .every((item) => item.getAttribute('tabindex') === '-1')
-    ).toBeTruthy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 2)) {
+      await expect.element(item).toHaveAttribute('tabindex', '-1');
+    }
   });
 });

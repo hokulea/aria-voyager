@@ -9,7 +9,10 @@ describe('Select with `ArrowRight`', () => {
 
   test('focus in', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
@@ -19,18 +22,21 @@ describe('Select with `ArrowRight`', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
+    }
   });
 
   test('use `ArrowRight` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 2)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowRight` key at the last item does nothing', async () => {
@@ -38,7 +44,10 @@ describe('Select with `ArrowRight`', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(0, -1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(0, -1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });
 
@@ -50,7 +59,10 @@ describe('select with `ArrowRight`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
@@ -60,17 +72,19 @@ describe('select with `ArrowRight`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowRight` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
     await expect.element(fourthItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 3).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });

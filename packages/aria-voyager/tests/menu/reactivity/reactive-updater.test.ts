@@ -35,9 +35,9 @@ describe('Reactive Updater', () => {
 
       updater.updateOptions();
 
-      expect(
-        menu.items.map((item) => item.getAttribute('tabindex') === '-1').every(Boolean)
-      ).toBeTruthy();
+      for (const item of menu.items) {
+        await expect.element(item).toHaveAttribute('tabindex', '-1');
+      }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {

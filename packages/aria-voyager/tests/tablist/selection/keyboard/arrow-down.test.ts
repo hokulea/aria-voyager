@@ -11,7 +11,10 @@ describe('Select with `ArrowDown`', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
 
     firstItem.focus();
     expect(document.activeElement).toBe(firstItem);
@@ -21,18 +24,20 @@ describe('Select with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowDown` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 2).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 2)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowDown` key at the last item does nothing', async () => {
@@ -40,7 +45,10 @@ describe('Select with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(0, -1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(0, -1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });
 
@@ -53,7 +61,11 @@ describe('select with `ArrowDown`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    expect(tabs.items.slice(1).every((item) => item.hasAttribute('aria-selected'))).toBeFalsy();
+
+    for (const item of tabs.items.slice(1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
+
     expect(tabs.activeItem).toBeTruthy();
 
     firstItem.focus();
@@ -64,17 +76,19 @@ describe('select with `ArrowDown`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 1).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 
   test('use `ArrowDown` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(fourthItem).toHaveAttribute('aria-selected', 'true');
-    expect(
-      tabs.items.filter((_, idx) => idx !== 3).every((item) => item.hasAttribute('aria-selected'))
-    ).toBeFalsy();
+
+    for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
+      await expect.element(item).not.toHaveAttribute('aria-selected');
+    }
   });
 });
