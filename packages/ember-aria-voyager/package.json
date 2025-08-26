@@ -103,7 +103,7 @@
     "eslint-plugin-qunit": "^8.2.5",
     "prettier": "3.6.2",
     "qunit": "2.24.1",
-    "qunit-dom": "3.4.0",
+    "qunit-dom": "3.5.0",
     "rollup": "4.48.0",
     "sinon": "^21.0.0",
     "testem": "^3.16.0",
