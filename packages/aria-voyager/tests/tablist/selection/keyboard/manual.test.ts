@@ -15,6 +15,7 @@ describe('Select manually with spacebar`', () => {
 
   test('start', async () => {
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
+
     for (const item of tabs.items.slice(1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
@@ -27,11 +28,13 @@ describe('Select manually with spacebar`', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
+
     for (const item of tabs.items.slice(1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
 
     expect(secondItem).toHaveAttribute('tabindex', '0');
+
     for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -41,11 +44,13 @@ describe('Select manually with spacebar`', () => {
     await userEvent.keyboard('{ArrowRight}');
 
     expect(firstItem).toHaveAttribute('aria-selected', 'true');
+
     for (const item of tabs.items.slice(1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
 
     expect(fourthItem).toHaveAttribute('tabindex', '0');
+
     for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -55,6 +60,7 @@ describe('Select manually with spacebar`', () => {
     await userEvent.keyboard('{ }');
 
     expect(fourthItem).toHaveAttribute('aria-selected', 'true');
+
     for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
@@ -64,11 +70,13 @@ describe('Select manually with spacebar`', () => {
     await userEvent.keyboard('{ArrowLeft}');
 
     expect(fourthItem).toHaveAttribute('aria-selected', 'true');
+
     for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
 
     expect(secondItem).toHaveAttribute('tabindex', '0');
+
     for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -78,6 +86,7 @@ describe('Select manually with spacebar`', () => {
     await userEvent.keyboard('{ }');
 
     expect(secondItem).toHaveAttribute('aria-selected', 'true');
+
     for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }

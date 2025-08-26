@@ -42,13 +42,13 @@ describe('Listbox', () => {
       const listbox = new Listbox(list);
 
       for (const item of listbox.items) {
-      expect(item.id).toBeTruthy();
-    }
+        expect(item.id).toBeTruthy();
+      }
     });
   });
 
   describe('disabled', () => {
-    it('focus does not work', () => {
+    it('focus does not work', async () => {
       const list = createListElement(document.body);
 
       list.setAttribute('aria-disabled', 'true');
@@ -57,9 +57,9 @@ describe('Listbox', () => {
 
       list.dispatchEvent(new FocusEvent('focusin'));
 
-      for (const elem of [...list.children]) {
-      await expect.element(elem).not.toHaveAttribute('aria-selected');
-    }
+      for (const elem of list.children) {
+        await expect.element(elem).not.toHaveAttribute('aria-selected');
+      }
     });
   });
 });

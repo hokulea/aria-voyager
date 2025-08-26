@@ -24,6 +24,7 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -44,6 +45,7 @@ describe('Navigate with `ArrowDown`', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(lastItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(0, -1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -59,6 +61,7 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
 
   test('start', async () => {
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -71,6 +74,7 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(secondItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
@@ -80,6 +84,7 @@ describe('navigate with `ArrowDown`, skipping disabled items', () => {
     await userEvent.keyboard('{ArrowDown}');
 
     await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
+
     for (const item of menu.items.filter((_, idx) => idx !== 3)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
