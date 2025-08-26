@@ -62,7 +62,8 @@ describe('Select manually with spacebar`', () => {
     expect(fourthItem).toHaveAttribute('aria-selected', 'true');
 
     for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
     }
   });
 
@@ -72,7 +73,8 @@ describe('Select manually with spacebar`', () => {
     expect(fourthItem).toHaveAttribute('aria-selected', 'true');
 
     for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
     }
 
     expect(secondItem).toHaveAttribute('tabindex', '0');

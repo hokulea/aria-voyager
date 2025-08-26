@@ -13,20 +13,23 @@ describe('Focus activates first item of selection (Multi Select)', () => {
     // await user.click(secondItem);
 
     // https://github.com/hokulea/aria-voyager/issues/259
-    // const user = userEvent.setup();
-    // await user.keyboard('{Shift>}');
-    // await user.click(thirdItem);
-    // await user.keyboard('{/Shift}');
+    const user = userEvent.setup();
 
-    secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
+    await user.click(secondItem);
+    await user.keyboard('{Shift>}');
+    await user.click(thirdItem);
+    await user.keyboard('{/Shift}');
+
+    // secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+    // thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
 
     await expect.element(firstItem).not.toHaveAttribute('aria-selected');
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
     await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
     for (const item of listbox.items) {
-      await expect.element(item).not.toHaveAttribute('aria-current');
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-current'));
     }
   });
 
