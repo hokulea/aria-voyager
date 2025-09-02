@@ -34,8 +34,8 @@ importers:
         specifier: 0.6.0
         version: 0.6.0
       '@hokulea/theme-moana':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.2.0
+        version: 0.2.0
       '@testing-library/dom':
         specifier: 10.4.1
         version: 10.4.1
@@ -243,8 +243,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@hokulea/theme-moana':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@sveltejs/vite-plugin-svelte':
         specifier: ^5.1.1
         version: 5.1.1(svelte@5.38.6)(vite@6.2.4(@types/node@22.5.0)(jiti@2.5.1)(terser@5.31.6))
@@ -1457,8 +1457,8 @@ packages:
     resolution: {integrity: sha512-Z6XXliGM0nXK5/Vzdk/NcEzB+gM210+ZoOGNpmbn/TJ/+1nTeschtm4XqWFpVP1LbS2pfJ3ATBXM+eIyGtVyaw==}
     engines: {node: ^20.11.0 || >=22}
 
-  '@hokulea/theme-moana@0.1.0':
-    resolution: {integrity: sha512-Ai9sbLeXNVRW9XPUv7a2YzySOOlKvf3rbHyzF6b0GLHjLOAh+QljzY+s/UenWNjDQc+8T0vSxX8V4RmwarduuA==}
+  '@hokulea/theme-moana@0.2.0':
+    resolution: {integrity: sha512-sljIBI19SItZjcqV/AOyiwIbUWD1LJjI1GueIUhp9l7qS/34fYmdwCZ1Q08Oi8Uw5+65VddP9fc3b95XKSAksw==}
     engines: {node: ^20.11.0 || >=22}
 
   '@humanfs/core@0.19.1':
@@ -9422,7 +9422,7 @@ snapshots:
 
   '@hokulea/core@0.6.0': {}
 
-  '@hokulea/theme-moana@0.1.0': {}
+  '@hokulea/theme-moana@0.2.0': {}
 
   '@humanfs/core@0.19.1': {}
 
