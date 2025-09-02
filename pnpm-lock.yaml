@@ -31,8 +31,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(prettier@3.6.2)
       '@hokulea/core':
-        specifier: 0.4.0
-        version: 0.4.0
+        specifier: 0.6.0
+        version: 0.6.0
       '@hokulea/theme-moana':
         specifier: 0.1.0
         version: 0.1.0
@@ -240,8 +240,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(prettier@3.6.2)
       '@hokulea/core':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.6.0
+        version: 0.6.0
       '@hokulea/theme-moana':
         specifier: ^0.1.0
         version: 0.1.0
@@ -1453,8 +1453,8 @@ packages:
   '@handlebars/parser@2.0.0':
     resolution: {integrity: sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA==}
 
-  '@hokulea/core@0.4.0':
-    resolution: {integrity: sha512-vnFil+sS0rrgGWZJ201bmgdIv6mIYBtM6ASiHScusFzymeda+aX64I6s1h6AFMLfrT7LUbJN2+mPE+ntOCAPjg==}
+  '@hokulea/core@0.6.0':
+    resolution: {integrity: sha512-Z6XXliGM0nXK5/Vzdk/NcEzB+gM210+ZoOGNpmbn/TJ/+1nTeschtm4XqWFpVP1LbS2pfJ3ATBXM+eIyGtVyaw==}
     engines: {node: ^20.11.0 || >=22}
 
   '@hokulea/theme-moana@0.1.0':
@@ -9420,7 +9420,7 @@ snapshots:
 
   '@handlebars/parser@2.0.0': {}
 
-  '@hokulea/core@0.4.0': {}
+  '@hokulea/core@0.6.0': {}
 
   '@hokulea/theme-moana@0.1.0': {}
 
