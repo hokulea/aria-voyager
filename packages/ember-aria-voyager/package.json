@@ -107,7 +107,7 @@
     "rollup": "4.50.0",
     "sinon": "^21.0.0",
     "testem": "^3.16.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vite": "^6.2.4"
   },
   "ember": {
