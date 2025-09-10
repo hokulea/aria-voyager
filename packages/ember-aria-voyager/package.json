@@ -104,7 +104,7 @@
     "prettier": "3.6.2",
     "qunit": "2.24.1",
     "qunit-dom": "3.5.0",
-    "rollup": "4.50.0",
+    "rollup": "4.50.1",
     "sinon": "^21.0.0",
     "testem": "^3.16.0",
     "typescript": "5.8.3",
