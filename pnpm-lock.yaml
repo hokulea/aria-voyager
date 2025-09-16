@@ -73,7 +73,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.2.4
+        specifier: ^6.3.6
         version: 6.3.6(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)
       vitest:
         specifier: ^3.1.1
@@ -221,7 +221,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.2.4
+        specifier: ^6.3.6
         version: 6.3.6(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)
 
   packages/svelte-aria-voyager:
@@ -285,7 +285,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.2.4
+        specifier: ^6.3.6
         version: 6.3.6(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)
       vitest:
         specifier: ^3.1.1
