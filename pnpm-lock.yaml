@@ -67,8 +67,8 @@ importers:
         specifier: 3.6.2
         version: 3.6.2
       tsdown:
-        specifier: 0.15.2
-        version: 0.15.2(typescript@5.8.3)
+        specifier: 0.15.3
+        version: 0.15.3(typescript@5.8.3)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -7196,8 +7196,8 @@ packages:
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
 
-  tsdown@0.15.2:
-    resolution: {integrity: sha512-qPbWcVnI7Ekq5p4xPiLwuS9siczCGPAyZYsAzcS1xTcFvkkZIsDbh3ejlmUoe/ypLJl5+oQ4Rbwp63Zf+eWiMw==}
+  tsdown@0.15.3:
+    resolution: {integrity: sha512-51p2z1F3GBAG9+9J+BNo6rYCvajZ9TAGtFMq/hCwjhvxFbzJ/Py4SHmLNltbraR4QFepW694cZwab33Nb7H2Ew==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -16357,7 +16357,7 @@ snapshots:
       strip-bom: 3.0.0
     optional: true
 
-  tsdown@0.15.2(typescript@5.8.3):
+  tsdown@0.15.3(typescript@5.8.3):
     dependencies:
       ansis: 4.1.0
       cac: 6.7.14
