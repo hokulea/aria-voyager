@@ -108,7 +108,7 @@
     "sinon": "^21.0.0",
     "testem": "^3.16.0",
     "typescript": "5.8.3",
-    "vite": "^6.3.6"
+    "vite": "^7.1.6"
   },
   "ember": {
     "edition": "octane"
