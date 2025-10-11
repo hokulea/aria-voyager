@@ -279,7 +279,7 @@ importers:
         specifier: 3.6.2
         version: 3.6.2
       svelte:
-        specifier: ^5.39.9
+        specifier: ^5.39.11
         version: 5.39.11
       typescript:
         specifier: 5.8.3
