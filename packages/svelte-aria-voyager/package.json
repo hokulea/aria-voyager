@@ -53,7 +53,7 @@
     "prettier": "3.6.2",
     "svelte": "^5.39.11",
     "typescript": "5.8.3",
-    "vite": "^6.3.6",
+    "vite": "^6.4.1",
     "vitest": "^3.1.1",
     "vitest-browser-svelte": "^1.1.0"
   },
