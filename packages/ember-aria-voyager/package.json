@@ -91,7 +91,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/qunit": "2.19.13",
     "@types/sinon": "17.0.4",
-    "decorator-transforms": "^2.3.0",
+    "decorator-transforms": "^2.3.1",
     "ember-cli-code-coverage": "3.1.0",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
