@@ -126,6 +126,20 @@ export class MenuNavigation implements NavigationPattern {
           (event.relatedTarget as HTMLElement).focus();
         }
 
+        // Clear active item visual state when pointer leaves menu entirely
+        // (not moving to trigger, submenu, or another element within the menu)
+        else if (target === this.control.element && this.isLeavingMenu(event)) {
+          if (this.focusStrategy.activeItem) {
+            this.focusStrategy.activeItem.setAttribute('tabindex', '-1');
+            this.focusStrategy.activeItem = undefined;
+          }
+
+          // Ensure first item remains tabbable for keyboard access
+          if (this.control.enabledItems.length > 0) {
+            this.control.enabledItems[0].setAttribute('tabindex', '0');
+          }
+        }
+
         break;
       }
       case 'pointerup': {
@@ -219,5 +233,35 @@ export class MenuNavigation implements NavigationPattern {
     if (root) {
       root.hidePopover();
     }
+  }
+
+  /**
+   * Check if the pointer is leaving the menu entirely (not moving to trigger or submenu).
+   */
+  private isLeavingMenu(event: PointerEvent): boolean {
+    const relatedTarget = event.relatedTarget as HTMLElement | null;
+
+    // Still within the menu element
+    if (relatedTarget && this.control.element.contains(relatedTarget)) {
+      return false;
+    }
+
+    // Moving to the trigger button
+    if (relatedTarget === (this.control.element as MenuElement)[OPENER]) {
+      return false;
+    }
+
+    // Check if moving to a submenu
+    for (const item of this.control.items) {
+      if (item.hasAttribute('popovertarget')) {
+        const submenu = getMenuFromItem(item);
+
+        if (submenu && (submenu === relatedTarget || submenu.contains(relatedTarget))) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }
