@@ -1,6 +1,6 @@
 import './main.css';
 
-import '@hokulea/core/index.css';
+import '@hokulea/core/style.css';
 import '@hokulea/theme-moana/dist/moana.css';
 
 import { Tabs } from './components/tabs';
