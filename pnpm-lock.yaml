@@ -31,11 +31,11 @@ importers:
         specifier: 1.1.1
         version: 1.1.1(prettier@3.6.2)
       '@hokulea/core':
-        specifier: 0.7.1
-        version: 0.7.1
+        specifier: 0.9.1
+        version: 0.9.1
       '@hokulea/theme-moana':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.4.0
+        version: 0.4.0
       '@testing-library/dom':
         specifier: 10.4.1
         version: 10.4.1
@@ -1400,8 +1400,16 @@ packages:
     resolution: {integrity: sha512-X0MpetxBWJneRoP9RvxMppVsEeA8N3s/emw0O9z2N91jTOGJ3YX/rZL2eLPnjOKitR9HnoCMOdzmYXShxFWx7g==}
     engines: {node: ^20.11.0 || >=22}
 
+  '@hokulea/core@0.9.1':
+    resolution: {integrity: sha512-0JDdrxQS65oar7aw+BgaHS4gGSw5CbXKubDVisFyOD5rbKHlflvDy8KB48/3V87c1J+TuoPAlff7BqZEjXPpAg==}
+    engines: {node: ^20.11.0 || >=22}
+
   '@hokulea/theme-moana@0.2.0':
     resolution: {integrity: sha512-sljIBI19SItZjcqV/AOyiwIbUWD1LJjI1GueIUhp9l7qS/34fYmdwCZ1Q08Oi8Uw5+65VddP9fc3b95XKSAksw==}
+    engines: {node: ^20.11.0 || >=22}
+
+  '@hokulea/theme-moana@0.4.0':
+    resolution: {integrity: sha512-b9K1q4aNeeggY6sLYS/oIbuT0RU9lPRXFjnfcms0vqYuEYQx6azrsbtWEUk4CCmG6NQCCbZ3ZsMSmaLS3AvDnw==}
     engines: {node: ^20.11.0 || >=22}
 
   '@humanfs/core@0.19.1':
@@ -9000,7 +9008,11 @@ snapshots:
 
   '@hokulea/core@0.7.1': {}
 
+  '@hokulea/core@0.9.1': {}
+
   '@hokulea/theme-moana@0.2.0': {}
+
+  '@hokulea/theme-moana@0.4.0': {}
 
   '@humanfs/core@0.19.1': {}
 

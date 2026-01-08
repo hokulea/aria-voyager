@@ -1,4 +1,3 @@
-// import styles from '@hokulea/core/navigation.module.css';
 import { Menu as MenuBehavior } from '#src';
 import { uniqueId } from '#src/utils';
 
@@ -8,7 +7,7 @@ export function createMenuElement(parent: HTMLElement) {
   const element = document.createElement('div');
 
   element.role = 'menu';
-  // element.classList.add(styles.menu as string);
+  element.classList.add('menu');
 
   parent.append(element);
 
