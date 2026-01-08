@@ -9,8 +9,8 @@ import {
 
 import type { Menu } from '#src';
 
-export function createCodeMenu() {
-  const codeMenu = createMenuElement(document.body);
+export function createCodeMenu(parent = document.body) {
+  const codeMenu = createMenuElement(parent);
 
   // Refactor
   const refactorHeader = document.createElement('span');
@@ -80,14 +80,15 @@ export function createCodeMenu() {
   return { codeMenu, socialMenu, shareMenu, panelPositionMenu, refactorHeader, appearanceHeader };
 }
 
-export function withTriggerButton(menu: HTMLElement) {
+export function withTriggerButton(menu: HTMLElement, parent = document.body) {
   const id = uniqueId();
   const button = document.createElement('button');
 
   button.setAttribute('popovertarget', id);
   button.setAttribute('type', 'button');
+  button.classList.add('button');
   button.append('Trigger Menu');
-  document.body.append(button);
+  parent.append(button);
 
   menu.id = id;
   menu.setAttribute('popover', '');
