@@ -142,6 +142,11 @@ export abstract class Control {
     for (const eventName of eventNames) {
       this.element.removeEventListener(eventName, this.#handler);
     }
+
+    // dispose navigation patterns
+    for (const pattern of this.navigationPatterns) {
+      pattern.dispose?.();
+    }
   }
 
   private handleEvent(event: Event) {

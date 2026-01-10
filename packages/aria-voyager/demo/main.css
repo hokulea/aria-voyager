@@ -7,3 +7,16 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
+
+.code-trigger {
+  anchor-name: --code-trigger;
+}
+
+.code-menu {
+  position-anchor: --code-trigger;
+  position: absolute;
+  inset: auto;
+  right: anchor(right);
+  top: anchor(bottom);
+  margin-block-start: var(--s-2);
+}

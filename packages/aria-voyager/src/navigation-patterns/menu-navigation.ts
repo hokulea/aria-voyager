@@ -21,6 +21,10 @@ function isPointerEvent(event: Event): event is PointerEvent {
   return ['pointerover', 'pointerout', 'pointerup'].includes(event.type);
 }
 
+function isKeyboardEvent(event: Event): event is KeyboardEvent {
+  return ['keydown', 'keyup', 'keypress'].includes(event.type);
+}
+
 function getMenuFromItem(item: Item): MenuElement | null {
   // eslint-disable-next-line unicorn/prefer-query-selector
   return document.getElementById(
@@ -28,13 +32,46 @@ function getMenuFromItem(item: Item): MenuElement | null {
   ) as MenuElement | null;
 }
 
+type InvocationType = 'mouse' | 'keyboard';
+type InvocationElement = {
+  invocationType: InvocationType;
+};
+
+function invokerStyle(event: PointerEvent | KeyboardEvent) {
+  if (isPointerEvent(event)) {
+    (event.target as unknown as InvocationElement).invocationType = 'mouse';
+  } else if (isKeyboardEvent(event) && (event.key === 'Enter' || event.key === ' ')) {
+    (event.target as unknown as InvocationElement).invocationType = 'keyboard';
+  }
+}
+
 export class MenuNavigation implements NavigationPattern {
   eventListeners: EventNames[] = ['keydown', 'toggle', 'pointerover', 'pointerout', 'pointerup'];
+
+  private invokers: HTMLElement[] = [];
 
   constructor(
     private control: Control,
     private focusStrategy: FocusStrategy
-  ) {}
+  ) {
+    // listen to invocators
+    if (control.element.id) {
+      for (const invoker of document.querySelectorAll<HTMLElement>(
+        `[popovertarget=${control.element.id}]`
+      )) {
+        invoker.addEventListener('pointerup', invokerStyle);
+        invoker.addEventListener('keydown', invokerStyle);
+        this.invokers.push(invoker);
+      }
+    }
+  }
+
+  dispose() {
+    for (const invoker of this.invokers) {
+      invoker.removeEventListener('pointerup', invokerStyle);
+      invoker.removeEventListener('keydown', invokerStyle);
+    }
+  }
 
   matches(event: Event): boolean {
     return (
@@ -54,8 +91,8 @@ export class MenuNavigation implements NavigationPattern {
     const { event } = bag;
 
     // navigation handlers
-    if (event.type === 'keydown') {
-      this.navigateWithKeyboard(event as KeyboardEvent);
+    if (isKeyboardEvent(event)) {
+      this.navigateWithKeyboard(event);
     } else if (isPointerEvent(event)) {
       this.navigateWithPointer(event);
     }
@@ -63,6 +100,13 @@ export class MenuNavigation implements NavigationPattern {
     // toggle behavior
     else if (isToggleEvent(event)) {
       if (event.newState === 'open') {
+        const invocationType = (event.source as unknown as InvocationElement | null)
+          ?.invocationType;
+
+        if (invocationType && invocationType === 'mouse') {
+          (this.control.element as MenuElement)[FOCUS_ON_OPEN] = false;
+        }
+
         this.show();
       } else {
         this.hide();

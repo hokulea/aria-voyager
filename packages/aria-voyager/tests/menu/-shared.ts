@@ -45,11 +45,11 @@ export function createCodeMenu(parent = document.body) {
   // Appearance
   const appearanceHeader = document.createElement('span');
 
+  codeMenu.append(document.createElement('hr'));
+
   appearanceHeader.append('Appearance');
 
   codeMenu.append(appearanceHeader);
-
-  codeMenu.append(document.createElement('hr'));
 
   appendItemToMenu(codeMenu, 'Full Screen');
   appendItemToMenu(codeMenu, 'Zen Mode');

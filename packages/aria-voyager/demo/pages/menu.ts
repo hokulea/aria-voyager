@@ -22,9 +22,13 @@ function menuWithTriggerButton(parent: HTMLElement) {
 
   const { codeMenu } = createCodeMenu(cont);
 
-  new Menu(codeMenu);
+  codeMenu.classList.add('code-menu');
 
-  withTriggerButton(codeMenu, cont);
+  const trigger = withTriggerButton(codeMenu, cont);
+
+  trigger.classList.add('code-trigger');
+
+  new Menu(codeMenu);
 }
 
 function load() {
