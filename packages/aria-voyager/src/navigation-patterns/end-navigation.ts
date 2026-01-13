@@ -1,8 +1,10 @@
+import { doesEventMatchKeys } from '../utils';
+
 import type { Control } from '..';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
-export function isEndEvent(event: Event): boolean {
-  return event instanceof KeyboardEvent && event.type === 'keydown' && event.key === 'End';
+function isEndEvent(event: Event): boolean {
+  return doesEventMatchKeys(event, 'End');
 }
 
 export class EndNavigation implements NavigationPattern {

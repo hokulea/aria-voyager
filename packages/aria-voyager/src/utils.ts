@@ -15,3 +15,21 @@ export function uniqueId(): string {
     ((a * 4) ^ ((Math.random() * 16) >> (a & 2))).toString(16)
   );
 }
+
+export function isToggleEvent(event: Event): event is ToggleEvent {
+  return event.type === 'toggle';
+}
+
+export function isPointerEvent(event: Event): event is PointerEvent {
+  return ['pointerover', 'pointerout', 'pointerup'].includes(event.type);
+}
+
+export function isKeyboardEvent(event: Event): event is KeyboardEvent {
+  return ['keydown', 'keyup', 'keypress'].includes(event.type);
+}
+
+export function doesEventMatchKeys(event: Event, keyOrKeys: string | string[]) {
+  const keys = Array.isArray(keyOrKeys) ? keyOrKeys : [keyOrKeys];
+
+  return event instanceof KeyboardEvent && event.type === 'keydown' && keys.includes(event.key);
+}
