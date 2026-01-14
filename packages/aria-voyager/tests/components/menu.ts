@@ -17,9 +17,14 @@ export function createMenuElement(parent: HTMLElement) {
 export function appendItemToMenu(parent: HTMLElement, item: string) {
   const elem = document.createElement('button');
 
-  elem.append(item);
   elem.type = 'button';
   elem.role = 'menuitem';
+
+  const label = document.createElement('span');
+
+  label.append(item);
+
+  elem.append(label);
 
   parent.append(elem);
 
@@ -47,9 +52,14 @@ export function appendRadioItemToMenu(parent: HTMLElement, item: string, checked
 export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTMLElement) {
   menu.id = uniqueId();
   menu.setAttribute('popover', '');
+  // @ts-expect-error doesn't know that CSS yet
+  menu.style.positionAnchor = `--${menu.id}`;
 
   const elem = appendItemToMenu(parent, item);
 
+  // @ts-expect-error doesn't know that CSS yet
+  elem.style.anchorName = `--${menu.id}`;
+  elem.ariaHasPopup = 'menu';
   elem.setAttribute('popovertarget', menu.id);
 
   parent.append(menu);
@@ -58,9 +68,14 @@ export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTM
 export function withTriggerButton(parent: HTMLElement, menu: HTMLElement) {
   menu.id = uniqueId();
   menu.setAttribute('popover', '');
+  // @ts-expect-error doesn't know that CSS yet
+  menu.style.positionAnchor = `--${menu.id}`;
 
   const trigger = document.createElement('button');
 
+  // @ts-expect-error doesn't know that CSS yet
+  trigger.style.anchorName = `--${menu.id}`;
+  trigger.ariaHasPopup = 'menu';
   trigger.setAttribute('popovertarget', menu.id);
 
   parent.append(trigger);

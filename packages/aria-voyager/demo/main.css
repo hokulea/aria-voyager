@@ -8,15 +8,26 @@ body {
   gap: 1rem;
 }
 
-.code-trigger {
-  anchor-name: --code-trigger;
-}
-
-.code-menu {
-  position-anchor: --code-trigger;
+/* This is a menu attached to a trigger (button) */
+.menu[popover] {
   position: absolute;
   inset: auto;
-  right: anchor(right);
-  top: anchor(bottom);
-  margin-block-start: var(--s-2);
+  inset-inline-start: anchor(start);
+  inset-block-start: calc(anchor(end) + var(--s-2));
+
+  /* A submenu to an non-disclosure menu */
+  .menu & {
+    position-try: flip-inline;
+    inset: auto;
+    inset-inline-start: calc(anchor(end) + var(--spacing-primitive-3));
+    /* inset-block-start: calc(anchor(start) + var(--spacing-primitive-3)); */
+    inset-block-start: anchor(start);
+  }
+
+  /* Customization to a submenu of a popover submenu */
+  .menu[popover] & {
+    /* inset-block-start: anchor(start); */
+    inset-block-start: calc(anchor(start) - var(--spacing-primitive-2));
+  }
 }
+
