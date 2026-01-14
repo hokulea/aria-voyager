@@ -1,4 +1,4 @@
-import { isKeyboardEvent, isPointerEvent, isToggleEvent, matchesKeys } from '../utils';
+import { isKeyboardEvent, isPointerEvent, isToggleEvent, matchesKeys } from '../utils/event';
 import { getMenuFromItem, getMenuItemFromEvent, getRootMenu } from '../utils/menu';
 
 import type { Control } from '..';

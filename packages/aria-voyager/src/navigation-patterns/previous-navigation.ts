@@ -1,4 +1,4 @@
-import { doesEventMatchKeys } from '../utils';
+import { doesEventMatchKeys } from '../utils/event';
 
 import type { Control } from '..';
 import type { Item } from '../controls/control';
