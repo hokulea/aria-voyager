@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 
+import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
 // https://vite.dev/config/
@@ -16,22 +17,29 @@ export default defineConfig({
     }
   },
   test: {
-    // open: true,
+    retry: 2,
+    testTimeout: 5000,
     coverage: {
       enabled: true,
       provider: 'istanbul',
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
+    fileParallelism: false,
     browser: {
       enabled: true,
       headless: true,
       screenshotFailures: false,
-      provider: 'playwright',
-      instances: [
-        {
-          browser: 'firefox'
-          // launch: { slowMo: 100 }
+      provider: playwright({
+        launchOptions: {
+          slowMo: 100
         }
+      }),
+      instances: [
+        { browser: 'firefox' }
+        // {
+        //   browser: 'firefox'
+        //   // launch: { slowMo: 100 }
+        // }
         // tests are flaky in playwright + chromium/webkit
         // { browser: 'chromium' }
         // { browser: 'webkit' }

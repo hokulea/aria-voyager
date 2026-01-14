@@ -1,5 +1,5 @@
-import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 import { ReactiveUpdateStrategy } from '#src';
 import { appendTab, removeTab } from '#tests/components/tabs';

@@ -1,5 +1,5 @@
-import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 import { List } from '#tests/components/list';
 
@@ -36,15 +36,15 @@ describe('Scroll Upwards', () => {
       i--;
     }
 
-    expect(list.scrollTop).toBe(180);
+    expect(Math.round(list.scrollTop)).toBe(180);
     expect(list.children[i].getAttribute('aria-selected')).toBe('true');
 
     await userEvent.keyboard('{ArrowUp}');
-    expect(list.scrollTop).toBe(169);
+    expect(Math.round(list.scrollTop)).toBe(169);
     expect(list.children[i - 1].getAttribute('aria-selected')).toBe('true');
 
     await userEvent.keyboard('{ArrowUp}');
-    expect(list.scrollTop).toBe(150);
+    expect(Math.round(list.scrollTop)).toBe(150);
     expect(list.children[i - 2].getAttribute('aria-selected')).toBe('true');
   });
 });

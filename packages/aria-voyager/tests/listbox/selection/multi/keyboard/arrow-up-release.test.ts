@@ -1,5 +1,5 @@
-import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
@@ -8,8 +8,6 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
-
-  const keys = userEvent.setup();
 
   test('use `End` key to activate last item', async () => {
     list.focus();
@@ -22,7 +20,7 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
   });
 
   test('use `ArrowUp` and `Shift` key to select third and second item', async () => {
-    await keys.keyboard('{Shift>}{ArrowUp}');
+    await userEvent.keyboard('{Shift>}{ArrowUp}');
 
     await expect.element(firstItem).not.toHaveAttribute('aria-selected');
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
@@ -30,7 +28,7 @@ describe('Select with `ArrowUp` and release `Shift`', () => {
   });
 
   test('Release shift', async () => {
-    await keys.keyboard('{/Shift}');
+    await userEvent.keyboard('{/Shift}');
 
     await expect.element(firstItem).not.toHaveAttribute('aria-selected');
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
