@@ -21,7 +21,7 @@ describe('DOM Observer', () => {
   });
 
   test('reads selection on external update', async () => {
-    const secondItem = list.children[1];
+    const secondItem = listbox.items[1];
 
     expect(listbox.selection.length).toBe(0);
 

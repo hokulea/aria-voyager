@@ -54,11 +54,11 @@ describe('Listbox', () => {
 
       list.setAttribute('aria-disabled', 'true');
 
-      new Listbox(list);
+      const listbox = new Listbox(list);
 
       list.dispatchEvent(new FocusEvent('focusin'));
 
-      for (const elem of list.children) {
+      for (const elem of listbox.items) {
         await expect.element(elem).not.toHaveAttribute('aria-selected');
       }
     });
