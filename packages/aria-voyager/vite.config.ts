@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 
+import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
 // https://vite.dev/config/
@@ -26,7 +27,7 @@ export default defineConfig({
       enabled: true,
       headless: true,
       screenshotFailures: false,
-      provider: 'playwright',
+      provider: playwright(),
       instances: [
         {
           browser: 'firefox'
