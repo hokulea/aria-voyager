@@ -9,8 +9,6 @@ describe('Select with `ArrowDown` and release `Shift`', () => {
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  const keys = userEvent.setup();
-
   test('focus the list to activate first item', async () => {
     list.focus();
 
@@ -20,7 +18,7 @@ describe('Select with `ArrowDown` and release `Shift`', () => {
   });
 
   test('use `ArrowDown` and `Shift` key to select from first to second item', async () => {
-    await keys.keyboard('{Shift>}{ArrowDown}');
+    await userEvent.keyboard('{Shift>}{ArrowDown}');
 
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
@@ -28,7 +26,7 @@ describe('Select with `ArrowDown` and release `Shift`', () => {
   });
 
   test('Release shift', async () => {
-    await keys.keyboard('{/Shift}');
+    await userEvent.keyboard('{/Shift}');
 
     await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
     await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');

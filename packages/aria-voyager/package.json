@@ -35,7 +35,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "tsc --noEmit",
     "test": "vitest run",
-    "test:ui": "vitest --browser.provider=preview --no-browser.headless --browser.name=firefox"
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "lodash.isequal": "^4.5.0"

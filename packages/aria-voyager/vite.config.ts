@@ -17,7 +17,8 @@ export default defineConfig({
     }
   },
   test: {
-    // open: true,
+    retry: 2,
+    testTimeout: 5000,
     coverage: {
       enabled: true,
       provider: 'istanbul',
@@ -27,7 +28,11 @@ export default defineConfig({
       enabled: true,
       headless: true,
       screenshotFailures: false,
-      provider: playwright(),
+      provider: playwright({
+        // launchOptions: {
+        //   slowMo: 100
+        // }
+      }),
       instances: [
         {
           browser: 'firefox'
