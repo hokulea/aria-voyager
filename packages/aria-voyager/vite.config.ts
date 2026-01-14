@@ -24,7 +24,7 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
-    maxWorkers: '50%',
+    fileParallelism: false,
     sequence: {
       shuffle: {
         files: true
