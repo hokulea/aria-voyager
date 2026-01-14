@@ -31,13 +31,15 @@ export default defineConfig({
       provider: playwright({
         launchOptions: {
           slowMo: 100
-        }
+        },
+        actionTimeout: 1000
       }),
       instances: [
-        {
-          browser: 'firefox'
-          // launch: { slowMo: 100 }
-        }
+        { browser: 'firefox' }
+        // {
+        //   browser: 'firefox'
+        //   // launch: { slowMo: 100 }
+        // }
         // tests are flaky in playwright + chromium/webkit
         // { browser: 'chromium' }
         // { browser: 'webkit' }
