@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       playwright:
-        specifier: ^1.56.1
+        specifier: ^1.57.0
         version: 1.57.0
       release-plan:
         specifier: 0.17.4
