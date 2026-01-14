@@ -25,11 +25,6 @@ export default defineConfig({
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
     fileParallelism: false,
-    sequence: {
-      shuffle: {
-        files: true
-      }
-    },
     browser: {
       enabled: true,
       headless: true,
@@ -37,8 +32,7 @@ export default defineConfig({
       provider: playwright({
         launchOptions: {
           slowMo: 100
-        },
-        actionTimeout: 1000
+        }
       }),
       instances: [
         { browser: 'firefox' }
