@@ -1,5 +1,5 @@
-import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 import { ItemEmitStrategy, Listbox } from '#src';
 import { createListWithFruits } from '#tests/listbox/-shared';

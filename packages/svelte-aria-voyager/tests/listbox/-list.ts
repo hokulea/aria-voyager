@@ -1,5 +1,5 @@
-import { type Locator, userEvent } from '@vitest/browser/context';
 import { expect, test } from 'vitest';
+import { type Locator, userEvent } from 'vitest/browser';
 
 type Elements =
   | HTMLElement

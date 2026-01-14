@@ -1,5 +1,5 @@
-import { userEvent } from '@vitest/browser/context';
 import { describe, expect, test, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 import { appendTab, getItems } from '#tests/components/tabs';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
