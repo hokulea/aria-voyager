@@ -66,6 +66,8 @@ export function createCodeMenu(parent = document.body) {
   appendCheckboxItemToMenu(panels, 'Status Bar', true);
   appendCheckboxItemToMenu(panels, 'Panel', true);
 
+  codeMenu.append(panels);
+
   codeMenu.append(document.createElement('hr'));
 
   const panelPositionMenu = createMenuElement(codeMenu);

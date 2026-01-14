@@ -28,8 +28,14 @@ export function isKeyboardEvent(event: Event): event is KeyboardEvent {
   return ['keydown', 'keyup', 'keypress'].includes(event.type);
 }
 
-export function doesEventMatchKeys(event: Event, keyOrKeys: string | string[]) {
+export function matchesKeys(event: KeyboardEvent, keyOrKeys: string | string[]) {
   const keys = Array.isArray(keyOrKeys) ? keyOrKeys : [keyOrKeys];
 
-  return event instanceof KeyboardEvent && event.type === 'keydown' && keys.includes(event.key);
+  return keys.includes(event.key);
+}
+
+export function doesEventMatchKeys(event: Event, keyOrKeys: string | string[]) {
+  return (
+    event instanceof KeyboardEvent && event.type === 'keydown' && matchesKeys(event, keyOrKeys)
+  );
 }
