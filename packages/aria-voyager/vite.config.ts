@@ -29,9 +29,9 @@ export default defineConfig({
       headless: true,
       screenshotFailures: false,
       provider: playwright({
-        // launchOptions: {
-        //   slowMo: 100
-        // }
+        launchOptions: {
+          slowMo: 100
+        }
       }),
       instances: [
         {
