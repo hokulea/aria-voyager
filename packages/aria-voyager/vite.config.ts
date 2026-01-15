@@ -24,7 +24,7 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
-    fileParallelism: false,
+    fileParallelism: !process.env.CI,
     browser: {
       enabled: true,
       headless: true,
