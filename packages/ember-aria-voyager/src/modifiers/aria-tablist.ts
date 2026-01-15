@@ -2,7 +2,7 @@ import { registerDestructor } from '@ember/destroyable';
 
 import { IndexEmitStrategy, ItemEmitStrategy, ReactiveUpdateStrategy, Tablist } from 'aria-voyager';
 import Modifier from 'ember-modifier';
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'es-toolkit/predicate';
 
 import {
   asArray,

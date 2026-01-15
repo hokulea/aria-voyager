@@ -1,5 +1,5 @@
 import { IndexEmitStrategy, ItemEmitStrategy, Listbox, ReactiveUpdateStrategy } from 'aria-voyager';
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'es-toolkit/predicate';
 
 import {
   asArray,
