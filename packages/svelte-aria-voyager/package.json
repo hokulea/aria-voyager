@@ -42,7 +42,6 @@
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
     "@testing-library/dom": "catalog:test",
     "@tsconfig/svelte": "^5.0.6",
-    "@types/css-modules": "1.0.5",
     "@vitest/browser-playwright": "catalog:test",
     "@vitest/coverage-istanbul": "catalog:test",
     "@vitest/ui": "catalog:test",
