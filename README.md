@@ -19,21 +19,23 @@ apply styling, it will operate on the accessibility tree.
 <table>
 <thead>
   <tr>
-    <td>Role</td>
     <td>Navigation Patterns</td>
     <td>Features</td>
     <td>Behavior</td>
   </tr>
 </thead>
 <tbody>
-  <tr style="vertical-align: top">
-    <td>
-      <a href="https://www.w3.org/TR/wai-aria-1.2/#listbox" target="_blank"><code>listbox</code></a><br><br>
-      Focus Strategy:<br>
+  <tr>
+    <th colspan="3">
+      Role:
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#listbox" target="_blank"><code>listbox</code></a><br>
+      Focus Strategy:
       <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_focus_activedescendant" target="_blank">
       <code>aria-activedescendant</code>
       </a>
-    </td>
+    </th>
+  </tr>
+  <tr style="vertical-align: top">
     <td>
       ✅ <code>ArrowUp</code> (prev)<br>
       ✅ <code>ArrowDown</code> (next)<br>
@@ -52,12 +54,15 @@ apply styling, it will operate on the accessibility tree.
       -
     </td>
   </tr>
-  <tr style="vertical-align: top">
-    <td>
-      <a href="https://www.w3.org/TR/wai-aria-1.2/#menu" target="_blank"><code>menu</code></a><br><br>
-      Focus Strategy:<br>
+  <tr>
+    <th colspan="3">
+      Role:
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#menu" target="_blank"><code>menu</code></a><br>
+      Focus Strategy:
       <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>
-    </td>
+    </th>
+  </tr>
+  <tr style="vertical-align: top">
     <td>
       ✅ <code>ArrowUp</code> (prev)<br>
       ✅ <code>ArrowDown</code> (next)<br>
@@ -74,15 +79,18 @@ apply styling, it will operate on the accessibility tree.
       ❌ <a href="https://www.w3.org/TR/wai-aria-1.2/#menuitemradio" target="_blank"><code>role="menuitemradio"</code></a>
     </td>
     <td>
-      ❌ Hover Behavior<br>
+      -
     </td>
   </tr>
-  <tr style="vertical-align: top">
-    <td>
-      <a href="https://www.w3.org/TR/wai-aria-1.2/#tablist" target="_blank"><code>tablist</code></a><br><br>
-      Focus Strategy:<br>
+  <tr>
+    <th colspan="3">
+      Role:
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#tablist" target="_blank"><code>tablist</code></a><br>
+      Focus Strategy:
       <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>
-    </td>
+    </th>
+  </tr>
+  <tr style="vertical-align: top">
     <td>
       ✅ <code>ArrowRight</code> / <code>ArrowUp</code> (prev)<br>
       ✅ <code>ArrowLeft</code> / <code>ArrowDown</code> (next)<br>
