@@ -291,8 +291,8 @@ importers:
         specifier: ^4.0.17
         version: 4.0.17(@types/node@24.3.1)(@vitest/browser-playwright@4.0.17)(@vitest/browser-webdriverio@4.0.17)(@vitest/ui@4.0.17)(jiti@2.5.1)(jsdom@26.1.0)(msw@2.7.3(@types/node@24.3.1)(typescript@5.8.3))(terser@5.44.0)
       vitest-browser-svelte:
-        specifier: ^1.1.0
-        version: 1.1.0(@vitest/browser@4.0.17(msw@2.7.3(@types/node@24.3.1)(typescript@5.8.3))(vite@7.3.1(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0))(vitest@4.0.17))(svelte@5.42.2)(vitest@4.0.17)
+        specifier: ^2.0.1
+        version: 2.0.1(svelte@5.42.2)(vitest@4.0.17)
 
 packages:
 
@@ -7208,13 +7208,11 @@ packages:
       vite:
         optional: true
 
-  vitest-browser-svelte@1.1.0:
-    resolution: {integrity: sha512-o98mCzKkWBjvmaGzi69rvyBd1IJ7zFPGI0jcID9vI4F5DmdG//YxkIbeQ7TS27hAVR+MULnBZNja2DUiuUBZyA==}
-    engines: {node: ^18.0.0 || >=20.0.0}
+  vitest-browser-svelte@2.0.1:
+    resolution: {integrity: sha512-z7GFio7vxaOolY+xwPUMEKuwL4KcPzB8+bepA9F0Phqag/TJ4j7IAGSwm4Y/FBh7KznsP+7aEIllMay0qDpFXw==}
     peerDependencies:
-      '@vitest/browser': ^2.1.0 || ^3.0.0 || ^4.0.0-0
       svelte: ^3 || ^4 || ^5 || ^5.0.0-next.0
-      vitest: ^2.1.0 || ^3.0.0 || ^4.0.0-0
+      vitest: ^4.0.0
 
   vitest@4.0.17:
     resolution: {integrity: sha512-FQMeF0DJdWY0iOnbv466n/0BudNdKj1l5jYgl5JVTwjSsZSlqyXFt/9+1sEyhR6CLowbZpV7O1sCHrzBhucKKg==}
@@ -15907,9 +15905,8 @@ snapshots:
     optionalDependencies:
       vite: 7.3.1(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)
 
-  vitest-browser-svelte@1.1.0(@vitest/browser@4.0.17(msw@2.7.3(@types/node@24.3.1)(typescript@5.8.3))(vite@7.3.1(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0))(vitest@4.0.17))(svelte@5.42.2)(vitest@4.0.17):
+  vitest-browser-svelte@2.0.1(svelte@5.42.2)(vitest@4.0.17):
     dependencies:
-      '@vitest/browser': 4.0.17(msw@2.7.3(@types/node@24.3.1)(typescript@5.8.3))(vite@7.3.1(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0))(vitest@4.0.17)
       svelte: 5.42.2
       vitest: 4.0.17(@types/node@24.3.1)(@vitest/browser-playwright@4.0.17)(@vitest/browser-webdriverio@4.0.17)(@vitest/ui@4.0.17)(jiti@2.5.1)(jsdom@26.1.0)(msw@2.7.3(@types/node@24.3.1)(typescript@5.8.3))(terser@5.44.0)
 
