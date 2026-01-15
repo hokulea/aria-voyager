@@ -1,4 +1,4 @@
-name: 'CI'
+name: "CI"
 
 on:
   workflow_dispatch:
@@ -6,6 +6,10 @@ on:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   lint-js:
@@ -67,6 +71,13 @@ jobs:
         uses: ./.github/actions/playwright-browser-install
       - name: Test
         run: pnpm run -r --parallel --aggregate-output test
+      - name: coverage
+        uses: qltysh/qlty-action/coverage@v2
+        with:
+          oidc: true
+          files: |
+            ${{github.workspace}}/packages/aria-voyager/coverage/lcov.info
+            ${{github.workspace}}/packages/svelte-aria-voyager/coverage/lcov.info
       # For the Try Scenarios
       - id: set-matrix
         working-directory: ./packages/ember-aria-voyager
