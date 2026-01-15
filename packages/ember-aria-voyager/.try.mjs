@@ -39,6 +39,10 @@ module.exports = async function (defaults) {
 };`;
 }
 
+function reexport(name) {
+  return `export { ${name} as default } from 'ember-aria-voyager';`;
+}
+
 function compatEmberScenario(name, emberVersion) {
   let cliVersion = '^5.12.0';
 
@@ -55,6 +59,16 @@ function compatEmberScenario(name, emberVersion) {
         'ember-cli': cliVersion,
         'ember-auto-import': '^2.10.0',
         '@ember/optional-features': '^2.2.0'
+      },
+      'ember-addon': {
+        version: 2,
+        type: 'addon',
+        main: 'addon-main.cjs'
+        // 'app-js': {
+        //   './modifiers/aria-listbox.js': './dist/_app_/modifiers/aria-listbox.js',
+        //   './modifiers/aria-menu.js': './dist/_app_/modifiers/aria-menu.js',
+        //   './modifiers/aria-tablist.js': './dist/_app_/modifiers/aria-tablist.js'
+        // }
       }
     },
     env: {
@@ -62,6 +76,15 @@ function compatEmberScenario(name, emberVersion) {
     },
     files: {
       'ember-cli-build.cjs': emberCliBuildJS(),
+      'modifiers/aria-listbox.js': reexport('ariaListbox'),
+      'modifiers/aria-menu.js': reexport('ariaMenu'),
+      'modifiers/aria-tablist.js': reexport('ariaTablist'),
+      'addon-main.cjs': `'use strict';
+
+      const { addonV1Shim } = require('@embroider/addon-shim');
+
+      module.exports = addonV1Shim(__dirname);
+      `,
       'config/optional-features.json': JSON.stringify({
         'application-template-wrapper': false,
         'default-async-observers': true,
