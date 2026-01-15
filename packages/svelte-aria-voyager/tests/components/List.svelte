@@ -1,7 +1,5 @@
 <script lang="ts" generics="Item extends unknown">
   import { ariaListbox } from '../../src';
-  // @ts-ignore
-  import styles from '@hokulea/core/controls.module.css';
   import type { Snippet } from 'svelte';
   import type { ListboxOptions } from '../../src/aria-listbox';
 
@@ -34,7 +32,7 @@
     disabled,
     multi
   }}
-  class={styles.list}
+  class="list"
 >
   {#each items as option}
     <span role="option" aria-selected={isSelected(option) ? 'true' : 'false'}>
