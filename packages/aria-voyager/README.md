@@ -1,7 +1,7 @@
 # aria-voyager
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6bd88c10540e66d94e2a/test_coverage)](https://codeclimate.com/github/hokulea/aria-voyager/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6bd88c10540e66d94e2a/maintainability)](https://codeclimate.com/github/hokulea/aria-voyager/maintainability)
+[![Maintainability](https://qlty.sh/gh/hokulea/projects/aria-voyager/maintainability.svg)](https://qlty.sh/gh/hokulea/projects/aria-voyager)
+[![Code Coverage](https://qlty.sh/gh/hokulea/projects/aria-voyager/coverage.svg)](https://qlty.sh/gh/hokulea/projects/aria-voyager)
 
 _Canoe vessel that navigates your aria._
 
