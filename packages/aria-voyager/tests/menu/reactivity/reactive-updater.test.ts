@@ -12,7 +12,7 @@ describe('Reactive Updater', () => {
   });
 
   test('start', () => {
-    expect(menu.items.length).toBe(11);
+    expect(menu.items.length).toBe(15);
   });
 
   test('reads elements on appending', () => {
@@ -20,7 +20,7 @@ describe('Reactive Updater', () => {
 
     updater.updateItems();
 
-    expect(menu.items.length).toBe(12);
+    expect(menu.items.length).toBe(16);
   });
 
   describe('read options', () => {

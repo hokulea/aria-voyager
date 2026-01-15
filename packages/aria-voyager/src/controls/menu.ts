@@ -6,9 +6,11 @@ import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
 import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
-import { Control } from './control';
+import { Control, type Item } from './control';
 
 import type { EmitStrategy, UpdateStrategy } from '..';
+
+export interface MenuItem extends Item, PopoverTargetAttributes {}
 
 interface MenuOptions {
   updater?: UpdateStrategy;

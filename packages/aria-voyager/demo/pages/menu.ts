@@ -10,9 +10,12 @@ const html = `
 `;
 
 function menuAsControl(parent: HTMLElement) {
-  const { codeMenu } = createCodeMenu(parent);
+  const { codeMenu, shareMenu, socialMenu, panelPositionMenu } = createCodeMenu(parent);
 
   new Menu(codeMenu);
+  new Menu(shareMenu);
+  new Menu(socialMenu);
+  new Menu(panelPositionMenu);
 }
 
 function menuWithTriggerButton(parent: HTMLElement) {
@@ -20,11 +23,18 @@ function menuWithTriggerButton(parent: HTMLElement) {
 
   parent.append(cont);
 
-  const { codeMenu } = createCodeMenu(cont);
+  const { codeMenu, shareMenu, socialMenu, panelPositionMenu } = createCodeMenu(cont);
+
+  codeMenu.classList.add('code-menu');
+
+  const trigger = withTriggerButton(codeMenu, cont);
+
+  trigger.classList.add('code-trigger');
 
   new Menu(codeMenu);
-
-  withTriggerButton(codeMenu, cont);
+  new Menu(shareMenu);
+  new Menu(socialMenu);
+  new Menu(panelPositionMenu);
 }
 
 function load() {
@@ -32,6 +42,8 @@ function load() {
 
   menuAsControl(parent);
   menuWithTriggerButton(parent);
+
+  // watchActiveElement();
 }
 
 export default { html, load, title };

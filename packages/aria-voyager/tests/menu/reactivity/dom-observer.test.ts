@@ -9,15 +9,15 @@ describe('DOM Observer', () => {
   const menu = new Menu(codeMenu);
 
   test('start', () => {
-    expect(menu.items.length).toBe(11);
+    expect(menu.items.length).toBe(15);
   });
 
   test('reads elements on appending', async () => {
     appendItemToMenu(codeMenu, 'Command Palette');
 
-    await vi.waitUntil(() => getItems(codeMenu).length === 12);
+    await vi.waitUntil(() => getItems(codeMenu).length === 16);
 
-    expect(menu.items.length).toBe(12);
+    expect(menu.items.length).toBe(16);
   });
 
   describe('read options', () => {

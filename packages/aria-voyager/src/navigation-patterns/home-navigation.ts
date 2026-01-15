@@ -1,8 +1,10 @@
+import { doesEventMatchKeys } from '../utils/event';
+
 import type { Control } from '..';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
-export function isHomeEvent(event: Event): boolean {
-  return event instanceof KeyboardEvent && event.type === 'keydown' && event.key === 'Home';
+function isHomeEvent(event: Event): boolean {
+  return doesEventMatchKeys(event, 'Home');
 }
 
 export class HomeNavigation implements NavigationPattern {

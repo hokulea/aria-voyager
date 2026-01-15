@@ -15,4 +15,6 @@ export interface NavigationPattern {
   prepare?(event: Event): void;
 
   handle(bag: NavigationParameterBag): NavigationParameterBag;
+
+  dispose?(): void;
 }

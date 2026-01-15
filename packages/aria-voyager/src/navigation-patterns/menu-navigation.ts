@@ -1,5 +1,8 @@
+import { isKeyboardEvent, isPointerEvent, isToggleEvent, matchesKeys } from '../utils/event';
+import { getMenuFromItem, getMenuItemFromEvent, getRootMenu } from '../utils/menu';
+
 import type { Control } from '..';
-import type { Item } from '../controls/control';
+import type { MenuItem } from '../controls/menu';
 import type { FocusStrategy } from './focus-strategy';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
@@ -13,19 +16,19 @@ type MenuElement = HTMLElement & {
   [FOCUS_TRIGGER_ON_CLOSE]?: boolean;
 };
 
-function isToggleEvent(event: Event): event is ToggleEvent {
-  return event.type === 'toggle';
+function showSubmenu(
+  menu: MenuElement,
+  { moveFocus = false, source }: { moveFocus?: boolean; source: HTMLElement }
+) {
+  menu[FOCUS_ON_OPEN] = moveFocus;
+  menu.showPopover({
+    source
+  });
 }
 
-function isPointerEvent(event: Event): event is PointerEvent {
-  return ['pointerover', 'pointerout', 'pointerup'].includes(event.type);
-}
-
-function getMenuFromItem(item: Item): MenuElement | null {
-  // eslint-disable-next-line unicorn/prefer-query-selector
-  return document.getElementById(
-    item.getAttribute('popovertarget') as string
-  ) as MenuElement | null;
+function hideSubmenu(menu: MenuElement, { focusTrigger }: { focusTrigger: boolean }) {
+  menu[FOCUS_TRIGGER_ON_CLOSE] = focusTrigger;
+  menu.hidePopover();
 }
 
 export class MenuNavigation implements NavigationPattern {
@@ -53,16 +56,23 @@ export class MenuNavigation implements NavigationPattern {
   handle(bag: NavigationParameterBag): NavigationParameterBag {
     const { event } = bag;
 
-    // navigation handlers
-    if (event.type === 'keydown') {
-      this.navigateWithKeyboard(event as KeyboardEvent);
-    } else if (isPointerEvent(event)) {
+    // -> keyboard navigation
+    if (isKeyboardEvent(event)) {
+      this.navigateWithKeyboard(event);
+    }
+
+    // -> pointer navigation
+    else if (isPointerEvent(event)) {
       this.navigateWithPointer(event);
     }
 
     // toggle behavior
     else if (isToggleEvent(event)) {
       if (event.newState === 'open') {
+        if (event.source) {
+          (this.control.element as MenuElement)[OPENER] = event.source as HTMLElement;
+        }
+
         this.show();
       } else {
         this.hide();
@@ -73,46 +83,54 @@ export class MenuNavigation implements NavigationPattern {
   }
 
   navigateWithKeyboard(event: KeyboardEvent) {
-    if (event.key === 'ArrowRight' && this.control.activeItem?.hasAttribute('popovertarget')) {
-      this.showSubmenu(true);
+    if (this.control.activeItem) {
+      const itemHasSubmenu = this.control.activeItem.hasAttribute('popovertarget');
+
+      if (itemHasSubmenu && matchesKeys(event, ['ArrowRight', 'Enter', ' '])) {
+        const menu = getMenuFromItem(this.control.activeItem as MenuItem);
+
+        if (menu) {
+          event.preventDefault();
+
+          showSubmenu(menu, { moveFocus: true, source: this.control.activeItem });
+        }
+      }
+
+      // close menu, when action is invoked
+      if (!itemHasSubmenu && matchesKeys(event, ['Enter', ' '])) {
+        event.preventDefault();
+
+        this.control.activeItem.click();
+        this.closeRootMenu();
+      }
     }
 
-    if (event.key === 'ArrowLeft') {
-      this.hideSubmenu();
-    }
-
-    // close menu, when action is invoked
-    if (
-      !this.control.activeItem?.hasAttribute('popovertarget') &&
-      (event.key === 'Enter' || event.key === ' ')
-    ) {
-      event.preventDefault();
-
-      this.control.activeItem?.click();
-      this.closeRootMenu();
+    if (matchesKeys(event, 'ArrowLeft') && this.control.element.hasAttribute('popover')) {
+      hideSubmenu(this.control.element, { focusTrigger: true });
     }
   }
 
   navigateWithPointer(event: PointerEvent) {
-    const target = event.target as HTMLElement;
+    const menuItem = getMenuItemFromEvent(event);
 
-    // hover ...
     switch (event.type) {
+      // hover ...
       case 'pointerover': {
-        // close sibling menus
-        for (const item of this.control.items
-          .filter((i) => i !== this.control.activeItem)
-          .filter((i) => i.hasAttribute('popovertarget'))) {
-          const menu = getMenuFromItem(item);
-
-          if (menu) {
-            menu[FOCUS_TRIGGER_ON_CLOSE] = false;
-            menu.hidePopover();
+        if (menuItem) {
+          // close sibling menus
+          for (const item of this.control.items
+            .filter((i) => i !== menuItem)
+            .filter((i) => i.hasAttribute('popovertarget'))) {
+            this.closeSubmenu(item as MenuItem);
           }
-        }
 
-        if (this.control.activeItem?.hasAttribute('popovertarget')) {
-          this.showSubmenu();
+          if (menuItem.hasAttribute('popovertarget')) {
+            const menu = getMenuFromItem(menuItem as MenuItem);
+
+            if (menu) {
+              showSubmenu(menu, { source: menuItem });
+            }
+          }
         }
 
         break;
@@ -120,10 +138,26 @@ export class MenuNavigation implements NavigationPattern {
       case 'pointerout': {
         // moving pointer from menu to trigger
         if (
-          target === this.control.element &&
+          event.target === this.control.element &&
           event.relatedTarget === (this.control.element as MenuElement)[OPENER]
         ) {
           (event.relatedTarget as HTMLElement).focus();
+        }
+
+        // Clear menu when pointer leaves menu entirely
+        else if (event.target === this.control.element && this.isLeavingMenu(event)) {
+          // close open menus
+          for (const item of this.control.items.filter((i) => i.hasAttribute('popovertarget'))) {
+            this.closeSubmenu(item as MenuItem);
+          }
+
+          // Ensure first item remains tabbable for keyboard access
+          if (
+            this.control.element.hasAttribute('popover') &&
+            this.control.enabledItems.length > 0
+          ) {
+            this.focusStrategy.activateItem(this.control.enabledItems[0]);
+          }
         }
 
         break;
@@ -131,7 +165,8 @@ export class MenuNavigation implements NavigationPattern {
       case 'pointerup': {
         // only close the menu if we have clicked a menuitem
         if (
-          this.control.items.some((item) => item.contains(target)) &&
+          menuItem &&
+          this.control.items.some((item) => item.contains(menuItem)) &&
           !this.control.activeItem?.hasAttribute('popovertarget')
         ) {
           // firefox wouldn't execute the default click handler from a menuitem,
@@ -143,24 +178,7 @@ export class MenuNavigation implements NavigationPattern {
 
         break;
       }
-      // No default
     }
-  }
-
-  showSubmenu(moveFocus = false) {
-    if (this.control.activeItem) {
-      const menu = getMenuFromItem(this.control.activeItem);
-
-      if (menu) {
-        menu[OPENER] = this.control.activeItem;
-        menu[FOCUS_ON_OPEN] = moveFocus;
-        menu.showPopover();
-      }
-    }
-  }
-
-  hideSubmenu() {
-    this.control.element.hidePopover();
   }
 
   show() {
@@ -197,27 +215,49 @@ export class MenuNavigation implements NavigationPattern {
     }
   }
 
+  closeSubmenu(item: MenuItem) {
+    const menu = getMenuFromItem(item) as MenuElement | undefined;
+
+    if (menu) {
+      hideSubmenu(menu, { focusTrigger: false });
+    }
+  }
+
   closeRootMenu() {
-    const getRootMenu = (menu: MenuElement): HTMLElement | undefined => {
-      const menus = [];
-
-      let elem: HTMLElement | null = menu;
-
-      while (elem) {
-        if (elem.getAttribute('role') === 'menu' && elem.hasAttribute('popover')) {
-          menus.push(elem);
-        }
-
-        elem = elem.parentElement;
-      }
-
-      return menus.pop();
-    };
-
-    const root = getRootMenu(this.control.element as MenuElement);
+    const root = getRootMenu(this.control.element);
 
     if (root) {
       root.hidePopover();
     }
+  }
+
+  /**
+   * Check if the pointer is leaving the menu entirely (not moving to trigger or submenu).
+   */
+  private isLeavingMenu(event: PointerEvent): boolean {
+    const relatedTarget = event.relatedTarget as HTMLElement | null;
+
+    // Still within the menu element
+    if (relatedTarget && this.control.element.contains(relatedTarget)) {
+      return false;
+    }
+
+    // Moving to the trigger button
+    if (relatedTarget === (this.control.element as MenuElement)[OPENER]) {
+      return false;
+    }
+
+    // Check if moving to a submenu
+    for (const item of this.control.items) {
+      if (item.hasAttribute('popovertarget')) {
+        const submenu = getMenuFromItem(item as MenuItem);
+
+        if (submenu && (submenu === relatedTarget || submenu.contains(relatedTarget))) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }
