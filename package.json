@@ -20,7 +20,7 @@
     "start": "turbo run start --parallel"
   },
   "devDependencies": {
-    "playwright": "^1.57.0",
+    "playwright": "catalog:test",
     "release-plan": "0.17.4",
     "turbo": "^2.5.8"
   },
