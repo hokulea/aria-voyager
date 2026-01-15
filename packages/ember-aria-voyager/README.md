@@ -198,3 +198,15 @@ interface TablistSignature<T> {
 ```
 
 When passing `items` the `select()` and `selection` can work off of your passed items, anyway will fall back to the HTMLElement
+
+## Use in Classic Apps
+
+`ember-aria-voyager` is primed to be used with polaris edition of ember using
+imports. Classic v1 addons and v2 addons with compat automatically provide
+re-exports, which this addon does not. Re-export it manually. Here is an example
+for `ariaListbox`:
+
+```ts
+// app/modifiers/aria-listbox.js
+export { ariaListbox as default } from 'ember-aria-voyager';
+```
