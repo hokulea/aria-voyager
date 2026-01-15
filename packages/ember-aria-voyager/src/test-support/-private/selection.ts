@@ -40,7 +40,7 @@ function findOption(
   }
 
   return getOptions(element as HTMLElement, selectors.option).find((e) =>
-    e.textContent?.trim().includes(text)
+    e.textContent.trim().includes(text)
   );
 }
 
@@ -69,7 +69,7 @@ export function findOptions(
   }
 
   return getOptions(element as HTMLElement, selectors.option).filter((e) =>
-    texts.includes(e.textContent?.trim() as string)
+    texts.includes(e.textContent.trim())
   );
 }
 
