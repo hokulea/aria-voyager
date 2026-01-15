@@ -1,5 +1,60 @@
 # Changelog
 
+## Release (2026-01-15)
+
+* aria-voyager 0.2.0 (minor)
+* ember-aria-voyager 0.2.5 (patch)
+
+#### :rocket: Enhancement
+* `aria-voyager`
+  * [#376](https://github.com/hokulea/aria-voyager/pull/376) hi svelte 👋 with `ariaListbox` ([@gossi](https://github.com/gossi))
+
+#### :bug: Bug Fix
+* `aria-voyager`
+  * [#584](https://github.com/hokulea/aria-voyager/pull/584) Better pointer support for menu ([@gossi](https://github.com/gossi))
+
+#### :memo: Documentation
+* `aria-voyager`, `ember-aria-voyager`
+  * [#593](https://github.com/hokulea/aria-voyager/pull/593) Update misc docs ([@gossi](https://github.com/gossi))
+
+#### :house: Internal
+* `aria-voyager`, `ember-aria-voyager`
+  * [#594](https://github.com/hokulea/aria-voyager/pull/594) Set repository in `package.json` ([@gossi](https://github.com/gossi))
+  * [#292](https://github.com/hokulea/aria-voyager/pull/292) Prepare Release ([@github-actions[bot]](https://github.com/apps/github-actions))
+  * [#591](https://github.com/hokulea/aria-voyager/pull/591) Use pnpm catalogs ([@gossi](https://github.com/gossi))
+  * [#590](https://github.com/hokulea/aria-voyager/pull/590) Improve `tsdown` ([@gossi](https://github.com/gossi))
+  * [#585](https://github.com/hokulea/aria-voyager/pull/585) Replace `lodash.is-equal` ([@gossi](https://github.com/gossi))
+  * [#454](https://github.com/hokulea/aria-voyager/pull/454) Revert "Update vite to v7 (+ vitest) (#447)" ([@gossi](https://github.com/gossi))
+  * [#447](https://github.com/hokulea/aria-voyager/pull/447) Update vite to v7 (+ vitest) ([@gossi](https://github.com/gossi))
+  * [#441](https://github.com/hokulea/aria-voyager/pull/441) Update to @gossi/config-* v1 and add vite integration for ember-aria-voyager ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#442](https://github.com/hokulea/aria-voyager/pull/442) Drop Node@18 ([@gossi](https://github.com/gossi))
+* Other
+  * [#592](https://github.com/hokulea/aria-voyager/pull/592) Make Svelte package private (for now) ([@gossi](https://github.com/gossi))
+  * [#589](https://github.com/hokulea/aria-voyager/pull/589) Cleanup ([@gossi](https://github.com/gossi))
+  * [#588](https://github.com/hokulea/aria-voyager/pull/588) Support Trusted Publishing ([@gossi](https://github.com/gossi))
+  * [#587](https://github.com/hokulea/aria-voyager/pull/587) Fix Coverage ([@gossi](https://github.com/gossi))
+  * [#449](https://github.com/hokulea/aria-voyager/pull/449) Remove hokulea project name ([@gossi](https://github.com/gossi))
+  * [#446](https://github.com/hokulea/aria-voyager/pull/446) Switch Code Coverage from codeclimate to qlty ([@gossi](https://github.com/gossi))
+  * [#445](https://github.com/hokulea/aria-voyager/pull/445) Update `release-plan` ([@gossi](https://github.com/gossi))
+  * [#402](https://github.com/hokulea/aria-voyager/pull/402) Report svelte coverage ([@gossi](https://github.com/gossi))
+  * [#401](https://github.com/hokulea/aria-voyager/pull/401) Cache playwright browser install ([@gossi](https://github.com/gossi))
+  * [#397](https://github.com/hokulea/aria-voyager/pull/397) Add coverage for svelte package ([@gossi](https://github.com/gossi))
+* `ember-aria-voyager`
+  * [#586](https://github.com/hokulea/aria-voyager/pull/586) Update to glint v2 ([@gossi](https://github.com/gossi))
+  * [#357](https://github.com/hokulea/aria-voyager/pull/357) Improve tests for tabs ([@gossi](https://github.com/gossi))
+* `aria-voyager`
+  * [#581](https://github.com/hokulea/aria-voyager/pull/581) Make little demo app ([@gossi](https://github.com/gossi))
+  * [#580](https://github.com/hokulea/aria-voyager/pull/580) Update hokulea ([@gossi](https://github.com/gossi))
+  * [#448](https://github.com/hokulea/aria-voyager/pull/448) Use `package.json` imports within `tests/` ([@gossi](https://github.com/gossi))
+  * [#458](https://github.com/hokulea/aria-voyager/pull/458) Migrate test assertions to use expect.element() with vitest browser assertions ([@Copilot](https://github.com/apps/copilot-swe-agent))
+  * [#444](https://github.com/hokulea/aria-voyager/pull/444) Replace `tsup` with `tsdown` ([@gossi](https://github.com/gossi))
+  * [#377](https://github.com/hokulea/aria-voyager/pull/377) Update vite configs ([@gossi](https://github.com/gossi))
+
+#### Committers: 3
+- Copilot [Bot] ([@copilot-swe-agent](https://github.com/apps/copilot-swe-agent))
+- GitHub Actions [Bot] ([@github-actions](https://github.com/apps/github-actions))
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2024-12-18)
 
 aria-voyager 0.1.3 (patch)
