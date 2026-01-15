@@ -4,8 +4,6 @@ import type tablist from './modifiers/aria-tablist';
 
 export default interface AriaVoyagerRegistry {
   'aria-listbox': typeof listbox;
-
   'aria-menu': typeof menu;
-
   'aria-tablist': typeof tablist;
 }

@@ -39,6 +39,10 @@ module.exports = async function (defaults) {
 };`;
 }
 
+function reexport(name) {
+  return `export { ${name} as default } from 'ember-aria-voyager';`;
+}
+
 function compatEmberScenario(name, emberVersion) {
   let cliVersion = '^5.12.0';
 
@@ -62,6 +66,9 @@ function compatEmberScenario(name, emberVersion) {
     },
     files: {
       'ember-cli-build.cjs': emberCliBuildJS(),
+      'modifiers/aria-listbox.js': reexport('ariaListbox'),
+      'modifiers/aria-menu.js': reexport('ariaMenu'),
+      'modifiers/aria-tablist.js': reexport('ariaTablist'),
       'config/optional-features.json': JSON.stringify({
         'application-template-wrapper': false,
         'default-async-observers': true,
