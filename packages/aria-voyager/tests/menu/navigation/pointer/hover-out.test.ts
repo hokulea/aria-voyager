@@ -34,7 +34,7 @@ describe('Hover out to trigger keeps submenu open', () => {
       expect(shareMenu.matches(':popover-open')).toBeTruthy();
     });
 
-
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     await expect.poll(() => expect.element(fourthItem).toHaveFocus());
   });
 });
