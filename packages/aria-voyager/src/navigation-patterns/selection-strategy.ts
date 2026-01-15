@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'es-toolkit/predicate';
 
 import type { Control } from '..';
 import type { Item } from '../controls/control';
