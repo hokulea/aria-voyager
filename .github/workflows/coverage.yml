@@ -20,6 +20,8 @@ jobs:
         uses: ./.github/actions/setup
       - name: Install Playwright Browsers
         uses: ./.github/actions/playwright-browser-install
+      - name: Test
+        run: pnpm run -r --parallel --aggregate-output test
       - name: coverage
         uses: qltysh/qlty-action/coverage@v2
         with:
