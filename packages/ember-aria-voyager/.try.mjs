@@ -59,6 +59,9 @@ function compatEmberScenario(name, emberVersion) {
         'ember-cli': cliVersion,
         'ember-auto-import': '^2.10.0',
         '@ember/optional-features': '^2.2.0'
+      },
+      ember: {
+        edition: 'octane'
       }
     },
     env: {
