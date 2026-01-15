@@ -33,6 +33,6 @@ jobs:
       - name: Install latest npm (for Trusted Publishing)
         run: npm install -g npm@latest
       - name: Publish to NPM
-        run: NPM_CONFIG_PROVENANCE=true pnpm release-plan publish
+        run: pnpm release-plan publish
         env:
           GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
