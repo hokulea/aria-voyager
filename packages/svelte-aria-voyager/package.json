@@ -5,6 +5,7 @@
   "description": "Navigation patterns for various aria roles and features in svelte",
   "author": "gossi",
   "license": "MIT",
+  "repository": "https://github.com/hokulea/aria-voyager",
   "files": [
     "dist"
   ],

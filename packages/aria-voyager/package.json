@@ -4,6 +4,7 @@
   "description": "A framework agnostic / universal package that implements navigation patterns for various aria roles and features",
   "author": "gossi",
   "license": "MIT",
+  "repository": "https://github.com/hokulea/aria-voyager",
   "files": [
     "dist"
   ],
