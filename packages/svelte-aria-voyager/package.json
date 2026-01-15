@@ -1,5 +1,6 @@
 {
   "name": "svelte-aria-voyager",
+  "private": true,
   "version": "0.0.0",
   "description": "Navigation patterns for various aria roles and features in svelte",
   "author": "gossi",
