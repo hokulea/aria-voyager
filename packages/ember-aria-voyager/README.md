@@ -1,7 +1,7 @@
 # ember-aria-voyager
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6bd88c10540e66d94e2a/test_coverage)](https://codeclimate.com/github/hokulea/aria-voyager/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6bd88c10540e66d94e2a/maintainability)](https://codeclimate.com/github/hokulea/aria-voyager/maintainability)
+[![Maintainability](https://qlty.sh/gh/hokulea/projects/aria-voyager/maintainability.svg)](https://qlty.sh/gh/hokulea/projects/aria-voyager)
+[![Code Coverage](https://qlty.sh/gh/hokulea/projects/aria-voyager/coverage.svg)](https://qlty.sh/gh/hokulea/projects/aria-voyager)
 
 _Canoe vessel that navigates your aria._
 
@@ -198,3 +198,15 @@ interface TablistSignature<T> {
 ```
 
 When passing `items` the `select()` and `selection` can work off of your passed items, anyway will fall back to the HTMLElement
+
+## Use in Classic Apps
+
+`ember-aria-voyager` is primed to be used with polaris edition of ember using
+imports. Classic v1 addons and v2 addons with compat automatically provide
+re-exports, which this addon does not. Re-export it manually. Here is an example
+for `ariaListbox`:
+
+```ts
+// app/modifiers/aria-listbox.js
+export { ariaListbox as default } from 'ember-aria-voyager';
+```
