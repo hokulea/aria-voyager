@@ -1,7 +1,5 @@
 <script lang="ts">
   import List from './components/List.svelte';
-  // @ts-ignore
-  import styles from '@hokulea/core/actions.module.css';
 
   const FRUITS = ['Banana', 'Apple', 'Pear'];
   const POKEMON = ['Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu'];
@@ -22,12 +20,8 @@
     </List>
   </div>
 
-  <button type="button" class={styles.button} onclick={() => (options = FRUITS)}
-    >Set to Fruits</button
-  >
-  <button type="button" class={styles.button} onclick={() => (options = POKEMON)}
-    >Set to Pokemon</button
-  >
+  <button type="button" class="button" onclick={() => (options = FRUITS)}>Set to Fruits</button>
+  <button type="button" class="button" onclick={() => (options = POKEMON)}>Set to Pokemon</button>
 
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 </main>
