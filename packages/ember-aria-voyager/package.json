@@ -103,7 +103,7 @@
     "qunit": "2.25.0",
     "qunit-dom": "3.5.0",
     "sinon": "^21.0.1",
-    "testem": "^3.16.0",
+    "testem": "^3.17.0",
     "tsdown": "catalog:build",
     "typescript": "catalog:build",
     "vite": "catalog:build"
