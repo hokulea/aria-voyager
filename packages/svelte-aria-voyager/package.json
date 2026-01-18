@@ -51,7 +51,7 @@
     "es-toolkit": "catalog:lib",
     "playwright": "catalog:test",
     "prettier": "catalog:lint",
-    "svelte": "^5.42.2",
+    "svelte": "^5.46.4",
     "typescript": "catalog:build",
     "vite": "catalog:build",
     "vitest": "catalog:test",
