@@ -335,8 +335,8 @@ importers:
         specifier: catalog:test
         version: 4.0.17(@types/node@24.3.1)(@vitest/browser-playwright@4.0.17)(@vitest/browser-webdriverio@4.0.17)(@vitest/ui@4.0.17)(jiti@2.5.1)(jsdom@26.1.0)(msw@2.7.3(@types/node@24.3.1)(typescript@5.9.3))(terser@5.44.0)
       vitest-browser-svelte:
-        specifier: ^2.0.1
-        version: 2.0.1(svelte@5.48.1)(vitest@4.0.17)
+        specifier: ^2.0.2
+        version: 2.0.2(svelte@5.48.1)(vitest@4.0.17)
 
 packages:
 
@@ -2013,6 +2013,12 @@ packages:
   '@testing-library/dom@10.4.1':
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
+
+  '@testing-library/svelte-core@1.0.0':
+    resolution: {integrity: sha512-VkUePoLV6oOYwSUvX6ShA8KLnJqZiYMIbP2JW2t0GLWLkJxKGvuH5qrrZBV/X7cXFnLGuFQEC7RheYiZOW68KQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5 || ^5.0.0-next.0
 
   '@tootallnate/once@1.1.2':
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -7270,8 +7276,8 @@ packages:
       vite:
         optional: true
 
-  vitest-browser-svelte@2.0.1:
-    resolution: {integrity: sha512-z7GFio7vxaOolY+xwPUMEKuwL4KcPzB8+bepA9F0Phqag/TJ4j7IAGSwm4Y/FBh7KznsP+7aEIllMay0qDpFXw==}
+  vitest-browser-svelte@2.0.2:
+    resolution: {integrity: sha512-OLJVYoIYflwToFIy3s41pZ9mVp6dwXfYd8IIsWoc57g8DyN3SxsNJ5GB1xWFPxLFlKM+1MPExjPxLaqdELrfRQ==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5 || ^5.0.0-next.0
       vitest: ^4.0.0
@@ -9565,6 +9571,10 @@ snapshots:
       lz-string: 1.5.0
       picocolors: 1.1.1
       pretty-format: 27.5.1
+
+  '@testing-library/svelte-core@1.0.0(svelte@5.48.1)':
+    dependencies:
+      svelte: 5.48.1
 
   '@tootallnate/once@1.1.2': {}
 
@@ -15919,8 +15929,9 @@ snapshots:
     optionalDependencies:
       vite: 7.3.1(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)
 
-  vitest-browser-svelte@2.0.1(svelte@5.48.1)(vitest@4.0.17):
+  vitest-browser-svelte@2.0.2(svelte@5.48.1)(vitest@4.0.17):
     dependencies:
+      '@testing-library/svelte-core': 1.0.0(svelte@5.48.1)
       svelte: 5.48.1
       vitest: 4.0.17(@types/node@24.3.1)(@vitest/browser-playwright@4.0.17)(@vitest/browser-webdriverio@4.0.17)(@vitest/ui@4.0.17)(jiti@2.5.1)(jsdom@26.1.0)(msw@2.7.3(@types/node@24.3.1)(typescript@5.9.3))(terser@5.44.0)
 

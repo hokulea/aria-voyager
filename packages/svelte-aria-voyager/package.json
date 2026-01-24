@@ -55,7 +55,7 @@
     "typescript": "catalog:build",
     "vite": "catalog:build",
     "vitest": "catalog:test",
-    "vitest-browser-svelte": "^2.0.1"
+    "vitest-browser-svelte": "^2.0.2"
   },
   "engines": {
     "node": "^20.11.0 || >=22"
