@@ -22,7 +22,7 @@
   "devDependencies": {
     "playwright": "catalog:test",
     "release-plan": "0.17.4",
-    "turbo": "^2.7.5"
+    "turbo": "^2.8.0"
   },
   "packageManager": "pnpm@10.28.0",
   "engines": {
