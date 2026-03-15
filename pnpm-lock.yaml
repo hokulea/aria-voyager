@@ -17,8 +17,8 @@ catalogs:
       version: 7.3.1
   lib:
     '@hokulea/core':
-      specifier: ^0.9.1
-      version: 0.9.1
+      specifier: ^0.10.0
+      version: 0.10.0
     '@hokulea/theme-moana':
       specifier: ^0.4.0
       version: 0.4.0
@@ -91,7 +91,7 @@ importers:
         version: 1.1.1(prettier@3.6.2)
       '@hokulea/core':
         specifier: catalog:lib
-        version: 0.9.1
+        version: 0.10.0
       '@hokulea/theme-moana':
         specifier: catalog:lib
         version: 0.4.0
@@ -288,7 +288,7 @@ importers:
         version: 1.1.1(prettier@3.6.2)
       '@hokulea/core':
         specifier: catalog:lib
-        version: 0.9.1
+        version: 0.10.0
       '@hokulea/theme-moana':
         specifier: catalog:lib
         version: 0.4.0
@@ -1407,8 +1407,8 @@ packages:
     resolution: {integrity: sha512-D76vKOZFEGA9v6g0rZTYTQDUXNopCblW1Zeas3EEVrbdeh8gWrCEO9/goocKmcgtqAwv1Md76p58UQp7HeFTEw==}
     engines: {node: ^18 || ^20 || ^22 || >=24}
 
-  '@hokulea/core@0.9.1':
-    resolution: {integrity: sha512-0JDdrxQS65oar7aw+BgaHS4gGSw5CbXKubDVisFyOD5rbKHlflvDy8KB48/3V87c1J+TuoPAlff7BqZEjXPpAg==}
+  '@hokulea/core@0.10.0':
+    resolution: {integrity: sha512-PnGwJtg+LlXuIvH8OZvsbtozTV0hhUgunvai4loUFxw0DbeCOrBlaPZKR/7rZ1GWLC4yXOYt/hdxU1RGhhmJtA==}
     engines: {node: ^20.11.0 || >=22}
 
   '@hokulea/theme-moana@0.4.0':
@@ -8727,7 +8727,7 @@ snapshots:
 
   '@handlebars/parser@2.2.1': {}
 
-  '@hokulea/core@0.9.1': {}
+  '@hokulea/core@0.10.0': {}
 
   '@hokulea/theme-moana@0.4.0': {}
 
