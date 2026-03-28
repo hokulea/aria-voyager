@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2026-01-15)
 
 * aria-voyager 0.2.0 (minor)
