@@ -335,8 +335,8 @@ importers:
         specifier: catalog:test
         version: 4.0.17(@types/node@24.3.1)(@vitest/browser-playwright@4.0.17)(@vitest/browser-webdriverio@4.0.17)(@vitest/ui@4.0.17)(jiti@2.5.1)(jsdom@26.1.0)(msw@2.7.3(@types/node@24.3.1)(typescript@5.9.3))(terser@5.44.0)
       vitest-browser-svelte:
-        specifier: ^2.0.2
-        version: 2.0.2(svelte@5.53.12)(vitest@4.0.17)
+        specifier: ^2.1.1
+        version: 2.1.1(svelte@5.53.12)(vitest@4.0.17)
 
 packages:
 
@@ -2422,6 +2422,7 @@ packages:
   '@xmldom/xmldom@0.8.10':
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@zip.js/zip.js@2.8.22':
     resolution: {integrity: sha512-0KlzbVR6r8irIX2o3zvUlosBDef62VDl47oUfa1U/qgEs67h4/eGBrX/6HWa1RQbt+J6sAeVmtyFKbTHNdF8qQ==}
@@ -2786,6 +2787,7 @@ packages:
   basic-ftp@5.2.0:
     resolution: {integrity: sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==}
     engines: {node: '>=10.0.0'}
+    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
   before-after-hook@3.0.2:
     resolution: {integrity: sha512-Nik3Sc0ncrMK4UUdXQmAnRtzmNQTAAXmXIopizwZ1W1t8QmfJj+zL4OA2I7XPTPW5z5TDqv4hRo/JzouDJnX3A==}
@@ -6936,6 +6938,7 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   validate-npm-package-license@3.0.4:
@@ -6997,8 +7000,8 @@ packages:
       vite:
         optional: true
 
-  vitest-browser-svelte@2.0.2:
-    resolution: {integrity: sha512-OLJVYoIYflwToFIy3s41pZ9mVp6dwXfYd8IIsWoc57g8DyN3SxsNJ5GB1xWFPxLFlKM+1MPExjPxLaqdELrfRQ==}
+  vitest-browser-svelte@2.1.1:
+    resolution: {integrity: sha512-qbunYRSm+N92r9bfTkdDTpBZESLmp4QFz2SluV3n/x8U7ysosfeXYJZ4vXbJ0Y0LzoqqDnV5LHprmFgn4Eo+Ug==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5 || ^5.0.0-next.0
       vitest: ^4.0.0
@@ -15278,7 +15281,7 @@ snapshots:
     optionalDependencies:
       vite: 7.3.1(@types/node@24.3.1)(jiti@2.5.1)(terser@5.44.0)
 
-  vitest-browser-svelte@2.0.2(svelte@5.53.12)(vitest@4.0.17):
+  vitest-browser-svelte@2.1.1(svelte@5.53.12)(vitest@4.0.17):
     dependencies:
       '@testing-library/svelte-core': 1.0.0(svelte@5.53.12)
       svelte: 5.53.12
