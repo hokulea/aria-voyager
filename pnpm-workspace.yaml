@@ -7,14 +7,14 @@ catalogs:
     "typescript": "5.9.3"
     "vite": "7.3.2"
   lint:
-    "@gossi/config-eslint": ^1.3.1
-    "@gossi/config-prettier": ^1.1.1
-    "@gossi/config-template-lint": ^1.2.0
+    "@gossi/config-eslint": ^1.3.3
+    "@gossi/config-prettier": ^1.2.1
+    "@gossi/config-template-lint": ^1.2.2
     "ember-template-lint": ^7.9.3
-    "eslint": ^10.0.0
-    "eslint-plugin-ember": ^13.0.0
-    "eslint-plugin-qunit": ^8.2.5
-    "prettier": 3.6.2
+    "eslint": ^10.5.0
+    "eslint-plugin-ember": ^13.3.2
+    "eslint-plugin-qunit": ^8.2.6
+    "prettier": 3.8.4
   test:
     "@testing-library/dom": "10.4.1"
     "@vitest/browser-playwright": "^4.0.17"
