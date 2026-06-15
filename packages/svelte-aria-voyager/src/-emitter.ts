@@ -1,4 +1,4 @@
-import { type Control, IndexEmitStrategy, ItemEmitStrategy } from 'aria-voyager';
+import { type Control, type EmitStrategy, IndexEmitStrategy, ItemEmitStrategy } from 'aria-voyager';
 
 export function asArray(val?: unknown) {
   if (val === undefined) {
@@ -9,11 +9,7 @@ export function asArray(val?: unknown) {
   return Array.isArray(val) ? val : [val];
 }
 
-export type WithItems<T> = {
-  items: T[];
-  selection?: T | T[];
-  activateItem?: (item: T) => void;
-} & (
+export type WithItems<T> = (
   | {
       multi?: boolean;
       select?: ((selection: T[]) => void) | ((selection: T) => void);
@@ -26,13 +22,13 @@ export type WithItems<T> = {
       multi?: false;
       select?: (selection: T) => void;
     }
-);
+) & {
+  items: T[];
+  selection?: T | T[];
+  activateItem?: (item: T) => void;
+};
 
-export type OptionalItems = {
-  items?: HTMLElement[];
-  selection?: HTMLElement | HTMLElement[];
-  activateItem?: (item: HTMLElement) => void;
-} & (
+export type OptionalItems = (
   | {
       multi?: boolean;
       select?: ((selection: HTMLElement[]) => void) | ((selection: HTMLElement) => void);
@@ -45,7 +41,11 @@ export type OptionalItems = {
       multi?: false;
       select?: (selection: HTMLElement) => void;
     }
-);
+) & {
+  items?: HTMLElement[];
+  selection?: HTMLElement | HTMLElement[];
+  activateItem?: (item: HTMLElement) => void;
+};
 
 export type EmitterSignature<T> = T extends never ? OptionalItems : WithItems<T>;
 // export type EmitterSignature<T = HTMLElement> = (T extends HTMLElement
@@ -72,7 +72,7 @@ export type EmitterSignature<T> = T extends never ? OptionalItems : WithItems<T>
 //       }
 //   );
 
-export function createItemEmitter<T>(control: Control, options: EmitterSignature<T>) {
+export function createItemEmitter<T>(control: Control, options: EmitterSignature<T>): EmitStrategy {
   return new ItemEmitStrategy(control, {
     select: (selection: HTMLElement[]) => {
       (options.select as ((selection: HTMLElement | HTMLElement[]) => void) | undefined)?.(
@@ -86,7 +86,10 @@ export function createItemEmitter<T>(control: Control, options: EmitterSignature
   });
 }
 
-export function createIndexEmitter<T>(control: Control, options: EmitterSignature<T>) {
+export function createIndexEmitter<T>(
+  control: Control,
+  options: EmitterSignature<T>
+): EmitStrategy {
   const findByIndex = (index: number) => {
     return (options as WithItems<T>).items[index] ?? undefined;
   };
