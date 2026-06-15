@@ -73,7 +73,7 @@ export class Tablist extends Control {
   }
 
   readItems() {
-    this.items = [...this.element.querySelectorAll<HTMLElement>('[role="tab"]')];
+    this.items = [...this.element.querySelectorAll<HTMLElement>(':scope [role="tab"]')];
 
     this.#selectionStrategy.select(
       this.selection.filter((selection) => this.items.includes(selection))
@@ -99,9 +99,11 @@ export class Tablist extends Control {
   }
 
   ensureSelection() {
-    if (this.selection.length === 0 && this.items.length > 0) {
-      this.focusStrategy.activateItem(this.items[0]);
-      this.#selectionStrategy.select([this.items[0]]);
+    if (!(this.selection.length === 0 && this.items.length > 0)) {
+      return;
     }
+
+    this.focusStrategy.activateItem(this.items[0]);
+    this.#selectionStrategy.select([this.items[0]]);
   }
 }

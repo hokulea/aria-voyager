@@ -73,7 +73,7 @@ export class Listbox extends Control {
   }
 
   readItems() {
-    this.items = [...this.element.querySelectorAll('[role="option"]')] as HTMLElement[];
+    this.items = [...this.element.querySelectorAll(':scope [role="option"]')] as HTMLElement[];
 
     this.#selectionStrategy.select(
       this.selection.filter((selection) => this.items.includes(selection))

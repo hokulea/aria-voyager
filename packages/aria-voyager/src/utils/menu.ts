@@ -54,5 +54,6 @@ export function getMenuItemFromEvent(event: PointerEvent): HTMLElement | undefin
 }
 
 export function getMenuFromItem(item: MenuItem): HTMLElement | undefined {
+  // eslint-disable-next-line unicorn/prefer-logical-operator-over-ternary
   return item.popoverTargetElement ? (item.popoverTargetElement as HTMLElement) : undefined;
 }

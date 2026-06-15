@@ -50,7 +50,7 @@ export function router(app: Element, path: string) {
     }
   }
 
-  currentModule = path in modules ? modules[path] : modules['404'];
+  currentModule = modules[path] ?? modules['404'];
 
   renderPage(app, currentModule.html);
 
@@ -66,5 +66,7 @@ export function handleRoute() {
   router(app, path);
 }
 
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 globalThis.addEventListener('load', handleRoute);
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 globalThis.addEventListener('hashchange', handleRoute);

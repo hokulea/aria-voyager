@@ -15,6 +15,7 @@ function load() {
   list.element.style.height = '300px';
   list.element.style.position = 'relative';
 
+  // eslint-disable-next-line unicorn/prefer-iterator-to-array
   list.setItems([...Array.from({ length: 20 }).keys()].map((i) => `Item ${i + 1}`));
 }
 

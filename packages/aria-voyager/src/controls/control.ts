@@ -3,10 +3,7 @@ import { isItemEnabled } from './-utils';
 
 import type { EmitStrategy } from '../emit-strategies/emit-strategy';
 import type { AbstractFocusStrategy } from '../navigation-patterns/focus-strategy';
-import type {
-  NavigationParameterBag,
-  NavigationPattern
-} from '../navigation-patterns/navigation-pattern';
+import type { NavigationPattern } from '../navigation-patterns/navigation-pattern';
 import type { UpdateStrategy } from '../update-strategies/update-strategy';
 
 function pipe<Value>(input: Value, ...fns: ((input: Value) => Value)[]) {
@@ -158,7 +155,7 @@ export abstract class Control {
 
     for (const p of patterns) p.prepare?.(event);
 
-    pipe({ event } as NavigationParameterBag, ...patterns.map((p) => p.handle.bind(p)));
+    pipe({ event }, ...patterns.map((p) => p.handle.bind(p)));
 
     event.stopPropagation();
   }

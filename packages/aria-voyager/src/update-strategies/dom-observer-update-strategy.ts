@@ -4,7 +4,6 @@ import { type Control } from '../controls/control';
 import type { UpdateStrategy } from './update-strategy';
 
 export class DomObserverUpdateStrategy implements UpdateStrategy {
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   private observer: MutationObserver = new MutationObserver((changes) => {
     if (!this.control) {
       return;

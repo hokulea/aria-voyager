@@ -11,6 +11,7 @@ list.style.position = 'relative';
 list.style.display = 'grid';
 list.style.overflow = 'auto';
 
+// eslint-disable-next-line unicorn/prefer-iterator-to-array
 listbox.setItems([...Array.from({ length: 20 }).keys()].map((i) => `Item ${i + 1}`));
 for (const item of listbox.items) item.style.height = '19px';
 
