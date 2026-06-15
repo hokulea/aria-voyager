@@ -127,7 +127,7 @@ importers:
         version: 3.6.2
       tsdown:
         specifier: catalog:build
-        version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(synckit@0.11.11))
+        version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(synckit@0.11.11))
       typescript:
         specifier: catalog:build
         version: 5.9.3
@@ -269,7 +269,7 @@ importers:
         version: 3.18.0(handlebars@4.7.8)(underscore@1.13.7)
       tsdown:
         specifier: catalog:build
-        version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(synckit@0.11.11))
+        version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11))
       typescript:
         specifier: catalog:build
         version: 5.9.3
@@ -9188,11 +9188,6 @@ snapshots:
       '@tybys/wasm-util': 0.10.2
     optional: true
 
-  '@napi-rs/wasm-runtime@1.1.5':
-    dependencies:
-      '@tybys/wasm-util': 0.10.2
-    optional: true
-
   '@napi-rs/wasm-runtime@1.1.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
       '@emnapi/core': 1.10.0
@@ -9522,9 +9517,9 @@ snapshots:
   '@rolldown/binding-openharmony-arm64@1.1.1':
     optional: true
 
-  '@rolldown/binding-wasm32-wasi@1.0.0-beta.60':
+  '@rolldown/binding-wasm32-wasi@1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.1.5
+      '@napi-rs/wasm-runtime': 1.1.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
@@ -14691,7 +14686,7 @@ snapshots:
     transitivePeerDependencies:
       - oxc-resolver
 
-  rolldown@1.0.0-beta.60:
+  rolldown@1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0):
     dependencies:
       '@oxc-project/types': 0.108.0
       '@rolldown/pluginutils': 1.0.0-beta.60
@@ -14706,7 +14701,7 @@ snapshots:
       '@rolldown/binding-linux-x64-gnu': 1.0.0-beta.60
       '@rolldown/binding-linux-x64-musl': 1.0.0-beta.60
       '@rolldown/binding-openharmony-arm64': 1.0.0-beta.60
-      '@rolldown/binding-wasm32-wasi': 1.0.0-beta.60
+      '@rolldown/binding-wasm32-wasi': 1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
       '@rolldown/binding-win32-arm64-msvc': 1.0.0-beta.60
       '@rolldown/binding-win32-x64-msvc': 1.0.0-beta.60
     transitivePeerDependencies:
@@ -15591,6 +15586,32 @@ snapshots:
       strip-bom: 3.0.0
     optional: true
 
+  tsdown@0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11)):
+    dependencies:
+      ansis: 4.3.1
+      cac: 7.0.0
+      defu: 6.1.7
+      empathic: 2.0.1
+      hookable: 6.1.1
+      import-without-cache: 0.4.0
+      obug: 2.1.1
+      picomatch: 4.0.4
+      rolldown: 1.1.1
+      rolldown-plugin-dts: 0.25.2(rolldown@1.1.1)(typescript@5.9.3)
+      semver: 7.8.4
+      tinyexec: 1.2.4
+      tinyglobby: 0.2.17
+      tree-kill: 1.2.2
+      unconfig-core: 7.5.0
+    optionalDependencies:
+      typescript: 5.9.3
+      unrun: 0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11)
+    transitivePeerDependencies:
+      - '@ts-macro/tsc'
+      - '@typescript/native-preview'
+      - oxc-resolver
+      - vue-tsc
+
   tsdown@0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(synckit@0.11.11)):
     dependencies:
       ansis: 4.3.1
@@ -15611,32 +15632,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
       unrun: 0.2.25(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(synckit@0.11.11)
-    transitivePeerDependencies:
-      - '@ts-macro/tsc'
-      - '@typescript/native-preview'
-      - oxc-resolver
-      - vue-tsc
-
-  tsdown@0.22.2(typescript@5.9.3)(unrun@0.2.25(synckit@0.11.11)):
-    dependencies:
-      ansis: 4.3.1
-      cac: 7.0.0
-      defu: 6.1.7
-      empathic: 2.0.1
-      hookable: 6.1.1
-      import-without-cache: 0.4.0
-      obug: 2.1.1
-      picomatch: 4.0.4
-      rolldown: 1.1.1
-      rolldown-plugin-dts: 0.25.2(rolldown@1.1.1)(typescript@5.9.3)
-      semver: 7.8.4
-      tinyexec: 1.2.4
-      tinyglobby: 0.2.17
-      tree-kill: 1.2.2
-      unconfig-core: 7.5.0
-    optionalDependencies:
-      typescript: 5.9.3
-      unrun: 0.2.25(synckit@0.11.11)
     transitivePeerDependencies:
       - '@ts-macro/tsc'
       - '@typescript/native-preview'
@@ -15822,9 +15817,9 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.11.1
       '@unrs/resolver-binding-win32-x64-msvc': 1.11.1
 
-  unrun@0.2.25(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(synckit@0.11.11):
+  unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11):
     dependencies:
-      rolldown: 1.0.0-beta.60(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
+      rolldown: 1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     optionalDependencies:
       synckit: 0.11.11
     transitivePeerDependencies:
@@ -15832,9 +15827,9 @@ snapshots:
       - '@emnapi/runtime'
     optional: true
 
-  unrun@0.2.25(synckit@0.11.11):
+  unrun@0.2.25(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(synckit@0.11.11):
     dependencies:
-      rolldown: 1.0.0-beta.60
+      rolldown: 1.0.0-beta.60(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
     optionalDependencies:
       synckit: 0.11.11
     transitivePeerDependencies:
