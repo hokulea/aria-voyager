@@ -27,13 +27,13 @@ catalogs:
       version: 1.43.0
   lint:
     '@gossi/config-eslint':
-      specifier: ^1.3.3
+      specifier: ^1.3.4
       version: 1.3.4
     '@gossi/config-prettier':
-      specifier: ^1.2.1
+      specifier: ^1.2.2
       version: 1.2.2
     '@gossi/config-template-lint':
-      specifier: ^1.2.2
+      specifier: ^1.2.3
       version: 1.2.3
     eslint:
       specifier: ^10.5.0

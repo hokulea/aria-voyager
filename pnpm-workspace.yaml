@@ -7,9 +7,9 @@ catalogs:
     "typescript": "5.9.3"
     "vite": "7.3.2"
   lint:
-    "@gossi/config-eslint": ^1.3.3
-    "@gossi/config-prettier": ^1.2.1
-    "@gossi/config-template-lint": ^1.2.2
+    "@gossi/config-eslint": ^1.3.4
+    "@gossi/config-prettier": ^1.2.2
+    "@gossi/config-template-lint": ^1.2.3
     "ember-template-lint": ^7.9.3
     "eslint": ^10.5.0
     "eslint-plugin-ember": ^13.3.2
