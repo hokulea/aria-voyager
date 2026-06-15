@@ -11,7 +11,7 @@ import {
 
 import type { EmitStrategy } from 'aria-voyager';
 
-export type ListboxOptions<T = unknown> = { disabled?: boolean } & EmitterSignature<T>;
+export type ListboxOptions<T = unknown> = EmitterSignature<T> & { disabled?: boolean };
 
 function setAriaAttribute(element: HTMLElement, attribute: string, present: boolean) {
   if (present) {
@@ -41,6 +41,7 @@ export function ariaListbox<T>(element: HTMLElement, options: ListboxOptions<T>)
   let items = options.items;
   let selection = options.selection;
 
+  // eslint-disable-next-line unicorn/prefer-minimal-ternary
   let emitter: EmitStrategy = options.items
     ? createIndexEmitter<T>(listbox, options)
     : createItemEmitter<T>(listbox, options);
