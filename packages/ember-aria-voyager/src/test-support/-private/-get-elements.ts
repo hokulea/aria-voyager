@@ -23,15 +23,15 @@ function getElements(
     const rootElement = getRootElement();
 
     return rootElement.querySelectorAll(target);
-  } else {
-    const descriptorData = lookupDescriptorData(target);
-
-    if (descriptorData) {
-      return resolveDOMElements(descriptorData);
-    } else {
-      throw new Error('Must use a selector string or DOM element descriptor');
-    }
   }
+
+  const descriptorData = lookupDescriptorData(target);
+
+  if (descriptorData) {
+    return resolveDOMElements(descriptorData);
+  }
+
+  throw new Error('Must use a selector string or DOM element descriptor');
 }
 
 export default getElements;

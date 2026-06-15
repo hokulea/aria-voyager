@@ -44,6 +44,7 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
   module('Reactivity', () => {
     test('disabling sets tabindex to -1', async function (this: TestContext, assert) {
       const options = ['apple', 'banana', 'pineapple'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -74,6 +75,7 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
     test('selection updates', async (assert) => {
       const handleUpdate = sinon.spy();
       const options = ['apple', 'banana', 'pineapple'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

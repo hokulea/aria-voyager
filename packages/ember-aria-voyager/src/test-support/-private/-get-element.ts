@@ -36,19 +36,23 @@ function getElement(target: Target): Element | Document | null {
     const rootElement = getRootElement();
 
     return rootElement.querySelector(target);
-  } else if (isElement(target) || isDocument(target)) {
-    return target;
-  } else if (target instanceof Window) {
-    return target.document;
-  } else {
-    const descriptorData = lookupDescriptorData(target);
-
-    if (descriptorData) {
-      return resolveDOMElement(descriptorData);
-    } else {
-      throw new Error('Must use an element, selector string, or DOM element descriptor');
-    }
   }
+
+  if (isElement(target) || isDocument(target)) {
+    return target;
+  }
+
+  if (target instanceof Window) {
+    return target.document;
+  }
+
+  const descriptorData = lookupDescriptorData(target);
+
+  if (descriptorData) {
+    return resolveDOMElement(descriptorData);
+  }
+
+  throw new Error('Must use an element, selector string, or DOM element descriptor');
 }
 
 export default getElement;

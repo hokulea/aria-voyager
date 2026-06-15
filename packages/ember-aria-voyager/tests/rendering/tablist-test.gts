@@ -19,7 +19,7 @@ import {
 import type { TOC } from '@ember/component/template-only';
 import type { Orientation } from 'aria-voyager';
 
-// eslint-disable-next-line unicorn/no-new-array
+// eslint-disable-next-line unicorn/no-new-array, unicorn/prefer-iterator-to-array, unicorn/no-unreadable-new-expression
 const range = (amount: number) => [...new Array(amount).keys()];
 
 const Tabs: TOC<{ Element: HTMLElement; Args: { amount: number } }> = <template>
@@ -46,6 +46,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
 
   module('Reactivity', () => {
     test('disabling sets tabindex to -1', async (assert) => {
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -68,6 +69,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
     });
 
     test('orientation changes are passed down', async (assert) => {
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -90,6 +92,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
     test('selection updates', async (assert) => {
       const handleUpdate = sinon.spy();
       const items = ['1', '2', '3', '4'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -145,6 +148,7 @@ module('Rendering | Modifier | {{tablist}}', (hooks) => {
     });
 
     test('@items to be reactive with @disabled', async (assert) => {
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

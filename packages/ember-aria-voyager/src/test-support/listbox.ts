@@ -124,6 +124,7 @@ export async function testListKeyboardSelection(
   const { elements, selectors: allSelectors } = setupListTest(assert, selectors);
   const multi = elements.list.getAttribute('aria-multiselectable');
 
+  // eslint-disable-next-line unicorn/prefer-minimal-ternary
   await (multi
     ? testListForKeyboardMultiSelection(assert, elements, allSelectors)
     : testListForKeyboardSingleSelection(assert, elements, allSelectors));
@@ -197,6 +198,7 @@ export async function testListPointerSelection(
   const { elements, selectors: allSelectors } = setupListTest(assert, selectors);
   const multi = elements.list.getAttribute('aria-multiselectable');
 
+  // eslint-disable-next-line unicorn/prefer-minimal-ternary
   await (multi
     ? testListForPointerMultiSelection(assert, elements, allSelectors)
     : testListForPointerSingleSelection(assert, elements, allSelectors));

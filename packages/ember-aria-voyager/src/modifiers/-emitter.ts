@@ -9,11 +9,7 @@ export function asArray(val?: unknown) {
   return Array.isArray(val) ? val : [val];
 }
 
-export type WithItems<T> = {
-  items: T[];
-  selection?: T | T[];
-  activateItem?: (item: T) => void;
-} & (
+export type WithItems<T> = (
   | {
       multi: true;
       select?: (selection: T[]) => void;
@@ -22,13 +18,13 @@ export type WithItems<T> = {
       multi?: false;
       select?: (selection: T) => void;
     }
-);
+) & {
+  items: T[];
+  selection?: T | T[];
+  activateItem?: (item: T) => void;
+};
 
-export type OptionalItems = {
-  items?: HTMLElement[];
-  selection?: HTMLElement | HTMLElement[];
-  activateItem?: (item: HTMLElement) => void;
-} & (
+export type OptionalItems = (
   | {
       multi: true;
       select?: (selection: HTMLElement[]) => void;
@@ -37,7 +33,11 @@ export type OptionalItems = {
       multi?: false;
       select?: (selection: HTMLElement) => void;
     }
-);
+) & {
+  items?: HTMLElement[];
+  selection?: HTMLElement | HTMLElement[];
+  activateItem?: (item: HTMLElement) => void;
+};
 
 export type EmitterSignature<T> = WithItems<T> | OptionalItems;
 

@@ -19,7 +19,7 @@ import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
 interface ListboxSignature<T> {
   Args: {
     Positional: [];
-    Named: { disabled?: boolean } & EmitterSignature<T>;
+    Named: EmitterSignature<T> & { disabled?: boolean };
   };
 }
 

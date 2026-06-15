@@ -13,11 +13,10 @@ import type { Target } from '@ember/test-helpers';
 export default function getDescription(target: Target): string {
   const data = isDescriptor(target) ? lookupDescriptorData(target) : undefined;
 
-  // eslint-disable-next-line unicorn/prefer-ternary
   if (data) {
     return data.description ?? '<unknown descriptor>';
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    return target.toString();
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  return target.toString();
 }

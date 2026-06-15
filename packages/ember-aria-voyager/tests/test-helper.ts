@@ -16,7 +16,7 @@ class TestApp extends EmberApp {
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+// eslint-disable-next-line @typescript-eslint/no-empty-function, unicorn/no-top-level-side-effects
 Router.map(function () {});
 
 import { setApplication } from '@ember/test-helpers';
