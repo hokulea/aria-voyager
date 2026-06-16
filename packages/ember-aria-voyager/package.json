@@ -50,9 +50,9 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.0",
+    "aria-voyager": "workspace:*",
     "dom-element-descriptors": "^0.5.1",
-    "ember-modifier": "^4.2.2",
-    "aria-voyager": "workspace:*"
+    "ember-modifier": "^4.2.2"
   },
   "peerDependencies": {
     "@ember/test-helpers": "^2.9.3 || ^3.0.0 || ^4.0.0 || ^5.0.0",

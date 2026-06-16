@@ -4,7 +4,7 @@ function scenarios() {
   return {
     scenarios: [
       // the two older won't work as the tests use functions as helpers and the
-      // polyfill does not work under vite
+      // polyfill does not work under Vite
       // compatEmberScenario('ember-lts-3.28', '^3.28.0'),
       // compatEmberScenario('ember-lts-4.4', '~4.4.0'),
       compatEmberScenario('ember-lts-4.12', '^4.12.0'),
@@ -46,6 +46,7 @@ function reexport(name) {
 function compatEmberScenario(name, emberVersion) {
   let cliVersion = '^5.12.0';
 
+  // eslint-disable-next-line unicorn/prefer-ternary
   if (emberVersion.includes('3.28')) {
     cliVersion = '^4.12.0';
   }

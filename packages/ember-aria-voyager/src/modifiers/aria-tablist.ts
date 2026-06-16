@@ -20,11 +20,11 @@ export interface TablistSignature<T> {
   Element: HTMLElement;
   Args: {
     Positional: [];
-    Named: {
+    Named: EmitterSignature<T> & {
       disabled?: boolean;
       orientation?: Orientation;
       behavior?: TablistBehavior;
-    } & EmitterSignature<T>;
+    };
   };
 }
 
@@ -81,7 +81,7 @@ export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
 
     if (this.prevOrientation !== options.orientation) {
       if (options.orientation) {
-        element.setAttribute('aria-orientation', options.orientation as string);
+        element.setAttribute('aria-orientation', options.orientation);
       } else {
         element.removeAttribute('aria-orientation');
       }

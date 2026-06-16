@@ -20,6 +20,7 @@ function showSubmenu(
   menu: MenuElement,
   { moveFocus = false, source }: { moveFocus?: boolean; source: HTMLElement }
 ) {
+  // eslint-disable-next-line unicorn/no-unsafe-property-key
   menu[FOCUS_ON_OPEN] = moveFocus;
   menu.showPopover({
     source
@@ -27,6 +28,7 @@ function showSubmenu(
 }
 
 function hideSubmenu(menu: MenuElement, { focusTrigger }: { focusTrigger: boolean }) {
+  // eslint-disable-next-line unicorn/no-unsafe-property-key
   menu[FOCUS_TRIGGER_ON_CLOSE] = focusTrigger;
   menu.hidePopover();
 }
@@ -42,10 +44,7 @@ export class MenuNavigation implements NavigationPattern {
   matches(event: Event): boolean {
     return (
       (event instanceof KeyboardEvent &&
-        (event.key === ' ' ||
-          event.key === 'Enter' ||
-          event.key === 'ArrowRight' ||
-          event.key === 'ArrowLeft')) ||
+        [' ', 'Enter', 'ArrowRight', 'ArrowLeft'].includes(event.key)) ||
       event.type === 'toggle' ||
       event.type === 'pointerover' ||
       event.type === 'pointerout' ||
@@ -70,6 +69,7 @@ export class MenuNavigation implements NavigationPattern {
     else if (isToggleEvent(event)) {
       if (event.newState === 'open') {
         if (event.source) {
+          // eslint-disable-next-line unicorn/no-unsafe-property-key
           (this.control.element as MenuElement)[OPENER] = event.source as HTMLElement;
         }
 
@@ -117,10 +117,12 @@ export class MenuNavigation implements NavigationPattern {
       // hover ...
       case 'pointerover': {
         if (menuItem) {
-          // close sibling menus
-          for (const item of this.control.items
+          const popoverTargets = this.control.items
             .filter((i) => i !== menuItem)
-            .filter((i) => i.hasAttribute('popovertarget'))) {
+            .filter((i) => i.hasAttribute('popovertarget'));
+
+          // close sibling menus
+          for (const item of popoverTargets) {
             this.closeSubmenu(item as MenuItem);
           }
 
@@ -139,6 +141,7 @@ export class MenuNavigation implements NavigationPattern {
         // moving pointer from menu to trigger
         if (
           event.target === this.control.element &&
+          // eslint-disable-next-line unicorn/no-unsafe-property-key
           event.relatedTarget === (this.control.element as MenuElement)[OPENER]
         ) {
           (event.relatedTarget as HTMLElement).focus();
@@ -147,7 +150,9 @@ export class MenuNavigation implements NavigationPattern {
         // Clear menu when pointer leaves menu entirely
         else if (event.target === this.control.element && this.isLeavingMenu(event)) {
           // close open menus
-          for (const item of this.control.items.filter((i) => i.hasAttribute('popovertarget'))) {
+          const popoverTargets = this.control.items.filter((i) => i.hasAttribute('popovertarget'));
+
+          for (const item of popoverTargets) {
             this.closeSubmenu(item as MenuItem);
           }
 
@@ -192,6 +197,7 @@ export class MenuNavigation implements NavigationPattern {
 
     // move focus to first element
     if (
+      // eslint-disable-next-line unicorn/no-unsafe-property-key
       (this.control.element as MenuElement)[FOCUS_ON_OPEN] !== false &&
       this.control.enabledItems.length > 0
     ) {
@@ -203,10 +209,12 @@ export class MenuNavigation implements NavigationPattern {
     // reset focus
     this.focusStrategy.activeItem = undefined;
 
+    // eslint-disable-next-line unicorn/no-unsafe-property-key
     const focusTriggerOnClose = (this.control.element as MenuElement)[FOCUS_TRIGGER_ON_CLOSE];
 
     if (focusTriggerOnClose !== false) {
       // @ts-expect-error yep, we add out own secret type
+      // eslint-disable-next-line unicorn/no-unsafe-property-key
       const trigger = this.control.element[OPENER] as HTMLElement | undefined;
 
       if (trigger) {
@@ -216,7 +224,7 @@ export class MenuNavigation implements NavigationPattern {
   }
 
   closeSubmenu(item: MenuItem) {
-    const menu = getMenuFromItem(item) as MenuElement | undefined;
+    const menu = getMenuFromItem(item);
 
     if (menu) {
       hideSubmenu(menu, { focusTrigger: false });
@@ -243,6 +251,7 @@ export class MenuNavigation implements NavigationPattern {
     }
 
     // Moving to the trigger button
+    // eslint-disable-next-line unicorn/no-unsafe-property-key
     if (relatedTarget === (this.control.element as MenuElement)[OPENER]) {
       return false;
     }

@@ -12,7 +12,8 @@ interface ShowPopoverOptions {
 }
 
 interface HTMLElement
-  extends Element,
+  extends
+    Element,
     ElementCSSInlineStyle,
     ElementContentEditable,
     GlobalEventHandlers,

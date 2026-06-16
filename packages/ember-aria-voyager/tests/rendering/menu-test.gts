@@ -71,6 +71,7 @@ module('Rendering | Modifier | {{menu}}', (hooks) => {
     });
 
     test('no tabindex attribute when disabled', async function (assert) {
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -98,6 +99,7 @@ module('Rendering | Modifier | {{menu}}', (hooks) => {
 
   module('Reactivity', () => {
     test('@items to be reactive with @disabled', async (assert) => {
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
       const context = new (class {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

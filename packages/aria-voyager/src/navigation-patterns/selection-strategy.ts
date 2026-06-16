@@ -117,7 +117,7 @@ export class SelectionStrategy implements NavigationPattern {
 
   readSelection() {
     this.#selection = [
-      ...this.control.element.querySelectorAll('[aria-selected="true"]')
+      ...this.control.element.querySelectorAll(':scope [aria-selected="true"]')
     ] as HTMLElement[];
 
     for (const listener of this.#listeners.read) {
@@ -218,6 +218,7 @@ export class SelectionStrategy implements NavigationPattern {
   // selection logic
 
   private deselect(item: HTMLElement) {
+    // eslint-disable-next-line unicorn/prefer-early-return
     if (this.#selection.includes(item)) {
       const selection = [...this.#selection];
 
@@ -248,6 +249,7 @@ export class SelectionStrategy implements NavigationPattern {
   }
 
   private selectRange(from: number, to: number) {
+    // eslint-disable-next-line unicorn/prefer-early-return
     if (this.control.options.multiple) {
       const selection = [];
       let i = from;
@@ -264,6 +266,7 @@ export class SelectionStrategy implements NavigationPattern {
 
   private selectShift(item: HTMLElement) {
     // only, when selection mode is MULTI
+    // eslint-disable-next-line unicorn/prefer-early-return
     if (this.control.options.multiple && this.shiftItem) {
       const indexShift = this.control.items.indexOf(this.shiftItem);
       const indexItem = this.control.items.indexOf(item);

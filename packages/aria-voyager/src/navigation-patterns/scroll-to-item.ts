@@ -59,6 +59,7 @@ export class ScrollToItem implements NavigationPattern {
   }
 
   private scrollUpwardsToItem(item: HTMLElement) {
+    // eslint-disable-next-line unicorn/prefer-early-return
     if (!this.isItemInViewport(item) || item.offsetTop === 0) {
       const buffer = this.calcBuffer();
 
@@ -67,6 +68,7 @@ export class ScrollToItem implements NavigationPattern {
   }
 
   private scrollDownwardsToItem(item: HTMLElement) {
+    // eslint-disable-next-line unicorn/prefer-early-return
     if (!this.isItemInViewport(item)) {
       const buffer = this.calcBuffer();
 
@@ -99,6 +101,7 @@ export class ScrollToItem implements NavigationPattern {
     const style = window.getComputedStyle(this.control.element);
     const padding = style.getPropertyValue('padding-block');
 
+    // eslint-disable-next-line unicorn/prefer-number-coercion
     return Math.max(2, Number.parseFloat(padding));
   }
 }

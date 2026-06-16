@@ -62,7 +62,7 @@ export class Menu extends Control {
   readItems() {
     // Find all descendant elements with role "menuitem", "menuitemcheckbox", or "menuitemradio"
     const items = this.element.querySelectorAll<HTMLElement>(
-      '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'
+      ':scope [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'
     );
 
     // Filter out elements that are within a nested menu but not the root menu

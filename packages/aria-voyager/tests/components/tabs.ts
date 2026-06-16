@@ -44,7 +44,7 @@ export function appendTab(parent: HTMLElement, label: string, contents: string |
   elem.type = 'button';
   elem.setAttribute('aria-controls', panelId);
 
-  const tablist = parent.querySelector('[role="tablist"]') as HTMLDivElement;
+  const tablist = parent.querySelector(':scope [role="tablist"]') as HTMLDivElement;
 
   tablist.append(elem);
 

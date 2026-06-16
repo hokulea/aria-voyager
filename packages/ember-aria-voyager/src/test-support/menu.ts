@@ -59,8 +59,12 @@ export async function testMenuKeyboardNavigation(
   const { elements } = setupMenuTest(assert, selectors);
   const { trigger, menu } = elements;
 
-  const shareMenu = getRootElement().querySelectorAll('[role="menu"]').item(1) as HTMLElement;
-  const socialMenu = getRootElement().querySelectorAll('[role="menu"]').item(2) as HTMLElement;
+  const shareMenu = getRootElement()
+    .querySelectorAll(':scope [role="menu"]')
+    .item(1) as HTMLElement;
+  const socialMenu = getRootElement()
+    .querySelectorAll(':scope [role="menu"]')
+    .item(2) as HTMLElement;
 
   await click(trigger);
 
@@ -142,8 +146,12 @@ export async function testMenuPointerNavigation(
   const { elements } = setupMenuTest(assert, selectors);
   const { trigger, menu } = elements;
 
-  const shareMenu = getRootElement().querySelectorAll('[role="menu"]').item(1) as HTMLElement;
-  const socialMenu = getRootElement().querySelectorAll('[role="menu"]').item(2) as HTMLElement;
+  const shareMenu = getRootElement()
+    .querySelectorAll(':scope [role="menu"]')
+    .item(1) as HTMLElement;
+  const socialMenu = getRootElement()
+    .querySelectorAll(':scope [role="menu"]')
+    .item(2) as HTMLElement;
 
   await click(trigger);
 
@@ -188,15 +196,13 @@ export async function testMenuPointerNavigation(
     '`pointerover` fourth element opens share menu again'
   );
 
-  assert.dom(shareItems[0] as HTMLElement).hasAttribute('tabindex', '0', 'first item is active');
+  assert.dom(shareItems[0]).hasAttribute('tabindex', '0', 'first item is active');
 
   // huh? Why does the second line work, but not the first one?
   // await triggerEvent(shareItems[1] as HTMLElement, 'pointover');
   (shareItems[1] as HTMLElement).dispatchEvent(new Event('pointerover', { bubbles: true }));
 
-  assert
-    .dom(shareItems[1] as HTMLElement)
-    .hasAttribute('tabindex', '0', '`pointerover` activates second item');
+  assert.dom(shareItems[1]).hasAttribute('tabindex', '0', '`pointerover` activates second item');
 
   assert.ok(socialMenu.matches(':popover-open'), '... and opens social menu');
 

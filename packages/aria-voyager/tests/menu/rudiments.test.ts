@@ -25,7 +25,7 @@ describe('setup', () => {
 
     new Menu(codeMenu);
 
-    const firstItem = codeMenu.querySelector('[role="menuitem"]') as HTMLElement;
+    const firstItem = codeMenu.querySelector(':scope [role="menuitem"]') as HTMLElement;
 
     await expect.element(firstItem).toHaveAttribute('tabindex', '0');
   });
