@@ -68,11 +68,11 @@ catalogs:
     "prettier": 3.8.4
   test:
     "@testing-library/dom": "10.4.1"
-    "@vitest/browser-playwright": "^4.0.17"
-    "@vitest/coverage-istanbul": "^4.0.17"
-    "@vitest/ui": "^4.0.17"
-    "playwright": "^1.57.0"
-    "vitest": "^4.0.17"
+    "@vitest/browser-playwright": "^4.1.9"
+    "@vitest/coverage-istanbul": "^4.1.9"
+    "@vitest/ui": "^4.1.9"
+    "playwright": "^1.61.0"
+    "vitest": "^4.1.9"
   lib:
     "@hokulea/core": ^0.10.0
     "@hokulea/theme-moana": ^0.4.0
