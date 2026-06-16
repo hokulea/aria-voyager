@@ -1,4 +1,5 @@
 import { getGroupChildren } from '#src/controls/-roles.js';
+import { PointerNavigation } from '#src/navigation-patterns/pointer-navigation.js';
 import { RovingTabindexStrategy } from '#src/navigation-patterns/roving-tabindex-strategy.js';
 
 import { EndNavigation } from '../navigation-patterns/end-navigation';
@@ -26,6 +27,7 @@ export class Group extends Control {
       new PreviousNavigation(this, ['ArrowUp', 'ArrowLeft']),
       new HomeNavigation(this),
       new EndNavigation(this),
+      new PointerNavigation(this),
       this.focusStrategy
     ]);
 
