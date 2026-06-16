@@ -101,6 +101,7 @@ export class ScrollToItem implements NavigationPattern {
     const style = window.getComputedStyle(this.control.element);
     const padding = style.getPropertyValue('padding-block');
 
-    return Math.max(2, Number(padding));
+    // eslint-disable-next-line unicorn/prefer-number-coercion
+    return Math.max(2, Number.parseFloat(padding));
   }
 }
