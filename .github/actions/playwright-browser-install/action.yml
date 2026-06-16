@@ -1,10 +1,12 @@
-name: 'Playwright Browser Install'
+name: Playwright Browser Install
+description: Install Playwright
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - name: Get installed Playwright version
       id: playwright-version
-      run: echo "PLAYWRIGHT_VERSION=$(jq .devDependencies.playwright package.json | sed 's/["\^]//g')" >> $GITHUB_ENV
+      run: |
+        echo "PLAYWRIGHT_VERSION=$(sed -n '/^catalogs:/,/^[^ ]/p' pnpm-workspace.yaml | grep '^    "playwright":' | sed 's/.*: *["^]*//;s/["].*//' | head -n 1)" >> $GITHUB_ENV      run: |
       shell: bash
 
     - name: Cache playwright binaries
