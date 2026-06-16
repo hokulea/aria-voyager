@@ -12,7 +12,8 @@ export default [
   {
     files: ['src/**/*.ts'],
     rules: {
-      'unicorn/consistent-class-member-order': 'off'
+      'unicorn/consistent-class-member-order': 'off',
+      'unicorn/prefer-query-selector': ['error', { allowWithVariables: true }]
     }
   }
 ];

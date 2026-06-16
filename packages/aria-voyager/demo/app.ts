@@ -3,6 +3,7 @@ import './main.css';
 import '@hokulea/core/style.css';
 import '@hokulea/theme-moana/dist/moana.css';
 
+import group from './pages/group';
 import list from './pages/list';
 import menu from './pages/menu';
 import tabs from './pages/tabs';
@@ -17,7 +18,8 @@ type PageModule = {
 const pages: Record<string | number, PageModule> = {
   '/list': list,
   '/tabs': tabs,
-  '/menu': menu
+  '/menu': menu,
+  '/group': group
 };
 
 const home = {

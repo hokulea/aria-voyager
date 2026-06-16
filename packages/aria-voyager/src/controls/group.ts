@@ -1,0 +1,60 @@
+import { getGroupChildren } from '#src/controls/-roles.js';
+import { RovingTabindexStrategy } from '#src/navigation-patterns/roving-tabindex-strategy.js';
+
+import { EndNavigation } from '../navigation-patterns/end-navigation';
+import { HomeNavigation } from '../navigation-patterns/home-navigation';
+import { NextNavigation } from '../navigation-patterns/next-navigation';
+import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
+import { Control } from './control';
+
+export class Group extends Control {
+  focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+
+  get activeItem() {
+    return this.focusStrategy.activeItem;
+  }
+
+  get prevActiveItem() {
+    return this.focusStrategy.prevActiveItem;
+  }
+
+  constructor(element: HTMLElement) {
+    super(element, {});
+
+    this.registerNavigationPatterns([
+      new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
+      new PreviousNavigation(this, ['ArrowUp', 'ArrowLeft']),
+      new HomeNavigation(this),
+      new EndNavigation(this),
+      this.focusStrategy
+    ]);
+
+    // setup
+    element.role = 'group';
+
+    if (!element.hasAttribute('tabindex')) {
+      element.setAttribute('tabindex', '0');
+    }
+
+    this.readOptions();
+    this.readItems();
+  }
+
+  dispose() {
+    super.dispose();
+  }
+
+  readItems() {
+    this.items = getGroupChildren(this.element);
+
+    this.focusStrategy.updateItems();
+  }
+
+  readOptions(): void {
+    super.readOptions();
+
+    this.element.setAttribute('tabindex', this.options.disabled ? '-1' : '0');
+
+    this.focusStrategy.updateItems();
+  }
+}
