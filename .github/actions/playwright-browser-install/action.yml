@@ -6,7 +6,7 @@ runs:
     - name: Get installed Playwright version
       id: playwright-version
       run: |
-        echo "PLAYWRIGHT_VERSION=$(sed -n '/^catalogs:/,/^[^ ]/p' pnpm-workspace.yaml | grep 'playwright' | sed 's/.*playwright//;s/[^0-9.]//g' | head -n 1)" >> $GITHUB_ENV
+        echo "PLAYWRIGHT_VERSION=$(sed -n '/^catalogs:/,/^[^ ]/p' pnpm-workspace.yaml | grep '^    "playwright":' | sed 's/.*: *["^]*//;s/["].*//' | head -n 1)" >> $GITHUB_ENV
       shell: bash
 
     - name: Cache playwright binaries
