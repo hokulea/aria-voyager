@@ -23,6 +23,6 @@ describe('Reactivity: selection', () => {
     list.focus();
     await userEvent.keyboard('{ArrowDown}');
 
-    expect(handleUpdate).toBeCalledWith('Pear');
+    expect(handleUpdate).toHaveBeenCalledWith('Pear');
   });
 });
