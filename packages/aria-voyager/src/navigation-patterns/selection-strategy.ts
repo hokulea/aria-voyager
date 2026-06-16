@@ -250,7 +250,7 @@ export class SelectionStrategy implements NavigationPattern {
 
   private selectRange(from: number, to: number) {
     // eslint-disable-next-line unicorn/prefer-early-return
-    if (!this.control.options.multiple) {
+    if (this.control.options.multiple) {
       const selection = [];
       let i = from;
       const up = to > from;

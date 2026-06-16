@@ -99,11 +99,10 @@ export class Tablist extends Control {
   }
 
   ensureSelection() {
-    if (!(this.selection.length === 0 && this.items.length > 0)) {
-      return;
+    // eslint-disable-next-line unicorn/prefer-early-return
+    if (this.selection.length === 0 && this.items.length > 0) {
+      this.focusStrategy.activateItem(this.items[0]);
+      this.#selectionStrategy.select([this.items[0]]);
     }
-
-    this.focusStrategy.activateItem(this.items[0]);
-    this.#selectionStrategy.select([this.items[0]]);
   }
 }
