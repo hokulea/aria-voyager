@@ -28,6 +28,29 @@ apply styling, it will operate on the accessibility tree.
   <tr>
     <th colspan="3">
       Role:
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#group" target="_blank"><code>group</code></a><br>
+      Focus Strategy:
+      <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>
+    </th>
+  </tr>
+  <tr style="vertical-align: top">
+    <td>
+      ✅ <code>ArrowUp</code> / <code>ArrowLeft</code> (prev)<br>
+      ✅ <code>ArrowDown</code> / <code>ArrowRight</code> (next)<br>
+      ✅ <code>Home</code> (first)<br>
+      ✅ <code>End</code> (last)<br>
+      ✅ Pointer Navigation
+    </td>
+    <td>
+      ✅ Disabled<br>
+    </td>
+    <td>
+      -
+    </td>
+  </tr>
+  <tr>
+    <th colspan="3">
+      Role:
       <a href="https://www.w3.org/TR/wai-aria-1.2/#listbox" target="_blank"><code>listbox</code></a><br>
       Focus Strategy:
       <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_focus_activedescendant" target="_blank">
