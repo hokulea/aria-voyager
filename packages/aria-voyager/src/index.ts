@@ -1,6 +1,7 @@
 // controls
 export type { Orientation } from './controls/control';
 export { Control } from './controls/control';
+export { Group } from './controls/group';
 export { Listbox } from './controls/listbox';
 export { Menu } from './controls/menu';
 export type { TablistBehavior, TablistOptions } from './controls/tablist';
