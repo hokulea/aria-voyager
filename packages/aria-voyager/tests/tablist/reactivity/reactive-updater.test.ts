@@ -1,9 +1,10 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { ReactiveUpdateStrategy } from '#src';
 import { appendTab, removeTab } from '#tests/components/tabs';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('Reactive Updater', async ({ annotate }) => {
   const updater = new ReactiveUpdateStrategy();
@@ -58,7 +59,7 @@ test('Reactive Updater', async ({ annotate }) => {
   expect(tabs.options.orientation).toBe('horizontal');
 
   await annotate('sets tabindex to -1 when the aria-disabled is `true`');
-  await userEvent.click(firstItem);
+  await firePointer(firstItem);
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 

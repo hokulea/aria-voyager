@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { List } from '#tests/components/list';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Scroll Upwards', async ({ annotate }) => {
   const listbox = new List(document.body);
@@ -24,7 +25,7 @@ test('Scroll Upwards', async ({ annotate }) => {
   await annotate('focus list and activate last item');
   list.focus();
   expect(document.activeElement).toBe(list);
-  await userEvent.keyboard('{End}');
+  await fireKey(list, 'End');
   expect(list.getAttribute('aria-activedescendant')).toBe(lastItem.id);
 
   await annotate('use `ArrowUp` to scroll up');
@@ -32,18 +33,18 @@ test('Scroll Upwards', async ({ annotate }) => {
   let i = lastIndex - 1;
 
   while (i >= 11) {
-    await userEvent.keyboard('{ArrowUp}');
+    await fireKey(list, 'ArrowUp');
     i--;
   }
 
   expect(Math.round(list.scrollTop)).toBe(180);
   expect(list.children[i].getAttribute('aria-selected')).toBe('true');
 
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(list, 'ArrowUp');
   expect(Math.round(list.scrollTop)).toBe(169);
   expect(list.children[i - 1].getAttribute('aria-selected')).toBe('true');
 
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(list, 'ArrowUp');
   expect(Math.round(list.scrollTop)).toBe(150);
   expect(list.children[i - 2].getAttribute('aria-selected')).toBe('true');
 });

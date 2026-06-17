@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('Invoking a menu item closes the menu', async ({ annotate }) => {
   const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
@@ -17,7 +18,7 @@ test('Invoking a menu item closes the menu', async ({ annotate }) => {
   await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 
   await annotate('open the menus');
-  await userEvent.click(triggerButton);
+  triggerButton.click();
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
   fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
@@ -27,7 +28,7 @@ test('Invoking a menu item closes the menu', async ({ annotate }) => {
   await expect.poll(() => socialMenu.matches(':popover-open')).toBe(true);
 
   await annotate('clicking a menu item closes the menu');
-  await userEvent.click(social.items[1]);
+  await firePointer(social.items[1]);
 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
   await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
@@ -42,14 +43,14 @@ test('Invoking a descending menu item closes the menu', async ({ annotate }) => 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
 
   await annotate('open the menu');
-  await userEvent.click(triggerButton);
+  triggerButton.click();
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
   await annotate('clicking a non-menu item keeps the menu open');
-  await userEvent.click(refactorHeader);
+  await firePointer(refactorHeader);
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
   await annotate('clicking a descendend menu item closes the menu');
-  await userEvent.click(secondItem);
+  await firePointer(secondItem);
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
 });

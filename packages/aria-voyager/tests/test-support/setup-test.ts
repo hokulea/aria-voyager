@@ -1,10 +1,9 @@
 import { afterEach, beforeEach } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 export function setupTest() {
-  beforeEach(async () => {
+  beforeEach(() => {
     // Reset pointer before any DOM is created
-    await userEvent.unhover(document.body);
+    // await userEvent.unhover(document.body);
   });
 
   afterEach(() => {

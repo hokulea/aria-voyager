@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Navigate with `ArrowDown`', async ({ annotate }) => {
   const { tablist, tabs } = createTabs();
@@ -21,7 +22,7 @@ test('Navigate with `ArrowDown`', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowDown` key to activate second item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
@@ -30,7 +31,7 @@ test('Navigate with `ArrowDown`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowDown` key to activate third item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
 
@@ -39,8 +40,8 @@ test('Navigate with `ArrowDown`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowDown` key at the last item does nothing');
-  await userEvent.keyboard('{End}');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'End');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
@@ -68,7 +69,7 @@ test('navigate with `ArrowDown`, skipping disabled items', async ({ annotate }) 
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowDown` key to activate second item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
@@ -77,7 +78,7 @@ test('navigate with `ArrowDown`, skipping disabled items', async ({ annotate }) 
   }
 
   await annotate('use `ArrowDown` key to activate fourth item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 

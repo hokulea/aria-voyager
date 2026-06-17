@@ -1,10 +1,11 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
+import { fireKey } from '#tests/test-support/events';
+
 test('Select manually with spacebar', async ({ annotate }) => {
-  const { tabs } = createTabs({
+  const { tablist, tabs } = createTabs({
     behavior: {
       singleSelection: 'manual'
     }
@@ -23,7 +24,7 @@ test('Select manually with spacebar', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowRight` key to activate second item');
-  await userEvent.keyboard('{ArrowRight}');
+  await fireKey(tablist, 'ArrowRight');
 
   expect(firstItem).toHaveAttribute('aria-selected', 'true');
 
@@ -38,7 +39,7 @@ test('Select manually with spacebar', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowRight` key to activate fourth item');
-  await userEvent.keyboard('{ArrowRight}');
+  await fireKey(tablist, 'ArrowRight');
 
   expect(firstItem).toHaveAttribute('aria-selected', 'true');
 
@@ -53,7 +54,7 @@ test('Select manually with spacebar', async ({ annotate }) => {
   }
 
   await annotate('use spacebar to select fourth item');
-  await userEvent.keyboard('{ }');
+  await fireKey(tablist, ' ');
 
   expect(fourthItem).toHaveAttribute('aria-selected', 'true');
 
@@ -63,7 +64,7 @@ test('Select manually with spacebar', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowLeft` key to activate second item');
-  await userEvent.keyboard('{ArrowLeft}');
+  await fireKey(tablist, 'ArrowLeft');
 
   expect(fourthItem).toHaveAttribute('aria-selected', 'true');
 
@@ -79,7 +80,7 @@ test('Select manually with spacebar', async ({ annotate }) => {
   }
 
   await annotate('use spacebar to select second item');
-  await userEvent.keyboard('{ }');
+  await fireKey(tablist, ' ');
 
   expect(secondItem).toHaveAttribute('aria-selected', 'true');
 

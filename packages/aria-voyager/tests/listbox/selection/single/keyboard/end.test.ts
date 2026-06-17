@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Select last item with `End` key', async ({ annotate }) => {
   const list = createListWithFruits();
@@ -16,7 +17,7 @@ test('Select last item with `End` key', async ({ annotate }) => {
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await annotate('use `End` to select last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(list, 'End');
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');

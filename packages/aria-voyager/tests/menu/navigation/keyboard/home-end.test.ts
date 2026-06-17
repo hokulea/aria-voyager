@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Navigates with `Home` and `End`', async ({ annotate }) => {
   const { codeMenu } = createCodeMenu();
@@ -18,7 +19,7 @@ test('Navigates with `Home` and `End`', async ({ annotate }) => {
   expect(menu.activeItem).toBe(firstItem);
 
   await annotate('activates the last item with END');
-  await userEvent.keyboard('{End}');
+  await fireKey(codeMenu, 'End');
 
   await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
@@ -27,7 +28,7 @@ test('Navigates with `Home` and `End`', async ({ annotate }) => {
   }
 
   await annotate('activates the first item with HOME');
-  await userEvent.keyboard('{Home}');
+  await fireKey(codeMenu, 'Home');
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
@@ -55,7 +56,7 @@ test('Navigates with `Home` and `End`, skip disabled items', async ({ annotate }
   expect(menu.activeItem).toBe(secondItem);
 
   await annotate('activates the second last item with END');
-  await userEvent.keyboard('{End}');
+  await fireKey(codeMenu, 'End');
 
   await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
@@ -66,7 +67,7 @@ test('Navigates with `Home` and `End`, skip disabled items', async ({ annotate }
   }
 
   await annotate('activates the second item with HOME');
-  await userEvent.keyboard('{Home}');
+  await fireKey(codeMenu, 'Home');
 
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 

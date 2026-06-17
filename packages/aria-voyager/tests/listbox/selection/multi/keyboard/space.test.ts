@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Toggle selection with `Space` key', async ({ annotate }) => {
   const list = createMultiSelectListWithFruits();
@@ -14,10 +15,10 @@ test('Toggle selection with `Space` key', async ({ annotate }) => {
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
 
   await annotate('use `Space` to select active item');
-  await userEvent.keyboard(' ');
+  await fireKey(list, ' ');
   await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
 
   await annotate('use `Space` to deselect active item');
-  await userEvent.keyboard(' ');
+  await fireKey(list, ' ');
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
 });

@@ -49,10 +49,10 @@ export default defineConfig({
         // }
       }),
       instances: [
-        { browser: 'firefox' }
+        { browser: 'firefox' },
         // tests are flaky in playwright + chromium/webkit
-        // { browser: 'chromium' }
-        // { browser: 'webkit' }
+        { browser: 'chromium' },
+        { browser: 'webkit' }
       ]
     }
   }

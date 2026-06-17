@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Navigates with `End`', async ({ annotate }) => {
   const list = createListWithFruits();
@@ -20,7 +21,7 @@ test('Navigates with `End`', async ({ annotate }) => {
   expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
 
   await annotate('use `End` key to activate last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(list, 'End');
   expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
   await expect.element(firstItem).not.toHaveAttribute('aria-current');
   await expect.element(secondItem).not.toHaveAttribute('aria-current');
@@ -45,7 +46,7 @@ test('Navigates with `End`, skip disabled item', async ({ annotate }) => {
   expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
 
   await annotate('use `End` key to activate second last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(list, 'End');
   expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
   await expect.element(firstItem).not.toHaveAttribute('aria-current');
   await expect.element(secondItem).toHaveAttribute('aria-current', 'true');

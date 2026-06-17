@@ -1,10 +1,11 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
+import { fireKey } from '#tests/test-support/events';
+
 test('Navigate with `ArrowLeft`', async ({ annotate }) => {
-  const { tabs } = createTabs();
+  const { tablist, tabs } = createTabs();
   const { firstItem, lastItem, secondLastItem, thirdLastItem } = getTabItems(tabs);
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
@@ -19,7 +20,7 @@ test('Navigate with `ArrowLeft`', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowUp` at first item does nothing');
-  await userEvent.keyboard('{ArrowLeft}');
+  await fireKey(tablist, 'ArrowLeft');
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
@@ -28,7 +29,7 @@ test('Navigate with `ArrowLeft`', async ({ annotate }) => {
   }
 
   await annotate('use `END` to jump to the last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(tablist, 'End');
 
   await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
@@ -37,7 +38,7 @@ test('Navigate with `ArrowLeft`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate second last item');
-  await userEvent.keyboard('{ArrowLeft}');
+  await fireKey(tablist, 'ArrowLeft');
 
   await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
@@ -46,7 +47,7 @@ test('Navigate with `ArrowLeft`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate third last item');
-  await userEvent.keyboard('{ArrowLeft}');
+  await fireKey(tablist, 'ArrowLeft');
 
   await expect.element(thirdLastItem).toHaveAttribute('tabindex', '0');
 
@@ -56,7 +57,7 @@ test('Navigate with `ArrowLeft`', async ({ annotate }) => {
 });
 
 test('navigate with `ArrowLeft`, skipping disabled items', async ({ annotate }) => {
-  const { tabs } = createTabs();
+  const { tablist, tabs } = createTabs();
   const { firstItem, lastItem, secondLastItem, thirdLastItem, fourthLastItem } = getTabItems(tabs);
 
   thirdLastItem.setAttribute('aria-disabled', 'true');
@@ -73,7 +74,7 @@ test('navigate with `ArrowLeft`, skipping disabled items', async ({ annotate }) 
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `END` to jump to the last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(tablist, 'End');
 
   await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
@@ -82,7 +83,7 @@ test('navigate with `ArrowLeft`, skipping disabled items', async ({ annotate }) 
   }
 
   await annotate('use `ArrowLeft` key to activate second last item');
-  await userEvent.keyboard('{ArrowLeft}');
+  await fireKey(tablist, 'ArrowLeft');
 
   await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
@@ -91,7 +92,7 @@ test('navigate with `ArrowLeft`, skipping disabled items', async ({ annotate }) 
   }
 
   await annotate('use `ArrowLeft` key to activate fourth last item');
-  await userEvent.keyboard('{ArrowLeft}');
+  await fireKey(tablist, 'ArrowLeft');
 
   await expect.element(fourthLastItem).toHaveAttribute('tabindex', '0');
 

@@ -1,8 +1,9 @@
 import { expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { ItemEmitStrategy } from '#src';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('ItemEmitter', async ({ annotate }) => {
   const { tabs } = createTabs();
@@ -21,7 +22,7 @@ test('ItemEmitter', async ({ annotate }) => {
 
   const selectSpy = vi.spyOn(listeners, 'select');
 
-  await userEvent.click(secondItem);
+  await firePointer(secondItem);
 
   expect(selectSpy).toHaveBeenCalledWith([secondItem]);
 

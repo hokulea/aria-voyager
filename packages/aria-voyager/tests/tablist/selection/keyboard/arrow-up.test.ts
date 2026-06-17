@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Select with `ArrowUp`', async ({ annotate }) => {
   const { tablist, tabs } = createTabs();
@@ -19,7 +20,7 @@ test('Select with `ArrowUp`', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowUp` at first item does nothing');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(tablist, 'ArrowUp');
 
   await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
 
@@ -28,7 +29,7 @@ test('Select with `ArrowUp`', async ({ annotate }) => {
   }
 
   await annotate('use `END` to jump to the last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(tablist, 'End');
 
   await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
 
@@ -37,7 +38,7 @@ test('Select with `ArrowUp`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate second last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(tablist, 'ArrowUp');
 
   await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
 
@@ -46,7 +47,7 @@ test('Select with `ArrowUp`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate third last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(tablist, 'ArrowUp');
 
   await expect.element(thirdLastItem).toHaveAttribute('aria-selected', 'true');
 
@@ -74,7 +75,7 @@ test('select with `ArrowUp`, skipping disabled items', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `END` to jump to the last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(tablist, 'End');
 
   await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
 
@@ -83,7 +84,7 @@ test('select with `ArrowUp`, skipping disabled items', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate second last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(tablist, 'ArrowUp');
 
   await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
 
@@ -92,7 +93,7 @@ test('select with `ArrowUp`, skipping disabled items', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate fourth last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(tablist, 'ArrowUp');
 
   await expect.element(fourthLastItem).toHaveAttribute('aria-selected', 'true');
 

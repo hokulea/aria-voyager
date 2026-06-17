@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
+
+import { fireHover, fireKey } from '#tests/test-support/events';
 
 test('Invoking a menu item closes all submenus', async ({ annotate }) => {
   const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
@@ -16,7 +17,7 @@ test('Invoking a menu item closes all submenus', async ({ annotate }) => {
   await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
 
   await annotate('open the menus');
-  await userEvent.click(triggerButton);
+  triggerButton.click();
 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
@@ -27,8 +28,8 @@ test('Invoking a menu item closes all submenus', async ({ annotate }) => {
   await expect.poll(() => socialMenu.matches(':popover-open')).toBe(true);
 
   await annotate('use `Enter` on a menu item closes all submenus');
-  await userEvent.hover(social.items[1]);
-  await userEvent.keyboard('{Enter}');
+  await fireHover(social.items[1]);
+  await fireKey(socialMenu, 'Enter');
 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
   await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);

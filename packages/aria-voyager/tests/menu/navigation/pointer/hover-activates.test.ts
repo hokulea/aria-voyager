@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
+
+import { fireHover } from '#tests/test-support/events';
 
 test('Hover activates item', async ({ annotate }) => {
   const { codeMenu } = createCodeMenu();
@@ -16,14 +17,14 @@ test('Hover activates item', async ({ annotate }) => {
   expect(menu.activeItem).toBeFalsy();
 
   await annotate('hovers first item to make it active');
-  await userEvent.hover(firstItem);
+  await fireHover(firstItem);
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
   expect(menu.activeItem).toBe(firstItem);
 
   await annotate('hovers second item to make it active');
-  await userEvent.hover(secondItem);
+  await fireHover(secondItem);
 
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 

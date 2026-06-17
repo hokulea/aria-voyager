@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('With Pointer', async ({ annotate }) => {
   const list = createListWithFruits();
@@ -14,13 +15,13 @@ test('With Pointer', async ({ annotate }) => {
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await annotate('select second item');
-  await userEvent.click(secondItem);
+  await firePointer(secondItem);
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await annotate('select third item');
-  await userEvent.click(thirdItem);
+  await firePointer(thirdItem);
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');

@@ -1,8 +1,9 @@
 import { expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { ItemEmitStrategy, Listbox } from '#src';
 import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('ItemEmitter', async ({ annotate }) => {
   const list = createListWithFruits();
@@ -22,13 +23,13 @@ test('ItemEmitter', async ({ annotate }) => {
 
   const selectSpy = vi.spyOn(listeners, 'select');
 
-  await userEvent.click(secondItem);
+  await firePointer(secondItem);
   expect(selectSpy).toHaveBeenCalledWith([secondItem]);
 
   await annotate('emits active item');
 
   const activateItemSpy = vi.spyOn(listeners, 'activateItem');
 
-  await userEvent.click(thirdItem);
+  await firePointer(thirdItem);
   expect(activateItemSpy).toHaveBeenCalledWith(thirdItem);
 });

@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Select with `ArrowDown`', async ({ annotate }) => {
   const { tablist, tabs } = createTabs();
@@ -19,7 +20,7 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowDown` key to activate second item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
 
@@ -28,7 +29,7 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowDown` key to activate third item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
@@ -37,8 +38,8 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowDown` key at the last item does nothing');
-  await userEvent.keyboard('{End}');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'End');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
 
@@ -66,7 +67,7 @@ test('select with `ArrowDown`, skipping disabled items', async ({ annotate }) =>
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowDown` key to activate second item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
 
@@ -75,7 +76,7 @@ test('select with `ArrowDown`, skipping disabled items', async ({ annotate }) =>
   }
 
   await annotate('use `ArrowDown` key to activate fourth item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(tablist, 'ArrowDown');
 
   await expect.element(fourthItem).toHaveAttribute('aria-selected', 'true');
 

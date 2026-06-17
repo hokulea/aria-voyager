@@ -1,20 +1,21 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
+
+import { fireHover } from '#tests/test-support/events';
 
 test('Pointer leaving menu clears active item', async ({ annotate }) => {
   const { codeMenu, triggerButton } = createCodeMenuWithTriggerButton();
   const menu = new Menu(codeMenu);
   const { firstItem, secondItem } = getItems(menu);
 
-  await userEvent.click(triggerButton);
+  triggerButton.click();
 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
   await annotate('hover item to make it active');
-  await userEvent.hover(secondItem);
+  await fireHover(secondItem);
 
   expect(menu.activeItem).toBe(secondItem);
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
@@ -34,14 +35,14 @@ test('Pointer leaving menu closes open submenus', async ({ annotate }) => {
   const menu = new Menu(codeMenu);
   const { fourthItem } = getItems(menu);
 
-  await userEvent.click(triggerButton);
+  triggerButton.click();
 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
   await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
   await annotate('hover share item to open submenu');
-  await userEvent.hover(fourthItem);
+  await fireHover(fourthItem);
 
   await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
 
@@ -63,16 +64,17 @@ test('Clicking menu item works after hover', async ({ annotate }) => {
     clicked = true;
   });
 
-  await userEvent.click(triggerButton);
+  triggerButton.click();
 
   await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
   await annotate('hover and click item fires click handler');
-  await userEvent.hover(firstItem);
+  await fireHover(firstItem);
 
   expect(menu.activeItem).toBe(firstItem);
 
-  await userEvent.click(firstItem);
+  firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  firstItem.click();
 
   expect(clicked).toBe(true);
 });

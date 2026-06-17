@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Open with `ArrowRight`', async ({ annotate }) => {
   const { codeMenu, shareMenu } = createCodeMenu();
@@ -17,13 +18,13 @@ test('Open with `ArrowRight`', async ({ annotate }) => {
   expect(document.activeElement).toBe(firstItem);
 
   await annotate('use `ArrowRight` to open submenu');
-  await userEvent.keyboard('{ArrowDown}');
-  await userEvent.keyboard('{ArrowDown}');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(firstItem, 'ArrowDown');
+  await fireKey(firstItem, 'ArrowDown');
+  await fireKey(firstItem, 'ArrowDown');
   await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 
-  await userEvent.keyboard('{ArrowRight}');
+  await fireKey(fourthItem, 'ArrowRight');
   await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
   await expect.element(shareFirstItem).toHaveAttribute('tabindex', '0');
-  expect(document.activeElement).toBe(shareFirstItem);
+  await expect.poll(() => document.activeElement).toBe(shareFirstItem);
 });

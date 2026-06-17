@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits } from '#tests/listbox/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('use `Meta` + `A` key to select all items', async () => {
   const list = createMultiSelectListWithFruits();
@@ -13,7 +14,7 @@ test('use `Meta` + `A` key to select all items', async () => {
   }
 
   list.focus();
-  await userEvent.keyboard('{Meta>}a');
+  await fireKey(list, 'a', { metaKey: true });
 
   for (const item of listbox.items) {
     await expect.element(item).toHaveAttribute('aria-selected', 'true');

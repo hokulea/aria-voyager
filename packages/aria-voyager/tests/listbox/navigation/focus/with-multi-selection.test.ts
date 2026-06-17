@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { blurControl, firePointer, focusControl } from '#tests/test-support/events';
 
 test('Focus activates first item of selection (Multi Select)', async ({ annotate }) => {
   const list = createMultiSelectListWithFruits();
@@ -11,12 +12,10 @@ test('Focus activates first item of selection (Multi Select)', async ({ annotate
 
   await annotate('select two items');
 
-  const user = userEvent.setup();
-
-  await user.click(secondItem);
-  await user.keyboard('{Shift>}');
-  await user.click(thirdItem);
-  await user.keyboard('{/Shift}');
+  await focusControl(secondItem);
+  await firePointer(secondItem);
+  await focusControl(thirdItem);
+  await firePointer(thirdItem, { shiftKey: true });
 
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
@@ -28,8 +27,8 @@ test('Focus activates first item of selection (Multi Select)', async ({ annotate
   }
 
   await annotate('refocus keeps selection');
-  await userEvent.tab();
-  await userEvent.tab({ shift: true });
+  await focusControl(list);
+  await blurControl(list);
 
   expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
   await expect.element(firstItem).not.toHaveAttribute('aria-current');

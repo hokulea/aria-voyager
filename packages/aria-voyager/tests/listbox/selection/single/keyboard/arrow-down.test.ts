@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Select with `ArrowDown`', async ({ annotate }) => {
   const list = createListWithFruits();
@@ -16,19 +17,19 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await annotate('use `ArrowDown` key to select second item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(list, 'ArrowDown');
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
   await annotate('use `ArrowDown` key to select third item');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(list, 'ArrowDown');
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
   await annotate('use `ArrowDown` key, but keep third item selected (hit end of list)');
-  await userEvent.keyboard('{ArrowDown}');
+  await fireKey(list, 'ArrowDown');
   await expect.element(firstItem).not.toHaveAttribute('aria-selected');
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');

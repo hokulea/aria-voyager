@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('Use pointer to activate items', async ({ annotate }) => {
   const { tabs } = createTabs();
@@ -16,7 +17,7 @@ test('Use pointer to activate items', async ({ annotate }) => {
   expect(tabs.activeItem).toBeTruthy();
 
   await annotate('select second item');
-  await userEvent.click(secondItem);
+  await firePointer(secondItem);
 
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
@@ -25,7 +26,7 @@ test('Use pointer to activate items', async ({ annotate }) => {
   }
 
   await annotate('select third item');
-  await userEvent.click(thirdItem);
+  await firePointer(thirdItem);
 
   await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
 

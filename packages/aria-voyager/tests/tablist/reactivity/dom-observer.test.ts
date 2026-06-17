@@ -1,8 +1,9 @@
 import { expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { appendTab, getItems } from '#tests/components/tabs';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('DOM Observer', async ({ annotate }) => {
   const { container, tablist, tabs } = createTabs();
@@ -56,7 +57,7 @@ test('DOM Observer', async ({ annotate }) => {
   expect(tabs.options.orientation).toBe('horizontal');
 
   await annotate('sets tabindex to -1 when the aria-disabled is `true`');
-  await userEvent.click(firstItem);
+  await firePointer(firstItem);
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 

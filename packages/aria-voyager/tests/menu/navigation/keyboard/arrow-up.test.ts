@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
+
+import { fireKey } from '#tests/test-support/events';
 
 test('Navigate with `ArrowUp`', async ({ annotate }) => {
   const { codeMenu } = createCodeMenu();
@@ -18,7 +19,7 @@ test('Navigate with `ArrowUp`', async ({ annotate }) => {
   firstItem.focus();
 
   await annotate('use `ArrowUp` at first item does nothing');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(codeMenu, 'ArrowUp');
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
@@ -27,7 +28,7 @@ test('Navigate with `ArrowUp`', async ({ annotate }) => {
   }
 
   await annotate('use `END` to jump to the last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(codeMenu, 'End');
 
   await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
@@ -36,7 +37,7 @@ test('Navigate with `ArrowUp`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate second last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(codeMenu, 'ArrowUp');
 
   await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
@@ -45,7 +46,7 @@ test('Navigate with `ArrowUp`', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate third last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(codeMenu, 'ArrowUp');
 
   await expect.element(thirdLastItem).toHaveAttribute('tabindex', '0');
 
@@ -72,7 +73,7 @@ test('navigate with `ArrowUp`, skip disabled items', async ({ annotate }) => {
   firstItem.focus();
 
   await annotate('use `END` to jump to the last item');
-  await userEvent.keyboard('{End}');
+  await fireKey(codeMenu, 'End');
 
   await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
@@ -81,7 +82,7 @@ test('navigate with `ArrowUp`, skip disabled items', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate second last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(codeMenu, 'ArrowUp');
 
   await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
@@ -90,7 +91,7 @@ test('navigate with `ArrowUp`, skip disabled items', async ({ annotate }) => {
   }
 
   await annotate('use `ArrowUp` key to activate fourth last item');
-  await userEvent.keyboard('{ArrowUp}');
+  await fireKey(codeMenu, 'ArrowUp');
 
   await expect.element(fourthLastItem).toHaveAttribute('tabindex', '0');
 

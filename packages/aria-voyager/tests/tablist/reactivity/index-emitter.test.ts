@@ -1,8 +1,9 @@
 import { expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { IndexEmitStrategy } from '#src';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
+
+import { firePointer } from '#tests/test-support/events';
 
 test('IndexEmitter', async ({ annotate }) => {
   const { tabs } = createTabs();
@@ -21,7 +22,7 @@ test('IndexEmitter', async ({ annotate }) => {
 
   const selectSpy = vi.spyOn(listeners, 'select');
 
-  await userEvent.click(secondItem);
+  await firePointer(secondItem);
 
   expect(selectSpy).toHaveBeenCalledWith([1]);
 
@@ -29,7 +30,7 @@ test('IndexEmitter', async ({ annotate }) => {
 
   const activateItemSpy = vi.spyOn(listeners, 'activateItem');
 
-  await userEvent.click(thirdItem);
+  await firePointer(thirdItem);
 
   expect(activateItemSpy).toHaveBeenCalledWith(2);
 });
