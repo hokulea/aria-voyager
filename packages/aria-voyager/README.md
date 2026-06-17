@@ -29,6 +29,43 @@ pnpm add aria-voyager
 
 ### Controls
 
+#### `Group`
+
+Bring your own markup in at first, here is an example markup for a group:
+
+```html
+<div role="group">
+  <button type="button">Cut</button>
+  <button type="button">Copy</button>
+  <button type="button">Paste</button>
+</div>
+```
+
+To make it interactive, create a new `Group` instance pointing it at your element.
+
+```ts
+import { Group } from 'aria-voyager';
+
+const groupElement = document.querySelector('[role="group"]');
+new Group(groupElement);
+```
+
+That is already enough to start making your group interactive. It will read
+the focusable children from the provided HTML and set up roving tabindex.
+
+`Group` accepts options as second parameter:
+
+```ts
+import type { EmitStrategy, UpdateStrategy } from 'aria-voyager';
+
+interface GroupOptions {
+  updater?: UpdateStrategy;
+  emitter?: EmitStrategy;
+}
+```
+
+See [updater](#updater) and [emitter](#emitter).
+
 #### `Listbox`
 
 Bring your own markup in at first, here is an example markup for a list:

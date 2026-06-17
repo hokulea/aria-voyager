@@ -26,6 +26,57 @@ pnpm add ember-aria-voyager
 
 ## Usage
 
+### `{{ariaGroup}}`
+
+Basic example:
+
+```glimmer-ts
+import { ariaGroup } from 'ember-aria-voyager';
+
+<template>
+  <div role="group" {{ariaGroup}}>
+    <button type="button">Cut</button>
+    <button type="button">Copy</button>
+    <button type="button">Paste</button>
+  </div>
+</template>
+```
+
+Here are the options, you can pass to `{{ariaGroup}}`
+
+```ts
+interface GroupSignature<T> {
+  Element: HTMLElement;
+  Args: {
+    Positional: [];
+    Named: {
+      items?: T[];
+      disabled?: boolean;
+    };
+  };
+}
+```
+
+Full example with reactive items:
+
+```glimmer-ts
+import { ariaGroup } from 'ember-aria-voyager';
+import { tracked } from '@glimmer/tracking';
+
+const context = new class {
+  @tracked items = ['Cut', 'Copy', 'Paste'];
+  @tracked disabled = false;
+};
+
+<template>
+  <div role="group" {{ariaGroup items=context.items disabled=context.disabled}}>
+    {{#each context.items as |item|}}
+      <button type="button">{{item}}</button>
+    {{/each}}
+  </div>
+</template>
+```
+
 ### `{{ariaListbox}}`
 
 Basic example:
