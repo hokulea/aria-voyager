@@ -46,7 +46,7 @@ describe('Navigates with `Home` and `End`, skip disabled items', () => {
   });
 
   test('start', async () => {
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
     await expect.element(ctx.lastItem).toHaveAttribute('tabindex', '-1');
 
     expect(ctx.menu.activeItem).toBeUndefined();
