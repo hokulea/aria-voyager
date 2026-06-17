@@ -29,7 +29,13 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: 'istanbul',
-      reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
+      reporter: [
+        'text',
+        'html',
+        ['lcov', { projectRoot: '../../' }],
+        'json',
+        ...(process.env.GITHUB_ACTIONS === 'true' ? ['github-actions'] : [])
+      ]
     },
     fileParallelism: !process.env.CI,
     browser: {
