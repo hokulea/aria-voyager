@@ -5,7 +5,7 @@ import Modifier from 'ember-modifier';
 import { isEqual } from 'es-toolkit/predicate';
 
 import type Owner from '@ember/owner';
-import type { EmitStrategy, RadioNavigationBehavior } from 'aria-voyager';
+import type { EmitStrategy } from 'aria-voyager';
 import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
 
 export interface RadioGroupSignature<T> {
@@ -15,7 +15,6 @@ export interface RadioGroupSignature<T> {
     Named: {
       items?: T[];
       select?: (selection: HTMLElement) => void;
-      behavior?: RadioNavigationBehavior;
       disabled?: boolean;
     };
   };
@@ -46,8 +45,7 @@ export default class RadioGroupModifier<T> extends Modifier<RadioGroupSignature<
       this.updater = new ReactiveUpdateStrategy();
 
       this.radioGroup = new RadioGroup(element as HTMLElement, {
-        updater: this.updater,
-        behavior: options.behavior
+        updater: this.updater
       });
     }
 

@@ -8,15 +8,11 @@ import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-s
 import { Control } from './control';
 
 import type { EmitStrategy } from '../emit-strategies/emit-strategy';
-import type { RadioNavigationBehavior } from '../navigation-patterns/radio-navigation';
 import type { UpdateStrategy } from '../update-strategies/update-strategy';
-
-export type RadioGroupBehavior = RadioNavigationBehavior;
 
 export interface RadioGroupOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
-  behavior?: RadioGroupBehavior;
 }
 
 export class RadioGroup extends Control {
@@ -41,7 +37,7 @@ export class RadioGroup extends Control {
     });
 
     this.#radioNavigation = new RadioNavigation(this, {
-      behavior: options.behavior ?? { singleSelection: 'automatic' }
+      behavior: { singleSelection: 'automatic' }
     });
 
     this.registerNavigationPatterns([

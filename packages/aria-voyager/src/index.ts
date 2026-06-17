@@ -4,7 +4,7 @@ export { Control } from './controls/control';
 export { Group } from './controls/group';
 export { Listbox } from './controls/listbox';
 export { Menu } from './controls/menu';
-export type { RadioGroupBehavior, RadioGroupOptions } from './controls/radio-group';
+export type { RadioGroupOptions } from './controls/radio-group';
 export { RadioGroup } from './controls/radio-group';
 export type { TablistBehavior, TablistOptions } from './controls/tablist';
 export { Tablist } from './controls/tablist';
