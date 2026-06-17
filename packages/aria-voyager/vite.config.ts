@@ -16,6 +16,11 @@ export default defineConfig({
       formats: ['es', 'cjs']
     }
   },
+  optimizeDeps: {
+    // Force re-bundling of dependencies on every run, ignoring cache
+    // This prevents stale cache from causing test failures
+    // force: true
+  },
   test: {
     retry: 1,
     testTimeout: 5000,
@@ -25,7 +30,7 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
-    fileParallelism: false,
+    fileParallelism: true,
     browser: {
       enabled: true,
       headless: true,
@@ -37,13 +42,9 @@ export default defineConfig({
         // }
       }),
       instances: [
-        // { browser: 'firefox' }
-        // {
-        //   browser: 'firefox'
-        //   // launch: { slowMo: 100 }
-        // }
+        { browser: 'firefox' },
         // tests are flaky in playwright + chromium/webkit
-        { browser: 'chromium' }
+        // { browser: 'chromium' }
         // { browser: 'webkit' }
       ]
     }
