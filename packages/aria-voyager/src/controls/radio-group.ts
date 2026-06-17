@@ -1,23 +1,23 @@
-import { getGroupChildren } from '#src/controls/-roles.js';
-import { PointerNavigation } from '#src/navigation-patterns/pointer-navigation.js';
-import { RovingTabindexStrategy } from '#src/navigation-patterns/roving-tabindex-strategy.js';
-
 import { EndNavigation } from '../navigation-patterns/end-navigation';
 import { HomeNavigation } from '../navigation-patterns/home-navigation';
 import { NextNavigation } from '../navigation-patterns/next-navigation';
+import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
+import { RadioNavigation } from '../navigation-patterns/radio-navigation';
+import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
 import { Control } from './control';
 
-import type { EmitStrategy } from '#src/emit-strategies/emit-strategy.js';
-import type { UpdateStrategy } from '#src/update-strategies/update-strategy.js';
+import type { EmitStrategy } from '../emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '../update-strategies/update-strategy';
 
-interface GroupOptions {
+export interface RadioGroupOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
 }
 
-export class Group extends Control {
+export class RadioGroup extends Control {
   focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+  #radioNavigation: RadioNavigation;
 
   get activeItem() {
     return this.focusStrategy.activeItem;
@@ -27,8 +27,18 @@ export class Group extends Control {
     return this.focusStrategy.prevActiveItem;
   }
 
-  constructor(element: HTMLElement, options: GroupOptions = {}) {
-    super(element, options);
+  constructor(element: HTMLElement, options: RadioGroupOptions = {}) {
+    super(element, {
+      capabilities: {
+        singleSelection: true,
+        multiSelection: false
+      },
+      ...options
+    });
+
+    this.#radioNavigation = new RadioNavigation(this, {
+      behavior: { singleSelection: 'automatic' }
+    });
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
@@ -36,11 +46,12 @@ export class Group extends Control {
       new HomeNavigation(this),
       new EndNavigation(this),
       new PointerNavigation(this),
-      this.focusStrategy
+      this.focusStrategy,
+      this.#radioNavigation
     ]);
 
     // setup
-    element.role = 'group';
+    element.role = 'radiogroup';
 
     this.readOptions();
     this.readItems();
@@ -51,7 +62,9 @@ export class Group extends Control {
   }
 
   readItems() {
-    this.items = getGroupChildren(this.element);
+    this.items = [...this.element.querySelectorAll<HTMLElement>(':scope [role="radio"]')];
+
+    this.#radioNavigation.updateItems();
 
     this.focusStrategy.updateItems();
   }

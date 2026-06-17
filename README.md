@@ -108,6 +108,30 @@ apply styling, it will operate on the accessibility tree.
       ✅ <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/#keyboardinteraction">Manual (with spacebar) / Automatic Selection</a><br>
     </td>
   </tr>
+  <tr>
+    <th colspan="3">
+      Role:
+      <a href="https://www.w3.org/TR/wai-aria-1.2/#radiogroup" target="_blank"><code>radiogroup</code></a><br>
+      Focus Strategy:
+      <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex" target="_blank">Roving <code>tabindex</code></a>
+    </th>
+  </tr>
+  <tr style="vertical-align: top">
+    <td>
+      ✅ <code>ArrowUp</code> / <code>ArrowLeft</code> (prev)<br>
+      ✅ <code>ArrowDown</code> / <code>ArrowRight</code> (next)<br>
+      ✅ <code>Home</code> (first)<br>
+      ✅ <code>End</code> (last)<br>
+      ✅ Pointer Navigation
+    </td>
+    <td>
+      ✅ Disabled<br>
+      ✅ Selection (via <code>aria-checked</code>)<br>
+    </td>
+    <td>
+      -
+    </td>
+  </tr>
 </tbody>
 </table>
 

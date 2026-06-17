@@ -199,6 +199,61 @@ interface TablistSignature<T> {
 
 When passing `items` the `select()` and `selection` can work off of your passed items, anyway will fall back to the HTMLElement
 
+### `{{ariaRadioGroup}}`
+
+Basic example:
+
+```glimmer-ts
+import { ariaRadioGroup } from 'ember-aria-voyager';
+
+<template>
+  <div role="radiogroup" {{ariaRadioGroup}}>
+    <button type="button" role="radio" aria-checked="false">Top</button>
+    <button type="button" role="radio" aria-checked="false">Bottom</button>
+    <button type="button" role="radio" aria-checked="false">Left</button>
+  </div>
+</template>
+```
+
+Here are the options, you can pass to `{{ariaRadioGroup}}`
+
+```ts
+interface RadioGroupSignature<T> {
+  Element: HTMLElement;
+  Args: {
+    Positional: [];
+    Named: {
+      items?: T[];
+      select?: (selection: HTMLElement) => void;
+      disabled?: boolean;
+    };
+  };
+}
+```
+
+Full example with selection callback:
+
+```glimmer-ts
+import { ariaRadioGroup } from 'ember-aria-voyager';
+import { tracked } from '@glimmer/tracking';
+
+const context = new class {
+  @tracked selected?: HTMLElement;
+
+  select = (item: HTMLElement) => {
+    this.selected = item;
+  };
+};
+
+<template>
+  <div role="radiogroup" {{ariaRadioGroup select=context.select}}>
+    <button type="button" role="radio" aria-checked="false">Top</button>
+    <button type="button" role="radio" aria-checked="false">Bottom</button>
+    <button type="button" role="radio" aria-checked="false">Left</button>
+  </div>
+</template>
+```
+
 ## Use in Classic Apps
 
 `ember-aria-voyager` is primed to be used with polaris edition of ember using

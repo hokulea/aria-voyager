@@ -155,6 +155,45 @@ interface TablistOptions {
 
 See [updater](#updater) and [emitter](#emitter).
 
+#### `RadioGroup`
+
+Bring your own markup in at first, here is an example markup for a radio group:
+
+```html
+<div role="radiogroup">
+  <button type="button" role="radio" aria-checked="false">Top</button>
+  <button type="button" role="radio" aria-checked="false">Bottom</button>
+  <button type="button" role="radio" aria-checked="false">Left</button>
+  <button type="button" role="radio" aria-checked="false">Right</button>
+</div>
+```
+
+To make it interactive, create a new `RadioGroup` instance pointing it at your element.
+
+```ts
+import { RadioGroup } from 'aria-voyager';
+
+const radioGroupElement = document.querySelector('[role="radiogroup"]');
+new RadioGroup(radioGroupElement);
+```
+
+That is already enough to start making your radio group interactive. It will read
+the options from the provided HTML and ensure exactly one radio is checked.
+
+`RadioGroup` accepts options as second parameter:
+
+```ts
+import type { EmitStrategy, UpdateStrategy, RadioNavigationBehavior } from 'aria-voyager';
+
+interface RadioGroupOptions {
+  updater?: UpdateStrategy;
+  emitter?: EmitStrategy;
+  behavior?: RadioNavigationBehavior;
+}
+```
+
+See [updater](#updater) and [emitter](#emitter).
+
 ### Strategies
 
 `aria-voyager` supports the concept of input (updater) and output (emitter)
