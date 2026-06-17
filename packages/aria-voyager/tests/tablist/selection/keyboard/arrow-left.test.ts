@@ -1,108 +1,98 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('Select with `ArrowLeft`', () => {
-  const { tabs } = createTabs();
-  const { firstItem, secondLastItem, thirdLastItem, lastItem } = getTabItems(tabs);
+import { fireKey } from '#tests/test-support/events';
 
-  test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+test('Select with `ArrowLeft`', async ({ annotate }) => {
+  const { tablist, tabs } = createTabs();
+  const { firstItem, lastItem, secondLastItem, thirdLastItem } = getTabItems(tabs);
 
-    for (const item of tabs.items.slice(1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
-  });
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-  test('use `ArrowUp` at first item does nothing', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
+  firstItem.focus();
+  expect(document.activeElement).toBe(firstItem);
 
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await annotate('use `ArrowUp` at first item does nothing');
+  await fireKey(tablist, 'ArrowLeft');
 
-    for (const item of tabs.items.slice(1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
 
-  test('use `END` to jump to the last item', async () => {
-    await userEvent.keyboard('{End}');
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
+  await annotate('use `END` to jump to the last item');
+  await fireKey(tablist, 'End');
 
-    for (const item of tabs.items.slice(0, -1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
 
-  test('use `ArrowUp` key to activate second last item', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
+  for (const item of tabs.items.slice(0, -1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
+  await annotate('use `ArrowUp` key to activate second last item');
+  await fireKey(tablist, 'ArrowLeft');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
 
-  test('use `ArrowUp` key to activate third last item', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
+  for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    await expect.element(thirdLastItem).toHaveAttribute('aria-selected', 'true');
+  await annotate('use `ArrowUp` key to activate third last item');
+  await fireKey(tablist, 'ArrowLeft');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(thirdLastItem))) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  await expect.element(thirdLastItem).toHaveAttribute('aria-selected', 'true');
+
+  for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(thirdLastItem))) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 });
 
-describe('select with `ArrowLeft`, skipping disabled items', () => {
-  const { tabs } = createTabs();
-  const { firstItem, fourthLastItem, secondLastItem, thirdLastItem, lastItem } = getTabItems(tabs);
+test('select with `ArrowLeft`, skipping disabled items', async ({ annotate }) => {
+  const { tablist, tabs } = createTabs();
+  const { firstItem, lastItem, secondLastItem, thirdLastItem, fourthLastItem } = getTabItems(tabs);
 
   thirdLastItem.setAttribute('aria-disabled', 'true');
 
-  test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
-  });
+  firstItem.focus();
+  expect(document.activeElement).toBe(firstItem);
 
-  test('use `END` to jump to the last item', async () => {
-    await userEvent.keyboard('{End}');
+  await annotate('use `END` to jump to the last item');
+  await fireKey(tablist, 'End');
 
-    await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(0, -1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  for (const item of tabs.items.slice(0, -1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-  test('use `ArrowLeft` key to activate second last item', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
+  await annotate('use `ArrowLeft` key to activate second last item');
+  await fireKey(tablist, 'ArrowLeft');
 
-    await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-  test('use `ArrowLeft` key to activate fourth last item', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
+  await annotate('use `ArrowLeft` key to activate fourth last item');
+  await fireKey(tablist, 'ArrowLeft');
 
-    await expect.element(fourthLastItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(fourthLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(fourthLastItem))) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(fourthLastItem))) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 });

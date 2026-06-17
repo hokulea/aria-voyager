@@ -1,36 +1,34 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Close with `Escape`', () => {
-  const { codeMenu, shareMenu } = createCodeMenu();
+import { fireKey } from '#tests/test-support/events';
 
+test('Close with `Escape`', async ({ annotate }) => {
+  const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
   const share = new Menu(shareMenu);
-  const codeItem = share.items[0];
   const { firstItem, fourthItem } = getItems(menu);
+  const { firstItem: shareFirstItem } = getItems(share);
 
-  test('start', async () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    firstItem.focus();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowRight}');
+  firstItem.focus();
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    expect(document.activeElement).toBe(codeItem);
-  });
+  await fireKey(codeMenu, 'ArrowDown');
+  await fireKey(codeMenu, 'ArrowDown');
+  await fireKey(codeMenu, 'ArrowDown');
+  await fireKey(codeMenu, 'ArrowRight');
 
-  test('use `Escape` to close submenu', async () => {
-    await userEvent.keyboard('{Escape}');
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
+  await expect.element(shareFirstItem).toHaveAttribute('tabindex', '0');
+  await expect.poll(() => document.activeElement).toBe(shareFirstItem);
 
-    shareMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(document.activeElement).toBe(fourthItem);
-  });
+  await annotate('use `Escape` to close submenu');
+  await fireKey(shareMenu, 'Escape');
+
+  shareMenu.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => document.activeElement).toBe(fourthItem);
 });

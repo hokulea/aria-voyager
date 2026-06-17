@@ -1,27 +1,24 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Listbox } from '#src';
 import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
-describe('Select last item with `End` key', () => {
+import { fireKey } from '#tests/test-support/events';
+
+test('Select last item with `End` key', async ({ annotate }) => {
   const list = createListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('focus list to select first item', async () => {
-    list.focus();
+  await annotate('focus list to select first item');
+  list.focus();
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
-  });
-
-  test('use `End` to select last item', async () => {
-    await userEvent.keyboard('{End}');
-
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await annotate('use `End` to select last item');
+  await fireKey(list, 'End');
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

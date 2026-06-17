@@ -1,35 +1,32 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Close with `ArrowLeft`', () => {
+import { fireKey } from '#tests/test-support/events';
+
+test('Close with `ArrowLeft`', async ({ annotate }) => {
   const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
   const share = new Menu(shareMenu);
-  const codeItem = share.items[0];
   const { firstItem, fourthItem } = getItems(menu);
+  const { firstItem: shareFirstItem } = getItems(share);
 
-  test('open share menu', async () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-    firstItem.focus();
+  firstItem.focus();
 
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowRight}');
-    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    expect(document.activeElement).toBe(codeItem);
-  });
+  await fireKey(codeMenu, 'ArrowDown');
+  await fireKey(codeMenu, 'ArrowDown');
+  await fireKey(codeMenu, 'ArrowDown');
+  await fireKey(codeMenu, 'ArrowRight');
+  await expect.element(shareFirstItem).toHaveAttribute('tabindex', '0');
+  await expect.poll(() => document.activeElement).toBe(shareFirstItem);
 
-  test('use `ArrowLeft` to close submenu', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await annotate('use `ArrowLeft` to close submenu');
+  await fireKey(shareMenu, 'ArrowLeft');
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-  test('has focus moved to the trigger of the submenu', () => {
-    expect(document.activeElement).toBe(fourthItem);
-  });
+  await annotate('has focus moved to the trigger of the submenu');
+  await expect.poll(() => document.activeElement).toBe(fourthItem);
 });

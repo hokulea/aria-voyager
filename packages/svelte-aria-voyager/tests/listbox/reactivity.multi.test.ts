@@ -26,7 +26,7 @@ describe('Reactivity: multi', () => {
     expect(list).not.toHaveAttribute('aria-multiselectable');
 
     await userEvent.click(last);
-    expect(handleUpdate).toBeCalledWith('Pear');
+    expect(handleUpdate).toHaveBeenCalledWith('Pear');
 
     await screen.rerender({
       multi: true
@@ -36,13 +36,13 @@ describe('Reactivity: multi', () => {
 
     await userEvent.click(first);
 
-    expect(handleUpdate).toBeCalledWith(['Banana']);
+    expect(handleUpdate).toHaveBeenCalledWith(['Banana']);
 
     await userEvent.keyboard('{Meta>}');
     await userEvent.click(second);
     await userEvent.keyboard('{/Meta}');
 
-    expect(handleUpdate).toBeCalledWith(['Banana', 'Apple']);
+    expect(handleUpdate).toHaveBeenCalledWith(['Banana', 'Apple']);
 
     await screen.rerender({
       multi: false
@@ -51,6 +51,6 @@ describe('Reactivity: multi', () => {
     expect(list).not.toHaveAttribute('aria-multiselectable');
 
     await userEvent.click(last);
-    expect(handleUpdate).toBeCalledWith('Pear');
+    expect(handleUpdate).toHaveBeenCalledWith('Pear');
   });
 });

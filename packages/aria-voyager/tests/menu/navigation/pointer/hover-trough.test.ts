@@ -1,47 +1,30 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Hover through items opens and closes submenus', () => {
+test('Hover through items opens and closes submenus', async ({ annotate }) => {
   const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
   const { thirdItem, fourthItem, fifthItem } = getItems(menu);
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-  test('hover third item', async () => {
-    // does not work under playwright
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(thirdItem);
+  await annotate('hover third item');
+  thirdItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    thirdItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  await expect.element(thirdItem).toHaveFocus();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-    await expect.element(thirdItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await annotate('hover forth item opens its submenu');
+  fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-  test('hover forth item opens its submenu', async () => {
-    // does not work under playwright
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(fourthItem);
+  await expect.element(fourthItem).toHaveFocus();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
 
-    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  await annotate('hover fifth item closes previous submenu');
+  fifthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    await expect.element(fourthItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-  });
-
-  test('hover fifth item closes previous submenu', async () => {
-    // does not work under playwright
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(fifthItem);
-
-    fifthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-
-    await expect.element(fifthItem).toHaveFocus();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await expect.element(fifthItem).toHaveFocus();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 });

@@ -16,9 +16,16 @@ export default defineConfig({
       formats: ['es', 'cjs']
     }
   },
+  optimizeDeps: {
+    // Force re-bundling of dependencies on every run, ignoring cache
+    // This prevents stale cache from causing test failures
+    // force: true
+  },
   test: {
-    retry: 2,
+    setupFiles: ['./tests/setup.ts'],
+    retry: 1,
     testTimeout: 5000,
+    isolate: true,
     coverage: {
       enabled: true,
       provider: 'istanbul',
@@ -29,21 +36,8 @@ export default defineConfig({
       enabled: true,
       headless: true,
       screenshotFailures: false,
-      provider: playwright({
-        launchOptions: {
-          slowMo: 100
-        }
-      }),
-      instances: [
-        { browser: 'firefox' }
-        // {
-        //   browser: 'firefox'
-        //   // launch: { slowMo: 100 }
-        // }
-        // tests are flaky in playwright + chromium/webkit
-        // { browser: 'chromium' }
-        // { browser: 'webkit' }
-      ]
+      provider: playwright(),
+      instances: [{ browser: 'firefox' }, { browser: 'chromium' }, { browser: 'webkit' }]
     }
   }
 });

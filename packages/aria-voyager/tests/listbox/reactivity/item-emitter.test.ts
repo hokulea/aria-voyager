@@ -1,15 +1,14 @@
-import { describe, expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test, vi } from 'vitest';
 
 import { ItemEmitStrategy, Listbox } from '#src';
-import { createListWithFruits } from '#tests/listbox/-shared';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
-describe('ItemEmitter', () => {
+import { firePointer } from '#tests/test-support/events';
+
+test('ItemEmitter', async ({ annotate }) => {
   const list = createListWithFruits();
   const listbox = new Listbox(list);
-
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
+  const { secondItem, thirdItem } = getItems(listbox);
 
   const listeners = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -20,19 +19,17 @@ describe('ItemEmitter', () => {
 
   new ItemEmitStrategy(listbox, listeners);
 
-  test('emits selection', async () => {
-    const selectSpy = vi.spyOn(listeners, 'select');
+  await annotate('emits selection');
 
-    await userEvent.click(secondItem);
+  const selectSpy = vi.spyOn(listeners, 'select');
 
-    expect(selectSpy).toHaveBeenCalledWith([secondItem]);
-  });
+  await firePointer(secondItem);
+  expect(selectSpy).toHaveBeenCalledWith([secondItem]);
 
-  test('emits active item', async () => {
-    const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+  await annotate('emits active item');
 
-    await userEvent.click(thirdItem);
+  const activateItemSpy = vi.spyOn(listeners, 'activateItem');
 
-    expect(activateItemSpy).toHaveBeenCalledWith(thirdItem);
-  });
+  await firePointer(thirdItem);
+  expect(activateItemSpy).toHaveBeenCalledWith(thirdItem);
 });

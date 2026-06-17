@@ -1,10 +1,11 @@
-import { describe, expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test, vi } from 'vitest';
 
 import { IndexEmitStrategy } from '#src';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('IndexEmitter', () => {
+import { firePointer } from '#tests/test-support/events';
+
+test('IndexEmitter', async ({ annotate }) => {
   const { tabs } = createTabs();
   const { secondItem, thirdItem } = getTabItems(tabs);
 
@@ -17,19 +18,19 @@ describe('IndexEmitter', () => {
 
   new IndexEmitStrategy(tabs, listeners);
 
-  test('emits selection', async () => {
-    const selectSpy = vi.spyOn(listeners, 'select');
+  await annotate('emits selection');
 
-    await userEvent.click(secondItem);
+  const selectSpy = vi.spyOn(listeners, 'select');
 
-    expect(selectSpy).toHaveBeenCalledWith([1]);
-  });
+  await firePointer(secondItem);
 
-  test('emits active item', async () => {
-    const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+  expect(selectSpy).toHaveBeenCalledWith([1]);
 
-    await userEvent.click(thirdItem);
+  await annotate('emits active item');
 
-    expect(activateItemSpy).toHaveBeenCalledWith(2);
-  });
+  const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+
+  await firePointer(thirdItem);
+
+  expect(activateItemSpy).toHaveBeenCalledWith(2);
 });

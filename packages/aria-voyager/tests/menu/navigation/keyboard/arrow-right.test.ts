@@ -1,32 +1,30 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Open with `ArrowRight`', () => {
+import { fireKey } from '#tests/test-support/events';
+
+test('Open with `ArrowRight`', async ({ annotate }) => {
   const { codeMenu, shareMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
-  const { firstItem, fourthItem } = getItems(menu);
   const share = new Menu(shareMenu);
-  const codeItem = share.items[0];
+  const { firstItem, fourthItem } = getItems(menu);
+  const { firstItem: shareFirstItem } = getItems(share);
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
-  });
+  firstItem.focus();
+  expect(document.activeElement).toBe(firstItem);
 
-  test('use `ArrowRight` to open submenu', async () => {
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
+  await annotate('use `ArrowRight` to open submenu');
+  await fireKey(firstItem, 'ArrowDown');
+  await fireKey(firstItem, 'ArrowDown');
+  await fireKey(firstItem, 'ArrowDown');
+  await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 
-    await userEvent.keyboard('{ArrowRight}');
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    expect(document.activeElement).toBe(codeItem);
-  });
+  await fireKey(fourthItem, 'ArrowRight');
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
+  await expect.element(shareFirstItem).toHaveAttribute('tabindex', '0');
+  await expect.poll(() => document.activeElement).toBe(shareFirstItem);
 });

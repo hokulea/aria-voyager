@@ -1,41 +1,32 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Menu } from '#src';
 import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Invoking a menu item closes all submenus', () => {
+import { fireHover, fireKey } from '#tests/test-support/events';
+
+test('Invoking a submenu item closes all submenus', async ({ annotate }) => {
   const { codeMenu, shareMenu, socialMenu } = createCodeMenu();
   const menu = new Menu(codeMenu);
-  const { fourthItem } = getItems(menu);
   const share = new Menu(shareMenu);
-  const socialItem = share.items[1];
   const social = new Menu(socialMenu);
-  const mastodonItem = social.items[1];
+  const { fourthItem } = getItems(menu);
+  const { secondItem: shareSecondItem } = getItems(share);
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 
-  test('open submenus', () => {
-    // does not work under playwright
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(fourthItem);
-    // await userEvent.hover(socialItem);
+  await annotate('open submenus');
+  fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-    socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(true);
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(socialMenu.matches(':popover-open')).toBeTruthy();
-  });
+  await annotate('use `Enter` on a menu item closes all submenus');
+  await fireHover(social.items[1]);
+  await fireKey(socialMenu, 'Enter');
 
-  test('use `Enter` on a menu item closes all submenus', async () => {
-    await userEvent.hover(mastodonItem);
-    await userEvent.keyboard('{Enter}');
-
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 });

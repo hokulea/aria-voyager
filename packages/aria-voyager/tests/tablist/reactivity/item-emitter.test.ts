@@ -1,10 +1,11 @@
-import { describe, expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test, vi } from 'vitest';
 
 import { ItemEmitStrategy } from '#src';
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('ItemEmitter', () => {
+import { firePointer } from '#tests/test-support/events';
+
+test('ItemEmitter', async ({ annotate }) => {
   const { tabs } = createTabs();
   const { secondItem, thirdItem } = getTabItems(tabs);
 
@@ -17,19 +18,19 @@ describe('ItemEmitter', () => {
 
   new ItemEmitStrategy(tabs, listeners);
 
-  test('emits selection', async () => {
-    const selectSpy = vi.spyOn(listeners, 'select');
+  await annotate('emits selection');
 
-    await userEvent.click(secondItem);
+  const selectSpy = vi.spyOn(listeners, 'select');
 
-    expect(selectSpy).toHaveBeenCalledWith([secondItem]);
-  });
+  await firePointer(secondItem);
 
-  test('emits active item', () => {
-    const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+  expect(selectSpy).toHaveBeenCalledWith([secondItem]);
 
-    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+  await annotate('emits active item');
 
-    expect(activateItemSpy).toHaveBeenCalledWith(thirdItem);
-  });
+  const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+
+  thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+
+  expect(activateItemSpy).toHaveBeenCalledWith(thirdItem);
 });

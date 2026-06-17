@@ -39,3 +39,5 @@ export function getItems(list: Listbox) {
     lastItem: list.items.at(-1) as HTMLElement
   };
 }
+
+export { appendItemToList, createListElement } from '#tests/components/list';

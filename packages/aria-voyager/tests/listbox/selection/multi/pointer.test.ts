@@ -1,56 +1,40 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
 
-describe('Select with Pointer', () => {
+import { firePointer } from '#tests/test-support/events';
+
+test('Select with Pointer', async ({ annotate }) => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('start', async () => {
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
-  });
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  test('select second item', async () => {
-    await userEvent.click(secondItem);
+  await annotate('select second item');
+  await firePointer(secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
-  });
+  await annotate('select third item with `Meta` key');
+  thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-  test('select third item with `Meta` key', async () => {
-    // https://github.com/hokulea/aria-voyager/issues/259
-    // const user = userEvent.setup();
+  await annotate('deselect second item with `Meta` key');
+  secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-    // await user.keyboard('{Meta>}');
-    // await user.click(thirdItem);
-    // await user.keyboard('{/Meta}');
-
-    thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
-
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
-
-  test('deselect second item with `Meta` key', async () => {
-    secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
-
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
-
-  test('select third to first item with `Shift` key', async () => {
-    firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
-
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await annotate('select third to first item with `Shift` key');
+  firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

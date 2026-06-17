@@ -1,10 +1,11 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('Select manually with spacebar`', () => {
-  const { tabs } = createTabs({
+import { fireKey } from '#tests/test-support/events';
+
+test('Select manually with spacebar', async ({ annotate }) => {
+  const { tablist, tabs } = createTabs({
     behavior: {
       singleSelection: 'manual'
     }
@@ -13,84 +14,77 @@ describe('Select manually with spacebar`', () => {
 
   thirdItem.setAttribute('aria-disabled', 'true');
 
-  test('start', async () => {
-    expect(firstItem).toHaveAttribute('aria-selected', 'true');
+  expect(firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
-  });
+  firstItem.focus();
+  expect(document.activeElement).toBe(firstItem);
 
-  test('use `ArrowRight` key to activate second item', async () => {
-    await userEvent.keyboard('{ArrowRight}');
+  await annotate('use `ArrowRight` key to activate second item');
+  await fireKey(tablist, 'ArrowRight');
 
-    expect(firstItem).toHaveAttribute('aria-selected', 'true');
+  expect(firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    expect(secondItem).toHaveAttribute('tabindex', '0');
+  expect(secondItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `ArrowRight` key to activate fourth item', async () => {
-    await userEvent.keyboard('{ArrowRight}');
+  await annotate('use `ArrowRight` key to activate fourth item');
+  await fireKey(tablist, 'ArrowRight');
 
-    expect(firstItem).toHaveAttribute('aria-selected', 'true');
+  expect(firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    expect(fourthItem).toHaveAttribute('tabindex', '0');
+  expect(fourthItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use spacebar to select fourth item', async () => {
-    await userEvent.keyboard('{ }');
+  await annotate('use spacebar to select fourth item');
+  await fireKey(tablist, ' ');
 
-    expect(fourthItem).toHaveAttribute('aria-selected', 'true');
+  expect(fourthItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
-      // eslint-disable-next-line @typescript-eslint/await-thenable
-      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
+  }
 
-  test('use `ArrowLeft` key to activate second item', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
+  await annotate('use `ArrowLeft` key to activate second item');
+  await fireKey(tablist, 'ArrowLeft');
 
-    expect(fourthItem).toHaveAttribute('aria-selected', 'true');
+  expect(fourthItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
-      // eslint-disable-next-line @typescript-eslint/await-thenable
-      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
-    }
+  for (const item of tabs.items.filter((_, idx) => idx !== 4)) {
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-selected'));
+  }
 
-    expect(secondItem).toHaveAttribute('tabindex', '0');
+  expect(secondItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use spacebar to select second item', async () => {
-    await userEvent.keyboard('{ }');
+  await annotate('use spacebar to select second item');
+  await fireKey(tablist, ' ');
 
-    expect(secondItem).toHaveAttribute('aria-selected', 'true');
+  expect(secondItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 });

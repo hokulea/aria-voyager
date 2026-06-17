@@ -1,38 +1,31 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
 
-describe('Select with `ArrowUp` and `Shift`', () => {
+import { fireKey } from '#tests/test-support/events';
+
+test('Select with `ArrowUp` and `Shift`', async ({ annotate }) => {
   const list = createMultiSelectListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  const keys = userEvent.setup();
+  await annotate('focus list and activate last item');
+  list.focus();
+  await fireKey(list, 'End');
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  test('focus list and activate last item', async () => {
-    list.focus();
-    await userEvent.keyboard('{End}');
+  await annotate('use `ArrowUp` and `Shift` key to select third and second item');
+  await fireKey(list, 'ArrowUp', { shiftKey: true });
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
-  });
-
-  test('use `ArrowUp` and `Shift` key to select third and second item', async () => {
-    await keys.keyboard('{Shift>}{ArrowUp}');
-
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
-
-  test('use `ArrowUp` and `Shift` key to select thirdt to first item', async () => {
-    await keys.keyboard('{ArrowUp}');
-
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await annotate('use `ArrowUp` and `Shift` key to select third to first item');
+  await fireKey(list, 'ArrowUp', { shiftKey: true });
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

@@ -7,11 +7,9 @@ test('add items when disabled', () => {
   const updater = new ReactiveUpdateStrategy();
   const { container, tablist } = createTabElement(document.body);
 
-  const tabs = new Tablist(tablist, {
-    updater
-  });
-
   tablist.setAttribute('aria-disabled', 'true');
+
+  const tabs = new Tablist(tablist, { updater });
 
   updater.updateOptions();
 

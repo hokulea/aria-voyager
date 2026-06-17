@@ -123,3 +123,5 @@ export function getItems(menu: Menu) {
     lastItem: menu.items.at(-1) as HTMLElement
   };
 }
+
+export { type EmitStrategy, type UpdateStrategy } from '#src';

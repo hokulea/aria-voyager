@@ -1,8 +1,9 @@
 import { expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
 import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
+
+import { fireKey, firePointer } from '#tests/test-support/events';
 
 test('Select from first to third item with `End` and `Shift` key', async () => {
   const list = createMultiSelectListWithFruits();
@@ -13,13 +14,13 @@ test('Select from first to third item with `End` and `Shift` key', async () => {
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  await userEvent.click(firstItem);
+  await firePointer(firstItem);
 
   await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  await userEvent.keyboard('{Shift>}{End}');
+  await fireKey(list, 'End', { shiftKey: true });
 
   await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
