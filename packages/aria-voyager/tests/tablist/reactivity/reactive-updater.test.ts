@@ -3,26 +3,21 @@ import { userEvent } from 'vitest/browser';
 
 import { ReactiveUpdateStrategy } from '#src';
 import { appendTab, removeTab } from '#tests/components/tabs';
-import { createTabs, getTabItems } from '#tests/tablist/-shared';
+import { setupTabs } from '#tests/tablist/-shared';
 
 // simulating a framework with a reactive library
 describe('Reactive Updater', () => {
   const updater = new ReactiveUpdateStrategy();
-
-  const { container, tablist, tabs } = createTabs({
-    updater
-  });
-
-  const { firstItem, secondItem } = getTabItems(tabs);
+  const ctx = setupTabs({ updater });
 
   test('reads elements on appending', () => {
-    expect(tabs.items.length).toBe(5);
+    expect(ctx.tabs.items.length).toBe(5);
 
-    appendTab(container, 'Grapefruit', 'for summer');
+    appendTab(ctx.container, 'Grapefruit', 'for summer');
 
     updater.updateItems();
 
-    expect(tabs.items.length).toBe(6);
+    expect(ctx.tabs.items.length).toBe(6);
   });
 
   test('reads selection on external update', () => {
@@ -31,67 +26,67 @@ describe('Reactive Updater', () => {
     document.body.append(focusDecoy);
     focusDecoy.focus();
 
-    expect(tabs.selection[0]).toBe(firstItem);
-    expect(secondItem).toHaveAttribute('tabindex', '-1');
+    expect(ctx.tabs.selection[0]).toBe(ctx.firstItem);
+    expect(ctx.secondItem).toHaveAttribute('tabindex', '-1');
 
     document.body.focus();
 
-    firstItem.removeAttribute('aria-selected');
-    secondItem.setAttribute('aria-selected', 'true');
+    ctx.firstItem.removeAttribute('aria-selected');
+    ctx.secondItem.setAttribute('aria-selected', 'true');
 
     updater.updateSelection();
 
-    expect(tabs.selection[0]).toBe(secondItem);
-    expect(secondItem).toHaveAttribute('tabindex', '0');
+    expect(ctx.tabs.selection[0]).toBe(ctx.secondItem);
+    expect(ctx.secondItem).toHaveAttribute('tabindex', '0');
   });
 
   describe('read options', () => {
     test('detects vertical orientation', () => {
-      expect(tabs.options.orientation).toBe('horizontal');
+      expect(ctx.tabs.options.orientation).toBe('horizontal');
 
-      tablist.setAttribute('aria-orientation', 'vertical');
+      ctx.tablist.setAttribute('aria-orientation', 'vertical');
 
       updater.updateOptions();
 
-      expect(tabs.options.orientation).toBe('vertical');
+      expect(ctx.tabs.options.orientation).toBe('vertical');
     });
 
     test('detects horizontal orientation', () => {
-      expect(tabs.options.orientation).toBe('vertical');
+      expect(ctx.tabs.options.orientation).toBe('vertical');
 
-      tablist.removeAttribute('aria-orientation');
+      ctx.tablist.removeAttribute('aria-orientation');
 
       updater.updateOptions();
 
-      expect(tabs.options.orientation).toBe('horizontal');
+      expect(ctx.tabs.options.orientation).toBe('horizontal');
     });
 
     test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      await userEvent.click(firstItem);
+      await userEvent.click(ctx.firstItem);
 
-      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+      await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
 
-      tablist.setAttribute('aria-disabled', 'true');
+      ctx.tablist.setAttribute('aria-disabled', 'true');
 
       updater.updateOptions();
 
-      for (const item of tabs.items) {
+      for (const item of ctx.tabs.items) {
         await expect.element(item).toHaveAttribute('tabindex', '-1');
       }
     });
 
     test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      for (const item of tabs.items) {
+      for (const item of ctx.tabs.items) {
         await expect.element(item).toHaveAttribute('tabindex', '-1');
       }
 
-      tablist.removeAttribute('aria-disabled');
+      ctx.tablist.removeAttribute('aria-disabled');
 
       updater.updateOptions();
 
-      await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+      await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
 
-      for (const item of tabs.items.slice(1)) {
+      for (const item of ctx.tabs.items.slice(1)) {
         await expect.element(item).toHaveAttribute('tabindex', '-1');
       }
     });
@@ -99,29 +94,29 @@ describe('Reactive Updater', () => {
 
   describe('items', () => {
     test('adding items to a disabled tablist will receive tabindex -1', async () => {
-      const { lastItem, secondLastItem } = getTabItems(tabs);
+      const { lastItem, secondLastItem } = { lastItem: ctx.lastItem, secondLastItem: ctx.secondLastItem };
 
       removeTab(lastItem);
       removeTab(secondLastItem);
 
-      tablist.setAttribute('aria-disabled', 'true');
+      ctx.tablist.setAttribute('aria-disabled', 'true');
       updater.updateOptions();
 
-      for (const item of tabs.items) {
+      for (const item of ctx.tabs.items) {
         await expect.element(item).toHaveAttribute('tabindex', '-1');
       }
 
-      appendTab(container, 'Tab 4', 'Content 4');
-      appendTab(container, 'Tab 5', 'Content 5');
+      appendTab(ctx.container, 'Tab 4', 'Content 4');
+      appendTab(ctx.container, 'Tab 5', 'Content 5');
 
-      firstItem.setAttribute('aria-selected', 'false');
+      ctx.firstItem.setAttribute('aria-selected', 'false');
       lastItem.setAttribute('aria-selected', 'true');
 
       updater.updateSelection();
 
       updater.updateItems();
 
-      for (const item of tabs.items) {
+      for (const item of ctx.tabs.items) {
         await expect.element(item).toHaveAttribute('tabindex', '-1');
       }
     });

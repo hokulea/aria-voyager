@@ -1,45 +1,42 @@
 import { describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { Listbox } from '#src';
-import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+import { setupListbox } from '../-shared';
 
 describe('use pointer to activate items', () => {
-  const list = createListWithFruits();
-  const listbox = new Listbox(list);
-  const { firstItem, secondItem, thirdItem } = getItems(listbox);
+  const ctx = setupListbox();
 
   test('start', async () => {
-    await expect.element(list).not.toHaveAttribute('aria-activedescendant');
-    await expect.element(firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.list).not.toHaveAttribute('aria-activedescendant');
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('clicking the list activates first item', async () => {
-    await userEvent.click(list);
+    await userEvent.click(ctx.list);
 
-    expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
-    await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
+    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
+    await expect.element(ctx.firstItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('clicking the second item activates it', async () => {
-    await userEvent.click(secondItem);
+    await userEvent.click(ctx.secondItem);
 
-    expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
-    await expect.element(firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-current');
+    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.secondItem.id);
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.secondItem).toHaveAttribute('aria-current', 'true');
+    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
   });
 
   test('clicking the third item activates it', async () => {
-    await userEvent.click(thirdItem);
+    await userEvent.click(ctx.thirdItem);
 
-    expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
-    await expect.element(firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
+    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.thirdItem.id);
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
+    await expect.element(ctx.thirdItem).toHaveAttribute('aria-current', 'true');
   });
 });

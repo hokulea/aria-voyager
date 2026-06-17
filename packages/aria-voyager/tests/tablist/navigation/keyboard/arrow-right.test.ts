@@ -1,31 +1,30 @@
-import { describe, expect, test } from 'vitest';
+import { beforeAll, describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { createTabs, getTabItems } from '#tests/tablist/-shared';
+import { setupTabs } from '#tests/tablist/-shared';
 
 describe('Navigate with `ArrowRight`', () => {
-  const { tabs } = createTabs();
-  const { firstItem, secondItem, thirdItem, lastItem } = getTabItems(tabs);
+  const ctx = setupTabs();
 
   test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.slice(1)) {
+    for (const item of ctx.tabs.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
 
-    expect(tabs.activeItem).toBeTruthy();
+    expect(ctx.tabs.activeItem).toBeTruthy();
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    ctx.firstItem.focus();
+    expect(document.activeElement).toBe(ctx.firstItem);
   });
 
   test('use `ArrowRight` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
-    await expect.element(secondItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
   });
@@ -33,9 +32,9 @@ describe('Navigate with `ArrowRight`', () => {
   test('use `ArrowRight` key to activate third item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
-    await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.thirdItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 1)) {
       // eslint-disable-next-line @typescript-eslint/await-thenable
       await expect.poll(() => expect.element(item).toHaveAttribute('tabindex', '-1'));
     }
@@ -45,39 +44,40 @@ describe('Navigate with `ArrowRight`', () => {
     await userEvent.keyboard('{End}');
     await userEvent.keyboard('{ArrowRight}');
 
-    await expect.element(lastItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.lastItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.slice(0, -1)) {
+    for (const item of ctx.tabs.items.slice(0, -1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
   });
 });
 
 describe('navigate with `ArrowRight`, skipping disabled items', () => {
-  const { tabs } = createTabs();
-  const { firstItem, secondItem, thirdItem, fourthItem } = getTabItems(tabs);
+  const ctx = setupTabs();
 
-  thirdItem.setAttribute('aria-disabled', 'true');
+  beforeAll(() => {
+    ctx.thirdItem.setAttribute('aria-disabled', 'true');
+  });
 
   test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.slice(1)) {
+    for (const item of ctx.tabs.items.slice(1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
 
-    expect(tabs.activeItem).toBeTruthy();
+    expect(ctx.tabs.activeItem).toBeTruthy();
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    ctx.firstItem.focus();
+    expect(document.activeElement).toBe(ctx.firstItem);
   });
 
   test('use `ArrowRight` key to activate second item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
-    await expect.element(secondItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 1)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
   });
@@ -85,9 +85,9 @@ describe('navigate with `ArrowRight`, skipping disabled items', () => {
   test('use `ArrowRight` key to activate fourth item', async () => {
     await userEvent.keyboard('{ArrowRight}');
 
-    await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.fourthItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 3)) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
   });

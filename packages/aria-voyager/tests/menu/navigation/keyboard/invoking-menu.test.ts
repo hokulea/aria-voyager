@@ -1,46 +1,38 @@
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
-
-import { Menu } from '#src';
-import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
+import { setupCodeMenu } from '#tests/menu/-shared';
 
 describe('Invoking a menu item closes all submenus', () => {
-  const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
-  const menu = new Menu(codeMenu);
-  const { fourthItem } = getItems(menu);
-  const share = new Menu(shareMenu);
-  const socialItem = share.items[1];
-  const social = new Menu(socialMenu);
-  const mastodonItem = social.items[1];
+  const ctx = setupCodeMenu({ withTrigger: true });
 
-  expect(shareMenu.matches(':popover-open')).toBeFalsy();
-  expect(socialMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBeFalsy();
+  });
 
   test('open the menus', async () => {
-    await userEvent.click(triggerButton);
+    await userEvent.click(ctx.triggerButton);
 
-    await vi.waitFor(() => {
-      expect(codeMenu.matches(':popover-open')).toBeTruthy();
-    });
+    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
 
     // does not work under playwright
     // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(fourthItem);
-    // await userEvent.hover(socialItem);
+    // await userEvent.hover(ctx.fourthItem);
+    // await userEvent.hover(ctx.shareSecondItem);
 
-    fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-    socialItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    ctx.fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    ctx.shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    expect(socialMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
+    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(true);
   });
 
   test('use `Enter` on a menu item closes all submenus', async () => {
-    await userEvent.hover(mastodonItem);
+    await userEvent.hover(ctx.social.items[1]);
     await userEvent.keyboard('{Enter}');
 
-    expect(codeMenu.matches(':popover-open')).toBeFalsy();
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
-    expect(socialMenu.matches(':popover-open')).toBeFalsy();
+    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(false);
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
+    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(false);
   });
 });

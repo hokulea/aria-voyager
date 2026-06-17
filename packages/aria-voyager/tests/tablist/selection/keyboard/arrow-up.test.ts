@@ -1,31 +1,32 @@
-import { describe, expect, test } from 'vitest';
+import { beforeAll, describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { createTabs, getTabItems } from '#tests/tablist/-shared';
+import { setupTabs } from '#tests/tablist/-shared';
 
 describe('Select with `ArrowUp`', () => {
-  const { tabs, tablist } = createTabs();
-  const { firstItem, secondLastItem, thirdLastItem, lastItem } = getTabItems(tabs);
+  const ctx = setupTabs();
 
-  tablist.setAttribute('aria-orientation', 'vertical');
+  beforeAll(() => {
+    ctx.tablist.setAttribute('aria-orientation', 'vertical');
+  });
 
   test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
+    for (const item of ctx.tabs.items.slice(1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    ctx.firstItem.focus();
+    expect(document.activeElement).toBe(ctx.firstItem);
   });
 
   test('use `ArrowUp` at first item does nothing', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
+    for (const item of ctx.tabs.items.slice(1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -33,9 +34,9 @@ describe('Select with `ArrowUp`', () => {
   test('use `END` to jump to the last item', async () => {
     await userEvent.keyboard('{End}');
 
-    await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.lastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(0, -1)) {
+    for (const item of ctx.tabs.items.slice(0, -1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -43,9 +44,9 @@ describe('Select with `ArrowUp`', () => {
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.secondLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.secondLastItem))) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -53,40 +54,41 @@ describe('Select with `ArrowUp`', () => {
   test('use `ArrowUp` key to activate third last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(thirdLastItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.thirdLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(thirdLastItem))) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.thirdLastItem))) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
 });
 
 describe('select with `ArrowUp`, skipping disabled items', () => {
-  const { tabs, tablist } = createTabs();
-  const { firstItem, fourthLastItem, secondLastItem, thirdLastItem, lastItem } = getTabItems(tabs);
+  const ctx = setupTabs();
 
-  tablist.setAttribute('aria-orientation', 'vertical');
-  thirdLastItem.setAttribute('aria-disabled', 'true');
+  beforeAll(() => {
+    ctx.tablist.setAttribute('aria-orientation', 'vertical');
+    ctx.thirdLastItem.setAttribute('aria-disabled', 'true');
+  });
 
   test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(1)) {
+    for (const item of ctx.tabs.items.slice(1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
 
-    expect(tabs.activeItem).toBeTruthy();
+    expect(ctx.tabs.activeItem).toBeTruthy();
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    ctx.firstItem.focus();
+    expect(document.activeElement).toBe(ctx.firstItem);
   });
 
   test('use `END` to jump to the last item', async () => {
     await userEvent.keyboard('{End}');
 
-    await expect.element(lastItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.lastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.slice(0, -1)) {
+    for (const item of ctx.tabs.items.slice(0, -1)) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -94,9 +96,9 @@ describe('select with `ArrowUp`, skipping disabled items', () => {
   test('use `ArrowUp` key to activate second last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(secondLastItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.secondLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(secondLastItem))) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.secondLastItem))) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -104,9 +106,9 @@ describe('select with `ArrowUp`, skipping disabled items', () => {
   test('use `ArrowUp` key to activate fourth last item', async () => {
     await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(fourthLastItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.fourthLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of tabs.items.filter((_, idx) => idx !== tabs.items.indexOf(fourthLastItem))) {
+    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.fourthLastItem))) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });

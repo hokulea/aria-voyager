@@ -1,40 +1,30 @@
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
-
-import { Menu } from '#src';
-import { createCodeMenu, getItems } from '#tests/menu/-shared';
+import { setupCodeMenu } from '#tests/menu/-shared';
 
 describe('Hover out to trigger keeps submenu open', () => {
-  const { codeMenu, shareMenu } = createCodeMenu();
-  const menu = new Menu(codeMenu);
-  const share = new Menu(shareMenu);
-  const codeItem = share.items[0];
-  const { fourthItem } = getItems(menu);
-
-  expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  const ctx = setupCodeMenu();
 
   test('hover item to show submenu', async () => {
-    await userEvent.hover(fourthItem);
+    await userEvent.hover(ctx.fourthItem);
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
   });
 
   test('hover into submenu moves focus', async () => {
-    await userEvent.hover(codeItem);
+    await userEvent.hover(ctx.shareFirstItem);
 
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
   });
 
   test('hover back to trigger moves focus and keeps the submenu open', async () => {
-    shareMenu.dispatchEvent(
-      new PointerEvent('pointerout', { bubbles: true, relatedTarget: fourthItem })
+    ctx.shareMenu.dispatchEvent(
+      new PointerEvent('pointerout', { bubbles: true, relatedTarget: ctx.fourthItem })
     );
 
-    await vi.waitFor(() => {
-      expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    });
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
 
     // eslint-disable-next-line @typescript-eslint/await-thenable
-    await expect.poll(() => expect.element(fourthItem).toHaveFocus());
+    await expect.poll(() => expect.element(ctx.fourthItem).toHaveFocus());
   });
 });

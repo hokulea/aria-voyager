@@ -1,17 +1,19 @@
 import { describe, expect, test } from 'vitest';
-
 import { Menu } from '#src';
 import { createMenuElement } from '#tests/components/menu';
-import { createCodeMenu } from '#tests/menu/-shared';
+import { setupCodeMenu } from '#tests/menu/-shared';
 
-test('renders', () => {
-  const { codeMenu } = createCodeMenu();
-  const menu = new Menu(codeMenu);
+describe('renders', () => {
+  const ctx = setupCodeMenu();
 
-  expect(menu.items.length).toBe(15);
+  test('renders', () => {
+    expect(ctx.menu.items.length).toBe(15);
+  });
 });
 
 describe('setup', () => {
+  const ctx = setupCodeMenu();
+
   test('has menu role', async () => {
     const menu = createMenuElement(document.body);
 
@@ -21,43 +23,25 @@ describe('setup', () => {
   });
 
   test('sets tabindex on the first item', async () => {
-    const { codeMenu } = createCodeMenu();
-
-    new Menu(codeMenu);
-
-    const firstItem = codeMenu.querySelector(':scope [role="menuitem"]') as HTMLElement;
-
-    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
   });
 
   test('reads items', () => {
-    const { codeMenu } = createCodeMenu();
-
-    const menu = new Menu(codeMenu);
-
-    expect(menu.items.length).toBe(15);
+    expect(ctx.menu.items.length).toBe(15);
   });
 
   test('items have tabindex', async () => {
-    const { codeMenu } = createCodeMenu();
-
-    const menu = new Menu(codeMenu);
-
-    for (const item of menu.items) {
+    for (const item of ctx.menu.items) {
       await expect.element(item).toHaveAttribute('tabindex');
     }
   });
 });
 
 describe('disabled', () => {
+  const ctx = setupCodeMenu({ disabled: true });
+
   test('focus does not work', async () => {
-    const { codeMenu } = createCodeMenu();
-
-    codeMenu.setAttribute('aria-disabled', 'true');
-
-    const menu = new Menu(codeMenu);
-
-    for (const item of menu.items) {
+    for (const item of ctx.menu.items) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');
     }
   });

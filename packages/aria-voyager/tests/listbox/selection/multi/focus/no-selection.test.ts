@@ -1,15 +1,14 @@
-import { expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
-import { Listbox } from '#src';
-import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
+import { setupListbox } from '../../../-shared';
 
-test('Select no items on focus', async () => {
-  const list = createMultiSelectListWithFruits();
-  const listbox = new Listbox(list);
-  const { firstItem, secondItem } = getItems(listbox);
+describe('Select no items on focus', () => {
+  const ctx = setupListbox({ multiSelect: true });
 
-  list.dispatchEvent(new FocusEvent('focusin'));
+  test('Select no items on focus', async () => {
+    ctx.list.dispatchEvent(new FocusEvent('focusin'));
 
-  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
+  });
 });

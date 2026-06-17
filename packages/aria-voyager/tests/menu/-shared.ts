@@ -1,3 +1,5 @@
+import { afterAll, beforeAll } from 'vitest';
+import { Menu } from '#src';
 import { uniqueId } from '#src/utils';
 import {
   appendCheckboxItemToMenu,
@@ -6,8 +8,8 @@ import {
   appendSubmenuToMenu,
   createMenuElement
 } from '#tests/components/menu';
-
-import type { Menu } from '#src';
+import { getControlItems } from '#tests/test-support/-items';
+import { setupTest } from '#tests/test-support/setup-test';
 
 export function createCodeMenu(parent = document.body) {
   const codeMenu = createMenuElement(parent);
@@ -122,4 +124,115 @@ export function getItems(menu: Menu) {
     secondLastItem: menu.items.at(-2) as HTMLElement,
     lastItem: menu.items.at(-1) as HTMLElement
   };
+}
+
+export type CodeMenuContext = {
+  menu: Menu;
+  share: Menu;
+  social: Menu;
+  panelPosition: Menu;
+  codeMenu: HTMLElement;
+  shareMenu: HTMLElement;
+  socialMenu: HTMLElement;
+  panelPositionMenu: HTMLElement;
+  triggerButton?: HTMLElement;
+  refactorHeader: HTMLElement;
+  appearanceHeader: HTMLElement;
+  // Main menu items
+  firstItem: HTMLElement;
+  secondItem: HTMLElement;
+  thirdItem: HTMLElement;
+  fourthItem: HTMLElement;
+  fifthItem: HTMLElement;
+  sixthItem: HTMLElement;
+  fourthLastItem: HTMLElement;
+  thirdLastItem: HTMLElement;
+  secondLastItem: HTMLElement;
+  lastItem: HTMLElement;
+  // Share submenu items
+  shareFirstItem: HTMLElement;
+  shareSecondItem: HTMLElement;
+  shareThirdItem: HTMLElement;
+  shareFourthItem: HTMLElement;
+  shareFifthItem: HTMLElement;
+  shareSixthItem: HTMLElement;
+  shareFourthLastItem: HTMLElement;
+  shareThirdLastItem: HTMLElement;
+  shareSecondLastItem: HTMLElement;
+  shareLastItem: HTMLElement;
+};
+
+export interface SetupCodeMenuOptions {
+  withTrigger?: boolean;
+  disabled?: boolean;
+  menuOptions?: {
+    updater?: import('#src').UpdateStrategy;
+    emitter?: import('#src').EmitStrategy;
+  };
+}
+
+export function setupCodeMenu(options?: SetupCodeMenuOptions): CodeMenuContext {
+  setupTest();
+
+  const ctx: Partial<CodeMenuContext> = {};
+  const result = {} as CodeMenuContext;
+
+  // Define getters for all properties so destructuring works correctly
+  const properties: (keyof CodeMenuContext)[] = [
+    'menu', 'share', 'social', 'panelPosition',
+    'codeMenu', 'shareMenu', 'socialMenu', 'panelPositionMenu', 'triggerButton',
+    'refactorHeader', 'appearanceHeader',
+    'firstItem', 'secondItem', 'thirdItem', 'fourthItem', 'fifthItem', 'sixthItem',
+    'fourthLastItem', 'thirdLastItem', 'secondLastItem', 'lastItem',
+    'shareFirstItem', 'shareSecondItem', 'shareThirdItem', 'shareFourthItem',
+    'shareFifthItem', 'shareSixthItem', 'shareFourthLastItem', 'shareThirdLastItem',
+    'shareSecondLastItem', 'shareLastItem'
+  ];
+
+  for (const prop of properties) {
+    Object.defineProperty(result, prop, {
+      get: () => ctx[prop],
+      enumerable: true
+    });
+  }
+
+  beforeAll(() => {
+    const setup = options?.withTrigger ? createCodeMenuWithTriggerButton() : createCodeMenu();
+
+    ctx.codeMenu = setup.codeMenu;
+    ctx.shareMenu = setup.shareMenu;
+    ctx.socialMenu = setup.socialMenu;
+    ctx.panelPositionMenu = setup.panelPositionMenu;
+    ctx.refactorHeader = setup.refactorHeader;
+    ctx.appearanceHeader = setup.appearanceHeader;
+    ctx.triggerButton = setup.triggerButton;
+
+    if (options?.disabled) {
+      ctx.codeMenu.setAttribute('aria-disabled', 'true');
+    }
+
+    ctx.menu = new Menu(ctx.codeMenu, options?.menuOptions);
+    ctx.share = new Menu(ctx.shareMenu);
+    ctx.social = new Menu(ctx.socialMenu);
+    ctx.panelPosition = new Menu(ctx.panelPositionMenu);
+
+    // Populate items from main menu
+    const items = getControlItems(ctx.menu);
+    Object.assign(ctx, items);
+
+    // Populate items from share submenu with prefix
+    const shareItems = getControlItems(ctx.share);
+    for (const [key, value] of Object.entries(shareItems)) {
+      ctx[`share${key.charAt(0).toUpperCase()}${key.slice(1)}`] = value;
+    }
+  });
+
+  afterAll(() => {
+    ctx.menu?.dispose();
+    ctx.share?.dispose();
+    ctx.social?.dispose();
+    ctx.panelPosition?.dispose();
+  });
+
+  return result;
 }

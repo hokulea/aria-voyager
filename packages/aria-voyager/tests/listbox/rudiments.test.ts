@@ -1,64 +1,51 @@
 import { describe, expect, it } from 'vitest';
 
-import { Listbox } from '#src';
-import { createListElement } from '#tests/components/list';
-
-import { createListWithFruits } from './-shared';
+import { setupListbox } from './-shared';
 
 describe('Listbox', () => {
-  it('renders', () => {
-    const list = createListWithFruits();
+  describe('renders', () => {
+    const ctx = setupListbox();
 
-    expect(list.children.length).toBe(3);
+    it('renders', () => {
+      expect(ctx.list.children.length).toBe(3);
+    });
   });
 
   describe('setup', () => {
-    it('has listbox role', async () => {
-      const list = createListElement(document.body);
+    describe('initialization', () => {
+      const ctx = setupListbox({ items: [] });
 
-      new Listbox(list);
+      it('has listbox role', async () => {
+        await expect.element(ctx.list).toHaveAttribute('role', 'listbox');
+      });
 
-      await expect.element(list).toHaveAttribute('role', 'listbox');
+      it('sets tabindex', async () => {
+        await expect.element(ctx.list).toHaveAttribute('tabindex', '0');
+      });
     });
 
-    it('sets tabindex', async () => {
-      const list = createListElement(document.body);
+    describe('items', () => {
+      const ctx = setupListbox();
 
-      new Listbox(list);
+      it('reads items', () => {
+        expect(ctx.listbox.items.length).toBe(3);
+      });
 
-      await expect.element(list).toHaveAttribute('tabindex', '0');
-    });
-
-    it('reads items', () => {
-      const list = createListWithFruits();
-
-      const listbox = new Listbox(list);
-
-      expect(listbox.items.length).toBe(3);
-    });
-
-    it('items have ids', () => {
-      const list = createListWithFruits();
-
-      const listbox = new Listbox(list);
-
-      for (const item of listbox.items) {
-        expect(item.id).toBeTruthy();
-      }
+      it('items have ids', () => {
+        for (const item of ctx.listbox.items) {
+          expect(item.id).toBeTruthy();
+        }
+      });
     });
   });
 
   describe('disabled', () => {
+    const ctx = setupListbox({ disabled: true });
+
     it('focus does not work', async () => {
-      const list = createListElement(document.body);
+      ctx.list.dispatchEvent(new FocusEvent('focusin'));
 
-      list.setAttribute('aria-disabled', 'true');
-
-      const listbox = new Listbox(list);
-
-      list.dispatchEvent(new FocusEvent('focusin'));
-
-      for (const elem of listbox.items) {
+      for (const elem of ctx.listbox.items) {
         await expect.element(elem).not.toHaveAttribute('aria-selected');
       }
     });

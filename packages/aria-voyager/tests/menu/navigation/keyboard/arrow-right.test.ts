@@ -1,32 +1,26 @@
 import { describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
-
-import { Menu } from '#src';
-import { createCodeMenu, getItems } from '#tests/menu/-shared';
+import { setupCodeMenu } from '#tests/menu/-shared';
 
 describe('Open with `ArrowRight`', () => {
-  const { codeMenu, shareMenu } = createCodeMenu();
-  const menu = new Menu(codeMenu);
-  const { firstItem, fourthItem } = getItems(menu);
-  const share = new Menu(shareMenu);
-  const codeItem = share.items[0];
+  const ctx = setupCodeMenu();
 
-  test('start', () => {
-    expect(shareMenu.matches(':popover-open')).toBeFalsy();
+  test('start', async () => {
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
 
-    firstItem.focus();
-    expect(document.activeElement).toBe(firstItem);
+    ctx.firstItem.focus();
+    expect(document.activeElement).toBe(ctx.firstItem);
   });
 
   test('use `ArrowRight` to open submenu', async () => {
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.keyboard('{ArrowDown}');
-    await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.fourthItem).toHaveAttribute('tabindex', '0');
 
     await userEvent.keyboard('{ArrowRight}');
-    expect(shareMenu.matches(':popover-open')).toBeTruthy();
-    await expect.element(codeItem).toHaveAttribute('tabindex', '0');
-    expect(document.activeElement).toBe(codeItem);
+    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
+    await expect.element(ctx.shareFirstItem).toHaveAttribute('tabindex', '0');
+    expect(document.activeElement).toBe(ctx.shareFirstItem);
   });
 });

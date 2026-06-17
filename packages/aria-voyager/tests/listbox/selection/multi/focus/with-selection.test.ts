@@ -1,20 +1,19 @@
-import { expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
-import { Listbox } from '#src';
-import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
+import { setupListbox } from '../../../-shared';
 
-test('Select first selection item when focus', async () => {
-  const list = createMultiSelectListWithFruits();
-  const listbox = new Listbox(list);
-  const { firstItem, secondItem, thirdItem } = getItems(listbox);
+describe('Select first selection item when focus', () => {
+  const ctx = setupListbox({ multiSelect: true });
 
-  secondItem.setAttribute('aria-selected', 'true');
-  thirdItem.setAttribute('aria-selected', 'true');
-  listbox.readSelection();
+  test('Select first selection item when focus', async () => {
+    ctx.secondItem.setAttribute('aria-selected', 'true');
+    ctx.thirdItem.setAttribute('aria-selected', 'true');
+    ctx.listbox.readSelection();
 
-  list.dispatchEvent(new FocusEvent('focusin'));
+    ctx.list.dispatchEvent(new FocusEvent('focusin'));
 
-  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
+  });
 });

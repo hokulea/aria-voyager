@@ -1,45 +1,41 @@
 import { describe, expect, test } from 'vitest';
 
 import { Tablist } from '#src';
-import { createTabs, getTabItems } from '#tests/tablist/-shared';
+import { setupTabs } from '#tests/tablist/-shared';
 
-test('renders', () => {
-  const { tabs } = createTabs();
+describe('renders', () => {
+  const ctx = setupTabs();
 
-  expect(tabs.items.length).toBe(5);
+  test('has 5 items', () => {
+    expect(ctx.tabs.items.length).toBe(5);
+  });
 });
 
 describe('setup', () => {
-  test('has menu role', async () => {
-    const { tablist } = createTabs();
+  const ctx = setupTabs();
 
-    await expect.element(tablist).toHaveAttribute('role', 'tablist');
+  test('has menu role', async () => {
+    await expect.element(ctx.tablist).toHaveAttribute('role', 'tablist');
   });
 
   test('sets tabindex on the first item', async () => {
-    const { tabs } = createTabs();
-
-    const { firstItem } = getTabItems(tabs);
-
-    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
   });
 
   test('items have tabindex', async () => {
-    const { tabs } = createTabs();
-
-    for (const item of tabs.items) {
+    for (const item of ctx.tabs.items) {
       await expect.element(item).toHaveAttribute('tabindex');
     }
   });
 });
 
 describe('disabled', () => {
+  const ctx = setupTabs();
+
   test('focus does not work', async () => {
-    const { tablist } = createTabs();
+    ctx.tablist.setAttribute('aria-disabled', 'true');
 
-    tablist.setAttribute('aria-disabled', 'true');
-
-    const tabs = new Tablist(tablist);
+    const tabs = new Tablist(ctx.tablist);
 
     for (const item of tabs.items) {
       await expect.element(item).toHaveAttribute('tabindex', '-1');

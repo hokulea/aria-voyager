@@ -1,15 +1,14 @@
-import { describe, expect, test, vi } from 'vitest';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { IndexEmitStrategy, Listbox } from '#src';
-import { createListWithFruits } from '#tests/listbox/-shared';
+import { IndexEmitStrategy } from '#src';
+import { setupListbox } from '../-shared';
 
 describe('IndexEmitter', () => {
-  const list = createListWithFruits();
-  const listbox = new Listbox(list);
+  const ctx = setupListbox();
 
-  const secondItem = list.children[1];
-  const thirdItem = list.children[2];
+  let secondItem: Element;
+  let thirdItem: Element;
 
   const listeners = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -18,7 +17,11 @@ describe('IndexEmitter', () => {
     activateItem() {}
   };
 
-  new IndexEmitStrategy(listbox, listeners);
+  beforeAll(() => {
+    secondItem = ctx.list.children[1];
+    thirdItem = ctx.list.children[2];
+    new IndexEmitStrategy(ctx.listbox, listeners);
+  });
 
   test('emits selection', async () => {
     const selectSpy = vi.spyOn(listeners, 'select');

@@ -1,33 +1,30 @@
 import { describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { Listbox } from '#src';
-import { createListWithFruits, getItems } from '#tests/listbox/-shared';
+import { setupListbox } from '../../-shared';
 
 describe('With Pointer', () => {
-  const list = createListWithFruits();
-  const listbox = new Listbox(list);
-  const { firstItem, secondItem, thirdItem } = getItems(listbox);
+  const ctx = setupListbox();
 
   test('start', async () => {
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
   });
 
   test('select second item', async () => {
-    await userEvent.click(secondItem);
+    await userEvent.click(ctx.secondItem);
 
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
   });
 
   test('select third item', async () => {
-    await userEvent.click(thirdItem);
+    await userEvent.click(ctx.thirdItem);
 
-    await expect.element(firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
+    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
+    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
   });
 });

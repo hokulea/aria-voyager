@@ -17,31 +17,33 @@ export default defineConfig({
     }
   },
   test: {
-    retry: 2,
+    retry: 1,
     testTimeout: 5000,
+    isolate: true,
     coverage: {
       enabled: true,
       provider: 'istanbul',
       reporter: ['text', 'html', ['lcov', { projectRoot: '../../' }], 'json']
     },
-    fileParallelism: !process.env.CI,
+    fileParallelism: false,
     browser: {
       enabled: true,
       headless: true,
       screenshotFailures: false,
       provider: playwright({
-        launchOptions: {
-          slowMo: 100
-        }
+        // launchOptions: {
+        //   // slowMo: 100
+        //   slowMo: 50
+        // }
       }),
       instances: [
-        { browser: 'firefox' }
+        // { browser: 'firefox' }
         // {
         //   browser: 'firefox'
         //   // launch: { slowMo: 100 }
         // }
         // tests are flaky in playwright + chromium/webkit
-        // { browser: 'chromium' }
+        { browser: 'chromium' }
         // { browser: 'webkit' }
       ]
     }
