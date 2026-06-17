@@ -8,6 +8,14 @@ import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { Control } from './control';
 
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy.js';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy.js';
+
+interface GroupOptions {
+  updater?: UpdateStrategy;
+  emitter?: EmitStrategy;
+}
+
 export class Group extends Control {
   focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
 
@@ -19,8 +27,8 @@ export class Group extends Control {
     return this.focusStrategy.prevActiveItem;
   }
 
-  constructor(element: HTMLElement) {
-    super(element, {});
+  constructor(element: HTMLElement, options: GroupOptions = {}) {
+    super(element, options);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),

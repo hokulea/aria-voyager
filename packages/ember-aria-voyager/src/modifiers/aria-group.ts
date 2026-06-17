@@ -43,7 +43,7 @@ export default class GroupModifier<T> extends Modifier<GroupSignature<T>> {
     if (!this.group) {
       this.updater = new ReactiveUpdateStrategy();
 
-      this.group = new Group(element, {
+      this.group = new Group(element as HTMLElement, {
         updater: this.updater
       });
     }
