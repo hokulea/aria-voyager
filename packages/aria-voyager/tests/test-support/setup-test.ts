@@ -1,13 +1,13 @@
-import { afterAll, beforeAll } from 'vitest';
+import { afterEach, beforeEach } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 export function setupTest() {
-  beforeAll(async () => {
+  beforeEach(async () => {
     // Reset pointer before any DOM is created
     await userEvent.unhover(document.body);
   });
 
-  afterAll(() => {
+  afterEach(() => {
     // Close any open popovers
     for (const el of document.querySelectorAll('[popover]')) {
       try {

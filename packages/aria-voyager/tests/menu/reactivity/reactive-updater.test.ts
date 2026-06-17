@@ -1,58 +1,53 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { ReactiveUpdateStrategy } from '#src';
-import { appendItemToMenu } from '#tests/components/menu';
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu, ReactiveUpdateStrategy } from '#src';
+import { createCodeMenu } from '#tests/menu/-shared';
 
-describe('Reactive Updater', () => {
+test('Reactive Updater', async ({ annotate }) => {
   const updater = new ReactiveUpdateStrategy();
-  const ctx = setupCodeMenu({
-    menuOptions: { updater }
-  });
+  const { codeMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu, { updater });
 
-  test('start', () => {
-    expect(ctx.menu.items.length).toBe(15);
-  });
+  expect(menu.items.length).toBe(15);
 
-  test('reads elements on appending', () => {
-    appendItemToMenu(ctx.codeMenu, 'Command Palette');
+  await annotate('reads elements on appending');
 
-    updater.updateItems();
+  const { appendItemToMenu } = await import('#tests/components/menu');
 
-    expect(ctx.menu.items.length).toBe(16);
-  });
+  appendItemToMenu(codeMenu, 'Command Palette');
 
-  describe('read options', () => {
-    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      expect(ctx.menu.items[0].getAttribute('tabindex')).toBe('0');
+  updater.updateItems();
 
-      for (const item of ctx.menu.items.slice(1)) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
+  expect(menu.items.length).toBe(16);
 
-      ctx.codeMenu.setAttribute('aria-disabled', 'true');
+  await annotate('sets tabindex to -1 when the aria-disabled is `true`');
+  expect(menu.items[0].getAttribute('tabindex')).toBe('0');
 
-      updater.updateOptions();
+  for (const item of menu.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      for (const item of ctx.menu.items) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
-    });
+  codeMenu.setAttribute('aria-disabled', 'true');
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      for (const item of ctx.menu.items) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
+  updater.updateOptions();
 
-      ctx.codeMenu.removeAttribute('aria-disabled');
+  for (const item of menu.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      updater.updateOptions();
+  await annotate('re-sets tabindex to 0 when the aria-disabled is removed');
 
-      expect(ctx.menu.items[0].getAttribute('tabindex')).toBe('0');
+  for (const item of menu.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      for (const item of ctx.menu.items.slice(1)) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
-    });
-  });
+  codeMenu.removeAttribute('aria-disabled');
+
+  updater.updateOptions();
+
+  expect(menu.items[0].getAttribute('tabindex')).toBe('0');
+
+  for (const item of menu.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

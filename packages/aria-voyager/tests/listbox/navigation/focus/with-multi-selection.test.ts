@@ -1,42 +1,39 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../-shared';
+import { Listbox } from '#src';
 
-describe('Focus activates first item of selection (Multi Select)', () => {
-  const ctx = setupListbox({ multiSelect: true });
+import { createMultiSelectListWithFruits, getItems } from '../../-shared';
 
-  test('select two items', async () => {
-    // await user.click(ctx.secondItem);
+test('Focus activates first item of selection (Multi Select)', async ({ annotate }) => {
+  const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-    // https://github.com/hokulea/aria-voyager/issues/259
-    const user = userEvent.setup();
+  await annotate('select two items');
 
-    await user.click(ctx.secondItem);
-    await user.keyboard('{Shift>}');
-    await user.click(ctx.thirdItem);
-    await user.keyboard('{/Shift}');
+  const user = userEvent.setup();
 
-    // ctx.secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-    // ctx.thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
+  await user.click(secondItem);
+  await user.keyboard('{Shift>}');
+  await user.click(thirdItem);
+  await user.keyboard('{/Shift}');
 
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of ctx.listbox.items) {
-      // eslint-disable-next-line @typescript-eslint/await-thenable
-      await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-current'));
-    }
-  });
+  for (const item of listbox.items) {
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await expect.poll(() => expect.element(item).not.toHaveAttribute('aria-current'));
+  }
 
-  test('refocus keeps selection', async () => {
-    await userEvent.tab();
-    await userEvent.tab({ shift: true });
+  await annotate('refocus keeps selection');
+  await userEvent.tab();
+  await userEvent.tab({ shift: true });
 
-    expect(ctx.list).toHaveAttribute('aria-activedescendant', ctx.secondItem.id);
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
+  expect(list).toHaveAttribute('aria-activedescendant', secondItem.id);
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 });

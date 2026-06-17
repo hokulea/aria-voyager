@@ -1,127 +1,119 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { ReactiveUpdateStrategy } from '#src';
 import { appendTab, removeTab } from '#tests/components/tabs';
-import { setupTabs } from '#tests/tablist/-shared';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-// simulating a framework with a reactive library
-describe('Reactive Updater', () => {
+test('Reactive Updater', async ({ annotate }) => {
   const updater = new ReactiveUpdateStrategy();
-  const ctx = setupTabs({ updater });
+  const { container, tablist, tabs } = createTabs({ updater });
+  const { firstItem, secondItem } = getTabItems(tabs);
 
-  test('reads elements on appending', () => {
-    expect(ctx.tabs.items.length).toBe(5);
+  expect(tabs.items.length).toBe(5);
 
-    appendTab(ctx.container, 'Grapefruit', 'for summer');
+  await annotate('reads elements on appending');
+  appendTab(container, 'Grapefruit', 'for summer');
 
-    updater.updateItems();
+  updater.updateItems();
 
-    expect(ctx.tabs.items.length).toBe(6);
-  });
+  expect(tabs.items.length).toBe(6);
 
-  test('reads selection on external update', () => {
-    const focusDecoy = document.createElement('button');
+  await annotate('reads selection on external update');
 
-    document.body.append(focusDecoy);
-    focusDecoy.focus();
+  const focusDecoy = document.createElement('button');
 
-    expect(ctx.tabs.selection[0]).toBe(ctx.firstItem);
-    expect(ctx.secondItem).toHaveAttribute('tabindex', '-1');
+  document.body.append(focusDecoy);
+  focusDecoy.focus();
 
-    document.body.focus();
+  expect(tabs.selection[0]).toBe(firstItem);
+  expect(secondItem).toHaveAttribute('tabindex', '-1');
 
-    ctx.firstItem.removeAttribute('aria-selected');
-    ctx.secondItem.setAttribute('aria-selected', 'true');
+  document.body.focus();
 
-    updater.updateSelection();
+  firstItem.removeAttribute('aria-selected');
+  secondItem.setAttribute('aria-selected', 'true');
 
-    expect(ctx.tabs.selection[0]).toBe(ctx.secondItem);
-    expect(ctx.secondItem).toHaveAttribute('tabindex', '0');
-  });
+  updater.updateSelection();
 
-  describe('read options', () => {
-    test('detects vertical orientation', () => {
-      expect(ctx.tabs.options.orientation).toBe('horizontal');
+  expect(tabs.selection[0]).toBe(secondItem);
+  expect(secondItem).toHaveAttribute('tabindex', '0');
 
-      ctx.tablist.setAttribute('aria-orientation', 'vertical');
+  await annotate('detects vertical orientation');
+  expect(tabs.options.orientation).toBe('horizontal');
 
-      updater.updateOptions();
+  tablist.setAttribute('aria-orientation', 'vertical');
 
-      expect(ctx.tabs.options.orientation).toBe('vertical');
-    });
+  updater.updateOptions();
 
-    test('detects horizontal orientation', () => {
-      expect(ctx.tabs.options.orientation).toBe('vertical');
+  expect(tabs.options.orientation).toBe('vertical');
 
-      ctx.tablist.removeAttribute('aria-orientation');
+  await annotate('detects horizontal orientation');
+  expect(tabs.options.orientation).toBe('vertical');
 
-      updater.updateOptions();
+  tablist.removeAttribute('aria-orientation');
 
-      expect(ctx.tabs.options.orientation).toBe('horizontal');
-    });
+  updater.updateOptions();
 
-    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      await userEvent.click(ctx.firstItem);
+  expect(tabs.options.orientation).toBe('horizontal');
 
-      await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  await annotate('sets tabindex to -1 when the aria-disabled is `true`');
+  await userEvent.click(firstItem);
 
-      ctx.tablist.setAttribute('aria-disabled', 'true');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-      updater.updateOptions();
+  tablist.setAttribute('aria-disabled', 'true');
 
-      for (const item of ctx.tabs.items) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
-    });
+  updater.updateOptions();
 
-    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      for (const item of ctx.tabs.items) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
+  for (const item of tabs.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      ctx.tablist.removeAttribute('aria-disabled');
+  await annotate('re-sets tabindex to 0 when the aria-disabled is removed');
 
-      updater.updateOptions();
+  for (const item of tabs.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  tablist.removeAttribute('aria-disabled');
 
-      for (const item of ctx.tabs.items.slice(1)) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
-    });
-  });
+  updater.updateOptions();
 
-  describe('items', () => {
-    test('adding items to a disabled tablist will receive tabindex -1', async () => {
-      const { lastItem, secondLastItem } = {
-        lastItem: ctx.lastItem,
-        secondLastItem: ctx.secondLastItem
-      };
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-      removeTab(lastItem);
-      removeTab(secondLastItem);
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      ctx.tablist.setAttribute('aria-disabled', 'true');
-      updater.updateOptions();
+  await annotate('adding items to a disabled tablist will receive tabindex -1');
 
-      for (const item of ctx.tabs.items) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
+  const { lastItem, secondLastItem } = {
+    lastItem: tabs.items.at(-1) as HTMLElement,
+    secondLastItem: tabs.items.at(-2) as HTMLElement
+  };
 
-      appendTab(ctx.container, 'Tab 4', 'Content 4');
-      appendTab(ctx.container, 'Tab 5', 'Content 5');
+  removeTab(lastItem);
+  removeTab(secondLastItem);
 
-      ctx.firstItem.setAttribute('aria-selected', 'false');
-      lastItem.setAttribute('aria-selected', 'true');
+  tablist.setAttribute('aria-disabled', 'true');
+  updater.updateOptions();
 
-      updater.updateSelection();
+  for (const item of tabs.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-      updater.updateItems();
+  appendTab(container, 'Tab 4', 'Content 4');
+  appendTab(container, 'Tab 5', 'Content 5');
 
-      for (const item of ctx.tabs.items) {
-        await expect.element(item).toHaveAttribute('tabindex', '-1');
-      }
-    });
-  });
+  firstItem.setAttribute('aria-selected', 'false');
+  lastItem.setAttribute('aria-selected', 'true');
+
+  updater.updateSelection();
+
+  updater.updateItems();
+
+  for (const item of tabs.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

@@ -1,17 +1,19 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { setupListbox } from '../../../-shared';
+import { Listbox } from '#src';
 
-describe('select first selection item when focus', () => {
-  const ctx = setupListbox();
+import { createListWithFruits, getItems } from '../../../-shared';
 
-  test('select first selection item when focus', async () => {
-    ctx.secondItem.setAttribute('aria-selected', 'true');
-    ctx.listbox.readSelection();
+test('select first selection item when focus', async () => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem } = getItems(listbox);
 
-    ctx.list.focus();
+  secondItem.setAttribute('aria-selected', 'true');
+  listbox.readSelection();
 
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-  });
+  list.focus();
+
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
 });

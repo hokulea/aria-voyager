@@ -1,30 +1,31 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Close with `ArrowLeft`', () => {
-  const ctx = setupCodeMenu();
+test('Close with `ArrowLeft`', async ({ annotate }) => {
+  const { codeMenu, shareMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const share = new Menu(shareMenu);
+  const { firstItem, fourthItem } = getItems(menu);
+  const { firstItem: shareFirstItem } = getItems(share);
 
-  test('open share menu', async () => {
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-    ctx.firstItem.focus();
+  firstItem.focus();
 
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowDown}');
-    await userEvent.keyboard('{ArrowRight}');
-    await expect.element(ctx.shareFirstItem).toHaveAttribute('tabindex', '0');
-    expect(document.activeElement).toBe(ctx.shareFirstItem);
-  });
+  await userEvent.keyboard('{ArrowDown}');
+  await userEvent.keyboard('{ArrowDown}');
+  await userEvent.keyboard('{ArrowDown}');
+  await userEvent.keyboard('{ArrowRight}');
+  await expect.element(shareFirstItem).toHaveAttribute('tabindex', '0');
+  expect(document.activeElement).toBe(shareFirstItem);
 
-  test('use `ArrowLeft` to close submenu', async () => {
-    await userEvent.keyboard('{ArrowLeft}');
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-  });
+  await annotate('use `ArrowLeft` to close submenu');
+  await userEvent.keyboard('{ArrowLeft}');
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-  test('has focus moved to the trigger of the submenu', () => {
-    expect(document.activeElement).toBe(ctx.fourthItem);
-  });
+  await annotate('has focus moved to the trigger of the submenu');
+  expect(document.activeElement).toBe(fourthItem);
 });

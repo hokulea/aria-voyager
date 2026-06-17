@@ -1,53 +1,50 @@
-import { describe, expect, it } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { setupListbox } from './-shared';
+import { Listbox } from '#src';
 
-describe('Listbox', () => {
-  describe('renders', () => {
-    const ctx = setupListbox();
+import { createListElement, createListWithFruits } from './-shared';
 
-    it('renders', () => {
-      expect(ctx.list.children.length).toBe(3);
-    });
-  });
+test('renders', () => {
+  const list = createListWithFruits();
 
-  describe('setup', () => {
-    describe('initialization', () => {
-      const ctx = setupListbox({ items: [] });
+  expect(list.children.length).toBe(3);
+});
 
-      it('has listbox role', async () => {
-        await expect.element(ctx.list).toHaveAttribute('role', 'listbox');
-      });
+test('initialization', async () => {
+  const list = createListElement(document.body);
 
-      it('sets tabindex', async () => {
-        await expect.element(ctx.list).toHaveAttribute('tabindex', '0');
-      });
-    });
+  new Listbox(list);
 
-    describe('items', () => {
-      const ctx = setupListbox();
+  await expect.element(list).toHaveAttribute('role', 'listbox');
+  await expect.element(list).toHaveAttribute('tabindex', '0');
+});
 
-      it('reads items', () => {
-        expect(ctx.listbox.items.length).toBe(3);
-      });
+test('reads items', () => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
 
-      it('items have ids', () => {
-        for (const item of ctx.listbox.items) {
-          expect(item.id).toBeTruthy();
-        }
-      });
-    });
-  });
+  expect(listbox.items.length).toBe(3);
+});
 
-  describe('disabled', () => {
-    const ctx = setupListbox({ disabled: true });
+test('items have ids', () => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
 
-    it('focus does not work', async () => {
-      ctx.list.dispatchEvent(new FocusEvent('focusin'));
+  for (const item of listbox.items) {
+    expect(item.id).toBeTruthy();
+  }
+});
 
-      for (const elem of ctx.listbox.items) {
-        await expect.element(elem).not.toHaveAttribute('aria-selected');
-      }
-    });
-  });
+test('disabled: focus does not work', async () => {
+  const list = createListWithFruits();
+
+  list.setAttribute('aria-disabled', 'true');
+
+  const listbox = new Listbox(list);
+
+  list.dispatchEvent(new FocusEvent('focusin'));
+
+  for (const elem of listbox.items) {
+    await expect.element(elem).not.toHaveAttribute('aria-selected');
+  }
 });

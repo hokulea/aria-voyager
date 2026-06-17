@@ -1,54 +1,53 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { List } from '#tests/components/list';
 
 import { getItems } from '../../-shared';
 
-const listbox = new List(document.body);
-const list = listbox.element;
+test('Scroll Downwards', async ({ annotate }) => {
+  const listbox = new List(document.body);
+  const list = listbox.element;
 
-list.style.height = '200px';
-list.style.position = 'relative';
-list.style.display = 'grid';
-list.style.overflow = 'auto';
+  list.style.height = '200px';
+  list.style.position = 'relative';
+  list.style.display = 'grid';
+  list.style.overflow = 'auto';
 
-// eslint-disable-next-line unicorn/prefer-iterator-to-array
-listbox.setItems([...Array.from({ length: 20 }).keys()].map((i) => `Item ${i + 1}`));
-for (const item of listbox.items) item.style.height = '19px';
+  // eslint-disable-next-line unicorn/prefer-iterator-to-array
+  listbox.setItems([...Array.from({ length: 20 }).keys()].map((i) => `Item ${i + 1}`));
+  for (const item of listbox.items) item.style.height = '19px';
 
-const { firstItem } = getItems(listbox.listbox);
+  const { firstItem } = getItems(listbox.listbox);
 
-describe('Scroll Downwards', () => {
   expect(list.scrollTop).toBe(0);
 
-  test('focus list to activate first item', async () => {
-    list.focus();
-    expect(document.activeElement).toBe(list);
-    await expect.element(list).toHaveAttribute('aria-activedescendant', firstItem.id);
-  });
+  await annotate('focus list to activate first item');
+  list.focus();
+  expect(document.activeElement).toBe(list);
+  await expect.element(list).toHaveAttribute('aria-activedescendant', firstItem.id);
 
-  test('use `ArrowDown` to scroll down', async () => {
-    let i = 0;
+  await annotate('use `ArrowDown` to scroll down');
 
-    while (i <= 8) {
-      await userEvent.keyboard('{ArrowDown}');
-      i++;
-    }
+  let i = 0;
 
-    expect(list.scrollTop).toBe(0);
-    await expect.element(list.children[i] as HTMLElement).toHaveAttribute('aria-selected', 'true');
-
+  while (i <= 8) {
     await userEvent.keyboard('{ArrowDown}');
-    expect(Math.round(list.scrollTop)).toBe(11);
-    await expect
-      .element(list.children[i + 1] as HTMLElement)
-      .toHaveAttribute('aria-selected', 'true');
+    i++;
+  }
 
-    await userEvent.keyboard('{ArrowDown}');
-    expect(Math.round(list.scrollTop)).toBe(30);
-    await expect
-      .element(list.children[i + 2] as HTMLElement)
-      .toHaveAttribute('aria-selected', 'true');
-  });
+  expect(list.scrollTop).toBe(0);
+  await expect.element(list.children[i] as HTMLElement).toHaveAttribute('aria-selected', 'true');
+
+  await userEvent.keyboard('{ArrowDown}');
+  expect(Math.round(list.scrollTop)).toBe(11);
+  await expect
+    .element(list.children[i + 1] as HTMLElement)
+    .toHaveAttribute('aria-selected', 'true');
+
+  await userEvent.keyboard('{ArrowDown}');
+  expect(Math.round(list.scrollTop)).toBe(30);
+  await expect
+    .element(list.children[i + 2] as HTMLElement)
+    .toHaveAttribute('aria-selected', 'true');
 });

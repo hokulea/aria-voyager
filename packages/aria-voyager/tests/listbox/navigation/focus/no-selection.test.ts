@@ -1,15 +1,17 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { setupListbox } from '../../-shared';
+import { Listbox } from '#src';
 
-describe('focus activates the first item', () => {
-  const ctx = setupListbox();
+import { createListWithFruits, getItems } from '../../-shared';
 
-  test('focus activates the first item', async () => {
-    ctx.list.dispatchEvent(new FocusEvent('focusin'));
+test('focus activates the first item', async () => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem } = getItems(listbox);
 
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-  });
+  list.dispatchEvent(new FocusEvent('focusin'));
+
+  expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
 });

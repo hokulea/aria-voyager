@@ -1,30 +1,28 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../-shared';
+import { Listbox } from '#src';
 
-describe('With Pointer', () => {
-  const ctx = setupListbox();
+import { createListWithFruits, getItems } from '../../-shared';
 
-  test('start', async () => {
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
-  });
+test('With Pointer', async ({ annotate }) => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('select second item', async () => {
-    await userEvent.click(ctx.secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
-  });
+  await annotate('select second item');
+  await userEvent.click(secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  test('select third item', async () => {
-    await userEvent.click(ctx.thirdItem);
-
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await annotate('select third item');
+  await userEvent.click(thirdItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

@@ -1,39 +1,36 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
 
-describe('Invoking a menu item closes all submenus', () => {
-  const ctx = setupCodeMenu({ withTrigger: true });
+test('Invoking a menu item closes all submenus', async ({ annotate }) => {
+  const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
+  const menu = new Menu(codeMenu);
+  const share = new Menu(shareMenu);
+  const social = new Menu(socialMenu);
+  const { fourthItem } = getItems(menu);
+  const { secondItem: shareSecondItem } = getItems(share);
 
-  test('start', async () => {
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBeFalsy();
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBeFalsy();
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBeFalsy();
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBeFalsy();
 
-  test('open the menus', async () => {
-    await userEvent.click(ctx.triggerButton);
+  await annotate('open the menus');
+  await userEvent.click(triggerButton);
 
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-    // does not work under playwright
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(ctx.fourthItem);
-    // await userEvent.hover(ctx.shareSecondItem);
+  fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    ctx.fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-    ctx.shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(true);
 
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(true);
-  });
+  await annotate('use `Enter` on a menu item closes all submenus');
+  await userEvent.hover(social.items[1]);
+  await userEvent.keyboard('{Enter}');
 
-  test('use `Enter` on a menu item closes all submenus', async () => {
-    await userEvent.hover(ctx.social.items[1]);
-    await userEvent.keyboard('{Enter}');
-
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 });

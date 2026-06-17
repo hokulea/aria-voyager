@@ -1,96 +1,82 @@
-import { beforeAll, describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../-shared';
+import { Listbox } from '#src';
 
-describe('Navigate with `ArrowUp`', () => {
-  const ctx = setupListbox();
+import { createListWithFruits, getItems } from '../../-shared';
 
-  test('start', async () => {
-    await expect.element(ctx.list).not.toHaveAttribute('aria-activedescendant');
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
+test('Navigate with `ArrowUp`', async ({ annotate }) => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('focus list to activate first item', () => {
-    ctx.list.focus();
-    expect(document.activeElement).toBe(ctx.list);
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
-  });
+  await expect.element(list).not.toHaveAttribute('aria-activedescendant');
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 
-  test('use `End` key to activate last item', async () => {
-    await userEvent.keyboard('{End}');
+  await annotate('focus list to activate first item');
+  list.focus();
+  expect(document.activeElement).toBe(list);
+  expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
 
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.thirdItem.id);
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-current', 'true');
-  });
+  await annotate('use `End` key to activate last item');
+  await userEvent.keyboard('{End}');
+  expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
 
-  test('use `ArrowUp` key to activate second item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
+  await annotate('use `ArrowUp` key to activate second item');
+  await userEvent.keyboard('{ArrowUp}');
+  expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.secondItem.id);
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
+  await annotate('use `ArrowUp` key to activate first item');
+  await userEvent.keyboard('{ArrowUp}');
+  expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 
-  test('use `ArrowUp` key to activate first item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
-
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
-
-  test('use `ArrowUp` key to, but keep first item activated (hit beginning of list)', async () => {
-    await userEvent.keyboard('{ArrowUp}');
-
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
+  await annotate('use `ArrowUp` key, but keep first item activated (hit beginning of list)');
+  await userEvent.keyboard('{ArrowUp}');
+  expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 });
 
-describe('Navigate with `ArrowUp`, skip disabled item', () => {
-  const ctx = setupListbox();
+test('Navigate with `ArrowUp`, skip disabled item', async ({ annotate }) => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  beforeAll(() => {
-    ctx.secondItem.setAttribute('aria-disabled', 'true');
-  });
+  secondItem.setAttribute('aria-disabled', 'true');
 
-  test('start', async () => {
-    await expect.element(ctx.list).not.toHaveAttribute('aria-activedescendant');
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
+  await expect.element(list).not.toHaveAttribute('aria-activedescendant');
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 
-  test('focus list to activate first item', () => {
-    ctx.list.focus();
-    expect(document.activeElement).toBe(ctx.list);
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
-  });
+  await annotate('focus list to activate first item');
+  list.focus();
+  expect(document.activeElement).toBe(list);
+  expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
 
-  test('use `End` key to activate last item', async () => {
-    await userEvent.keyboard('{End}');
+  await annotate('use `End` key to activate last item');
+  await userEvent.keyboard('{End}');
+  expect(list.getAttribute('aria-activedescendant')).toBe(thirdItem.id);
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
 
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.thirdItem.id);
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-current', 'true');
-  });
-
-  test('use `ArrowUp` key to activate first item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
-
-    expect(ctx.list.getAttribute('aria-activedescendant')).toBe(ctx.firstItem.id);
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-current', 'true');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-current');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-current');
-  });
+  await annotate('use `ArrowUp` key to activate first item');
+  await userEvent.keyboard('{ArrowUp}');
+  expect(list.getAttribute('aria-activedescendant')).toBe(firstItem.id);
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
 });

@@ -22,6 +22,7 @@ export default defineConfig({
     // force: true
   },
   test: {
+    setupFiles: ['./tests/setup.ts'],
     retry: 1,
     testTimeout: 5000,
     isolate: true,

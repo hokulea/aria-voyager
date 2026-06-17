@@ -1,26 +1,28 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../../-shared';
+import { Listbox } from '#src';
 
-describe('Select from first to third item with `End` and `Shift` key', () => {
-  const ctx = setupListbox({ multiSelect: true });
+import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-  test('Select from first to third item with `End` and `Shift` key', async () => {
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
+test('Select from first to third item with `End` and `Shift` key', async () => {
+  const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-    await userEvent.click(ctx.firstItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
+  await userEvent.click(firstItem);
 
-    await userEvent.keyboard('{Shift>}{End}');
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await userEvent.keyboard('{Shift>}{End}');
+
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

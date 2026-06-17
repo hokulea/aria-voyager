@@ -1,36 +1,35 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Hover activates item', () => {
-  const ctx = setupCodeMenu();
+test('Hover activates item', async ({ annotate }) => {
+  const { codeMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const { firstItem, secondItem } = getItems(menu);
 
-  test('start', async () => {
-    for (const item of ctx.menu.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+  for (const item of menu.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    expect(ctx.menu.activeItem).toBeFalsy();
-  });
+  expect(menu.activeItem).toBeFalsy();
 
-  test('hovers first item to make it active', async () => {
-    await userEvent.hover(ctx.firstItem);
+  await annotate('hovers first item to make it active');
+  await userEvent.hover(firstItem);
 
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    expect(ctx.menu.activeItem).toBe(ctx.firstItem);
-  });
+  expect(menu.activeItem).toBe(firstItem);
 
-  test('hovers second item to make it active', async () => {
-    await userEvent.hover(ctx.secondItem);
+  await annotate('hovers second item to make it active');
+  await userEvent.hover(secondItem);
 
-    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
+  await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
-    expect(ctx.menu.activeItem).toBe(ctx.secondItem);
+  expect(menu.activeItem).toBe(secondItem);
 
-    for (const item of ctx.menu.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of menu.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

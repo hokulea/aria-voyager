@@ -1,20 +1,20 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Hover opens submenu', () => {
-  const ctx = setupCodeMenu();
+test('Hover opens submenu', async ({ annotate }) => {
+  const { codeMenu, shareMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const { fourthItem } = getItems(menu);
 
-  test('start', async () => {
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-    expect(ctx.menu.activeItem).toBeUndefined();
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  expect(menu.activeItem).toBeUndefined();
 
-  test('hover item to show submenu', async () => {
-    await userEvent.hover(ctx.fourthItem);
+  await annotate('hover item to show submenu');
+  await userEvent.hover(fourthItem);
 
-    await expect.element(ctx.fourthItem).toHaveFocus();
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
-  });
+  await expect.element(fourthItem).toHaveFocus();
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
 });

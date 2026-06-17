@@ -1,98 +1,87 @@
-import { beforeAll, describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupTabs } from '#tests/tablist/-shared';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('Navigate with `ArrowDown`', () => {
-  const ctx = setupTabs();
+test('Navigate with `ArrowDown`', async ({ annotate }) => {
+  const { tablist, tabs } = createTabs();
+  const { firstItem, secondItem, thirdItem, lastItem } = getTabItems(tabs);
 
-  beforeAll(() => {
-    ctx.tablist.setAttribute('aria-orientation', 'vertical');
-  });
+  tablist.setAttribute('aria-orientation', 'vertical');
 
-  test('start', async () => {
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    expect(ctx.tabs.activeItem).toBeTruthy();
+  expect(tabs.activeItem).toBeTruthy();
 
-    ctx.firstItem.focus();
-    expect(document.activeElement).toBe(ctx.firstItem);
-  });
+  firstItem.focus();
+  expect(document.activeElement).toBe(firstItem);
 
-  test('use `ArrowDown` key to activate second item', async () => {
-    await userEvent.keyboard('{ArrowDown}');
+  await annotate('use `ArrowDown` key to activate second item');
+  await userEvent.keyboard('{ArrowDown}');
 
-    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
+  await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `ArrowDown` key to activate third item', async () => {
-    await userEvent.keyboard('{ArrowDown}');
+  await annotate('use `ArrowDown` key to activate third item');
+  await userEvent.keyboard('{ArrowDown}');
 
-    await expect.element(ctx.thirdItem).toHaveAttribute('tabindex', '0');
+  await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 2)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 2)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `ArrowDown` key at the last item does nothing', async () => {
-    await userEvent.keyboard('{End}');
-    await userEvent.keyboard('{ArrowDown}');
+  await annotate('use `ArrowDown` key at the last item does nothing');
+  await userEvent.keyboard('{End}');
+  await userEvent.keyboard('{ArrowDown}');
 
-    await expect.element(ctx.lastItem).toHaveAttribute('tabindex', '0');
+  await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.slice(0, -1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.slice(0, -1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });
 
-describe('navigate with `ArrowDown`, skipping disabled items', () => {
-  const ctx = setupTabs();
+test('navigate with `ArrowDown`, skipping disabled items', async ({ annotate }) => {
+  const { tablist, tabs } = createTabs();
+  const { firstItem, secondItem, thirdItem, fourthItem } = getTabItems(tabs);
 
-  beforeAll(() => {
-    ctx.tablist.setAttribute('aria-orientation', 'vertical');
-    ctx.thirdItem.setAttribute('aria-disabled', 'true');
-  });
+  tablist.setAttribute('aria-orientation', 'vertical');
+  thirdItem.setAttribute('aria-disabled', 'true');
 
-  test('start', async () => {
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+  for (const item of tabs.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    expect(ctx.tabs.activeItem).toBeTruthy();
+  expect(tabs.activeItem).toBeTruthy();
 
-    ctx.firstItem.focus();
-    expect(document.activeElement).toBe(ctx.firstItem);
-  });
+  firstItem.focus();
+  expect(document.activeElement).toBe(firstItem);
 
-  test('use `ArrowDown` key to activate second item', async () => {
-    await userEvent.keyboard('{ArrowDown}');
+  await annotate('use `ArrowDown` key to activate second item');
+  await userEvent.keyboard('{ArrowDown}');
 
-    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
+  await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `ArrowDown` key to activate fourth item', async () => {
-    await userEvent.keyboard('{ArrowDown}');
+  await annotate('use `ArrowDown` key to activate fourth item');
+  await userEvent.keyboard('{ArrowDown}');
 
-    await expect.element(ctx.fourthItem).toHaveAttribute('tabindex', '0');
+  await expect.element(fourthItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== 3)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items.filter((_, idx) => idx !== 3)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

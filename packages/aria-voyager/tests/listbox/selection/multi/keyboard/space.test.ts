@@ -1,24 +1,24 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../../-shared';
+import { Listbox } from '#src';
 
-describe('Toggle selection with `Space` key', () => {
-  const ctx = setupListbox({ multiSelect: true });
+import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
 
-  test('focus list', async () => {
-    ctx.list.focus();
+test('Toggle selection with `Space` key', async ({ annotate }) => {
+  const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem } = getItems(listbox);
 
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-  });
+  await annotate('focus list');
+  list.focus();
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
 
-  test('use `Space` to select active item', async () => {
-    await userEvent.keyboard(' ');
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await annotate('use `Space` to select active item');
+  await userEvent.keyboard(' ');
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
 
-  test('use `Space` to deselect active item', async () => {
-    await userEvent.keyboard(' ');
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-  });
+  await annotate('use `Space` to deselect active item');
+  await userEvent.keyboard(' ');
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
 });

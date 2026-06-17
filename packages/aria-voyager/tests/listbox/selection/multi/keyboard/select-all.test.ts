@@ -1,21 +1,22 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../../-shared';
+import { Listbox } from '#src';
 
-describe('Select all', () => {
-  const ctx = setupListbox({ multiSelect: true });
+import { createMultiSelectListWithFruits } from '../../../-shared';
 
-  test('use `Meta` + `A` key to select all items', async () => {
-    for (const item of ctx.listbox.items) {
-      await expect.element(item).not.toHaveAttribute('aria-selected');
-    }
+test('use `Meta` + `A` key to select all items', async () => {
+  const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
 
-    ctx.list.focus();
-    await userEvent.keyboard('{Meta>}a');
+  for (const item of listbox.items) {
+    await expect.element(item).not.toHaveAttribute('aria-selected');
+  }
 
-    for (const item of ctx.listbox.items) {
-      await expect.element(item).toHaveAttribute('aria-selected', 'true');
-    }
-  });
+  list.focus();
+  await userEvent.keyboard('{Meta>}a');
+
+  for (const item of listbox.items) {
+    await expect.element(item).toHaveAttribute('aria-selected', 'true');
+  }
 });

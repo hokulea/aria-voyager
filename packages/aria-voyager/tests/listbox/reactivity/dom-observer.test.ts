@@ -1,89 +1,59 @@
-import { describe, expect, test, vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
-import { appendItemToList, getItems } from '#tests/components/list';
+import { Listbox } from '#src';
+import { appendItemToList } from '#tests/components/list';
 
-import { setupListbox } from '../-shared';
+import { createListWithFruits, getItems } from '../-shared';
 
-describe('DOM Observer', () => {
-  const ctx = setupListbox();
+test('DOM Observer', async ({ annotate }) => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
 
-  test('start', () => {
-    expect(ctx.listbox.items.length).toBe(3);
-  });
+  expect(listbox.items.length).toBe(3);
 
-  test('reads elements on appending', async () => {
-    appendItemToList('Grapefruit', ctx.list);
+  await annotate('reads elements on appending');
+  appendItemToList('Grapefruit', list);
+  await vi.waitUntil(() => listbox.items.length === 4);
+  expect(listbox.items.length).toBe(4);
 
-    await vi.waitUntil(() => getItems(ctx.list).length === 4);
+  await annotate('reads selection on external update');
 
-    expect(ctx.listbox.items.length).toBe(4);
-  });
+  const { secondItem } = getItems(listbox);
 
-  test('reads selection on external update', async () => {
-    const secondItem = ctx.listbox.items[1];
+  expect(listbox.selection.length).toBe(0);
+  secondItem.setAttribute('aria-selected', 'true');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  expect(listbox.selection.length).toBe(1);
 
-    expect(ctx.listbox.selection.length).toBe(0);
+  await annotate('removes items that contain selection');
+  expect(listbox.selection.length).toBe(1);
+  expect(listbox.items.length).toBe(4);
+  secondItem.remove();
+  await vi.waitUntil(() => listbox.items.length === 3);
+  expect(listbox.items.length).toBe(3);
+  expect(listbox.selection.length).toBe(0);
 
-    secondItem.setAttribute('aria-selected', 'true');
+  await annotate('detects multi-select');
+  expect(listbox.options.multiple).toBeFalsy();
+  list.setAttribute('aria-multiselectable', 'true');
+  await expect.element(list).toHaveAttribute('aria-multiselectable', 'true');
+  expect(listbox.options.multiple).toBeTruthy();
 
-    await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await annotate('detects single-select');
+  expect(listbox.options.multiple).toBeTruthy();
+  list.removeAttribute('aria-multiselectable');
+  await expect.element(list).not.toHaveAttribute('aria-multiselectable');
+  expect(listbox.options.multiple).toBeFalsy();
 
-    expect(ctx.listbox.selection.length).toBe(1);
-  });
+  await annotate('sets tabindex to -1 when aria-disabled is true');
+  await expect.element(list).toHaveAttribute('tabindex', '0');
+  list.setAttribute('aria-disabled', 'true');
+  await expect.element(list).toHaveAttribute('aria-disabled', 'true');
+  await expect.element(list).toHaveAttribute('tabindex', '-1');
 
-  test('removes items that contain selection', async () => {
-    expect(ctx.listbox.selection.length).toBe(1);
-    expect(ctx.listbox.items.length).toBe(4);
-
-    const secondItem = ctx.list.children[1];
-
-    secondItem.remove();
-
-    await vi.waitUntil(() => getItems(ctx.list).length === 3);
-
-    expect(ctx.listbox.items.length).toBe(3);
-    expect(ctx.listbox.selection.length).toBe(0);
-  });
-
-  describe('read options', () => {
-    test('detects multi-select', async () => {
-      expect(ctx.listbox.options.multiple).toBeFalsy();
-
-      ctx.list.setAttribute('aria-multiselectable', 'true');
-
-      await expect.element(ctx.list).toHaveAttribute('aria-multiselectable', 'true');
-
-      expect(ctx.listbox.options.multiple).toBeTruthy();
-    });
-
-    test('detects single-select', async () => {
-      expect(ctx.listbox.options.multiple).toBeTruthy();
-
-      ctx.list.removeAttribute('aria-multiselectable');
-
-      await expect.element(ctx.list).not.toHaveAttribute('aria-multiselectable');
-
-      expect(ctx.listbox.options.multiple).toBeFalsy();
-    });
-
-    test('sets tabindex to -1 when the aria-disabled is `true`', async () => {
-      await expect.element(ctx.list).toHaveAttribute('tabindex', '0');
-
-      ctx.list.setAttribute('aria-disabled', 'true');
-
-      await expect.element(ctx.list).toHaveAttribute('aria-disabled', 'true');
-
-      await expect.element(ctx.list).toHaveAttribute('tabindex', '-1');
-    });
-
-    test('re-sets tabindex to 0 when the aria-disabled is removed', async () => {
-      await expect.element(ctx.list).toHaveAttribute('tabindex', '-1');
-
-      ctx.list.removeAttribute('aria-disabled');
-
-      await expect.element(ctx.list).not.toHaveAttribute('aria-disabled');
-
-      await expect.element(ctx.list).toHaveAttribute('tabindex', '0');
-    });
-  });
+  await annotate('re-sets tabindex to 0 when aria-disabled is removed');
+  await expect.element(list).toHaveAttribute('tabindex', '-1');
+  list.removeAttribute('aria-disabled');
+  await expect.element(list).not.toHaveAttribute('aria-disabled');
+  await expect.element(list).toHaveAttribute('tabindex', '0');
 });

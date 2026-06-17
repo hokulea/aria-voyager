@@ -1,60 +1,55 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
 
-describe('Invoking a menu item closes the menu', () => {
-  const ctx = setupCodeMenu({ withTrigger: true });
+test('Invoking a menu item closes the menu', async ({ annotate }) => {
+  const { codeMenu, shareMenu, socialMenu, triggerButton } = createCodeMenuWithTriggerButton();
+  const menu = new Menu(codeMenu);
+  const share = new Menu(shareMenu);
+  const social = new Menu(socialMenu);
+  const { fourthItem } = getItems(menu);
+  const { secondItem: shareSecondItem } = getItems(share);
 
-  test('start', async () => {
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 
-  test('open the menus', async () => {
-    await userEvent.click(ctx.triggerButton);
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
+  await annotate('open the menus');
+  await userEvent.click(triggerButton);
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(ctx.fourthItem);
-    // await userEvent.hover(ctx.shareSecondItem);
+  fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    ctx.fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-    ctx.shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(true);
 
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(true);
-  });
+  await annotate('clicking a menu item closes the menu');
+  await userEvent.click(social.items[1]);
 
-  test('clicking a menu item closes the menu', async () => {
-    await userEvent.click(ctx.social.items[1]);
-
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 });
 
-describe('Invoking a descending menu item closes the menu', () => {
-  const ctx = setupCodeMenu({ withTrigger: true });
+test('Invoking a descending menu item closes the menu', async ({ annotate }) => {
+  const { codeMenu, triggerButton, refactorHeader } = createCodeMenuWithTriggerButton();
+  const menu = new Menu(codeMenu);
+  const { secondItem } = getItems(menu);
 
-  test('start', async () => {
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
 
-  test('open the menus', async () => {
-    await userEvent.click(ctx.triggerButton);
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
-  });
+  await annotate('open the menu');
+  await userEvent.click(triggerButton);
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-  test('clicking a non-menu item keeps the menu open', async () => {
-    await userEvent.click(ctx.refactorHeader);
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
-  });
+  await annotate('clicking a non-menu item keeps the menu open');
+  await userEvent.click(refactorHeader);
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-  test('clicking a descendend menu item closes the menu', async () => {
-    await userEvent.click(ctx.secondItem);
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(false);
-  });
+  await annotate('clicking a descendend menu item closes the menu');
+  await userEvent.click(secondItem);
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(false);
 });

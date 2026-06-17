@@ -1,44 +1,38 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
 import { Tablist } from '#src';
-import { setupTabs } from '#tests/tablist/-shared';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('renders', () => {
-  const ctx = setupTabs();
+test('renders', () => {
+  const { tabs } = createTabs();
 
-  test('has 5 items', () => {
-    expect(ctx.tabs.items.length).toBe(5);
-  });
+  expect(tabs.items.length).toBe(5);
 });
 
-describe('setup', () => {
-  const ctx = setupTabs();
+test('setup', async ({ annotate }) => {
+  const { tablist, tabs } = createTabs();
+  const { firstItem } = getTabItems(tabs);
 
-  test('has menu role', async () => {
-    await expect.element(ctx.tablist).toHaveAttribute('role', 'tablist');
-  });
+  await expect.element(tablist).toHaveAttribute('role', 'tablist');
 
-  test('sets tabindex on the first item', async () => {
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
-  });
+  await annotate('sets tabindex on the first item');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-  test('items have tabindex', async () => {
-    for (const item of ctx.tabs.items) {
-      await expect.element(item).toHaveAttribute('tabindex');
-    }
-  });
+  await annotate('items have tabindex');
+
+  for (const item of tabs.items) {
+    await expect.element(item).toHaveAttribute('tabindex');
+  }
 });
 
-describe('disabled', () => {
-  const ctx = setupTabs();
+test('disabled', async () => {
+  const { tablist } = createTabs();
 
-  test('focus does not work', async () => {
-    ctx.tablist.setAttribute('aria-disabled', 'true');
+  tablist.setAttribute('aria-disabled', 'true');
 
-    const tabs = new Tablist(ctx.tablist);
+  const tabs = new Tablist(tablist);
 
-    for (const item of tabs.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of tabs.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

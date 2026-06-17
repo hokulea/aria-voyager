@@ -1,93 +1,78 @@
-import { beforeAll, describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenuWithTriggerButton, getItems } from '#tests/menu/-shared';
 
-describe('Pointer leaving menu clears active item', () => {
-  const ctx = setupCodeMenu({ withTrigger: true });
+test('Pointer leaving menu clears active item', async ({ annotate }) => {
+  const { codeMenu, triggerButton } = createCodeMenuWithTriggerButton();
+  const menu = new Menu(codeMenu);
+  const { firstItem, secondItem } = getItems(menu);
 
-  test('open the menu', async () => {
-    await userEvent.click(ctx.triggerButton);
+  await userEvent.click(triggerButton);
 
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-  test('hover item to make it active', async () => {
-    await userEvent.hover(ctx.secondItem);
+  await annotate('hover item to make it active');
+  await userEvent.hover(secondItem);
 
-    expect(ctx.menu.activeItem).toBe(ctx.secondItem);
-    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '0');
-  });
+  expect(menu.activeItem).toBe(secondItem);
+  await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
-  test('pointer leaving menu clears active item', async () => {
-    // Simulate pointer leaving the menu (moving to document body)
-    ctx.codeMenu.dispatchEvent(
-      new PointerEvent('pointerout', { bubbles: true, relatedTarget: document.body })
-    );
+  await annotate('pointer leaving menu clears active item');
+  codeMenu.dispatchEvent(
+    new PointerEvent('pointerout', { bubbles: true, relatedTarget: document.body })
+  );
 
-    // Active item should be first item
-    expect(ctx.menu.activeItem).toBe(ctx.firstItem);
-
-    // First item should have tabindex="0" for keyboard access
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
-
-    // Previously active item should have tabindex="-1"
-    await expect.element(ctx.secondItem).toHaveAttribute('tabindex', '-1');
-  });
+  expect(menu.activeItem).toBe(firstItem);
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(secondItem).toHaveAttribute('tabindex', '-1');
 });
 
-describe('Pointer leaving menu closes open submenus', () => {
-  const ctx = setupCodeMenu({ withTrigger: true });
+test('Pointer leaving menu closes open submenus', async ({ annotate }) => {
+  const { codeMenu, shareMenu, triggerButton } = createCodeMenuWithTriggerButton();
+  const menu = new Menu(codeMenu);
+  const { fourthItem } = getItems(menu);
 
-  test('open the menu', async () => {
-    await userEvent.click(ctx.triggerButton);
+  await userEvent.click(triggerButton);
 
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-  test('share menu is closed', async () => {
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 
-  test('hover share menuitom to open submenu', async () => {
-    await userEvent.hover(ctx.fourthItem);
+  await annotate('hover share item to open submenu');
+  await userEvent.hover(fourthItem);
 
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
 
-  test('pointer leaving menu closes submenu', async () => {
-    // Simulate pointer leaving the menu (moving to document body)
-    ctx.codeMenu.dispatchEvent(
-      new PointerEvent('pointerout', { bubbles: true, relatedTarget: document.body })
-    );
+  await annotate('pointer leaving menu closes submenu');
+  codeMenu.dispatchEvent(
+    new PointerEvent('pointerout', { bubbles: true, relatedTarget: document.body })
+  );
 
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
 });
 
-describe('Clicking menu item works after hover', () => {
-  const ctx = setupCodeMenu({ withTrigger: true });
+test('Clicking menu item works after hover', async ({ annotate }) => {
+  const { codeMenu, triggerButton } = createCodeMenuWithTriggerButton();
+  const menu = new Menu(codeMenu);
+  const { firstItem } = getItems(menu);
   let clicked = false;
 
-  beforeAll(() => {
-    ctx.firstItem.addEventListener('click', () => {
-      clicked = true;
-    });
+  firstItem.addEventListener('click', () => {
+    clicked = true;
   });
 
-  test('open the menu', async () => {
-    await userEvent.click(ctx.triggerButton);
+  await userEvent.click(triggerButton);
 
-    await expect.poll(() => ctx.codeMenu.matches(':popover-open')).toBe(true);
-  });
+  await expect.poll(() => codeMenu.matches(':popover-open')).toBe(true);
 
-  test('hover and click item fires click handler', async () => {
-    await userEvent.hover(ctx.firstItem);
+  await annotate('hover and click item fires click handler');
+  await userEvent.hover(firstItem);
 
-    expect(ctx.menu.activeItem).toBe(ctx.firstItem);
+  expect(menu.activeItem).toBe(firstItem);
 
-    await userEvent.click(ctx.firstItem);
+  await userEvent.click(firstItem);
 
-    expect(clicked).toBe(true);
-  });
+  expect(clicked).toBe(true);
 });

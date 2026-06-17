@@ -1,114 +1,100 @@
-import { beforeAll, describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Navigate with `ArrowUp`', () => {
-  const ctx = setupCodeMenu();
+test('Navigate with `ArrowUp`', async ({ annotate }) => {
+  const { codeMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const { firstItem, lastItem, secondLastItem, thirdLastItem } = getItems(menu);
 
-  test('start', async () => {
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.menu.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+  for (const item of menu.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    ctx.firstItem.focus();
-  });
+  firstItem.focus();
 
-  test('use `ArrowUp` at first item does nothing', async () => {
-    await userEvent.keyboard('{ArrowUp}');
+  await annotate('use `ArrowUp` at first item does nothing');
+  await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.menu.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of menu.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `END` to jump to the last item', async () => {
-    await userEvent.keyboard('{End}');
+  await annotate('use `END` to jump to the last item');
+  await userEvent.keyboard('{End}');
 
-    await expect.element(ctx.lastItem).toHaveAttribute('tabindex', '0');
+  await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.menu.items.slice(0, -1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of menu.items.slice(0, -1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `ArrowUp` key to activate second last item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
+  await annotate('use `ArrowUp` key to activate second last item');
+  await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(ctx.secondLastItem).toHaveAttribute('tabindex', '0');
+  await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.menu.items.filter(
-      (_, idx) => idx !== ctx.menu.items.indexOf(ctx.secondLastItem)
-    )) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `ArrowUp` key to activate third last item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
+  await annotate('use `ArrowUp` key to activate third last item');
+  await userEvent.keyboard('{ArrowUp}');
 
-    await expect.element(ctx.thirdLastItem).toHaveAttribute('tabindex', '0');
+  await expect.element(thirdLastItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of ctx.menu.items.filter(
-      (_, idx) => idx !== ctx.menu.items.indexOf(ctx.thirdLastItem)
-    )) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(thirdLastItem))) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });
 
-describe('navigate with `ArrowUp`, skip disabled items', () => {
-  const ctx = setupCodeMenu();
+test('navigate with `ArrowUp`, skip disabled items', async ({ annotate }) => {
+  const { codeMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const { firstItem, lastItem, secondLastItem, fourthLastItem } = getItems(menu);
 
-  beforeAll(() => {
-    ctx.thirdLastItem.setAttribute('aria-disabled', 'true');
-  });
+  const thirdLastItem = menu.items.at(-3) as HTMLElement;
 
-  test('start', async () => {
-    await expect.element(ctx.firstItem).toHaveAttribute('tabindex', '0');
+  thirdLastItem.setAttribute('aria-disabled', 'true');
 
-    for (const item of ctx.menu.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    ctx.firstItem.focus();
-  });
+  for (const item of menu.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-  test('use `END` to jump to the last item', async () => {
-    await userEvent.keyboard('{End}');
+  firstItem.focus();
 
-    await expect.element(ctx.lastItem).toHaveAttribute('tabindex', '0');
+  await annotate('use `END` to jump to the last item');
+  await userEvent.keyboard('{End}');
 
-    for (const item of ctx.menu.items.slice(0, -1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  await expect.element(lastItem).toHaveAttribute('tabindex', '0');
 
-  test('use `ArrowUp` key to activate second last item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
+  for (const item of menu.items.slice(0, -1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    await expect.element(ctx.secondLastItem).toHaveAttribute('tabindex', '0');
+  await annotate('use `ArrowUp` key to activate second last item');
+  await userEvent.keyboard('{ArrowUp}');
 
-    for (const item of ctx.menu.items.filter(
-      (_, idx) => idx !== ctx.menu.items.indexOf(ctx.secondLastItem)
-    )) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  await expect.element(secondLastItem).toHaveAttribute('tabindex', '0');
 
-  test('use `ArrowUp` key to activate fourth last item', async () => {
-    await userEvent.keyboard('{ArrowUp}');
+  for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(secondLastItem))) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    await expect.element(ctx.fourthLastItem).toHaveAttribute('tabindex', '0');
+  await annotate('use `ArrowUp` key to activate fourth last item');
+  await userEvent.keyboard('{ArrowUp}');
 
-    for (const item of ctx.menu.items.filter(
-      (_, idx) => idx !== ctx.menu.items.indexOf(ctx.fourthLastItem)
-    )) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  await expect.element(fourthLastItem).toHaveAttribute('tabindex', '0');
+
+  for (const item of menu.items.filter((_, idx) => idx !== menu.items.indexOf(fourthLastItem))) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

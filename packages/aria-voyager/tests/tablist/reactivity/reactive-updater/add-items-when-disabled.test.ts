@@ -1,31 +1,30 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { ReactiveUpdateStrategy } from '#src';
-import { appendTab, getItems } from '#tests/components/tabs';
-import { setupTabs } from '#tests/tablist/-shared';
+import { ReactiveUpdateStrategy, Tablist } from '#src';
+import { appendTab, createTabElement, getItems } from '#tests/components/tabs';
 
-describe('add items when disabled', () => {
+test('add items when disabled', () => {
   const updater = new ReactiveUpdateStrategy();
-  const ctx = setupTabs({ updater, tabCount: 0 });
+  const { container, tablist } = createTabElement(document.body);
 
-  test('add items when disabled', () => {
-    ctx.tablist.setAttribute('aria-disabled', 'true');
+  tablist.setAttribute('aria-disabled', 'true');
 
-    updater.updateOptions();
+  const tabs = new Tablist(tablist, { updater });
 
-    appendTab(ctx.container, 'Grapefruit', 'For summer');
-    appendTab(ctx.container, 'Apple', 'With cinamon');
-    appendTab(ctx.container, 'Banana', 'For Smoothie');
+  updater.updateOptions();
 
-    const [firstItem] = getItems(ctx.tablist);
+  appendTab(container, 'Grapefruit', 'For summer');
+  appendTab(container, 'Apple', 'With cinamon');
+  appendTab(container, 'Banana', 'For Smoothie');
 
-    firstItem.setAttribute('aria-selected', 'true');
+  const [firstItem] = getItems(tablist);
 
-    updater.updateItems();
-    updater.updateSelection();
+  firstItem.setAttribute('aria-selected', 'true');
 
-    for (const tab of ctx.tabs.items) expect(tab).toHaveAttribute('tabindex', '-1');
+  updater.updateItems();
+  updater.updateSelection();
 
-    expect(ctx.tabs.selection).toEqual([firstItem]);
-  });
+  for (const tab of tabs.items) expect(tab).toHaveAttribute('tabindex', '-1');
+
+  expect(tabs.selection).toEqual([firstItem]);
 });

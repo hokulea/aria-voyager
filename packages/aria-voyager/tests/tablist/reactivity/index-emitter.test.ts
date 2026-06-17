@@ -1,11 +1,12 @@
-import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { IndexEmitStrategy } from '#src';
-import { setupTabs } from '#tests/tablist/-shared';
+import { createTabs, getTabItems } from '#tests/tablist/-shared';
 
-describe('IndexEmitter', () => {
-  const ctx = setupTabs();
+test('IndexEmitter', async ({ annotate }) => {
+  const { tabs } = createTabs();
+  const { secondItem, thirdItem } = getTabItems(tabs);
 
   const listeners = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -14,23 +15,21 @@ describe('IndexEmitter', () => {
     activateItem() {}
   };
 
-  beforeAll(() => {
-    new IndexEmitStrategy(ctx.tabs, listeners);
-  });
+  new IndexEmitStrategy(tabs, listeners);
 
-  test('emits selection', async () => {
-    const selectSpy = vi.spyOn(listeners, 'select');
+  await annotate('emits selection');
 
-    await userEvent.click(ctx.secondItem);
+  const selectSpy = vi.spyOn(listeners, 'select');
 
-    expect(selectSpy).toHaveBeenCalledWith([1]);
-  });
+  await userEvent.click(secondItem);
 
-  test('emits active item', async () => {
-    const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+  expect(selectSpy).toHaveBeenCalledWith([1]);
 
-    await userEvent.click(ctx.thirdItem);
+  await annotate('emits active item');
 
-    expect(activateItemSpy).toHaveBeenCalledWith(2);
-  });
+  const activateItemSpy = vi.spyOn(listeners, 'activateItem');
+
+  await userEvent.click(thirdItem);
+
+  expect(activateItemSpy).toHaveBeenCalledWith(2);
 });

@@ -1,53 +1,40 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupListbox } from '../../-shared';
+import { Listbox } from '#src';
 
-describe('Select with Pointer', () => {
-  const ctx = setupListbox({ multiSelect: true });
+import { createMultiSelectListWithFruits, getItems } from '../../-shared';
 
-  test('start', async () => {
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
-  });
+test('Select with Pointer', async ({ annotate }) => {
+  const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
-  test('select second item', async () => {
-    await userEvent.click(ctx.secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.thirdItem).not.toHaveAttribute('aria-selected');
-  });
+  await annotate('select second item');
+  await userEvent.click(secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  test('select third item with `Meta` key', async () => {
-    // https://github.com/hokulea/aria-voyager/issues/259
-    // const user = userEvent.setup();
+  await annotate('select third item with `Meta` key');
+  thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-    // await user.keyboard('{Meta>}');
-    // await user.click(ctx.thirdItem);
-    // await user.keyboard('{/Meta}');
+  await annotate('deselect second item with `Meta` key');
+  secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 
-    ctx.thirdItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
-
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
-
-  test('deselect second item with `Meta` key', async () => {
-    ctx.secondItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, metaKey: true }));
-
-    await expect.element(ctx.firstItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.secondItem).not.toHaveAttribute('aria-selected');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
-
-  test('select third to first item with `Shift` key', async () => {
-    ctx.firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
-
-    await expect.element(ctx.firstItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.secondItem).toHaveAttribute('aria-selected', 'true');
-    await expect.element(ctx.thirdItem).toHaveAttribute('aria-selected', 'true');
-  });
+  await annotate('select third to first item with `Shift` key');
+  firstItem.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, shiftKey: true }));
+  await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
+  await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });

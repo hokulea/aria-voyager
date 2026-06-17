@@ -1,32 +1,30 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
-import { setupCodeMenu } from '#tests/menu/-shared';
+import { Menu } from '#src';
+import { createCodeMenu, getItems } from '#tests/menu/-shared';
 
-describe('Invoking a menu item closes all submenus', () => {
-  const ctx = setupCodeMenu();
+test('Invoking a submenu item closes all submenus', async ({ annotate }) => {
+  const { codeMenu, shareMenu, socialMenu } = createCodeMenu();
+  const menu = new Menu(codeMenu);
+  const share = new Menu(shareMenu);
+  const social = new Menu(socialMenu);
+  const { fourthItem } = getItems(menu);
+  const { secondItem: shareSecondItem } = getItems(share);
 
-  test('start', async () => {
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 
-  test('open the sub-submenu', async () => {
-    // https://github.com/hokulea/aria-voyager/issues/264
-    // await userEvent.hover(ctx.fourthItem);
-    // await userEvent.hover(ctx.shareSecondItem);
+  await annotate('open the sub-submenu');
+  fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
 
-    ctx.fourthItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
-    ctx.shareSecondItem.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(true);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(true);
 
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(true);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(true);
-  });
+  await annotate('clicking a menu item closes all submenus');
+  await userEvent.click(social.items[1]);
 
-  test('clicking a menu item closes all submenus', async () => {
-    await userEvent.click(ctx.social.items[1]);
-
-    await expect.poll(() => ctx.shareMenu.matches(':popover-open')).toBe(false);
-    await expect.poll(() => ctx.socialMenu.matches(':popover-open')).toBe(false);
-  });
+  await expect.poll(() => shareMenu.matches(':popover-open')).toBe(false);
+  await expect.poll(() => socialMenu.matches(':popover-open')).toBe(false);
 });
