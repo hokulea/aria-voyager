@@ -36,18 +36,8 @@ export default defineConfig({
       enabled: true,
       headless: true,
       screenshotFailures: false,
-      provider: playwright({
-        // launchOptions: {
-        //   // slowMo: 100
-        //   slowMo: 50
-        // }
-      }),
-      instances: [
-        { browser: 'firefox' },
-        // tests are flaky in playwright + chromium/webkit
-        { browser: 'chromium' },
-        { browser: 'webkit' }
-      ]
+      provider: playwright(),
+      instances: [{ browser: 'firefox' }, { browser: 'chromium' }, { browser: 'webkit' }]
     }
   }
 });
