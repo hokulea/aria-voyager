@@ -42,10 +42,6 @@ export class Group extends Control {
     // setup
     element.role = 'group';
 
-    if (!element.hasAttribute('tabindex')) {
-      element.setAttribute('tabindex', '0');
-    }
-
     this.readOptions();
     this.readItems();
   }
