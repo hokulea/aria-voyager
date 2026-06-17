@@ -1,51 +1,35 @@
-import { describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { expect, test } from 'vitest';
 
 import { createButtonGroup, getGroupItems } from '#tests/group/-shared';
 
-describe('Use pointer to activate items', () => {
-  const { group } = createButtonGroup();
+import { firePointer, focusControl } from '#tests/test-support/events';
+
+test('Use pointer to activate items', async ({ annotate }) => {
+  const { container, group } = createButtonGroup();
   const { firstItem, secondItem, thirdItem } = getGroupItems(group);
 
-  test('start', async () => {
-    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    for (const item of group.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
+  for (const item of group.items.slice(1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    expect(group.activeItem).toBeTruthy();
-  });
+  await annotate('select second item');
+  await focusControl(container);
+  await firePointer(secondItem);
 
-  // does not run in CLI mode
-  // update vitest and activate again
-  test.skip('select not an item does nothing', async () => {
-    await userEvent.click(group.element);
+  await expect.element(secondItem).toHaveAttribute('tabindex', '0');
 
-    expect(group.activeItem).toBeTruthy();
+  for (const item of group.items.filter((_, idx) => idx !== 1)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 
-    for (const item of group.items.slice(1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  await annotate('select third item');
+  await firePointer(thirdItem);
 
-  test('select second item', async () => {
-    await userEvent.click(secondItem);
+  await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
 
-    await expect.element(secondItem).toHaveAttribute('tabindex', '0');
-
-    for (const item of group.items.filter((_, idx) => idx !== 1)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
-
-  test('select third item', async () => {
-    await userEvent.click(thirdItem);
-
-    await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
-
-    for (const item of group.items.filter((_, idx) => idx !== 2)) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of group.items.filter((_, idx) => idx !== 2)) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });

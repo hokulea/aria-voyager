@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 
 import { createButtonGroup, getGroupItems } from '#tests/group/-shared';
 
@@ -8,38 +8,28 @@ test('renders', () => {
   expect(group.items.length).toBe(5);
 });
 
-describe('setup', () => {
-  test('has menu role', async () => {
-    const { container } = createButtonGroup();
+test('setup', async ({ annotate }) => {
+  const { container, group } = createButtonGroup();
+  const { firstItem } = getGroupItems(group);
 
-    await expect.element(container).toHaveAttribute('role', 'group');
-  });
+  await expect.element(container).toHaveAttribute('role', 'group');
 
-  test('sets tabindex on the first item', async () => {
-    const { group } = createButtonGroup();
+  await annotate('sets tabindex on the first item');
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
 
-    const { firstItem } = getGroupItems(group);
+  await annotate('items have tabindex');
 
-    await expect.element(firstItem).toHaveAttribute('tabindex', '0');
-  });
-
-  test('items have tabindex', async () => {
-    const { group } = createButtonGroup();
-
-    for (const item of group.items) {
-      await expect.element(item).toHaveAttribute('tabindex');
-    }
-  });
+  for (const item of group.items) {
+    await expect.element(item).toHaveAttribute('tabindex');
+  }
 });
 
-describe('disabled', () => {
-  test('focus does not work', async () => {
-    const { container, group } = createButtonGroup();
+test('disabled', async () => {
+  const { container, group } = createButtonGroup();
 
-    container.setAttribute('aria-disabled', 'true');
+  container.setAttribute('aria-disabled', 'true');
 
-    for (const item of group.items) {
-      await expect.element(item).toHaveAttribute('tabindex', '-1');
-    }
-  });
+  for (const item of group.items) {
+    await expect.element(item).toHaveAttribute('tabindex', '-1');
+  }
 });
