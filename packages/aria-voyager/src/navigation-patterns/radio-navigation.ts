@@ -81,32 +81,33 @@ export class RadioNavigation implements NavigationPattern {
   #handleFocus(_event: FocusEvent, item: Item) {
     // focusin: automatic mode checks the focused item
     if (this.#behavior.singleSelection === 'automatic' && this.#isRadioItem(item)) {
-      this.#check(item);
+      this.#select(item);
     }
   }
 
   #handlePointer(_event: MouseEvent, item: Item) {
     // pointerup: check the clicked item
     if (this.#isRadioItem(item)) {
-      this.#check(item);
+      this.#select(item);
     }
   }
 
   #handleKeyboard(event: KeyboardEvent, item?: Item) {
     // Space: check the active item
-    if (event.key === ' ' && this.control.activeItem && this.#isRadioItem(this.control.activeItem)) {
-      this.#check(this.control.activeItem);
+    if (
+      event.key === ' ' &&
+      this.control.activeItem &&
+      this.#isRadioItem(this.control.activeItem)
+    ) {
+      this.#select(this.control.activeItem);
+
       return;
     }
 
     // Automatic mode: check the item when navigating with arrow keys
     // (item is set by NextNavigation/PreviousNavigation/etc.)
-    if (
-      this.#behavior.singleSelection === 'automatic' &&
-      item &&
-      this.#isRadioItem(item)
-    ) {
-      this.#check(item);
+    if (this.#behavior.singleSelection === 'automatic' && item && this.#isRadioItem(item)) {
+      this.#select(item);
     }
   }
 
@@ -174,7 +175,7 @@ export class RadioNavigation implements NavigationPattern {
   /**
    * Check an item: uncheck siblings in same group, emit.
    */
-  #check(item: Item): void {
+  #select(item: Item): void {
     const group = this.#getGroup(item);
     const groupItems = this.#groups.get(group) ?? [];
 
