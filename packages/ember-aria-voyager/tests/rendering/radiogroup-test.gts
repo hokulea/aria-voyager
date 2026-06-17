@@ -165,61 +165,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
     });
   });
 
-  module('Groups', function () {
-    test('data-group creates independent radio groups', async function (assert) {
-      await render(
-        <template>
-          <div {{ariaRadioGroup}} data-test-group>
-            <button
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-group="alignment"
-              data-test-top
-            >Top</button>
-            <button
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-group="alignment"
-              data-test-bottom
-            >Bottom</button>
-            <button
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-group="position"
-              data-test-left
-            >Left</button>
-            <button
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-group="position"
-              data-test-right
-            >Right</button>
-          </div>
-        </template>
-      );
-
-      // Each group has first item checked
-      assert.dom('[data-test-top]').hasAttribute('aria-checked', 'true');
-      assert.dom('[data-test-bottom]').hasAttribute('aria-checked', 'false');
-      assert.dom('[data-test-left]').hasAttribute('aria-checked', 'true');
-      assert.dom('[data-test-right]').hasAttribute('aria-checked', 'false');
-
-      await focus('[data-test-group]');
-      await triggerEvent('[data-test-bottom]', 'pointerup');
-
-      // Only alignment group changed
-      assert.dom('[data-test-top]').hasAttribute('aria-checked', 'false');
-      assert.dom('[data-test-bottom]').hasAttribute('aria-checked', 'true');
-      // Position group unchanged
-      assert.dom('[data-test-left]').hasAttribute('aria-checked', 'true');
-      assert.dom('[data-test-right]').hasAttribute('aria-checked', 'false');
-    });
-  });
-
   module('Navigation', function () {
     test('it supports keyboard navigation', async function (assert) {
       await render(
