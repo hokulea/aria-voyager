@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import { Menu } from '#src';
 import { createMenuElement } from '#tests/components/menu';
 import { setupCodeMenu } from '#tests/menu/-shared';

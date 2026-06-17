@@ -1,6 +1,8 @@
 import { afterAll, beforeAll } from 'vitest';
+
 import { Tablist } from '#src';
 import { appendTab, createTabElement } from '#tests/components/tabs';
+
 import { getControlItems } from '#tests/test-support/-items';
 import { setupTest } from '#tests/test-support/setup-test';
 
@@ -60,9 +62,19 @@ export function setupTabs(options?: SetupTabsOptions): TabsContext {
   const result = {} as TabsContext;
 
   const properties: (keyof TabsContext)[] = [
-    'tabs', 'container', 'tablist',
-    'firstItem', 'secondItem', 'thirdItem', 'fourthItem', 'fifthItem', 'sixthItem',
-    'fourthLastItem', 'thirdLastItem', 'secondLastItem', 'lastItem'
+    'tabs',
+    'container',
+    'tablist',
+    'firstItem',
+    'secondItem',
+    'thirdItem',
+    'fourthItem',
+    'fifthItem',
+    'sixthItem',
+    'fourthLastItem',
+    'thirdLastItem',
+    'secondLastItem',
+    'lastItem'
   ];
 
   for (const prop of properties) {
@@ -74,10 +86,12 @@ export function setupTabs(options?: SetupTabsOptions): TabsContext {
 
   beforeAll(() => {
     const { container, tablist } = createTabElement(document.body);
+
     ctx.container = container;
     ctx.tablist = tablist;
 
     const count = options?.tabCount ?? 5;
+
     for (let i = 1; i <= count; i++) {
       appendTab(container, `Tab ${i.toString()}`, `Content ${i.toString()}`);
     }
@@ -86,6 +100,7 @@ export function setupTabs(options?: SetupTabsOptions): TabsContext {
 
     // Populate items
     const items = getControlItems(ctx.tabs);
+
     Object.assign(ctx, items);
   });
 

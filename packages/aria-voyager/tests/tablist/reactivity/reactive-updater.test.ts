@@ -94,7 +94,10 @@ describe('Reactive Updater', () => {
 
   describe('items', () => {
     test('adding items to a disabled tablist will receive tabindex -1', async () => {
-      const { lastItem, secondLastItem } = { lastItem: ctx.lastItem, secondLastItem: ctx.secondLastItem };
+      const { lastItem, secondLastItem } = {
+        lastItem: ctx.lastItem,
+        secondLastItem: ctx.secondLastItem
+      };
 
       removeTab(lastItem);
       removeTab(secondLastItem);

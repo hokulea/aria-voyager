@@ -1,6 +1,8 @@
 import { afterAll, beforeAll } from 'vitest';
+
 import { Listbox } from '#src';
 import { appendItemToList, createListElement } from '#tests/components/list';
+
 import { getControlItems } from '#tests/test-support/-items';
 import { setupTest } from '#tests/test-support/setup-test';
 
@@ -70,9 +72,18 @@ export function setupListbox(options?: SetupListboxOptions): ListboxContext {
   const result = {} as ListboxContext;
 
   const properties: (keyof ListboxContext)[] = [
-    'listbox', 'list',
-    'firstItem', 'secondItem', 'thirdItem', 'fourthItem', 'fifthItem', 'sixthItem',
-    'fourthLastItem', 'thirdLastItem', 'secondLastItem', 'lastItem'
+    'listbox',
+    'list',
+    'firstItem',
+    'secondItem',
+    'thirdItem',
+    'fourthItem',
+    'fifthItem',
+    'sixthItem',
+    'fourthLastItem',
+    'thirdLastItem',
+    'secondLastItem',
+    'lastItem'
   ];
 
   for (const prop of properties) {
@@ -94,6 +105,7 @@ export function setupListbox(options?: SetupListboxOptions): ListboxContext {
     }
 
     const items = options?.items ?? ['Banana', 'Apple', 'Pear'];
+
     for (const item of items) {
       appendItemToList(item, ctx.list);
     }
@@ -102,6 +114,7 @@ export function setupListbox(options?: SetupListboxOptions): ListboxContext {
 
     // Populate items
     const controlItems = getControlItems(ctx.listbox);
+
     Object.assign(ctx, controlItems);
   });
 

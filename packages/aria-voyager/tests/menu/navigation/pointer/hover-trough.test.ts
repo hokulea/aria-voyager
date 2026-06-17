@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import { setupCodeMenu } from '#tests/menu/-shared';
 
 describe('Hover through items opens and closes submenus', () => {

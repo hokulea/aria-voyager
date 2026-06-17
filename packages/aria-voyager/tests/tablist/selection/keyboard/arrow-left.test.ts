@@ -42,7 +42,9 @@ describe('Select with `ArrowLeft`', () => {
 
     await expect.element(ctx.secondLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.secondLastItem))) {
+    for (const item of ctx.tabs.items.filter(
+      (_, idx) => idx !== ctx.tabs.items.indexOf(ctx.secondLastItem)
+    )) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -52,7 +54,9 @@ describe('Select with `ArrowLeft`', () => {
 
     await expect.element(ctx.thirdLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.thirdLastItem))) {
+    for (const item of ctx.tabs.items.filter(
+      (_, idx) => idx !== ctx.tabs.items.indexOf(ctx.thirdLastItem)
+    )) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -91,7 +95,9 @@ describe('select with `ArrowLeft`, skipping disabled items', () => {
 
     await expect.element(ctx.secondLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.secondLastItem))) {
+    for (const item of ctx.tabs.items.filter(
+      (_, idx) => idx !== ctx.tabs.items.indexOf(ctx.secondLastItem)
+    )) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });
@@ -101,7 +107,9 @@ describe('select with `ArrowLeft`, skipping disabled items', () => {
 
     await expect.element(ctx.fourthLastItem).toHaveAttribute('aria-selected', 'true');
 
-    for (const item of ctx.tabs.items.filter((_, idx) => idx !== ctx.tabs.items.indexOf(ctx.fourthLastItem))) {
+    for (const item of ctx.tabs.items.filter(
+      (_, idx) => idx !== ctx.tabs.items.indexOf(ctx.fourthLastItem)
+    )) {
       await expect.element(item).not.toHaveAttribute('aria-selected');
     }
   });

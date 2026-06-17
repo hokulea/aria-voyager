@@ -1,3 +1,5 @@
+import type { Control } from '#src';
+
 export interface ControlWithItems {
   items: HTMLElement[];
 }
@@ -15,7 +17,7 @@ export interface ControlItems {
   lastItem: HTMLElement;
 }
 
-export function getControlItems<T extends ControlWithItems>(control: T): ControlItems {
+export function getControlItems(control: Control): ControlItems {
   return {
     firstItem: control.items[0],
     secondItem: control.items[1],
@@ -23,9 +25,9 @@ export function getControlItems<T extends ControlWithItems>(control: T): Control
     fourthItem: control.items[3],
     fifthItem: control.items[4],
     sixthItem: control.items[5],
-    fourthLastItem: control.items.at(-4),
-    thirdLastItem: control.items.at(-3),
-    secondLastItem: control.items.at(-2),
-    lastItem: control.items.at(-1)
+    fourthLastItem: control.items.at(-4) as HTMLElement,
+    thirdLastItem: control.items.at(-3) as HTMLElement,
+    secondLastItem: control.items.at(-2) as HTMLElement,
+    lastItem: control.items.at(-1) as HTMLElement
   };
 }

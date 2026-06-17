@@ -1,4 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
+
 import { getItems } from '#tests/components/menu';
 import { setupCodeMenu } from '#tests/menu/-shared';
 
@@ -11,6 +12,7 @@ describe('DOM Observer', () => {
 
   test('reads elements on appending', async () => {
     const { appendItemToMenu } = await import('#tests/components/menu');
+
     appendItemToMenu(ctx.codeMenu, 'Command Palette');
 
     await vi.waitUntil(() => getItems(ctx.codeMenu).length === 16);

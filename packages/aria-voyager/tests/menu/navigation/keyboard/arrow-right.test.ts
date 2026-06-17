@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
+
 import { setupCodeMenu } from '#tests/menu/-shared';
 
 describe('Open with `ArrowRight`', () => {

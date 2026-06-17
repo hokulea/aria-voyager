@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { ItemEmitStrategy } from '#src';
+
 import { setupListbox } from '../-shared';
 
 describe('ItemEmitter', () => {

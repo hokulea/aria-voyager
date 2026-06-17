@@ -1,5 +1,6 @@
 import { afterAll, beforeAll } from 'vitest';
-import { Menu } from '#src';
+
+import { type EmitStrategy, Menu, type UpdateStrategy } from '#src';
 import { uniqueId } from '#src/utils';
 import {
   appendCheckboxItemToMenu,
@@ -8,6 +9,7 @@ import {
   appendSubmenuToMenu,
   createMenuElement
 } from '#tests/components/menu';
+
 import { getControlItems } from '#tests/test-support/-items';
 import { setupTest } from '#tests/test-support/setup-test';
 
@@ -135,7 +137,7 @@ export type CodeMenuContext = {
   shareMenu: HTMLElement;
   socialMenu: HTMLElement;
   panelPositionMenu: HTMLElement;
-  triggerButton?: HTMLElement;
+  triggerButton: HTMLElement;
   refactorHeader: HTMLElement;
   appearanceHeader: HTMLElement;
   // Main menu items
@@ -166,8 +168,8 @@ export interface SetupCodeMenuOptions {
   withTrigger?: boolean;
   disabled?: boolean;
   menuOptions?: {
-    updater?: import('#src').UpdateStrategy;
-    emitter?: import('#src').EmitStrategy;
+    updater?: UpdateStrategy;
+    emitter?: EmitStrategy;
   };
 }
 
@@ -179,14 +181,37 @@ export function setupCodeMenu(options?: SetupCodeMenuOptions): CodeMenuContext {
 
   // Define getters for all properties so destructuring works correctly
   const properties: (keyof CodeMenuContext)[] = [
-    'menu', 'share', 'social', 'panelPosition',
-    'codeMenu', 'shareMenu', 'socialMenu', 'panelPositionMenu', 'triggerButton',
-    'refactorHeader', 'appearanceHeader',
-    'firstItem', 'secondItem', 'thirdItem', 'fourthItem', 'fifthItem', 'sixthItem',
-    'fourthLastItem', 'thirdLastItem', 'secondLastItem', 'lastItem',
-    'shareFirstItem', 'shareSecondItem', 'shareThirdItem', 'shareFourthItem',
-    'shareFifthItem', 'shareSixthItem', 'shareFourthLastItem', 'shareThirdLastItem',
-    'shareSecondLastItem', 'shareLastItem'
+    'menu',
+    'share',
+    'social',
+    'panelPosition',
+    'codeMenu',
+    'shareMenu',
+    'socialMenu',
+    'panelPositionMenu',
+    'triggerButton',
+    'refactorHeader',
+    'appearanceHeader',
+    'firstItem',
+    'secondItem',
+    'thirdItem',
+    'fourthItem',
+    'fifthItem',
+    'sixthItem',
+    'fourthLastItem',
+    'thirdLastItem',
+    'secondLastItem',
+    'lastItem',
+    'shareFirstItem',
+    'shareSecondItem',
+    'shareThirdItem',
+    'shareFourthItem',
+    'shareFifthItem',
+    'shareSixthItem',
+    'shareFourthLastItem',
+    'shareThirdLastItem',
+    'shareSecondLastItem',
+    'shareLastItem'
   ];
 
   for (const prop of properties) {
@@ -197,6 +222,7 @@ export function setupCodeMenu(options?: SetupCodeMenuOptions): CodeMenuContext {
   }
 
   beforeAll(() => {
+    // eslint-disable-next-line unicorn/prefer-minimal-ternary
     const setup = options?.withTrigger ? createCodeMenuWithTriggerButton() : createCodeMenu();
 
     ctx.codeMenu = setup.codeMenu;
@@ -205,6 +231,8 @@ export function setupCodeMenu(options?: SetupCodeMenuOptions): CodeMenuContext {
     ctx.panelPositionMenu = setup.panelPositionMenu;
     ctx.refactorHeader = setup.refactorHeader;
     ctx.appearanceHeader = setup.appearanceHeader;
+    // @ts-expect-error this seems to happen here
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     ctx.triggerButton = setup.triggerButton;
 
     if (options?.disabled) {
@@ -218,11 +246,15 @@ export function setupCodeMenu(options?: SetupCodeMenuOptions): CodeMenuContext {
 
     // Populate items from main menu
     const items = getControlItems(ctx.menu);
+
     Object.assign(ctx, items);
 
     // Populate items from share submenu with prefix
     const shareItems = getControlItems(ctx.share);
+
     for (const [key, value] of Object.entries(shareItems)) {
+      // @ts-expect-error the string string is not the key, correct
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, unicorn/no-unsafe-property-key
       ctx[`share${key.charAt(0).toUpperCase()}${key.slice(1)}`] = value;
     }
   });
