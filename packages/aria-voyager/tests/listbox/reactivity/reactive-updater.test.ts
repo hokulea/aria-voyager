@@ -2,8 +2,7 @@ import { expect, test } from 'vitest';
 
 import { Listbox, ReactiveUpdateStrategy } from '#src';
 import { appendItemToList } from '#tests/components/list';
-
-import { createListWithFruits, getItems } from '../-shared';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('Reactive Updater', async ({ annotate }) => {
   const list = createListWithFruits();

@@ -2,8 +2,7 @@ import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
-
-import { createListWithFruits, getItems } from '../../../-shared';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('Select last item with `End` key', async ({ annotate }) => {
   const list = createListWithFruits();

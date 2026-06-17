@@ -2,8 +2,7 @@ import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { List } from '#tests/components/list';
-
-import { getItems } from '../../-shared';
+import { getItems } from '#tests/listbox/-shared';
 
 test('Scroll Downwards', async ({ annotate }) => {
   const listbox = new List(document.body);

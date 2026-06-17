@@ -2,8 +2,7 @@ import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
-
-import { createListWithFruits, getItems } from '../../-shared';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('Navigate with `ArrowDown`', async ({ annotate }) => {
   await annotate('Arrange');

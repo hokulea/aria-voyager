@@ -2,8 +2,7 @@ import { expect, test, vi } from 'vitest';
 
 import { Listbox } from '#src';
 import { appendItemToList } from '#tests/components/list';
-
-import { createListWithFruits, getItems } from '../-shared';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('DOM Observer', async ({ annotate }) => {
   const list = createListWithFruits();

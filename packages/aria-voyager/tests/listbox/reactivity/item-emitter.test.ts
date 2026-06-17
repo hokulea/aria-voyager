@@ -2,8 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { ItemEmitStrategy, Listbox } from '#src';
-
-import { createListWithFruits, getItems } from '../-shared';
+import { createListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('ItemEmitter', async ({ annotate }) => {
   const list = createListWithFruits();

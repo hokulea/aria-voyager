@@ -2,8 +2,7 @@ import { expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { Listbox } from '#src';
-
-import { createMultiSelectListWithFruits, getItems } from '../../../-shared';
+import { createMultiSelectListWithFruits, getItems } from '#tests/listbox/-shared';
 
 test('select from third to first item with `Home` and `Shift` key', async () => {
   const list = createMultiSelectListWithFruits();
