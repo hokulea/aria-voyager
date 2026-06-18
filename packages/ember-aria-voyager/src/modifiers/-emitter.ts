@@ -13,10 +13,12 @@ export type WithItems<T> = (
   | {
       multi: true;
       select?: (selection: T[]) => void;
+      checked?: (selection: T[]) => void;
     }
   | {
       multi?: false;
       select?: (selection: T) => void;
+      checked?: (selection: T) => void;
     }
 ) & {
   items: T[];
@@ -28,10 +30,12 @@ export type OptionalItems = (
   | {
       multi: true;
       select?: (selection: HTMLElement[]) => void;
+      checked?: (selection: HTMLElement[]) => void;
     }
   | {
       multi?: false;
       select?: (selection: HTMLElement) => void;
+      checked?: (selection: HTMLElement) => void;
     }
 ) & {
   items?: HTMLElement[];
@@ -45,6 +49,12 @@ export function createItemEmitter<T>(control: Control, options: EmitterSignature
   return new ItemEmitStrategy(control, {
     select: (selection: HTMLElement[]) => {
       (options.select as ((selection: HTMLElement | HTMLElement[]) => void) | undefined)?.(
+        options.multi ? selection : (selection[0] as HTMLElement)
+      );
+    },
+
+    checked: (selection: HTMLElement[]) => {
+      (options.checked as ((selection: HTMLElement | HTMLElement[]) => void) | undefined)?.(
         options.multi ? selection : (selection[0] as HTMLElement)
       );
     },
@@ -73,6 +83,22 @@ export function createIndexEmitter<T>(control: Control, options: EmitterSignatur
 
         if (item) {
           (options.select as ((selection: T) => void) | undefined)?.(item);
+        }
+      }
+    },
+
+    checked: (selection: number[]) => {
+      if (options.multi) {
+        const items = selection
+          .map((index) => findByIndex(index))
+          .filter((i) => i !== undefined) as T[];
+
+        (options.checked as ((selection: T[]) => void) | undefined)?.(items);
+      } else {
+        const item = findByIndex(selection[0] as number);
+
+        if (item) {
+          (options.checked as ((selection: T) => void) | undefined)?.(item);
         }
       }
     },

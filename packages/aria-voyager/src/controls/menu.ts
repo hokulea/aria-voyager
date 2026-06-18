@@ -1,3 +1,4 @@
+import { CheckBehavior } from '../navigation-patterns/check-behavior';
 import { EndNavigation } from '../navigation-patterns/end-navigation';
 import { HomeNavigation } from '../navigation-patterns/home-navigation';
 import { MenuNavigation } from '../navigation-patterns/menu-navigation';
@@ -19,6 +20,9 @@ interface MenuOptions {
 
 export class Menu extends Control {
   protected focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+  #checkBehavior = new CheckBehavior(this, {
+    isCheckableItem: (item) => item.getAttribute('role') === 'menuitemcheckbox'
+  });
 
   get selection() {
     return [];
@@ -48,6 +52,7 @@ export class Menu extends Control {
       new EndNavigation(this),
       new PointerNavigation(this, 'pointerover'),
       this.focusStrategy,
+      this.#checkBehavior,
       new MenuNavigation(this, this.focusStrategy),
       new ScrollToItem(this)
     ]);
@@ -73,6 +78,7 @@ export class Menu extends Control {
       return !closestMenu || closestMenu === this.element;
     });
 
+    this.#checkBehavior.updateItems();
     this.focusStrategy.updateItems();
   }
 

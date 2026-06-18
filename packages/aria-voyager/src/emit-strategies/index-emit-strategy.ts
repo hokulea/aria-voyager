@@ -16,6 +16,12 @@ export class IndexEmitStrategy implements EmitStrategy {
     return this.options.select?.(indices);
   }
 
+  checked(selection: Item[]) {
+    const indices = selection.map((i) => this.control.items.indexOf(i)).filter((i) => i !== -1);
+
+    return this.options.checked?.(indices);
+  }
+
   itemActivated(item: Item) {
     const index = this.control.items.indexOf(item);
 
