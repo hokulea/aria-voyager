@@ -1,6 +1,6 @@
 import { isEqual } from 'es-toolkit/predicate';
 
-import { isItemOf } from '#src/controls/-utils.js';
+import { asItemOf } from '#src/controls/-utils.js';
 
 import type { Control, Item } from '../controls/control';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
@@ -49,8 +49,8 @@ export class CheckBehavior implements NavigationPattern {
   handle(bag: NavigationParameterBag): NavigationParameterBag {
     const { event, item } = bag;
 
-    if (event.type === 'pointerup' && item && isItemOf(item, this.control)) {
-      this.#handlePointer(item);
+    if (event.type === 'pointerup') {
+      this.#handlePointer(event as PointerEvent, item);
     }
 
     if (event.type === 'keydown') {
@@ -60,9 +60,15 @@ export class CheckBehavior implements NavigationPattern {
     return bag;
   }
 
-  #handlePointer(item: Item) {
-    if (this.#isCheckableItem(item)) {
-      this.#toggle(item);
+  #handlePointer(event: PointerEvent, item?: Item) {
+    const pointerItem =
+      item ??
+      (event.composedPath().find((elem) => asItemOf(elem as HTMLElement, this.control)) as
+        | Item
+        | undefined);
+
+    if (pointerItem && this.#isCheckableItem(pointerItem)) {
+      this.#toggle(pointerItem);
     }
   }
 
