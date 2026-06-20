@@ -5,6 +5,7 @@ import { MenuNavigation } from '../navigation-patterns/menu-navigation';
 import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
+import { RadioNavigation } from '../navigation-patterns/radio-navigation';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
 import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
 import { Control, type Item } from './control';
@@ -22,6 +23,11 @@ export class Menu extends Control {
   protected focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
   #checkBehavior = new CheckBehavior(this, {
     isCheckableItem: (item) => item.getAttribute('role') === 'menuitemcheckbox'
+  });
+
+  #radioNavigation = new RadioNavigation(this, {
+    isRadioItem: (item) => item.getAttribute('role') === 'menuitemradio',
+    behavior: { singleSelection: 'manual' }
   });
 
   get selection() {
@@ -53,6 +59,7 @@ export class Menu extends Control {
       new PointerNavigation(this, 'pointerover'),
       this.focusStrategy,
       this.#checkBehavior,
+      this.#radioNavigation,
       new MenuNavigation(this, this.focusStrategy),
       new ScrollToItem(this)
     ]);
@@ -79,6 +86,7 @@ export class Menu extends Control {
     });
 
     this.#checkBehavior.updateItems();
+    this.#radioNavigation.updateItems();
     this.focusStrategy.updateItems();
   }
 

@@ -33,12 +33,11 @@ export interface RadioNavigationOptions {
   behavior?: RadioNavigationBehavior;
 }
 
-const DEFAULT_GROUP = '';
-
 export class RadioNavigation implements NavigationPattern {
   eventListeners: EventNames[] = ['focusin', 'keydown', 'pointerup'];
 
   #groups = new Map<string, Item[]>();
+  #itemToGroup = new Map<Item, string>();
   #behavior: Required<RadioNavigationBehavior>;
   #isRadioItem: (item: Item) => boolean;
 
@@ -116,24 +115,44 @@ export class RadioNavigation implements NavigationPattern {
    */
   updateItems(): void {
     // 1. Filter control.items through isRadioItem
-    const radioItems = this.control.items.filter((item) => this.#isRadioItem(item));
+    const radioItems = new Set(this.control.items.filter((item) => this.#isRadioItem(item)));
 
     // 2. Partition by data-group (missing → default key '')
     this.#groups = new Map<string, Item[]>();
+    this.#itemToGroup = new Map();
 
-    for (const item of radioItems) {
-      const group = this.#getGroup(item);
+    let groupIndex = 1;
 
-      if (!this.#groups.has(group)) {
-        this.#groups.set(group, []);
+    const walk = (parent: Element) => {
+      for (const child of parent.children) {
+        if (this.#isSeparator(child)) {
+          groupIndex++;
+        } else if (child.getAttribute('role') === 'group') {
+          groupIndex++;
+          walk(child);
+          groupIndex++;
+        } else if (radioItems.has(child as Item)) {
+          const key = String(groupIndex);
+
+          if (!this.#groups.has(key)) {
+            this.#groups.set(key, []);
+          }
+
+          (this.#groups.get(key) as Item[]).push(child as Item);
+          this.#itemToGroup.set(child as Item, key);
+        }
       }
+    };
 
-      (this.#groups.get(group) as Item[]).push(item);
-    }
+    walk(this.control.element);
 
     // 3. For each group, enforce invariant
     for (const items of this.#groups.values()) {
-      this.enforceGroupInvariant(items);
+      const correctedItem = this.#enforceGroupInvariant(items);
+
+      if (correctedItem) {
+        this.control.emitter?.selected([correctedItem]);
+      }
     }
   }
 
@@ -143,43 +162,52 @@ export class RadioNavigation implements NavigationPattern {
    * Per ADR-0001: if multiple have aria-checked="true", pick first and uncheck rest.
    * If none, check the first item.
    */
-  private enforceGroupInvariant(items: Item[]): void {
+  #enforceGroupInvariant(items: Item[]): Item | undefined {
     if (items.length === 0) {
-      return;
+      return undefined;
     }
 
     const checkedItems = items.filter((item) => item.getAttribute('aria-checked') === 'true');
 
+    // No checked item: check the first item, uncheck the rest
     if (checkedItems.length === 0) {
-      // No item checked → check the first item, uncheck rest
       for (const [i, item] of items.entries()) {
         item.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
       }
-    } else if (checkedItems.length === 1) {
-      // Exactly one checked → keep it, ensure others are explicitly "false"
+
+      return items[0];
+    }
+
+    // Exactly one checked: keep it, ensure others are explicitely "false"
+    if (checkedItems.length === 1) {
       const checkedItem = checkedItems[0];
 
       for (const item of items) {
         item.setAttribute('aria-checked', item === checkedItem ? 'true' : 'false');
       }
-    } else {
-      // Multiple checked → keep first, uncheck rest
-      const firstChecked = checkedItems[0];
 
-      for (const item of items) {
-        item.setAttribute('aria-checked', item === firstChecked ? 'true' : 'false');
-      }
+      return undefined;
     }
+
+    // Multiple checked: keep first, uncheck the rest
+    const firstChecked = checkedItems[0];
+
+    for (const item of items) {
+      item.setAttribute('aria-checked', item === firstChecked ? 'true' : 'false');
+    }
+
+    return firstChecked;
   }
 
-  /**
-   * Check an item: uncheck siblings in same group, emit.
-   */
   #select(item: Item): void {
-    const group = this.#getGroup(item);
+    const group = this.#itemToGroup.get(item);
+
+    if (group === undefined) {
+      return;
+    }
+
     const groupItems = this.#groups.get(group) ?? [];
 
-    // Uncheck all other items in that group
     for (const sibling of groupItems) {
       if (sibling === item) {
         sibling.setAttribute('aria-checked', 'true');
@@ -188,14 +216,10 @@ export class RadioNavigation implements NavigationPattern {
       }
     }
 
-    // Emit
     this.control.emitter?.selected([item]);
   }
 
-  /**
-   * Get group key from item. Returns item.dataset.group ?? ''
-   */
-  #getGroup(item: Item): string {
-    return item.dataset.group ?? DEFAULT_GROUP;
+  #isSeparator(element: Element): boolean {
+    return element.getAttribute('role') === 'separator' || element instanceof HTMLHRElement;
   }
 }

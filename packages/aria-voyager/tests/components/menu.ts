@@ -65,6 +65,49 @@ export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTM
   parent.append(menu);
 }
 
+export function appendRadioItems(
+  parent: HTMLElement,
+  items: string[],
+  checkedIndex = -1
+): HTMLElement[] {
+  return items.map((label, i) => {
+    const btn = document.createElement('button');
+
+    btn.type = 'button';
+    btn.role = 'menuitemradio';
+    btn.setAttribute('aria-checked', i === checkedIndex ? 'true' : 'false');
+    btn.append(label);
+
+    parent.append(btn);
+
+    return btn;
+  });
+}
+
+export function appendSeparator(parent: HTMLElement): HTMLElement {
+  const hr = document.createElement('hr');
+
+  parent.append(hr);
+
+  return hr;
+}
+
+export function appendRadioGroup(parent: HTMLElement): HTMLElement {
+  const group = document.createElement('div');
+
+  group.role = 'group';
+
+  parent.append(group);
+
+  return group;
+}
+
+export function createMenuWithRadioGroups(parent: HTMLElement) {
+  const menuElement = createMenuElement(parent);
+
+  return menuElement;
+}
+
 export function withTriggerButton(parent: HTMLElement, menu: HTMLElement) {
   menu.id = uniqueId();
   menu.setAttribute('popover', '');
