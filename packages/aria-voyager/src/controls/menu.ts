@@ -87,7 +87,8 @@ export class Menu extends Control implements ControlWithSelection {
     );
 
     // Filter out elements that are within a nested menu but not the root menu
-    this.items = [...items].filter((item) => {
+    // eslint-disable-next-line unicorn/prefer-spread
+    this.items = Array.from(items).filter((item) => {
       // Check if the closest ancestor with <menu> tag or [role="menu"] is not the root element
       const closestMenu = item.closest('menu,[role="menu"]');
 
