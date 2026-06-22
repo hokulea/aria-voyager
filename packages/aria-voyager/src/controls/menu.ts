@@ -8,7 +8,7 @@ import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { RadioSelectionStrategy } from '../navigation-patterns/radio-selection-strategy';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
 import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
-import { Control, type Item } from './control';
+import { Control, type ControlWithSelection, type Item } from './control';
 
 import type { EmitStrategy, UpdateStrategy } from '..';
 
@@ -19,14 +19,10 @@ interface MenuOptions {
   emitter?: EmitStrategy;
 }
 
-export class Menu extends Control {
-  protected focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
-
-  #checkBehavior = new CheckBehavior(this, {
-    isCheckableItem: (item) => item.getAttribute('role') === 'menuitemcheckbox'
-  });
-
+export class Menu extends Control implements ControlWithSelection {
+  protected focusStrategy: RovingTabindexStrategy;
   #selectionStrategy: RadioSelectionStrategy;
+  #checkBehavior: CheckBehavior;
 
   get selection() {
     return [];
@@ -49,10 +45,14 @@ export class Menu extends Control {
       ...options
     });
 
+    this.#checkBehavior = new CheckBehavior(this, {
+      isCheckableItem: (item) => item.getAttribute('role') === 'menuitemcheckbox'
+    });
     this.#selectionStrategy = new RadioSelectionStrategy(this, {
       isRadioItem: (item) => item.getAttribute('role') === 'menuitemradio',
-      behavior: { singleSelection: 'manual' }
+      behavior: { singleSelection: 'manual', activateSelectionOnFocus: false }
     });
+    this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown']),
@@ -97,6 +97,10 @@ export class Menu extends Control {
     this.#checkBehavior.updateItems();
     this.#selectionStrategy.readSelection();
     this.focusStrategy.updateItems();
+  }
+
+  readSelection(): void {
+    this.#selectionStrategy.readSelection();
   }
 
   isSelectionAttribute(attributeName: string): boolean {

@@ -6,15 +6,14 @@ import {
   type SelectionStrategy
 } from '#src/navigation-patterns/selection-strategy';
 
-import type { Control } from '..';
-import type { Item } from '../controls/control';
+import type { Control, Item } from '../controls/control';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
-const DEFAULT_BEHAVIOR: Required<SelectionBehavior> = {
-  singleSelection: 'automatic'
-};
-
 const SELECTION_ATTRIBUTE = 'aria-selected';
+
+interface ItemSelectionOptions {
+  behavior?: SelectionBehavior;
+}
 
 export class ItemSelectionStrategy
   extends AbstractSelectionStrategy
@@ -28,20 +27,13 @@ export class ItemSelectionStrategy
     return this.#selection;
   }
 
-  private shiftItem?: Item;
-  private behavior: Required<SelectionBehavior>;
+  constructor(control: Control, options?: ItemSelectionOptions) {
+    super(control, options?.behavior);
 
-  constructor(
-    private control: Control,
-    behavior?: SelectionBehavior
-  ) {
-    super();
-    this.behavior = {
-      ...DEFAULT_BEHAVIOR,
-      ...behavior
-    };
     this.readSelection();
   }
+
+  private shiftItem?: Item;
 
   matches(event: Event): boolean {
     return this.control.items.length > 0 && this.eventListeners.includes(event.type as EventNames);

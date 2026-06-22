@@ -6,7 +6,7 @@ import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
-import { Control } from './control';
+import { Control, type ControlWithSelection } from './control';
 
 import type { EmitStrategy, UpdateStrategy } from '..';
 
@@ -15,12 +15,9 @@ interface ListboxOptions {
   emitter?: EmitStrategy;
 }
 
-export class Listbox extends Control {
-  #selectionStrategy: ItemSelectionStrategy = new ItemSelectionStrategy(this);
-  protected focusStrategy: ActiveDescendentStrategy = new ActiveDescendentStrategy(
-    this,
-    this.#selectionStrategy
-  );
+export class Listbox extends Control implements ControlWithSelection {
+  protected focusStrategy: ActiveDescendentStrategy;
+  #selectionStrategy: ItemSelectionStrategy;
 
   get selection() {
     return this.#selectionStrategy.selection;
@@ -43,6 +40,9 @@ export class Listbox extends Control {
       optionAttributes: ['aria-multiselectable'],
       ...options
     });
+
+    this.#selectionStrategy = new ItemSelectionStrategy(this);
+    this.focusStrategy = new ActiveDescendentStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),

@@ -5,7 +5,7 @@ import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
-import { Control } from './control';
+import { Control, type ControlWithSelection } from './control';
 
 import type { EmitStrategy, UpdateStrategy } from '..';
 import type { SelectionBehavior } from '../navigation-patterns/selection-strategy';
@@ -18,9 +18,9 @@ export interface TablistOptions {
   behavior?: TablistBehavior;
 }
 
-export class Tablist extends Control {
-  #selectionStrategy: ItemSelectionStrategy;
+export class Tablist extends Control implements ControlWithSelection {
   protected focusStrategy: RovingTabindexStrategy;
+  #selectionStrategy: ItemSelectionStrategy;
   #nextNavigation = new NextNavigation(this, 'ArrowRight');
   #prevNavigation = new PreviousNavigation(this, 'ArrowLeft');
 
@@ -46,7 +46,9 @@ export class Tablist extends Control {
       ...options
     });
 
-    this.#selectionStrategy = new ItemSelectionStrategy(this, options?.behavior ?? {});
+    this.#selectionStrategy = new ItemSelectionStrategy(this, {
+      behavior: options?.behavior ?? {}
+    });
     this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([

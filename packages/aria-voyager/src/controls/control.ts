@@ -2,7 +2,7 @@ import { DomObserverUpdateStrategy } from '../update-strategies/dom-observer-upd
 import { isItemEnabled } from './-utils';
 
 import type { EmitStrategy } from '../emit-strategies/emit-strategy';
-import type { AbstractFocusStrategy } from '../navigation-patterns/focus-strategy';
+import type { FocusStrategy } from '../navigation-patterns/focus-strategy';
 import type { NavigationPattern } from '../navigation-patterns/navigation-pattern';
 import type { UpdateStrategy } from '../update-strategies/update-strategy';
 
@@ -49,7 +49,7 @@ export interface ControlWithSelection {
 }
 
 export abstract class Control {
-  protected abstract focusStrategy: AbstractFocusStrategy;
+  protected abstract focusStrategy: FocusStrategy;
 
   items: Item[] = [];
 

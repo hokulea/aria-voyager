@@ -16,7 +16,7 @@ export interface RadioGroupOptions {
 }
 
 export class RadioGroup extends Control implements ControlWithSelection {
-  focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+  protected focusStrategy: RovingTabindexStrategy;
   #selectionStrategy: RadioSelectionStrategy;
 
   get activeItem() {
@@ -39,6 +39,7 @@ export class RadioGroup extends Control implements ControlWithSelection {
     this.#selectionStrategy = new RadioSelectionStrategy(this, {
       behavior: { singleSelection: 'automatic' }
     });
+    this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),

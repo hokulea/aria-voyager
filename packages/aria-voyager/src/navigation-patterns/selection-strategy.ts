@@ -1,4 +1,4 @@
-import type { Item } from '#src/controls/control';
+import type { Control, Item } from '#src/controls/control';
 
 export interface SelectionStrategy {
   readonly selection: Item[];
@@ -6,6 +6,7 @@ export interface SelectionStrategy {
   readSelection(): void;
 
   isSelectionAttriute(attributeName: string): boolean;
+  shouldActivateSelectionOnFocus(): boolean;
 
   addListener(event: string, handler: EventHandler): void;
   removeListener(event: string, handler: EventHandler): void;
@@ -21,10 +22,22 @@ export interface SelectionBehavior {
    * @defaultValue `automatic`
    */
   singleSelection?: 'automatic' | 'manual';
+
+  /**
+   * When the control receives focus, shall the first selection item be activated?
+   *
+   * @defaultValue `true`
+   */
+  activateSelectionOnFocus?: boolean;
 }
 
 export type SelectionEvent = 'read';
 export type EventHandler = (...args: unknown[]) => void;
+
+const DEFAULT_BEHAVIOR: Required<SelectionBehavior> = {
+  singleSelection: 'automatic',
+  activateSelectionOnFocus: true
+};
 
 export abstract class AbstractSelectionStrategy implements /* NavigationPattern, */ SelectionStrategy {
   abstract readonly selection: Item[];
@@ -32,6 +45,17 @@ export abstract class AbstractSelectionStrategy implements /* NavigationPattern,
   #listeners: Record<SelectionEvent, Set<EventHandler>> = {
     read: new Set<EventHandler>()
   };
+
+  protected control: Control;
+  protected behavior: Required<SelectionBehavior>;
+
+  constructor(control: Control, behavior?: SelectionBehavior) {
+    this.control = control;
+    this.behavior = {
+      ...DEFAULT_BEHAVIOR,
+      ...behavior
+    };
+  }
 
   dispose() {
     for (const listeners of Object.values(this.#listeners)) listeners.clear();
@@ -43,6 +67,10 @@ export abstract class AbstractSelectionStrategy implements /* NavigationPattern,
 
   removeListener(event: SelectionEvent, handler: EventHandler) {
     this.#listeners[event].delete(handler);
+  }
+
+  shouldActivateSelectionOnFocus() {
+    return this.behavior.activateSelectionOnFocus;
   }
 
   protected notifyListener(event: SelectionEvent) {

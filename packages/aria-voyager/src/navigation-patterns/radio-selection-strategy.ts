@@ -3,27 +3,12 @@ import { isEqual } from 'es-toolkit/predicate';
 import { isItemOf } from '#src/controls/-utils.js';
 import {
   AbstractSelectionStrategy,
+  type SelectionBehavior,
   type SelectionStrategy
 } from '#src/navigation-patterns/selection-strategy.js';
 
 import type { Control, Item } from '../controls/control';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
-
-export interface RadioSelectionBehavior {
-  /**
-   * Selection behavior:
-   *
-   * - `automatic`: aria-checked follows focus (arrow keys auto-check)
-   * - `manual`: aria-checked only changes on Space or pointer click
-   *
-   * @defaultValue `automatic`
-   */
-  singleSelection?: 'automatic' | 'manual';
-}
-
-const DEFAULT_BEHAVIOR: Required<RadioSelectionBehavior> = {
-  singleSelection: 'automatic'
-};
 
 export interface RadioSelectionOptions {
   /**
@@ -36,7 +21,7 @@ export interface RadioSelectionOptions {
   /**
    * Selection behavior configuration.
    */
-  behavior?: RadioSelectionBehavior;
+  behavior?: SelectionBehavior;
 }
 
 const SELECTION_ATTRIBUTE = 'aria-checked';
@@ -49,7 +34,6 @@ export class RadioSelectionStrategy
 
   #groups = new Map<string, Item[]>();
   #itemToGroup = new Map<Item, string>();
-  #behavior: Required<RadioSelectionBehavior>;
   #isRadioItem: (item: Item) => boolean;
 
   #selection: Item[] = [];
@@ -58,17 +42,12 @@ export class RadioSelectionStrategy
     return this.#selection;
   }
 
-  constructor(
-    private control: Control,
-    options?: RadioSelectionOptions
-  ) {
-    super();
+  constructor(control: Control, options?: RadioSelectionOptions) {
+    super(control, options?.behavior);
 
-    this.#behavior = {
-      ...DEFAULT_BEHAVIOR,
-      ...options?.behavior
-    };
     this.#isRadioItem = options?.isRadioItem ?? (() => true);
+
+    this.readSelection();
   }
 
   isSelectionAttriute(attributeName: string): boolean {
@@ -102,7 +81,7 @@ export class RadioSelectionStrategy
 
   #handleFocus(_event: FocusEvent, item: Item) {
     // focusin: automatic mode checks the focused item
-    if (this.#behavior.singleSelection === 'automatic' && this.#isRadioItem(item)) {
+    if (this.behavior.singleSelection === 'automatic' && this.#isRadioItem(item)) {
       this.#select(item);
     }
   }
@@ -128,7 +107,7 @@ export class RadioSelectionStrategy
 
     // Automatic mode: check the item when navigating with arrow keys
     // (item is set by NextNavigation/PreviousNavigation/etc.)
-    if (this.#behavior.singleSelection === 'automatic' && item && this.#isRadioItem(item)) {
+    if (this.behavior.singleSelection === 'automatic' && item && this.#isRadioItem(item)) {
       this.#select(item);
     }
   }
@@ -188,10 +167,10 @@ export class RadioSelectionStrategy
       return undefined;
     }
 
-    const checkedItems = items.filter((item) => item.getAttribute('aria-checked') === 'true');
+    const selectedItems = items.filter((item) => this.#isItemSelected(item));
 
     // No checked item: check the first item, uncheck the rest
-    if (checkedItems.length === 0) {
+    if (selectedItems.length === 0) {
       for (const [i, item] of items.entries()) {
         item.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
       }
@@ -200,24 +179,24 @@ export class RadioSelectionStrategy
     }
 
     // Exactly one checked: keep it, ensure others are explicitely "false"
-    if (checkedItems.length === 1) {
-      const checkedItem = checkedItems[0];
+    if (selectedItems.length === 1) {
+      const selectedItem = selectedItems[0];
 
       for (const item of items) {
-        item.setAttribute('aria-checked', item === checkedItem ? 'true' : 'false');
+        item.setAttribute('aria-checked', item === selectedItem ? 'true' : 'false');
       }
 
       return undefined;
     }
 
     // Multiple checked: keep first, uncheck the rest
-    const firstChecked = checkedItems[0];
+    const firstSelected = selectedItems[0];
 
     for (const item of items) {
-      item.setAttribute('aria-checked', item === firstChecked ? 'true' : 'false');
+      item.setAttribute('aria-checked', item === firstSelected ? 'true' : 'false');
     }
 
-    return firstChecked;
+    return firstSelected;
   }
 
   #select(item: Item): void {
@@ -240,19 +219,36 @@ export class RadioSelectionStrategy
     this.#storeSelectionAndNotify();
   }
 
+  #isItemSelected(item: Item) {
+    return item.getAttribute('aria-checked') === 'true';
+  }
+
   #isSeparator(element: Element): boolean {
     return element.getAttribute('role') === 'separator' || element instanceof HTMLHRElement;
   }
 
   #storeSelectionAndNotify() {
-    this.select(this.control.enabledItems.filter((item) => this.#isRadioItem(item)));
+    const selection = this.control.enabledItems.filter(
+      (item) => this.#isRadioItem(item) && this.#isItemSelected(item)
+    );
+
+    this.select(selection);
   }
 
-  select(selection: Item[]) {
+  select(selection: Item | Item[]) {
+    if (!Array.isArray(selection)) {
+      this.select([selection]);
+
+      return;
+    }
+
     if (isEqual(selection, this.#selection)) {
       return;
     }
 
+    this.#selection = selection;
+
     this.notifyListener('read');
+    this.control.emitter?.selected(this.#selection);
   }
 }

@@ -7,12 +7,16 @@ export interface FocusStrategy {
   prevActiveItem?: Item;
   activateItem(item: Item): void;
   updateItems(): void;
+  dispose(): void;
 }
 
 /**
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents
  */
 export abstract class AbstractFocusStrategy implements NavigationPattern, FocusStrategy {
+  protected control: Control;
+  private selectionStrategy?: SelectionStrategy;
+
   eventListeners: EventNames[] = ['focus', 'focusin'];
 
   activeItem?: Item;
@@ -26,11 +30,13 @@ export abstract class AbstractFocusStrategy implements NavigationPattern, FocusS
     return [];
   }
 
-  constructor(
-    protected control: Control,
-    private selectionStrategy?: SelectionStrategy
-  ) {
-    this.selectionStrategy?.addListener('read', this.readSelectionHandler.bind(this));
+  constructor(control: Control, selectionStrategy?: SelectionStrategy) {
+    this.control = control;
+
+    if (selectionStrategy) {
+      this.selectionStrategy = selectionStrategy;
+      this.selectionStrategy.addListener('read', this.readSelectionHandler.bind(this));
+    }
   }
 
   dispose() {
@@ -38,7 +44,11 @@ export abstract class AbstractFocusStrategy implements NavigationPattern, FocusS
   }
 
   readSelectionHandler() {
-    if (!this.hasFocus() && this.selection.length > 0) {
+    if (
+      !this.hasFocus() &&
+      this.selectionStrategy?.shouldActivateSelectionOnFocus() &&
+      this.selection.length > 0
+    ) {
       this.activateSelection();
     }
   }
@@ -72,9 +82,11 @@ export abstract class AbstractFocusStrategy implements NavigationPattern, FocusS
 
   handleFocus(event: FocusEvent) {
     if (this.control.element === event.target) {
-      const selectionPresent = this.selection.length > 0;
-
-      if (selectionPresent) {
+      if (
+        this.selectionStrategy &&
+        this.selectionStrategy.shouldActivateSelectionOnFocus() &&
+        this.selection.length > 0
+      ) {
         this.activateSelection();
       } else {
         this.activateItem(this.control.enabledItems[0]);
