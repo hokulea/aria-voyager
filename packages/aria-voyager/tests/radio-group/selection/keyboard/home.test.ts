@@ -1,5 +1,6 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
+import { ItemEmitStrategy } from '#src/index.js';
 import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
 
 import { fireKey, focusControl } from '#tests/test-support/events';
@@ -14,6 +15,13 @@ test('Select with `Home`', async ({ annotate }) => {
     'Option 5'
   ]);
 
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
+
   const { firstItem, secondItem, thirdItem, fourthItem, fifthItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
@@ -26,11 +34,13 @@ test('Select with `Home`', async ({ annotate }) => {
   await fireKey(container, 'End');
   await expect.element(fifthItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', fifthItem);
+  expect(listeners.select).toHaveBeenCalledWith([fifthItem]);
 
   await annotate('use `Home` key to select first item');
   await fireKey(container, 'Home');
   await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
+  expect(listeners.select).toHaveBeenCalledWith([firstItem]);
 });
 
 test('Select with `Home`, skip disabled item', async ({ annotate }) => {
@@ -42,10 +52,18 @@ test('Select with `Home`, skip disabled item', async ({ annotate }) => {
     'Option 5'
   ]);
 
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
+
   const { firstItem, secondItem, thirdItem, fourthItem, fifthItem } = getItems(radioGroup);
   const items = [secondItem, thirdItem, fourthItem, fifthItem];
 
   firstItem.setAttribute('aria-disabled', 'true');
+  radioGroup.readItems();
 
   await focusControl(container);
   expect(document.activeElement).toBe(secondItem);
@@ -56,9 +74,11 @@ test('Select with `Home`, skip disabled item', async ({ annotate }) => {
   await fireKey(container, 'End');
   await expect.element(fifthItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', fifthItem);
+  expect(listeners.select).toHaveBeenCalledWith([fifthItem]);
 
   await annotate('use `Home` key to select second item');
   await fireKey(container, 'Home');
   await expect.element(secondItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', secondItem);
+  expect(listeners.select).toHaveBeenCalledWith([secondItem]);
 });

@@ -46,6 +46,7 @@ test('Navigate with `Home`, skip disabled item', async ({ annotate }) => {
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
   firstItem.setAttribute('aria-disabled', 'true');
+  radioGroup.readItems();
 
   await focusControl(container);
   expect(document.activeElement).toBe(secondItem);

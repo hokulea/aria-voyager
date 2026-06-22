@@ -1,5 +1,6 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
+import { ItemEmitStrategy } from '#src/index.js';
 import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
 
 import { fireKey, focusControl } from '#tests/test-support/events';
@@ -13,6 +14,13 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
     'Option 4',
     'Option 5'
   ]);
+
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
 
   const { firstItem, secondItem, thirdItem, fourthItem, fifthItem, lastItem } =
     getItems(radioGroup);
@@ -28,11 +36,13 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
   await fireKey(container, 'ArrowDown');
   await expect.element(secondItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', secondItem);
+  expect(listeners.select).toHaveBeenCalledWith([secondItem]);
 
   await annotate('use `ArrowDown` key to select third item');
   await fireKey(container, 'ArrowDown');
   await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+  expect(listeners.select).toHaveBeenCalledWith([thirdItem]);
 
   await annotate('use `End` key to select last item');
   await fireKey(container, 'End');
@@ -56,6 +66,13 @@ test('Select with `ArrowDown`, skip disabled item', async ({ annotate }) => {
     'Option 5'
   ]);
 
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
+
   const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem];
 
@@ -73,4 +90,5 @@ test('Select with `ArrowDown`, skip disabled item', async ({ annotate }) => {
   await fireKey(container, 'ArrowDown');
   await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+  expect(listeners.select).toHaveBeenCalledWith([thirdItem]);
 });

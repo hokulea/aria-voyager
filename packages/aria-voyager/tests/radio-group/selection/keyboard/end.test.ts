@@ -1,5 +1,6 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
+import { ItemEmitStrategy } from '#src/index.js';
 import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
 
 import { fireKey, focusControl } from '#tests/test-support/events';
@@ -11,6 +12,13 @@ test('Select with `End`', async ({ annotate }) => {
     'Option 2',
     'Option 3'
   ]);
+
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
 
   const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem];
@@ -24,6 +32,7 @@ test('Select with `End`', async ({ annotate }) => {
   await fireKey(container, 'End');
   await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+  expect(listeners.select).toHaveBeenCalledWith([thirdItem]);
 });
 
 test('Select with `End`, skip disabled item', async ({ annotate }) => {
@@ -35,10 +44,18 @@ test('Select with `End`, skip disabled item', async ({ annotate }) => {
     'Option 5'
   ]);
 
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
+
   const { firstItem, secondItem, thirdItem, fourthItem, fifthItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
   fifthItem.setAttribute('aria-disabled', 'true');
+  radioGroup.readItems();
 
   await focusControl(container);
   expect(document.activeElement).toBe(firstItem);
@@ -49,4 +66,5 @@ test('Select with `End`, skip disabled item', async ({ annotate }) => {
   await fireKey(container, 'End');
   await expect.element(fourthItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', fourthItem);
+  expect(listeners.select).toHaveBeenCalledWith([fourthItem]);
 });

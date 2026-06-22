@@ -1,5 +1,6 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
+import { ItemEmitStrategy } from '#src/index.js';
 import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
 
 import { firePointer, focusControl } from '#tests/test-support/events';
@@ -12,6 +13,13 @@ test('Use pointer to select items', async ({ annotate }) => {
     'Option 3'
   ]);
 
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(radioGroup, listeners);
+
   const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem];
 
@@ -23,16 +31,19 @@ test('Use pointer to select items', async ({ annotate }) => {
   await firePointer(secondItem);
   await expect.element(secondItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', secondItem);
+  expect(listeners.select).toHaveBeenCalledWith([secondItem]);
 
   await annotate('click third item to select it but all others');
   await firePointer(thirdItem);
   await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+  expect(listeners.select).toHaveBeenCalledWith([thirdItem]);
 
   await annotate('click already selectd item stays active');
   await firePointer(thirdItem);
   await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+  expect(listeners.select).toHaveBeenCalledWith([thirdItem]);
 
   radioGroup.dispose();
 });
