@@ -1,5 +1,5 @@
 import { isItemOf } from '../controls/-utils';
-import { type Control } from '../controls/control';
+import { type Control, type ControlWithSelection } from '../controls/control';
 
 import type { UpdateStrategy } from './update-strategy';
 
@@ -35,12 +35,18 @@ export class DomObserverUpdateStrategy implements UpdateStrategy {
       this.control.readOptions();
     }
 
-    const changedSelection = changes.every(
-      (c) => c.type === 'attributes' && c.attributeName === 'aria-selected'
-    );
+    if (this.control.usesSelection()) {
+      const changedSelection = changes.every(
+        (c) =>
+          c.type === 'attributes' &&
+          (this.control as unknown as ControlWithSelection).isSelectionAttribute(
+            c.attributeName as string
+          )
+      );
 
-    if (changedSelection) {
-      this.control.readSelection();
+      if (changedSelection) {
+        this.control.readSelection();
+      }
     }
   });
 

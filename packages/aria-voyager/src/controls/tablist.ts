@@ -1,10 +1,10 @@
 import { EndNavigation } from '../navigation-patterns/end-navigation';
 import { HomeNavigation } from '../navigation-patterns/home-navigation';
+import { ItemSelectionStrategy } from '../navigation-patterns/item-selection-strategy';
 import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
-import { SelectionStrategy } from '../navigation-patterns/selection-strategy';
 import { Control } from './control';
 
 import type { EmitStrategy, UpdateStrategy } from '..';
@@ -19,7 +19,7 @@ export interface TablistOptions {
 }
 
 export class Tablist extends Control {
-  #selectionStrategy: SelectionStrategy;
+  #selectionStrategy: ItemSelectionStrategy;
   protected focusStrategy: RovingTabindexStrategy;
   #nextNavigation = new NextNavigation(this, 'ArrowRight');
   #prevNavigation = new PreviousNavigation(this, 'ArrowLeft');
@@ -46,7 +46,7 @@ export class Tablist extends Control {
       ...options
     });
 
-    this.#selectionStrategy = new SelectionStrategy(this, options?.behavior ?? {});
+    this.#selectionStrategy = new ItemSelectionStrategy(this, options?.behavior ?? {});
     this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
@@ -72,6 +72,17 @@ export class Tablist extends Control {
     this.#selectionStrategy.dispose();
   }
 
+  readOptions(): void {
+    super.readOptions();
+
+    this.#nextNavigation.keyOrKeys =
+      this.options.orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
+    this.#prevNavigation.keyOrKeys =
+      this.options.orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
+
+    this.focusStrategy.updateItems();
+  }
+
   readItems() {
     this.items = [...this.element.querySelectorAll<HTMLElement>(':scope [role="tab"]')];
 
@@ -87,15 +98,8 @@ export class Tablist extends Control {
     this.#selectionStrategy.readSelection();
   }
 
-  readOptions(): void {
-    super.readOptions();
-
-    this.#nextNavigation.keyOrKeys =
-      this.options.orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
-    this.#prevNavigation.keyOrKeys =
-      this.options.orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
-
-    this.focusStrategy.updateItems();
+  isSelectionAttribute(attributeName: string): boolean {
+    return this.#selectionStrategy.isSelectionAttriute(attributeName);
   }
 
   ensureSelection() {

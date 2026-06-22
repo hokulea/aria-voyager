@@ -5,7 +5,7 @@ import { MenuNavigation } from '../navigation-patterns/menu-navigation';
 import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { RadioNavigation } from '../navigation-patterns/radio-navigation';
+import { RadioSelectionStrategy } from '../navigation-patterns/radio-selection-strategy';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
 import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
 import { Control, type Item } from './control';
@@ -21,14 +21,12 @@ interface MenuOptions {
 
 export class Menu extends Control {
   protected focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+
   #checkBehavior = new CheckBehavior(this, {
     isCheckableItem: (item) => item.getAttribute('role') === 'menuitemcheckbox'
   });
 
-  #radioNavigation = new RadioNavigation(this, {
-    isRadioItem: (item) => item.getAttribute('role') === 'menuitemradio',
-    behavior: { singleSelection: 'manual' }
-  });
+  #selectionStrategy: RadioSelectionStrategy;
 
   get selection() {
     return [];
@@ -45,10 +43,15 @@ export class Menu extends Control {
   constructor(element: HTMLElement, options?: MenuOptions) {
     super(element, {
       capabilities: {
-        singleSelection: false,
+        singleSelection: true,
         multiSelection: false
       },
       ...options
+    });
+
+    this.#selectionStrategy = new RadioSelectionStrategy(this, {
+      isRadioItem: (item) => item.getAttribute('role') === 'menuitemradio',
+      behavior: { singleSelection: 'manual' }
     });
 
     this.registerNavigationPatterns([
@@ -59,7 +62,7 @@ export class Menu extends Control {
       new PointerNavigation(this, 'pointerover'),
       this.focusStrategy,
       this.#checkBehavior,
-      this.#radioNavigation,
+      this.#selectionStrategy,
       new MenuNavigation(this, this.focusStrategy),
       new ScrollToItem(this)
     ]);
@@ -69,6 +72,12 @@ export class Menu extends Control {
 
     this.readOptions();
     this.readItems();
+  }
+
+  readOptions(): void {
+    super.readOptions();
+
+    this.focusStrategy.updateItems();
   }
 
   readItems() {
@@ -86,13 +95,11 @@ export class Menu extends Control {
     });
 
     this.#checkBehavior.updateItems();
-    this.#radioNavigation.updateItems();
+    this.#selectionStrategy.readSelection();
     this.focusStrategy.updateItems();
   }
 
-  readOptions(): void {
-    super.readOptions();
-
-    this.focusStrategy.updateItems();
+  isSelectionAttribute(attributeName: string): boolean {
+    return this.#selectionStrategy.isSelectionAttriute(attributeName);
   }
 }

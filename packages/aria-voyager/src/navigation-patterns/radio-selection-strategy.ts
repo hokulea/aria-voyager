@@ -1,9 +1,15 @@
+import { isEqual } from 'es-toolkit/predicate';
+
 import { isItemOf } from '#src/controls/-utils.js';
+import {
+  AbstractSelectionStrategy,
+  type SelectionStrategy
+} from '#src/navigation-patterns/selection-strategy.js';
 
 import type { Control, Item } from '../controls/control';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
-export interface RadioNavigationBehavior {
+export interface RadioSelectionBehavior {
   /**
    * Selection behavior:
    *
@@ -15,11 +21,11 @@ export interface RadioNavigationBehavior {
   singleSelection?: 'automatic' | 'manual';
 }
 
-const DEFAULT_BEHAVIOR: Required<RadioNavigationBehavior> = {
+const DEFAULT_BEHAVIOR: Required<RadioSelectionBehavior> = {
   singleSelection: 'automatic'
 };
 
-export interface RadioNavigationOptions {
+export interface RadioSelectionOptions {
   /**
    * Filter function to determine which items in control.items are radio items.
    *
@@ -30,26 +36,43 @@ export interface RadioNavigationOptions {
   /**
    * Selection behavior configuration.
    */
-  behavior?: RadioNavigationBehavior;
+  behavior?: RadioSelectionBehavior;
 }
 
-export class RadioNavigation implements NavigationPattern {
+const SELECTION_ATTRIBUTE = 'aria-checked';
+
+export class RadioSelectionStrategy
+  extends AbstractSelectionStrategy
+  implements NavigationPattern, SelectionStrategy
+{
   eventListeners: EventNames[] = ['focusin', 'keydown', 'pointerup'];
 
   #groups = new Map<string, Item[]>();
   #itemToGroup = new Map<Item, string>();
-  #behavior: Required<RadioNavigationBehavior>;
+  #behavior: Required<RadioSelectionBehavior>;
   #isRadioItem: (item: Item) => boolean;
+
+  #selection: Item[] = [];
+
+  get selection(): Item[] {
+    return this.#selection;
+  }
 
   constructor(
     private control: Control,
-    options?: RadioNavigationOptions
+    options?: RadioSelectionOptions
   ) {
+    super();
+
     this.#behavior = {
       ...DEFAULT_BEHAVIOR,
       ...options?.behavior
     };
     this.#isRadioItem = options?.isRadioItem ?? (() => true);
+  }
+
+  isSelectionAttriute(attributeName: string): boolean {
+    return attributeName === SELECTION_ATTRIBUTE;
   }
 
   matches(event: Event): boolean {
@@ -113,9 +136,9 @@ export class RadioNavigation implements NavigationPattern {
   /**
    * Called from control.readItems() to re-partition items and re-enforce invariant.
    */
-  updateItems(): void {
+  readSelection(): void {
     // 1. Filter control.items through isRadioItem
-    const radioItems = new Set(this.control.items.filter((item) => this.#isRadioItem(item)));
+    const radioItems = new Set(this.control.enabledItems.filter((item) => this.#isRadioItem(item)));
 
     // 2. Partition by data-group (missing → default key '')
     this.#groups = new Map<string, Item[]>();
@@ -148,12 +171,10 @@ export class RadioNavigation implements NavigationPattern {
 
     // 3. For each group, enforce invariant
     for (const items of this.#groups.values()) {
-      const correctedItem = this.#enforceGroupInvariant(items);
-
-      if (correctedItem) {
-        this.control.emitter?.selected([correctedItem]);
-      }
+      this.#enforceGroupInvariant(items);
     }
+
+    this.#storeSelectionAndNotify();
   }
 
   /**
@@ -216,10 +237,22 @@ export class RadioNavigation implements NavigationPattern {
       }
     }
 
-    this.control.emitter?.selected([item]);
+    this.#storeSelectionAndNotify();
   }
 
   #isSeparator(element: Element): boolean {
     return element.getAttribute('role') === 'separator' || element instanceof HTMLHRElement;
+  }
+
+  #storeSelectionAndNotify() {
+    this.select(this.control.enabledItems.filter((item) => this.#isRadioItem(item)));
+  }
+
+  select(selection: Item[]) {
+    if (isEqual(selection, this.#selection)) {
+      return;
+    }
+
+    this.notifyListener('read');
   }
 }

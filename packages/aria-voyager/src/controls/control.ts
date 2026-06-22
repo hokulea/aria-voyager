@@ -43,6 +43,11 @@ export type TreeItem = {
   children: TreeItem[];
 };
 
+export interface ControlWithSelection {
+  readSelection(): void;
+  isSelectionAttribute(attributeName: string): boolean;
+}
+
 export abstract class Control {
   protected abstract focusStrategy: AbstractFocusStrategy;
 
@@ -73,6 +78,10 @@ export abstract class Control {
 
   get capabilities() {
     return this.#capabilities;
+  }
+
+  usesSelection(): this is ControlWithSelection {
+    return this.#capabilities.singleSelection || this.#capabilities.multiSelection;
   }
 
   #optionAttributes: string[] = [];
@@ -180,9 +189,5 @@ export abstract class Control {
 
   readItems() {
     this.items = [];
-  }
-
-  readSelection() {
-    // no-op, please implement
   }
 }
