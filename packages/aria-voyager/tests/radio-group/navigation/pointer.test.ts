@@ -3,8 +3,9 @@ import { expect, test } from 'vitest';
 import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
 
 import { firePointer, focusControl } from '#tests/test-support/events';
+import { allItemsToHaveAttributeBut } from '#tests/test-support/items';
 
-test('Use pointer to check items', async ({ annotate }) => {
+test('Use pointer to activate items', async ({ annotate }) => {
   const { container, radioGroup } = createRadioGroup(document.body, [
     'Option 1',
     'Option 2',
@@ -12,31 +13,26 @@ test('Use pointer to check items', async ({ annotate }) => {
   ]);
 
   const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
+  const items = [firstItem, secondItem, thirdItem];
 
-  // First item is checked by default
-  await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
-  await expect.element(secondItem).toHaveAttribute('aria-checked', 'false');
-  await expect.element(thirdItem).toHaveAttribute('aria-checked', 'false');
-
-  await annotate('click second item → checks it, unchecks first');
   await focusControl(container);
+  await expect.element(firstItem).toHaveAttribute('tabindex', '0');
+  await allItemsToHaveAttributeBut(items, 'tabindex', '-1', firstItem);
+
+  await annotate('click second item to activate it but all others');
   await firePointer(secondItem);
+  await expect.element(secondItem).toHaveAttribute('tabindex', '0');
+  await allItemsToHaveAttributeBut(items, 'tabindex', '-1', secondItem);
 
-  await expect.element(firstItem).toHaveAttribute('aria-checked', 'false');
-  await expect.element(secondItem).toHaveAttribute('aria-checked', 'true');
-  await expect.element(thirdItem).toHaveAttribute('aria-checked', 'false');
-
-  await annotate('click third item → checks it, unchecks second');
+  await annotate('click third item to activate it but all others');
   await firePointer(thirdItem);
+  await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
+  await allItemsToHaveAttributeBut(items, 'tabindex', '-1', thirdItem);
 
-  await expect.element(firstItem).toHaveAttribute('aria-checked', 'false');
-  await expect.element(secondItem).toHaveAttribute('aria-checked', 'false');
-  await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
-
-  await annotate('click already checked item → stays checked');
+  await annotate('click already activated item stays active');
   await firePointer(thirdItem);
-
-  await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
+  await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
+  await allItemsToHaveAttributeBut(items, 'tabindex', '-1', thirdItem);
 
   radioGroup.dispose();
 });

@@ -1,0 +1,66 @@
+import { expect, test } from 'vitest';
+
+import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
+
+import { fireKey, focusControl } from '#tests/test-support/events';
+import { allItemsToHaveAttributeBut } from '#tests/test-support/items';
+
+test('Select with `ArrowUp`', async ({ annotate }) => {
+  const { container, radioGroup } = createRadioGroup(document.body, [
+    'Option 1',
+    'Option 2',
+    'Option 3'
+  ]);
+
+  const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
+  const items = [firstItem, secondItem, thirdItem];
+
+  container.focus();
+  expect(document.activeElement).toBe(firstItem);
+
+  await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
+
+  await annotate('use `End` key to select last item');
+  await fireKey(container, 'End');
+  await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+
+  await annotate('use `ArrowUp` key to select second item');
+  await fireKey(container, 'ArrowUp');
+  await expect.element(secondItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', secondItem);
+
+  await annotate('use `ArrowDown` key to select first item');
+  await fireKey(container, 'ArrowUp');
+  await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
+});
+
+test('Select with `ArrowUp`, skip disabled item', async ({ annotate }) => {
+  const { container, radioGroup } = createRadioGroup(document.body, [
+    'Option 1',
+    'Option 2',
+    'Option 3'
+  ]);
+
+  const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
+  const items = [firstItem, secondItem, thirdItem];
+
+  secondItem.setAttribute('aria-disabled', 'true');
+
+  await focusControl(container);
+  expect(document.activeElement).toBe(firstItem);
+  await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
+
+  await annotate('use `End` key to select last item');
+  await fireKey(container, 'End');
+  await expect.element(thirdItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', thirdItem);
+
+  await annotate('use `ArrowUp` key to select first item');
+  await fireKey(container, 'ArrowUp');
+  await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
+  await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
+});
