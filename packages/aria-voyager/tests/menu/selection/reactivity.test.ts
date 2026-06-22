@@ -46,9 +46,7 @@ test('removing separator merges groups, invariant corrects, emits', async ({ ann
   menu.dispose();
 });
 
-test.only('adding separator splits group, invariant corrects per new group', async ({
-  annotate
-}) => {
+test('adding separator splits group, invariant corrects per new group', async ({ annotate }) => {
   const menuElement = createMenuElement(document.body);
 
   const [a, b, c] = appendRadioItems(menuElement, ['A', 'B', 'C']);
