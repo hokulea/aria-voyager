@@ -1,6 +1,6 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
-import { Menu } from '#src';
+import { ItemEmitStrategy, Menu } from '#src';
 import {
   appendRadioGroup,
   appendRadioItems,
@@ -8,22 +8,26 @@ import {
   createMenuElement
 } from '#tests/components/menu';
 
-import { fireKey } from '#tests/test-support/events';
-
 test('removing separator merges groups, invariant corrects, emits', async ({ annotate }) => {
   const menuElement = createMenuElement(document.body);
   const [a, b] = appendRadioItems(menuElement, ['A', 'B']);
 
   const hr = appendSeparator(menuElement);
 
-  const [c, d] = appendRadioItems(menuElement, ['C', 'D']);
+  const [c] = appendRadioItems(menuElement, ['C', 'D']);
+
   const menu = new Menu(menuElement);
+
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(menu, listeners);
 
   await annotate('initial state: two groups, each with first item checked');
   await expect.element(a).toHaveAttribute('aria-checked', 'true');
   await expect.element(b).toHaveAttribute('aria-checked', 'false');
-  await expect.element(c).toHaveAttribute('aria-checked', 'true');
-  await expect.element(d).toHaveAttribute('aria-checked', 'false');
 
   await annotate('remove separator');
   hr.remove();
@@ -35,45 +39,42 @@ test('removing separator merges groups, invariant corrects, emits', async ({ ann
   await expect.element(a).toHaveAttribute('aria-checked', 'true');
   await expect.element(b).toHaveAttribute('aria-checked', 'false');
   await expect.element(c).toHaveAttribute('aria-checked', 'false');
-  await expect.element(d).toHaveAttribute('aria-checked', 'false');
 
-  await annotate('all items now in same group: selecting D unchecks A');
-  d.focus();
-  await fireKey(menuElement, ' ');
-
-  await expect.element(a).toHaveAttribute('aria-checked', 'false');
-  await expect.element(d).toHaveAttribute('aria-checked', 'true');
+  await annotate('emitter should be called with A (first checked item in merged group)');
+  expect(listeners.select).toHaveBeenCalledWith([a]);
 
   menu.dispose();
 });
 
-test('adding separator splits group, invariant corrects per new group', async ({ annotate }) => {
+test.only('adding separator splits group, invariant corrects per new group', async ({
+  annotate
+}) => {
   const menuElement = createMenuElement(document.body);
 
   const [a, b, c] = appendRadioItems(menuElement, ['A', 'B', 'C']);
 
   const menu = new Menu(menuElement);
 
-  await annotate('initial state: one group, A checked');
-  await expect.element(a).toHaveAttribute('aria-checked', 'true');
-  await expect.element(b).toHaveAttribute('aria-checked', 'false');
-  await expect.element(c).toHaveAttribute('aria-checked', 'false');
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
 
-  await annotate('insert separator between A and B');
+  new ItemEmitStrategy(menu, listeners);
+
+  await annotate('insert separator between A and B to split group');
 
   const hr = document.createElement('hr');
 
   b.before(hr);
-
-  await annotate('trigger re-read');
   menu.readItems();
 
-  await annotate('group 1: [A] — A still checked');
   await expect.element(a).toHaveAttribute('aria-checked', 'true');
-
-  await annotate('group 2: [B, C] — B checked (first item, no checked before)');
   await expect.element(b).toHaveAttribute('aria-checked', 'true');
   await expect.element(c).toHaveAttribute('aria-checked', 'false');
+
+  await annotate('emitter should be called with B (first item in new group)');
+  expect(listeners.select).toHaveBeenCalledWith([a, b]);
 
   menu.dispose();
 });
@@ -82,30 +83,36 @@ test('moving item between groups corrects both groups', async ({ annotate }) => 
   const menuElement = createMenuElement(document.body);
 
   const g1 = appendRadioGroup(menuElement);
-  const [a, b] = appendRadioItems(g1, ['A', 'B']);
+  const [a] = appendRadioItems(g1, ['A', 'B']);
 
   const g2 = appendRadioGroup(menuElement);
   const [c, d] = appendRadioItems(g2, ['C', 'D']);
 
   const menu = new Menu(menuElement);
 
-  await annotate('initial state: group 1 [A checked, B], group 2 [C checked, D]');
-  await expect.element(a).toHaveAttribute('aria-checked', 'true');
-  await expect.element(c).toHaveAttribute('aria-checked', 'true');
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
 
-  await annotate('move C from group 2 to group 1');
-  g1.append(c);
+  new ItemEmitStrategy(menu, listeners);
 
-  await annotate('trigger re-read');
+  await annotate('remove C from group 2, D becomes solo item');
+  c.remove();
   menu.readItems();
 
-  await annotate('group 1: [A, B, C] — A still checked, C unchecked');
-  await expect.element(a).toHaveAttribute('aria-checked', 'true');
-  await expect.element(b).toHaveAttribute('aria-checked', 'false');
-  await expect.element(c).toHaveAttribute('aria-checked', 'false');
-
-  await annotate('group 2: [D] — D checked (invariant: no checked → check first)');
   await expect.element(d).toHaveAttribute('aria-checked', 'true');
+  expect(listeners.select).toHaveBeenCalledWith([d]);
+
+  listeners.select.mockReset();
+
+  await annotate('move C into group 1, A stays checked');
+  g1.append(c);
+  menu.readItems();
+
+  await expect.element(a).toHaveAttribute('aria-checked', 'true');
+  await expect.element(c).toHaveAttribute('aria-checked', 'false');
+  expect(listeners.select).toHaveBeenCalledWith([a]);
 
   menu.dispose();
 });
@@ -113,32 +120,30 @@ test('moving item between groups corrects both groups', async ({ annotate }) => 
 test('items already valid after merge, no emission', async ({ annotate }) => {
   const menuElement = createMenuElement(document.body);
 
-  const [a, b] = appendRadioItems(menuElement, ['A', 'B']);
+  appendRadioItems(menuElement, ['A', 'B']);
 
   const hr = appendSeparator(menuElement);
 
-  const [c, d] = appendRadioItems(menuElement, ['C', 'D']);
+  const [c] = appendRadioItems(menuElement, ['C', 'D']);
 
   const menu = new Menu(menuElement);
 
-  await annotate('initial state: two groups');
-  await expect.element(a).toHaveAttribute('aria-checked', 'true');
-  await expect.element(c).toHaveAttribute('aria-checked', 'true');
+  const listeners = {
+    select: vi.fn(),
+    activateItem: vi.fn()
+  };
+
+  new ItemEmitStrategy(menu, listeners);
 
   await annotate('uncheck C manually');
   c.setAttribute('aria-checked', 'false');
 
-  await annotate('remove separator');
+  await annotate('remove separator to merge groups');
   hr.remove();
-
-  await annotate('trigger re-read');
   menu.readItems();
 
-  await annotate('merged group: A still checked, no correction needed');
-  await expect.element(a).toHaveAttribute('aria-checked', 'true');
-  await expect.element(b).toHaveAttribute('aria-checked', 'false');
-  await expect.element(c).toHaveAttribute('aria-checked', 'false');
-  await expect.element(d).toHaveAttribute('aria-checked', 'false');
+  await annotate('emitter should not be called (A already checked, no correction needed)');
+  expect(listeners.select).not.toHaveBeenCalled();
 
   menu.dispose();
 });

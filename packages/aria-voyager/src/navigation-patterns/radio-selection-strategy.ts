@@ -82,14 +82,14 @@ export class RadioSelectionStrategy
   #handleFocus(_event: FocusEvent, item: Item) {
     // focusin: automatic mode checks the focused item
     if (this.behavior.singleSelection === 'automatic' && this.#isRadioItem(item)) {
-      this.#select(item);
+      this.#selectItem(item);
     }
   }
 
   #handlePointer(_event: MouseEvent, item: Item) {
     // pointerup: check the clicked item
     if (this.#isRadioItem(item)) {
-      this.#select(item);
+      this.#selectItem(item);
     }
   }
 
@@ -100,7 +100,7 @@ export class RadioSelectionStrategy
       this.control.activeItem &&
       this.#isRadioItem(this.control.activeItem)
     ) {
-      this.#select(this.control.activeItem);
+      this.#selectItem(this.control.activeItem);
 
       return;
     }
@@ -108,7 +108,7 @@ export class RadioSelectionStrategy
     // Automatic mode: check the item when navigating with arrow keys
     // (item is set by NextNavigation/PreviousNavigation/etc.)
     if (this.behavior.singleSelection === 'automatic' && item && this.#isRadioItem(item)) {
-      this.#select(item);
+      this.#selectItem(item);
     }
   }
 
@@ -153,7 +153,7 @@ export class RadioSelectionStrategy
       this.#enforceGroupInvariant(items);
     }
 
-    this.#storeSelectionAndNotify();
+    this.#readSelectionFromItemsStoreAndNotify();
   }
 
   /**
@@ -199,7 +199,7 @@ export class RadioSelectionStrategy
     return firstSelected;
   }
 
-  #select(item: Item): void {
+  #selectItem(item: Item): void {
     const group = this.#itemToGroup.get(item);
 
     if (group === undefined) {
@@ -216,7 +216,7 @@ export class RadioSelectionStrategy
       }
     }
 
-    this.#storeSelectionAndNotify();
+    this.#readSelectionFromItemsStoreAndNotify();
   }
 
   #isItemSelected(item: Item) {
@@ -227,7 +227,7 @@ export class RadioSelectionStrategy
     return element.getAttribute('role') === 'separator' || element instanceof HTMLHRElement;
   }
 
-  #storeSelectionAndNotify() {
+  #readSelectionFromItemsStoreAndNotify() {
     const selection = this.control.enabledItems.filter(
       (item) => this.#isRadioItem(item) && this.#isItemSelected(item)
     );

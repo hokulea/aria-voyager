@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
-import { Menu } from '#src';
+import { ItemEmitStrategy, Menu } from '#src';
 import {
   appendRadioGroup,
   appendRadioItems,
@@ -22,6 +22,13 @@ describe('Separator', () => {
 
     const menu = new Menu(menuElement);
 
+    const listeners = {
+      select: vi.fn(),
+      activateItem: vi.fn()
+    };
+
+    new ItemEmitStrategy(menu, listeners);
+
     await annotate('each group has its first item checked');
     await expect.element(a).toHaveAttribute('aria-checked', 'true');
     await expect.element(b).toHaveAttribute('aria-checked', 'false');
@@ -36,6 +43,7 @@ describe('Separator', () => {
     await expect.element(b).toHaveAttribute('aria-checked', 'true');
     await expect.element(c).toHaveAttribute('aria-checked', 'true');
     await expect.element(d).toHaveAttribute('aria-checked', 'false');
+    expect(listeners.select).toHaveBeenCalledWith([b, c]);
 
     await annotate('selecting D in group 1 does not affect group 0');
     d.focus();
@@ -45,6 +53,7 @@ describe('Separator', () => {
     await expect.element(b).toHaveAttribute('aria-checked', 'true');
     await expect.element(c).toHaveAttribute('aria-checked', 'false');
     await expect.element(d).toHaveAttribute('aria-checked', 'true');
+    expect(listeners.select).toHaveBeenCalledWith([b, d]);
 
     menu.dispose();
   });
@@ -63,6 +72,12 @@ describe('Separator', () => {
     const [c, d] = appendRadioItems(menuElement, ['C', 'D']);
 
     const menu = new Menu(menuElement);
+    const listeners = {
+      select: vi.fn(),
+      activateItem: vi.fn()
+    };
+
+    new ItemEmitStrategy(menu, listeners);
 
     await annotate('each group has its first item checked');
     await expect.element(a).toHaveAttribute('aria-checked', 'true');
@@ -78,6 +93,7 @@ describe('Separator', () => {
     await expect.element(b).toHaveAttribute('aria-checked', 'true');
     await expect.element(c).toHaveAttribute('aria-checked', 'true');
     await expect.element(d).toHaveAttribute('aria-checked', 'false');
+    expect(listeners.select).toHaveBeenCalledWith([b, c]);
 
     menu.dispose();
   });
@@ -88,6 +104,12 @@ describe('Separator', () => {
     const [a, b, c] = appendRadioItems(menuElement, ['A', 'B', 'C']);
 
     const menu = new Menu(menuElement);
+    const listeners = {
+      select: vi.fn(),
+      activateItem: vi.fn()
+    };
+
+    new ItemEmitStrategy(menu, listeners);
 
     await annotate('first item is checked by default');
     await expect.element(a).toHaveAttribute('aria-checked', 'true');
@@ -101,6 +123,7 @@ describe('Separator', () => {
     await expect.element(a).toHaveAttribute('aria-checked', 'false');
     await expect.element(b).toHaveAttribute('aria-checked', 'false');
     await expect.element(c).toHaveAttribute('aria-checked', 'true');
+    expect(listeners.select).toHaveBeenCalledWith([c]);
 
     menu.dispose();
   });
@@ -119,6 +142,12 @@ describe('role="group"', () => {
     const [c, d] = appendRadioItems(g2, ['C', 'D']);
 
     const menu = new Menu(menuElement);
+    const listeners = {
+      select: vi.fn(),
+      activateItem: vi.fn()
+    };
+
+    new ItemEmitStrategy(menu, listeners);
 
     await annotate('each group has its first item checked');
     await expect.element(a).toHaveAttribute('aria-checked', 'true');
@@ -134,6 +163,7 @@ describe('role="group"', () => {
     await expect.element(b).toHaveAttribute('aria-checked', 'true');
     await expect.element(c).toHaveAttribute('aria-checked', 'true');
     await expect.element(d).toHaveAttribute('aria-checked', 'false');
+    expect(listeners.select).toHaveBeenCalledWith([b, c]);
 
     menu.dispose();
   });
