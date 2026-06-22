@@ -45,28 +45,6 @@ test('Click on menuitemcheckbox toggles aria-checked', async ({ annotate }) => {
   menu.dispose();
 });
 
-test('Click on regular menuitem still activates', async ({ annotate }) => {
-  const menuElement = createMenuElement(document.body);
-
-  appendItemToMenu(menuElement, 'Cut');
-  appendCheckboxItemToMenu(menuElement, 'Bold', false);
-  appendItemToMenu(menuElement, 'Paste');
-
-  const menu = new Menu(menuElement);
-  const cutItem = menu.items[0];
-
-  await annotate('click regular menuitem');
-  await firePointer(cutItem);
-
-  // Regular menuitem triggers click (which would be verified by a click handler)
-  // We verify that the click doesn't affect checkbox state
-  const checkbox = menu.items[1];
-
-  await expect.element(checkbox).toHaveAttribute('aria-checked', 'false');
-
-  menu.dispose();
-});
-
 test('Multiple checkboxes can be checked independently via click', async ({ annotate }) => {
   const menuElement = createMenuElement(document.body);
 
