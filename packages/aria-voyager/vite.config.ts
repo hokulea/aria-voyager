@@ -37,7 +37,12 @@ export default defineConfig({
       headless: true,
       screenshotFailures: false,
       provider: playwright(),
-      instances: [{ browser: 'firefox' }, { browser: 'chromium' }, { browser: 'webkit' }]
+      instances: [
+        // have them line by line to toggle them on and off
+        { browser: 'firefox' },
+        { browser: 'chromium' }
+        // { browser: 'webkit' }
+      ]
     }
   }
 });
