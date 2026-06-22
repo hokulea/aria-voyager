@@ -1,4 +1,7 @@
+import { expect } from 'vitest';
+
 import type { Control } from '#src';
+import type { Item } from '#src/controls/control';
 
 export interface ControlWithItems {
   items: HTMLElement[];
@@ -30,4 +33,23 @@ export function getControlItems(control: Control): ControlItems {
     secondLastItem: control.items.at(-2) as HTMLElement,
     lastItem: control.items.at(-1) as HTMLElement
   };
+}
+
+export async function allItemsToHaveAttributeBut(
+  items: Item[],
+  attributeName: string,
+  expectedValue: string,
+  excluded: number | Item
+) {
+  const filteredItems = items.filter((item, idx) => {
+    if (typeof excluded === 'number') {
+      return idx !== excluded;
+    }
+
+    return item !== excluded;
+  });
+
+  for (const item of filteredItems) {
+    await expect.element(item).toHaveAttribute(attributeName, expectedValue);
+  }
 }
