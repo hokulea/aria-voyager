@@ -1,15 +1,14 @@
-import { getGroupChildren } from '#src/controls/-roles.js';
-import { PointerNavigation } from '#src/navigation-patterns/pointer-navigation.js';
-import { RovingTabindexStrategy } from '#src/navigation-patterns/roving-tabindex-strategy.js';
+import { RovingTabindexStrategy } from '#src/behaviors/focus/roving-tabindex-strategy';
+import { EndNavigation } from '#src/behaviors/navigation/end-navigation';
+import { HomeNavigation } from '#src/behaviors/navigation/home-navigation';
+import { NextNavigation } from '#src/behaviors/navigation/next-navigation';
+import { PointerNavigation } from '#src/behaviors/navigation/pointer-navigation';
+import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigation';
+import { getGroupChildren } from '#src/controls/-roles';
+import { Control } from '#src/controls/control';
 
-import { EndNavigation } from '../navigation-patterns/end-navigation';
-import { HomeNavigation } from '../navigation-patterns/home-navigation';
-import { NextNavigation } from '../navigation-patterns/next-navigation';
-import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { Control } from './control';
-
-import type { EmitStrategy } from '#src/emit-strategies/emit-strategy.js';
-import type { UpdateStrategy } from '#src/update-strategies/update-strategy.js';
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 interface GroupOptions {
   updater?: UpdateStrategy;
@@ -32,7 +31,7 @@ export class Group extends Control {
 
     this.focusStrategy = new RovingTabindexStrategy(this);
 
-    this.registerNavigationPatterns([
+    this.registerBehavior([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
       new PreviousNavigation(this, ['ArrowUp', 'ArrowLeft']),
       new HomeNavigation(this),

@@ -4,10 +4,10 @@ import {
   AbstractSelectionStrategy,
   type SelectionBehavior,
   type SelectionStrategy
-} from '#src/navigation-patterns/selection-strategy';
+} from '#src/behaviors/selection/selection-strategy';
 
-import type { Control, Item } from '../controls/control';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { Control, Item } from '#src/controls/control';
 
 const SELECTION_ATTRIBUTE = 'aria-selected';
 
@@ -17,7 +17,7 @@ interface ItemSelectionOptions {
 
 export class ItemSelectionStrategy
   extends AbstractSelectionStrategy
-  implements SelectionStrategy, NavigationPattern
+  implements SelectionStrategy, Behavior
 {
   eventListeners: EventNames[] = ['focusin', 'keydown', 'keyup', 'pointerup', 'change'];
 
@@ -50,7 +50,7 @@ export class ItemSelectionStrategy
     }
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const { event } = bag;
 
     if (event.type === 'focusin') {

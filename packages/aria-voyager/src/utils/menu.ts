@@ -1,4 +1,4 @@
-import type { MenuItem } from '../controls/menu';
+import type { MenuItem } from '#src/controls/menu';
 
 export function isMenuItemElement(element: HTMLElement) {
   return ['menuitem', 'menuitemcheckbox', 'menuitemradio'].includes(element.role as string);

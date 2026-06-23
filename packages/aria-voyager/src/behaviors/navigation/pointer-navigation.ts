@@ -1,9 +1,9 @@
-import { asItemOf } from '../controls/-utils';
+import { asItemOf } from '#src/controls/-items';
 
-import type { Control } from '..';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { Control } from '#src/controls/control';
 
-export class PointerNavigation implements NavigationPattern {
+export class PointerNavigation implements Behavior {
   eventListeners: EventNames[];
 
   constructor(
@@ -17,8 +17,8 @@ export class PointerNavigation implements NavigationPattern {
     return this.eventListeners.includes(event.type as EventNames);
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
-    const { event } = bag as NavigationParameterBag & { event: PointerEvent };
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
+    const { event } = bag as BehaviorParameterBag & { event: PointerEvent };
 
     const item = event
       .composedPath()

@@ -1,14 +1,15 @@
-import { ActiveDescendentStrategy } from '../navigation-patterns/active-descendent-strategy';
-import { EndNavigation } from '../navigation-patterns/end-navigation';
-import { HomeNavigation } from '../navigation-patterns/home-navigation';
-import { ItemSelectionStrategy } from '../navigation-patterns/item-selection-strategy';
-import { NextNavigation } from '../navigation-patterns/next-navigation';
-import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
-import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
-import { Control, type ControlWithSelection } from './control';
+import { ActiveDescendentStrategy } from '#src/behaviors/focus/active-descendent-strategy';
+import { EndNavigation } from '#src/behaviors/navigation/end-navigation';
+import { HomeNavigation } from '#src/behaviors/navigation/home-navigation';
+import { NextNavigation } from '#src/behaviors/navigation/next-navigation';
+import { PointerNavigation } from '#src/behaviors/navigation/pointer-navigation';
+import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigation';
+import { ScrollToItem } from '#src/behaviors/navigation/scroll-to-item';
+import { ItemSelectionStrategy } from '#src/behaviors/selection/item-selection-strategy';
+import { Control, type ControlWithSelection } from '#src/controls/control';
 
-import type { EmitStrategy, UpdateStrategy } from '..';
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 interface ListboxOptions {
   updater?: UpdateStrategy;
@@ -44,7 +45,7 @@ export class Listbox extends Control implements ControlWithSelection {
     this.#selectionStrategy = new ItemSelectionStrategy(this);
     this.focusStrategy = new ActiveDescendentStrategy(this, this.#selectionStrategy);
 
-    this.registerNavigationPatterns([
+    this.registerBehavior([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
       new PreviousNavigation(this, ['ArrowUp', 'ArrowLeft']),
       new HomeNavigation(this),

@@ -13,6 +13,7 @@
     "noEmitOnError": false,
     "module": "ESNext",
     "target": "ESNext",
+    "verbatimModuleSyntax": true,
     // Features
     "experimentalDecorators": true,
     "allowJs": false,

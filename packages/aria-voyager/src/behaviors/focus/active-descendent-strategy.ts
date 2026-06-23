@@ -1,7 +1,7 @@
-import { uniqueId } from '../utils';
-import { AbstractFocusStrategy } from './focus-strategy';
+import { AbstractFocusStrategy } from '#src/behaviors/focus/focus-strategy';
+import { uniqueId } from '#src/utils/dom';
 
-import type { Item } from '../controls/control';
+import type { Item } from '#src/controls/control';
 
 export class ActiveDescendentStrategy extends AbstractFocusStrategy {
   activateItem(item: Item) {

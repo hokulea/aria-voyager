@@ -1,10 +1,10 @@
-import { isKeyboardEvent, isPointerEvent, isToggleEvent, matchesKeys } from '../utils/event';
-import { getMenuFromItem, getMenuItemFromEvent, getRootMenu } from '../utils/menu';
+import { isKeyboardEvent, isPointerEvent, isToggleEvent, matchesKeys } from '#src/utils/event';
+import { getMenuFromItem, getMenuItemFromEvent, getRootMenu } from '#src/utils/menu';
 
-import type { Control } from '..';
-import type { MenuItem } from '../controls/menu';
-import type { FocusStrategy } from './focus-strategy';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { FocusStrategy } from '#src/behaviors/focus/focus-strategy';
+import type { Control } from '#src/controls/control';
+import type { MenuItem } from '#src/controls/menu';
 
 const OPENER = Symbol('Opener');
 const FOCUS_ON_OPEN = Symbol('FocusOnOpen');
@@ -33,7 +33,7 @@ function hideSubmenu(menu: MenuElement, { focusTrigger }: { focusTrigger: boolea
   menu.hidePopover();
 }
 
-export class MenuNavigation implements NavigationPattern {
+export class MenuNavigation implements Behavior {
   eventListeners: EventNames[] = ['keydown', 'toggle', 'pointerover', 'pointerout', 'pointerup'];
 
   constructor(
@@ -52,7 +52,7 @@ export class MenuNavigation implements NavigationPattern {
     );
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const { event } = bag;
 
     // -> keyboard navigation

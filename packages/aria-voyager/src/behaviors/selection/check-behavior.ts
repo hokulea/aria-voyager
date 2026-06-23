@@ -1,9 +1,9 @@
 import { isEqual } from 'es-toolkit/predicate';
 
-import { asItemOf } from '#src/controls/-utils.js';
+import { asItemOf } from '#src/controls/-items';
 
-import type { Control, Item } from '../controls/control';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { Control, Item } from '#src/controls/control';
 
 export interface CheckBehaviorOptions {
   /**
@@ -25,7 +25,7 @@ export interface CheckBehaviorOptions {
  * - option with aria-checked in Listbox
  * - treeitem with aria-checked in Tree
  */
-export class CheckBehavior implements NavigationPattern {
+export class CheckBehavior implements Behavior {
   eventListeners: EventNames[] = ['keydown', 'pointerup'];
 
   #checked: Item[] = [];
@@ -46,7 +46,7 @@ export class CheckBehavior implements NavigationPattern {
     );
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const { event, item } = bag;
 
     if (event.type === 'pointerup') {

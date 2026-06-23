@@ -1,6 +1,6 @@
-import type { Control, Item } from '../controls/control';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
-import type { SelectionStrategy } from './selection-strategy';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { SelectionStrategy } from '#src/behaviors/selection/selection-strategy';
+import type { Control, Item } from '#src/controls/control';
 
 export interface FocusStrategy {
   activeItem?: Item;
@@ -13,7 +13,7 @@ export interface FocusStrategy {
 /**
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents
  */
-export abstract class AbstractFocusStrategy implements NavigationPattern, FocusStrategy {
+export abstract class AbstractFocusStrategy implements Behavior, FocusStrategy {
   protected control: Control;
   private selectionStrategy?: SelectionStrategy;
 
@@ -64,7 +64,7 @@ export abstract class AbstractFocusStrategy implements NavigationPattern, FocusS
     return this.control.enabledItems.length > 0;
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const { event, item } = bag;
 
     if (event.type === 'focusin') {

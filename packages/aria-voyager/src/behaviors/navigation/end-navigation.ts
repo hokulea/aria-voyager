@@ -1,13 +1,13 @@
-import { doesEventMatchKeys } from '../utils/event';
+import { doesEventMatchKeys } from '#src/utils/event';
 
-import type { Control } from '..';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { Control } from '#src/controls/control';
 
 function isEndEvent(event: Event): boolean {
   return doesEventMatchKeys(event, 'End');
 }
 
-export class EndNavigation implements NavigationPattern {
+export class EndNavigation implements Behavior {
   eventListeners: EventNames[] = ['keydown'];
 
   constructor(private control: Control) {}
@@ -16,7 +16,7 @@ export class EndNavigation implements NavigationPattern {
     return isEndEvent(event) && this.control.enabledItems.length > 0;
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const lastOffset = this.control.enabledItems.length - 1;
 
     return {

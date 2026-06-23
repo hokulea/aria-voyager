@@ -1,7 +1,7 @@
-import { isItemEnabled } from '../controls/-utils';
-import { AbstractFocusStrategy } from './focus-strategy';
+import { AbstractFocusStrategy } from '#src/behaviors/focus/focus-strategy';
+import { isItemEnabled } from '#src/controls/-items';
 
-import type { Item } from '../controls/control';
+import type { Item } from '#src/controls/control';
 
 /**
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex

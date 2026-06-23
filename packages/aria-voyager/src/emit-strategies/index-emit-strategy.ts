@@ -1,5 +1,5 @@
-import type { Control, Item } from '../controls/control';
-import type { EmitStrategy, EmitterOptions } from './emit-strategy';
+import type { Control, Item } from '#src/controls/control';
+import type { EmitStrategy, EmitterOptions } from '#src/emit-strategies/emit-strategy';
 
 export class IndexEmitStrategy implements EmitStrategy {
   constructor(
