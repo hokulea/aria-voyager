@@ -52,12 +52,10 @@ export function appendRadioItemToMenu(parent: HTMLElement, item: string, checked
 export function appendSubmenuToMenu(parent: HTMLElement, item: string, menu: HTMLElement) {
   menu.id = uniqueId();
   menu.setAttribute('popover', '');
-  // @ts-expect-error doesn't know that CSS yet
   menu.style.positionAnchor = `--${menu.id}`;
 
   const elem = appendItemToMenu(parent, item);
 
-  // @ts-expect-error doesn't know that CSS yet
   elem.style.anchorName = `--${menu.id}`;
   elem.ariaHasPopup = 'menu';
   elem.setAttribute('popovertarget', menu.id);
@@ -111,12 +109,10 @@ export function createMenuWithRadioGroups(parent: HTMLElement) {
 export function withTriggerButton(parent: HTMLElement, menu: HTMLElement) {
   menu.id = uniqueId();
   menu.setAttribute('popover', '');
-  // @ts-expect-error doesn't know that CSS yet
   menu.style.positionAnchor = `--${menu.id}`;
 
   const trigger = document.createElement('button');
 
-  // @ts-expect-error doesn't know that CSS yet
   trigger.style.anchorName = `--${menu.id}`;
   trigger.ariaHasPopup = 'menu';
   trigger.setAttribute('popovertarget', menu.id);

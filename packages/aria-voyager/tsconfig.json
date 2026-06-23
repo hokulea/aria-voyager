@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
     "declarationDir": "dist/",
     // Path resolution
     "moduleResolution": "bundler",
@@ -32,19 +31,18 @@
     "skipLibCheck": true,
     "paths": {
       "#src": [
-        "./index.ts"
+        "./src/index.ts"
       ],
       "#src/*": [
-        "./*"
+        "./src/*"
       ],
       "#tests/*": [
-        "../tests/*"
+        "./tests/*"
       ]
     },
   },
   "include": [
-    "src/**/*",
-    "types",
+    "src",
     "demo",
     "tests",
     "vite.config.ts"

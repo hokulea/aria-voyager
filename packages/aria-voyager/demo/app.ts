@@ -1,6 +1,9 @@
+// @ts-expect-error yeah, cannot import CSS yet
 import './main.css';
 
+// @ts-expect-error yeah, cannot import CSS yet
 import '@hokulea/core/style.css';
+// @ts-expect-error yeah, cannot import CSS yet
 import '@hokulea/theme-moana/dist/moana.css';
 
 import group from './pages/group';
