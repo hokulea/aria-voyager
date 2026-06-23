@@ -65,8 +65,6 @@ export class RadioGroup extends Control implements ControlWithSelection {
   readOptions(): void {
     super.readOptions();
 
-    this.element.setAttribute('tabindex', this.options.disabled ? '-1' : '0');
-
     this.focusStrategy.updateItems();
   }
 

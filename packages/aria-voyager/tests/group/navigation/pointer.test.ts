@@ -2,10 +2,10 @@ import { expect, test } from 'vitest';
 
 import { createButtonGroup, getGroupItems } from '#tests/group/-shared';
 
-import { firePointer, focusControl } from '#tests/test-support/events';
+import { firePointer } from '#tests/test-support/events';
 
 test('Use pointer to activate items', async ({ annotate }) => {
-  const { container, group } = createButtonGroup();
+  const { group } = createButtonGroup();
   const { firstItem, secondItem, thirdItem } = getGroupItems(group);
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
@@ -15,7 +15,6 @@ test('Use pointer to activate items', async ({ annotate }) => {
   }
 
   await annotate('select second item');
-  await focusControl(container);
   await firePointer(secondItem);
 
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');

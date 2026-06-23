@@ -99,6 +99,7 @@ export class Menu extends Control implements ControlWithSelection {
     this.#checkBehavior.updateItems();
     this.#selectionStrategy.readSelection();
     this.focusStrategy.updateItems();
+    this.focusStrategy.activeItem = undefined;
   }
 
   readSelection(): void {
