@@ -1,5 +1,5 @@
-import type { Control } from '../controls/control';
-import type { UpdateStrategy } from './update-strategy';
+import type { Control } from '#src/controls/control';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 export class ReactiveUpdateStrategy implements UpdateStrategy {
   constructor(private control?: Control) {}

@@ -1,4 +1,4 @@
-import type { Control } from '..';
+import type { Control } from '#src/controls/control';
 
 export interface UpdateStrategy {
   setControl(control: Control): void;

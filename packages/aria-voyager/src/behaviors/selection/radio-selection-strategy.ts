@@ -1,14 +1,14 @@
 import { isEqual } from 'es-toolkit/predicate';
 
-import { isItemOf } from '#src/controls/-utils.js';
 import {
   AbstractSelectionStrategy,
   type SelectionBehavior,
   type SelectionStrategy
-} from '#src/navigation-patterns/selection-strategy.js';
+} from '#src/behaviors/selection/selection-strategy';
+import { isItemOf } from '#src/controls/-items';
 
-import type { Control, Item } from '../controls/control';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { Control, Item } from '#src/controls/control';
 
 function isGroupContainer(element: Element): boolean {
   return (
@@ -42,7 +42,7 @@ const SELECTION_ATTRIBUTE = 'aria-checked';
 
 export class RadioSelectionStrategy
   extends AbstractSelectionStrategy
-  implements NavigationPattern, SelectionStrategy
+  implements Behavior, SelectionStrategy
 {
   eventListeners: EventNames[] = ['focusin', 'keydown', 'pointerup'];
 
@@ -75,7 +75,7 @@ export class RadioSelectionStrategy
     );
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const { event, item } = bag;
 
     if (event.type === 'focusin' && item && isItemOf(item, this.control)) {

@@ -1,14 +1,14 @@
-import { EndNavigation } from '../navigation-patterns/end-navigation';
-import { HomeNavigation } from '../navigation-patterns/home-navigation';
-import { NextNavigation } from '../navigation-patterns/next-navigation';
-import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
-import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { RadioSelectionStrategy } from '../navigation-patterns/radio-selection-strategy';
-import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
-import { Control, type ControlWithSelection } from './control';
+import { RovingTabindexStrategy } from '#src/behaviors/focus/roving-tabindex-strategy';
+import { EndNavigation } from '#src/behaviors/navigation/end-navigation';
+import { HomeNavigation } from '#src/behaviors/navigation/home-navigation';
+import { NextNavigation } from '#src/behaviors/navigation/next-navigation';
+import { PointerNavigation } from '#src/behaviors/navigation/pointer-navigation';
+import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigation';
+import { RadioSelectionStrategy } from '#src/behaviors/selection/radio-selection-strategy';
+import { Control, type ControlWithSelection } from '#src/controls/control';
 
-import type { EmitStrategy } from '../emit-strategies/emit-strategy';
-import type { UpdateStrategy } from '../update-strategies/update-strategy';
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 export interface RadioGroupOptions {
   updater?: UpdateStrategy;
@@ -41,7 +41,7 @@ export class RadioGroup extends Control implements ControlWithSelection {
     });
     this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
-    this.registerNavigationPatterns([
+    this.registerBehavior([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
       new PreviousNavigation(this, ['ArrowUp', 'ArrowLeft']),
       new HomeNavigation(this),

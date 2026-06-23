@@ -1,4 +1,4 @@
-import type { Item } from '../controls/control';
+import type { Item } from '#src/controls/control';
 
 export interface EmitterOptions<T> {
   select?(selection: T[]): void;

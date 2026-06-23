@@ -1,16 +1,17 @@
-import { CheckBehavior } from '../navigation-patterns/check-behavior';
-import { EndNavigation } from '../navigation-patterns/end-navigation';
-import { HomeNavigation } from '../navigation-patterns/home-navigation';
-import { MenuNavigation } from '../navigation-patterns/menu-navigation';
-import { NextNavigation } from '../navigation-patterns/next-navigation';
-import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
-import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { RadioSelectionStrategy } from '../navigation-patterns/radio-selection-strategy';
-import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
-import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
-import { Control, type ControlWithSelection, type Item } from './control';
+import { RovingTabindexStrategy } from '#src/behaviors/focus/roving-tabindex-strategy';
+import { EndNavigation } from '#src/behaviors/navigation/end-navigation';
+import { HomeNavigation } from '#src/behaviors/navigation/home-navigation';
+import { MenuNavigation } from '#src/behaviors/navigation/menu-navigation';
+import { NextNavigation } from '#src/behaviors/navigation/next-navigation';
+import { PointerNavigation } from '#src/behaviors/navigation/pointer-navigation';
+import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigation';
+import { ScrollToItem } from '#src/behaviors/navigation/scroll-to-item';
+import { CheckBehavior } from '#src/behaviors/selection/check-behavior';
+import { RadioSelectionStrategy } from '#src/behaviors/selection/radio-selection-strategy';
+import { Control, type ControlWithSelection, type Item } from '#src/controls/control';
 
-import type { EmitStrategy, UpdateStrategy } from '..';
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 export interface MenuItem extends Item, PopoverTargetAttributes {}
 
@@ -54,7 +55,7 @@ export class Menu extends Control implements ControlWithSelection {
     });
     this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
-    this.registerNavigationPatterns([
+    this.registerBehavior([
       new NextNavigation(this, ['ArrowDown']),
       new PreviousNavigation(this, ['ArrowUp']),
       new HomeNavigation(this),

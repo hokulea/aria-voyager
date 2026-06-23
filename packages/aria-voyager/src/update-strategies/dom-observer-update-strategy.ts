@@ -1,7 +1,7 @@
-import { isItemOf } from '../controls/-utils';
-import { type Control, type ControlWithSelection } from '../controls/control';
+import { isItemOf } from '#src/controls/-items';
 
-import type { UpdateStrategy } from './update-strategy';
+import type { Control, ControlWithSelection } from '#src/controls/control';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 export class DomObserverUpdateStrategy implements UpdateStrategy {
   private observer: MutationObserver = new MutationObserver((changes) => {

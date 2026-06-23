@@ -1,10 +1,10 @@
-import { DomObserverUpdateStrategy } from '../update-strategies/dom-observer-update-strategy';
-import { isItemEnabled } from './-utils';
+import { isItemEnabled } from '#src/controls/-items';
+import { DomObserverUpdateStrategy } from '#src/update-strategies/dom-observer-update-strategy';
 
-import type { EmitStrategy } from '../emit-strategies/emit-strategy';
-import type { FocusStrategy } from '../navigation-patterns/focus-strategy';
-import type { NavigationPattern } from '../navigation-patterns/navigation-pattern';
-import type { UpdateStrategy } from '../update-strategies/update-strategy';
+import type { Behavior } from '#src/behaviors/behavior';
+import type { FocusStrategy } from '#src/behaviors/focus/focus-strategy';
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 function pipe<Value>(input: Value, ...fns: ((input: Value) => Value)[]) {
   let lastResult = input;
@@ -99,7 +99,7 @@ export abstract class Control {
     orientation: 'horizontal'
   };
 
-  private navigationPatterns: NavigationPattern[] = [];
+  private navigationPatterns: Behavior[] = [];
 
   #handler: (event: Event) => void;
 
@@ -127,7 +127,7 @@ export abstract class Control {
     this.updater = updater;
   }
 
-  protected registerNavigationPatterns(patterns: NavigationPattern[]) {
+  protected registerBehavior(patterns: Behavior[]) {
     this.navigationPatterns = patterns;
 
     const eventNames = new Set(this.navigationPatterns.flatMap((p) => p.eventListeners ?? []));

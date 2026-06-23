@@ -1,4 +1,4 @@
-import type { Control, Item } from './control';
+import type { Control, Item } from '#src/controls/control';
 
 export function isItemOf(item: Item, control: Control) {
   return control.items.includes(item);

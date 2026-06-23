@@ -1,7 +1,7 @@
-import type { Control, Item } from '../controls/control';
-import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
+import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { Control, Item } from '#src/controls/control';
 
-export class ScrollToItem implements NavigationPattern {
+export class ScrollToItem implements Behavior {
   eventListeners: EventNames[] = ['keydown'];
 
   constructor(private control: Control) {}
@@ -10,7 +10,7 @@ export class ScrollToItem implements NavigationPattern {
     return this.control.items.length > 0;
   }
 
-  handle(bag: NavigationParameterBag): NavigationParameterBag {
+  handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     const { event, item } = bag;
 
     if (event.type === 'keydown') {

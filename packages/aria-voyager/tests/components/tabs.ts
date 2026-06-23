@@ -1,5 +1,5 @@
 import { Tablist } from '#src';
-import { uniqueId } from '#src/utils';
+import { uniqueId } from '#src/utils/dom';
 
 import { getCompositeItems } from './-composites';
 

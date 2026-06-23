@@ -1,14 +1,15 @@
-import { EndNavigation } from '../navigation-patterns/end-navigation';
-import { HomeNavigation } from '../navigation-patterns/home-navigation';
-import { ItemSelectionStrategy } from '../navigation-patterns/item-selection-strategy';
-import { NextNavigation } from '../navigation-patterns/next-navigation';
-import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
-import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
-import { Control, type ControlWithSelection } from './control';
+import { RovingTabindexStrategy } from '#src/behaviors/focus/roving-tabindex-strategy';
+import { EndNavigation } from '#src/behaviors/navigation/end-navigation';
+import { HomeNavigation } from '#src/behaviors/navigation/home-navigation';
+import { NextNavigation } from '#src/behaviors/navigation/next-navigation';
+import { PointerNavigation } from '#src/behaviors/navigation/pointer-navigation';
+import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigation';
+import { ItemSelectionStrategy } from '#src/behaviors/selection/item-selection-strategy';
+import { Control, type ControlWithSelection } from '#src/controls/control';
 
-import type { EmitStrategy, UpdateStrategy } from '..';
-import type { SelectionBehavior } from '../navigation-patterns/selection-strategy';
+import type { SelectionBehavior } from '#src/behaviors/selection/selection-strategy';
+import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
+import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 export type TablistBehavior = SelectionBehavior;
 
@@ -51,7 +52,7 @@ export class Tablist extends Control implements ControlWithSelection {
     });
     this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
-    this.registerNavigationPatterns([
+    this.registerBehavior([
       this.#nextNavigation,
       this.#prevNavigation,
       new HomeNavigation(this),

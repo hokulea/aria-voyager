@@ -1,4 +1,4 @@
-import { uniqueId } from '#src/utils';
+import { uniqueId } from '#src/utils/dom';
 import {
   appendCheckboxItemToMenu,
   appendItemToMenu,
