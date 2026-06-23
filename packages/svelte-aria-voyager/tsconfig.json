@@ -1,7 +1,6 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./src",
     "declarationDir": "dist/",
     // Path resolution
     "moduleResolution": "bundler",
@@ -33,7 +32,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*",
+    "src",
     "tests",
     "vite.config.js"
   ]
