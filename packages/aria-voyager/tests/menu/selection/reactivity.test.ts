@@ -125,8 +125,6 @@ test.skip('items already valid after merge, no emission', async ({ annotate }) =
 
   const [c, d] = appendRadioItems(menuElement, ['C', 'D']);
 
-  console.log('about to new menu');
-
   const menu = new Menu(menuElement);
 
   const listeners = {

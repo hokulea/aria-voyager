@@ -171,6 +171,7 @@ export class RadioSelectionStrategy
       this.#enforceGroupInvariant(items)
     ).filter(Boolean) as Item[];
 
+    this.#persistSelection(selection);
     this.select(selection);
   }
 
@@ -189,31 +190,12 @@ export class RadioSelectionStrategy
 
     // No checked item: check the first item, uncheck the rest
     if (selectedItems.length === 0) {
-      // for (const [i, item] of items.entries()) {
-      //   item.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
-      // }
-
       return items[0];
     }
 
     // Exactly one checked: keep it, ensure others are explicitely "false"
-    if (selectedItems.length === 1) {
-      const selectedItem = selectedItems[0];
-
-      // for (const item of items) {
-      //   item.setAttribute('aria-checked', item === selectedItem ? 'true' : 'false');
-      // }
-
-      return selectedItem;
-    }
-
     // Multiple checked: keep first, uncheck the rest
-
     return selectedItems[0];
-
-    // for (const item of items) {
-    //   item.setAttribute('aria-checked', item === firstSelected ? 'true' : 'false');
-    // }
   }
 
   #selectItem(item: Item): void {
@@ -223,23 +205,20 @@ export class RadioSelectionStrategy
       return;
     }
 
-    // find all selected items from all other groups
+    // find all selected items from all other groups (in the order they appear
+    // in the DOM)
+    const selection = this.#groups
+      .entries()
+      .flatMap(([k, v]) => {
+        if (k === group) {
+          return [item];
+        }
 
-    // eslint-disable-next-line unicorn/prefer-spread
-    const selection = [item].concat(
-      // eslint-disable-next-line unicorn/prefer-spread
-      Array.from(
-        this.#groups
-          .entries()
-          // filter out the group of the item to select
-          .filter(([k, _v]) => k !== group)
-          // pick the items
-          .flatMap(([_k, v]) => v)
-          // filter for selected items
-          .filter((i) => isItemSelected(i))
-      )
-    );
+        return v.filter((i) => isItemSelected(i));
+      })
+      .toArray();
 
+    this.#persistSelection(selection);
     this.select(selection);
   }
 
@@ -254,7 +233,6 @@ export class RadioSelectionStrategy
       return;
     }
 
-    this.#persistSelection(selection);
     this.#selection = selection;
 
     this.notifyListener('read');
