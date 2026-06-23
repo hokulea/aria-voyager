@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/tracking';
-import { focus, render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import { render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
