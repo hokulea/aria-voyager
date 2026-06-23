@@ -26,7 +26,7 @@ test('Select with `ArrowDown`', async ({ annotate }) => {
     getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
-  await focusControl(container);
+  await focusControl(firstItem);
   expect(document.activeElement).toBe(firstItem);
 
   await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
@@ -82,7 +82,7 @@ test('Select with `ArrowDown`, skip disabled item', async ({ annotate }) => {
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
 
   await annotate('focus radio group to select first item');
-  await focusControl(container);
+  await focusControl(firstItem);
   await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
 

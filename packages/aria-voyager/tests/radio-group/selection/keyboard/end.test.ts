@@ -23,7 +23,7 @@ test('Select with `End`', async ({ annotate }) => {
   const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem];
 
-  await focusControl(container);
+  await focusControl(firstItem);
   expect(document.activeElement).toBe(firstItem);
   await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
@@ -57,7 +57,7 @@ test('Select with `End`, skip disabled item', async ({ annotate }) => {
   fifthItem.setAttribute('aria-disabled', 'true');
   radioGroup.readItems();
 
-  await focusControl(container);
+  await focusControl(firstItem);
   expect(document.activeElement).toBe(firstItem);
   await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);

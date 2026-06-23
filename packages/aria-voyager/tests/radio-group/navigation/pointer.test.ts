@@ -2,20 +2,15 @@ import { expect, test } from 'vitest';
 
 import { createRadioGroup, getItems } from '#tests/radio-group/-shared';
 
-import { firePointer, focusControl } from '#tests/test-support/events';
+import { firePointer } from '#tests/test-support/events';
 import { allItemsToHaveAttributeBut } from '#tests/test-support/items';
 
 test('Use pointer to activate items', async ({ annotate }) => {
-  const { container, radioGroup } = createRadioGroup(document.body, [
-    'Option 1',
-    'Option 2',
-    'Option 3'
-  ]);
+  const { radioGroup } = createRadioGroup(document.body, ['Option 1', 'Option 2', 'Option 3']);
 
   const { firstItem, secondItem, thirdItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem];
 
-  await focusControl(container);
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
   await allItemsToHaveAttributeBut(items, 'tabindex', '-1', firstItem);
 
@@ -29,12 +24,10 @@ test('Use pointer to activate items', async ({ annotate }) => {
   await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
   await allItemsToHaveAttributeBut(items, 'tabindex', '-1', thirdItem);
 
-  // fire pointer twice on an already focussed item causes webkit to halt
-  // @TODO: fix me
-  // await annotate('click already activated item stays active');
-  // await firePointer(thirdItem);
-  // await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
-  // await allItemsToHaveAttributeBut(items, 'tabindex', '-1', thirdItem);
+  await annotate('click already activated item stays active');
+  await firePointer(thirdItem);
+  await expect.element(thirdItem).toHaveAttribute('tabindex', '0');
+  await allItemsToHaveAttributeBut(items, 'tabindex', '-1', thirdItem);
 
   radioGroup.dispose();
 });
