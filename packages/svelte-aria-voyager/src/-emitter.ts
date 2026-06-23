@@ -13,14 +13,17 @@ export type WithItems<T> = (
   | {
       multi?: boolean;
       select?: ((selection: T[]) => void) | ((selection: T) => void);
+      check?: ((selection: T[]) => void) | ((selection: T) => void);
     }
   | {
       multi: true;
       select?: (selection: T[]) => void;
+      check?: (selection: T[]) => void;
     }
   | {
       multi?: false;
       select?: (selection: T) => void;
+      check?: (selection: T) => void;
     }
 ) & {
   items: T[];
@@ -32,14 +35,17 @@ export type OptionalItems = (
   | {
       multi?: boolean;
       select?: ((selection: HTMLElement[]) => void) | ((selection: HTMLElement) => void);
+      check?: ((selection: HTMLElement[]) => void) | ((selection: HTMLElement) => void);
     }
   | {
       multi: true;
       select?: (selection: HTMLElement[]) => void;
+      check?: (selection: HTMLElement[]) => void;
     }
   | {
       multi?: false;
       select?: (selection: HTMLElement) => void;
+      check?: (selection: HTMLElement) => void;
     }
 ) & {
   items?: HTMLElement[];
@@ -80,6 +86,12 @@ export function createItemEmitter<T>(control: Control, options: EmitterSignature
       );
     },
 
+    check: (selection: HTMLElement[]) => {
+      (options.check as ((selection: HTMLElement | HTMLElement[]) => void) | undefined)?.(
+        options.multi ? selection : selection[0]
+      );
+    },
+
     activateItem: (item: HTMLElement) => {
       (options.activateItem as ((item: HTMLElement) => void) | undefined)?.(item);
     }
@@ -107,6 +119,22 @@ export function createIndexEmitter<T>(
 
         if (item) {
           (options.select as ((selection: T) => void) | undefined)?.(item);
+        }
+      }
+    },
+
+    check: (selection: number[]) => {
+      if (options.multi) {
+        const items = selection
+          .map((index) => findByIndex(index))
+          .filter((i) => i !== undefined) as T[];
+
+        (options.check as ((selection: T[]) => void) | undefined)?.(items);
+      } else {
+        const item = findByIndex(selection[0]);
+
+        if (item) {
+          (options.check as ((selection: T) => void) | undefined)?.(item);
         }
       }
     },

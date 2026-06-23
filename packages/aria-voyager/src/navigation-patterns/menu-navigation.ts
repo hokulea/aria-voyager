@@ -98,6 +98,11 @@ export class MenuNavigation implements NavigationPattern {
 
       // close menu, when action is invoked
       if (!itemHasSubmenu && matchesKeys(event, ['Enter', ' '])) {
+        // Skip activation for checkable items — CheckBehavior handles them
+        if (event.key === ' ' && this.control.activeItem.hasAttribute('aria-checked')) {
+          return;
+        }
+
         event.preventDefault();
 
         this.control.activeItem.click();
@@ -174,6 +179,11 @@ export class MenuNavigation implements NavigationPattern {
           this.control.items.some((item) => item.contains(menuItem)) &&
           !this.control.activeItem?.hasAttribute('popovertarget')
         ) {
+          // Don't close menu for checkable items — CheckBehavior handles them
+          if (menuItem.hasAttribute('aria-checked')) {
+            break;
+          }
+
           // firefox wouldn't execute the default click handler from a menuitem,
           // when `this.closeRootMenu()` is invoked directly.
           // As such, pushing this on the event loop gives firefox "time to breath"

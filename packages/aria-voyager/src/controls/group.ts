@@ -17,7 +17,7 @@ interface GroupOptions {
 }
 
 export class Group extends Control {
-  focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
+  protected focusStrategy: RovingTabindexStrategy;
 
   get activeItem() {
     return this.focusStrategy.activeItem;
@@ -29,6 +29,8 @@ export class Group extends Control {
 
   constructor(element: HTMLElement, options: GroupOptions = {}) {
     super(element, options);
+
+    this.focusStrategy = new RovingTabindexStrategy(this);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),

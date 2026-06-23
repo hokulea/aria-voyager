@@ -1,12 +1,12 @@
 import { ActiveDescendentStrategy } from '../navigation-patterns/active-descendent-strategy';
 import { EndNavigation } from '../navigation-patterns/end-navigation';
 import { HomeNavigation } from '../navigation-patterns/home-navigation';
+import { ItemSelectionStrategy } from '../navigation-patterns/item-selection-strategy';
 import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
 import { ScrollToItem } from '../navigation-patterns/scroll-to-item';
-import { SelectionStrategy } from '../navigation-patterns/selection-strategy';
-import { Control } from './control';
+import { Control, type ControlWithSelection } from './control';
 
 import type { EmitStrategy, UpdateStrategy } from '..';
 
@@ -15,12 +15,9 @@ interface ListboxOptions {
   emitter?: EmitStrategy;
 }
 
-export class Listbox extends Control {
-  #selectionStrategy: SelectionStrategy = new SelectionStrategy(this);
-  protected focusStrategy: ActiveDescendentStrategy = new ActiveDescendentStrategy(
-    this,
-    this.#selectionStrategy
-  );
+export class Listbox extends Control implements ControlWithSelection {
+  protected focusStrategy: ActiveDescendentStrategy;
+  #selectionStrategy: ItemSelectionStrategy;
 
   get selection() {
     return this.#selectionStrategy.selection;
@@ -43,6 +40,9 @@ export class Listbox extends Control {
       optionAttributes: ['aria-multiselectable'],
       ...options
     });
+
+    this.#selectionStrategy = new ItemSelectionStrategy(this);
+    this.focusStrategy = new ActiveDescendentStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
@@ -72,6 +72,14 @@ export class Listbox extends Control {
     this.#selectionStrategy.dispose();
   }
 
+  readOptions(): void {
+    super.readOptions();
+
+    this.element.setAttribute('tabindex', this.options.disabled ? '-1' : '0');
+
+    this.focusStrategy.updateItems();
+  }
+
   readItems() {
     this.items = [...this.element.querySelectorAll(':scope [role="option"]')] as HTMLElement[];
 
@@ -86,11 +94,7 @@ export class Listbox extends Control {
     this.#selectionStrategy.readSelection();
   }
 
-  readOptions(): void {
-    super.readOptions();
-
-    this.element.setAttribute('tabindex', this.options.disabled ? '-1' : '0');
-
-    this.focusStrategy.updateItems();
+  isSelectionAttribute(attributeName: string): boolean {
+    return this.#selectionStrategy.isSelectionAttriute(attributeName);
   }
 }

@@ -13,7 +13,9 @@ export class ReactiveUpdateStrategy implements UpdateStrategy {
   }
 
   updateSelection() {
-    this.control?.readSelection();
+    if (this.control?.usesSelection()) {
+      this.control.readSelection();
+    }
   }
 
   updateOptions() {

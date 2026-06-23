@@ -22,6 +22,7 @@ export default defineConfig({
     // force: true
   },
   test: {
+    cache: false,
     setupFiles: ['./tests/setup.ts'],
     retry: 1,
     testTimeout: 5000,
@@ -37,7 +38,12 @@ export default defineConfig({
       headless: true,
       screenshotFailures: false,
       provider: playwright(),
-      instances: [{ browser: 'firefox' }, { browser: 'chromium' }, { browser: 'webkit' }]
+      instances: [
+        // have them line by line to toggle them on and off
+        { browser: 'firefox' },
+        { browser: 'chromium' },
+        { browser: 'webkit' }
+      ]
     }
   }
 });

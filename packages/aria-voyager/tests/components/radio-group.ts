@@ -15,16 +15,12 @@ export function createRadioGroupElement(parent: HTMLElement) {
 export function appendRadioItem(
   parent: HTMLElement,
   label: string,
-  options?: { group?: string; checked?: boolean }
+  options?: { checked?: boolean }
 ) {
   const elem = document.createElement('button');
 
   elem.type = 'button';
   elem.role = 'radio';
-
-  if (options?.group) {
-    elem.dataset.group = options.group;
-  }
 
   if (options?.checked) {
     elem.setAttribute('aria-checked', 'true');
@@ -50,9 +46,9 @@ export class RadioButtonGroup {
     return this.radioGroup.items;
   }
 
-  setItems(items: string[], options?: { group?: string }) {
+  setItems(items: string[]) {
     for (const item of items) {
-      appendRadioItem(this.element, item, { group: options?.group });
+      appendRadioItem(this.element, item);
     }
 
     this.radioGroup.readItems();

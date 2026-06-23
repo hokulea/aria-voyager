@@ -3,9 +3,9 @@ import { HomeNavigation } from '../navigation-patterns/home-navigation';
 import { NextNavigation } from '../navigation-patterns/next-navigation';
 import { PointerNavigation } from '../navigation-patterns/pointer-navigation';
 import { PreviousNavigation } from '../navigation-patterns/previous-navigation';
-import { RadioNavigation } from '../navigation-patterns/radio-navigation';
+import { RadioSelectionStrategy } from '../navigation-patterns/radio-selection-strategy';
 import { RovingTabindexStrategy } from '../navigation-patterns/roving-tabindex-strategy';
-import { Control } from './control';
+import { Control, type ControlWithSelection } from './control';
 
 import type { EmitStrategy } from '../emit-strategies/emit-strategy';
 import type { UpdateStrategy } from '../update-strategies/update-strategy';
@@ -15,9 +15,9 @@ export interface RadioGroupOptions {
   emitter?: EmitStrategy;
 }
 
-export class RadioGroup extends Control {
-  focusStrategy: RovingTabindexStrategy = new RovingTabindexStrategy(this);
-  #radioNavigation: RadioNavigation;
+export class RadioGroup extends Control implements ControlWithSelection {
+  protected focusStrategy: RovingTabindexStrategy;
+  #selectionStrategy: RadioSelectionStrategy;
 
   get activeItem() {
     return this.focusStrategy.activeItem;
@@ -36,9 +36,10 @@ export class RadioGroup extends Control {
       ...options
     });
 
-    this.#radioNavigation = new RadioNavigation(this, {
+    this.#selectionStrategy = new RadioSelectionStrategy(this, {
       behavior: { singleSelection: 'automatic' }
     });
+    this.focusStrategy = new RovingTabindexStrategy(this, this.#selectionStrategy);
 
     this.registerNavigationPatterns([
       new NextNavigation(this, ['ArrowDown', 'ArrowRight']),
@@ -47,7 +48,7 @@ export class RadioGroup extends Control {
       new EndNavigation(this),
       new PointerNavigation(this),
       this.focusStrategy,
-      this.#radioNavigation
+      this.#selectionStrategy
     ]);
 
     // setup
@@ -61,19 +62,26 @@ export class RadioGroup extends Control {
     super.dispose();
   }
 
-  readItems() {
-    this.items = [...this.element.querySelectorAll<HTMLElement>(':scope [role="radio"]')];
-
-    this.#radioNavigation.updateItems();
-
-    this.focusStrategy.updateItems();
-  }
-
   readOptions(): void {
     super.readOptions();
 
     this.element.setAttribute('tabindex', this.options.disabled ? '-1' : '0');
 
     this.focusStrategy.updateItems();
+  }
+
+  readItems() {
+    this.items = [...this.element.querySelectorAll<HTMLElement>(':scope [role="radio"]')];
+
+    this.focusStrategy.updateItems();
+    this.#selectionStrategy.readSelection();
+  }
+
+  isSelectionAttribute(attributeName: string): boolean {
+    return this.#selectionStrategy.isSelectionAttriute(attributeName);
+  }
+
+  readSelection(): void {
+    this.#selectionStrategy.readSelection();
   }
 }

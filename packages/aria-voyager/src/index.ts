@@ -9,6 +9,9 @@ export { RadioGroup } from './controls/radio-group';
 export type { TablistBehavior, TablistOptions } from './controls/tablist';
 export { Tablist } from './controls/tablist';
 
+// navigation patterns
+export { CheckBehavior } from './navigation-patterns/check-behavior';
+
 // emit strategies
 export type { EmitStrategy } from './emit-strategies/emit-strategy';
 export { IndexEmitStrategy } from './emit-strategies/index-emit-strategy';

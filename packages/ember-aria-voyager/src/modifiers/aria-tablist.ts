@@ -5,26 +5,35 @@ import Modifier from 'ember-modifier';
 import { isEqual } from 'es-toolkit/predicate';
 
 import {
+  type ActivateHandler,
   asArray,
   createIndexEmitter,
   createItemEmitter,
-  type EmitterSignature,
+  type Items,
+  type SingleSelectionHandler,
   type WithItems
 } from './-emitter.ts';
 
 import type Owner from '@ember/owner';
 import type { EmitStrategy, Orientation, TablistBehavior } from 'aria-voyager';
 import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { Simplify } from 'type-fest';
+
+type TablistOptions<T> = Simplify<
+  Omit<SingleSelectionHandler<T>, 'multi'> &
+    (Items<T> | Partial<Items<T>>) &
+    ActivateHandler<T> & {
+      disabled?: boolean;
+      orientation?: Orientation;
+      behavior?: TablistBehavior;
+    }
+>;
 
 export interface TablistSignature<T> {
   Element: HTMLElement;
   Args: {
     Positional: [];
-    Named: EmitterSignature<T> & {
-      disabled?: boolean;
-      orientation?: Orientation;
-      behavior?: TablistBehavior;
-    };
+    Named: TablistOptions<T>;
   };
 }
 

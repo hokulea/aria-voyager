@@ -1,22 +1,38 @@
 import { registerDestructor } from '@ember/destroyable';
 
-import { ItemEmitStrategy, RadioGroup, ReactiveUpdateStrategy } from 'aria-voyager';
+import {
+  IndexEmitStrategy,
+  ItemEmitStrategy,
+  RadioGroup,
+  ReactiveUpdateStrategy
+} from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import { isEqual } from 'es-toolkit/predicate';
+
+import {
+  type ActivateHandler,
+  createIndexEmitter,
+  createItemEmitter,
+  type Items,
+  type SingleSelectionHandler
+} from '#src/modifiers/-emitter.ts';
 
 import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';
 import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { Simplify } from 'type-fest';
+
+type RadioGroupOptions<T> = Simplify<
+  SingleSelectionHandler<T> &
+    (Items<T> | Partial<Items<T>>) &
+    ActivateHandler<T> & { disabled?: boolean }
+>;
 
 export interface RadioGroupSignature<T> {
   Element: HTMLElement;
   Args: {
     Positional: [];
-    Named: {
-      items?: T[];
-      select?: (selection: HTMLElement) => void;
-      disabled?: boolean;
-    };
+    Named: RadioGroupOptions<T>;
   };
 }
 
@@ -49,12 +65,12 @@ export default class RadioGroupModifier<T> extends Modifier<RadioGroupSignature<
       });
     }
 
-    if (options.select && !(this.emitter instanceof ItemEmitStrategy)) {
-      this.emitter = new ItemEmitStrategy(this.radioGroup, {
-        select: (selection: HTMLElement[]) => {
-          options.select?.(selection[0] as HTMLElement);
-        }
-      });
+    if (options.select) {
+      if (options.items && !(this.emitter instanceof IndexEmitStrategy)) {
+        this.emitter = createIndexEmitter<T>(this.radioGroup, options);
+      } else if (!options.items && !(this.emitter instanceof ItemEmitStrategy)) {
+        this.emitter = createItemEmitter<T>(this.radioGroup, options);
+      }
     }
 
     if (options.items && !isEqual(this.prevItems, options.items)) {
