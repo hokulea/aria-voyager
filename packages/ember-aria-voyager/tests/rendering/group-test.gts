@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/tracking';
-import { focus, render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import { render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -21,7 +21,6 @@ module('Rendering | Modifier | {{ariaGroup}}', (hooks) => {
       );
 
       assert.dom('[data-test-group]').hasAttribute('role', 'group');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '0');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0');
       assert.dom('button:nth-of-type(2)').hasAttribute('tabindex', '-1');
       assert.dom('button:last-of-type').hasAttribute('tabindex', '-1');
@@ -46,7 +45,6 @@ module('Rendering | Modifier | {{ariaGroup}}', (hooks) => {
       );
 
       assert.dom('[data-test-group]').doesNotHaveAria('disabled');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '0');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0');
 
       context.disabled = true;
@@ -54,7 +52,6 @@ module('Rendering | Modifier | {{ariaGroup}}', (hooks) => {
       await rerender();
 
       assert.dom('[data-test-group]').hasAria('disabled', 'true');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '-1');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '-1');
     });
   });
@@ -91,7 +88,6 @@ module('Rendering | Modifier | {{ariaGroup}}', (hooks) => {
       await rerender();
 
       assert.dom('[data-test-group]').hasAria('disabled', 'true');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '-1');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '-1');
 
       context.items = ['apple', 'banana', 'pineapple'];
@@ -114,8 +110,6 @@ module('Rendering | Modifier | {{ariaGroup}}', (hooks) => {
           </div>
         </template>
       );
-
-      await focus('[data-test-group]');
 
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0', 'First item is activated');
 
@@ -167,8 +161,6 @@ module('Rendering | Modifier | {{ariaGroup}}', (hooks) => {
           </div>
         </template>
       );
-
-      await focus('[data-test-group]');
 
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0', 'First item is activated');
 
