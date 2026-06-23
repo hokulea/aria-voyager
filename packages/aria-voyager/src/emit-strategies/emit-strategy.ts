@@ -2,7 +2,7 @@ import type { Item } from '../controls/control';
 
 export interface EmitterOptions<T> {
   select?(selection: T[]): void;
-  checked?(selection: T[]): void;
+  check?(selection: T[]): void;
   activateItem?(item: T): void;
 }
 

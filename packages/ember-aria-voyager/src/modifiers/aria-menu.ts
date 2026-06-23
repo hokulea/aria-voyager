@@ -1,21 +1,35 @@
 import { registerDestructor } from '@ember/destroyable';
 
-import { Menu, ReactiveUpdateStrategy } from 'aria-voyager';
+import { IndexEmitStrategy, ItemEmitStrategy, Menu, ReactiveUpdateStrategy } from 'aria-voyager';
 import Modifier from 'ember-modifier';
 import { isEqual } from 'es-toolkit/predicate';
+
+import {
+  type ActivateHandler,
+  type CheckHandler,
+  createIndexEmitter,
+  createItemEmitter,
+  type Items,
+  type MultiSelectionHandler
+} from '#src/modifiers/-emitter.ts';
 
 import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';
 import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { Simplify } from 'type-fest';
+
+type MenuOptions<T> = Simplify<
+  Omit<MultiSelectionHandler<T>, 'multi'> &
+    (Items<T> | Partial<Items<T>>) &
+    ActivateHandler<T> &
+    CheckHandler<T> & { disabled?: boolean }
+>;
 
 export interface MenuSignature<T> {
   Element: HTMLElement;
   Args: {
     Positional: [];
-    Named: {
-      items?: T[];
-      disabled?: boolean;
-    };
+    Named: MenuOptions<T>;
   };
 }
 
@@ -46,6 +60,14 @@ export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
       this.menu = new Menu(element as HTMLElement, {
         updater: this.updater
       });
+    }
+
+    if (options.check || options.select) {
+      if (options.items && !(this.emitter instanceof IndexEmitStrategy)) {
+        this.emitter = createIndexEmitter<T>(this.menu, { ...options, multi: true });
+      } else if (!options.items && !(this.emitter instanceof ItemEmitStrategy)) {
+        this.emitter = createItemEmitter<T>(this.menu, { ...options, multi: true });
+      }
     }
 
     if (options.items && !isEqual(this.prevItems, options.items)) {

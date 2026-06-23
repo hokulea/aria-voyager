@@ -15,7 +15,7 @@ export class ItemEmitStrategy implements EmitStrategy {
   }
 
   checked(selection: Item[]) {
-    return this.options.checked?.(selection);
+    return this.options.check?.(selection);
   }
 
   itemActivated(item: Item) {

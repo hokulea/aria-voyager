@@ -5,21 +5,28 @@ import Modifier from 'ember-modifier';
 import { isEqual } from 'es-toolkit/predicate';
 
 import {
+  type ActivateHandler,
   asArray,
   createIndexEmitter,
   createItemEmitter,
-  type EmitterSignature,
+  type Items,
+  type SelectionHandler,
   type WithItems
 } from './-emitter.ts';
 
 import type Owner from '@ember/owner';
 import type { EmitStrategy } from 'aria-voyager';
 import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
+import type { Simplify } from 'type-fest';
+
+type ListboxOptions<T> = Simplify<
+  SelectionHandler<T> & (Items<T> | Partial<Items<T>>) & ActivateHandler<T> & { disabled?: boolean }
+>;
 
 interface ListboxSignature<T> {
   Args: {
     Positional: [];
-    Named: EmitterSignature<T> & { disabled?: boolean };
+    Named: ListboxOptions<T>;
   };
 }
 

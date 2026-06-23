@@ -10,6 +10,20 @@ import {
 import type { Control, Item } from '../controls/control';
 import type { EventNames, NavigationParameterBag, NavigationPattern } from './navigation-pattern';
 
+function isGroupContainer(element: Element): boolean {
+  return (
+    element.getAttribute('role') === 'group' || element.getAttribute('role') === 'presentation'
+  );
+}
+
+function isSeparator(element: Element): boolean {
+  return element.getAttribute('role') === 'separator' || element instanceof HTMLHRElement;
+}
+
+function isItemSelected(item: Item): boolean {
+  return item.getAttribute('aria-checked') === 'true';
+}
+
 export interface RadioSelectionOptions {
   /**
    * Filter function to determine which items in control.items are radio items.
@@ -127,9 +141,9 @@ export class RadioSelectionStrategy
 
     const walk = (parent: Element) => {
       for (const child of parent.children) {
-        if (this.#isSeparator(child)) {
+        if (isSeparator(child)) {
           groupIndex++;
-        } else if (child.getAttribute('role') === 'group') {
+        } else if (isGroupContainer(child)) {
           groupIndex++;
           walk(child);
           groupIndex++;
@@ -167,7 +181,7 @@ export class RadioSelectionStrategy
       return undefined;
     }
 
-    const selectedItems = items.filter((item) => this.#isItemSelected(item));
+    const selectedItems = items.filter((item) => isItemSelected(item));
 
     // No checked item: check the first item, uncheck the rest
     if (selectedItems.length === 0) {
@@ -209,27 +223,15 @@ export class RadioSelectionStrategy
     const groupItems = this.#groups.get(group) ?? [];
 
     for (const sibling of groupItems) {
-      if (sibling === item) {
-        sibling.setAttribute('aria-checked', 'true');
-      } else {
-        sibling.setAttribute('aria-checked', 'false');
-      }
+      sibling.setAttribute('aria-checked', sibling === item ? 'true' : 'false');
     }
 
     this.#readSelectionFromItemsStoreAndNotify();
   }
 
-  #isItemSelected(item: Item) {
-    return item.getAttribute('aria-checked') === 'true';
-  }
-
-  #isSeparator(element: Element): boolean {
-    return element.getAttribute('role') === 'separator' || element instanceof HTMLHRElement;
-  }
-
   #readSelectionFromItemsStoreAndNotify() {
     const selection = this.control.enabledItems.filter(
-      (item) => this.#isRadioItem(item) && this.#isItemSelected(item)
+      (item) => this.#isRadioItem(item) && isItemSelected(item)
     );
 
     this.select(selection);

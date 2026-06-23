@@ -59,7 +59,7 @@ export class Menu extends Control implements ControlWithSelection {
       new PreviousNavigation(this, ['ArrowUp']),
       new HomeNavigation(this),
       new EndNavigation(this),
-      new PointerNavigation(this, 'pointerover'),
+      new PointerNavigation(this, ['pointerover', 'pointerup']),
       this.focusStrategy,
       this.#checkBehavior,
       this.#selectionStrategy,

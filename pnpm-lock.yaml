@@ -134,7 +134,7 @@ importers:
         version: 3.8.4
       tsdown:
         specifier: catalog:build
-        version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11))
+        version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(synckit@0.11.11))
       typescript:
         specifier: catalog:build
         version: 5.9.3
@@ -277,6 +277,9 @@ importers:
       tsdown:
         specifier: catalog:build
         version: 0.22.2(typescript@5.9.3)(unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11))
+      type-fest:
+        specifier: ^5.7.0
+        version: 5.7.0
       typescript:
         specifier: catalog:build
         version: 5.9.3
@@ -6534,6 +6537,10 @@ packages:
     resolution: {integrity: sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  tagged-tag@1.0.0:
+    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
+    engines: {node: '>=20'}
+
   tap-parser@7.0.0:
     resolution: {integrity: sha512-05G8/LrzqOOFvZhhAk32wsGiPZ1lfUrl+iV7+OkKgfofZxiceZWMHkKmow71YsyVQ8IvGBP2EjcIjE5gL4l5lA==}
     hasBin: true
@@ -6730,6 +6737,10 @@ packages:
   type-fest@4.41.0:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
+
+  type-fest@5.7.0:
+    resolution: {integrity: sha512-1URUxUqfHFM1c+zfSPsa3gnkO7Aq21qyH75SIduNYz4SzY964rn1X2vCMQaHSHhktiw+0kPa2iyb6PUpXqB6Vg==}
+    engines: {node: '>=20'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -8821,6 +8832,11 @@ snapshots:
       '@tybys/wasm-util': 0.10.2
     optional: true
 
+  '@napi-rs/wasm-runtime@1.1.5':
+    dependencies:
+      '@tybys/wasm-util': 0.10.2
+    optional: true
+
   '@napi-rs/wasm-runtime@1.1.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
       '@emnapi/core': 1.10.0
@@ -9162,6 +9178,14 @@ snapshots:
     optional: true
 
   '@rolldown/binding-openharmony-arm64@1.1.1':
+    optional: true
+
+  '@rolldown/binding-wasm32-wasi@1.0.0-beta.60':
+    dependencies:
+      '@napi-rs/wasm-runtime': 1.1.5
+    transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
     optional: true
 
   '@rolldown/binding-wasm32-wasi@1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
@@ -13708,6 +13732,29 @@ snapshots:
     transitivePeerDependencies:
       - oxc-resolver
 
+  rolldown@1.0.0-beta.60:
+    dependencies:
+      '@oxc-project/types': 0.108.0
+      '@rolldown/pluginutils': 1.0.0-beta.60
+    optionalDependencies:
+      '@rolldown/binding-android-arm64': 1.0.0-beta.60
+      '@rolldown/binding-darwin-arm64': 1.0.0-beta.60
+      '@rolldown/binding-darwin-x64': 1.0.0-beta.60
+      '@rolldown/binding-freebsd-x64': 1.0.0-beta.60
+      '@rolldown/binding-linux-arm-gnueabihf': 1.0.0-beta.60
+      '@rolldown/binding-linux-arm64-gnu': 1.0.0-beta.60
+      '@rolldown/binding-linux-arm64-musl': 1.0.0-beta.60
+      '@rolldown/binding-linux-x64-gnu': 1.0.0-beta.60
+      '@rolldown/binding-linux-x64-musl': 1.0.0-beta.60
+      '@rolldown/binding-openharmony-arm64': 1.0.0-beta.60
+      '@rolldown/binding-wasm32-wasi': 1.0.0-beta.60
+      '@rolldown/binding-win32-arm64-msvc': 1.0.0-beta.60
+      '@rolldown/binding-win32-x64-msvc': 1.0.0-beta.60
+    transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
+    optional: true
+
   rolldown@1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0):
     dependencies:
       '@oxc-project/types': 0.108.0
@@ -14282,6 +14329,8 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.2.9
 
+  tagged-tag@1.0.0: {}
+
   tap-parser@7.0.0:
     dependencies:
       events-to-array: 1.1.2
@@ -14541,6 +14590,32 @@ snapshots:
       - oxc-resolver
       - vue-tsc
 
+  tsdown@0.22.2(typescript@5.9.3)(unrun@0.2.25(synckit@0.11.11)):
+    dependencies:
+      ansis: 4.3.1
+      cac: 7.0.0
+      defu: 6.1.7
+      empathic: 2.0.1
+      hookable: 6.1.1
+      import-without-cache: 0.4.0
+      obug: 2.1.1
+      picomatch: 4.0.4
+      rolldown: 1.1.1
+      rolldown-plugin-dts: 0.25.2(rolldown@1.1.1)(typescript@5.9.3)
+      semver: 7.8.4
+      tinyexec: 1.2.4
+      tinyglobby: 0.2.17
+      tree-kill: 1.2.2
+      unconfig-core: 7.5.0
+    optionalDependencies:
+      typescript: 5.9.3
+      unrun: 0.2.25(synckit@0.11.11)
+    transitivePeerDependencies:
+      - '@ts-macro/tsc'
+      - '@typescript/native-preview'
+      - oxc-resolver
+      - vue-tsc
+
   tslib@1.14.1: {}
 
   tslib@2.8.1: {}
@@ -14563,6 +14638,10 @@ snapshots:
   type-detect@4.1.0: {}
 
   type-fest@4.41.0: {}
+
+  type-fest@5.7.0:
+    dependencies:
+      tagged-tag: 1.0.0
 
   type-is@1.6.18:
     dependencies:
@@ -14711,6 +14790,16 @@ snapshots:
   unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11):
     dependencies:
       rolldown: 1.0.0-beta.60(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+    optionalDependencies:
+      synckit: 0.11.11
+    transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
+    optional: true
+
+  unrun@0.2.25(synckit@0.11.11):
+    dependencies:
+      rolldown: 1.0.0-beta.60
     optionalDependencies:
       synckit: 0.11.11
     transitivePeerDependencies:

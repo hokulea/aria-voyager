@@ -1,5 +1,7 @@
 import { type Control, IndexEmitStrategy, ItemEmitStrategy } from 'aria-voyager';
 
+import type { Simplify } from 'type-fest';
+
 export function asArray(val?: unknown) {
   if (val === undefined) {
     return [];
@@ -9,41 +11,26 @@ export function asArray(val?: unknown) {
   return Array.isArray(val) ? val : [val];
 }
 
-export type WithItems<T> = (
-  | {
-      multi: true;
-      select?: (selection: T[]) => void;
-      checked?: (selection: T[]) => void;
-    }
-  | {
-      multi?: false;
-      select?: (selection: T) => void;
-      checked?: (selection: T) => void;
-    }
-) & {
-  items: T[];
-  selection?: T | T[];
-  activateItem?: (item: T) => void;
+export type Items<T> = { items: T[] };
+export type ActivateHandler<T> = { activateItem?: (item: T) => void };
+export type CheckHandler<T> = { check?: (selection: T[]) => void };
+export type SingleSelectionHandler<T> = {
+  multi?: false;
+  selection?: T;
+  select?: (selection: T) => void;
 };
-
-export type OptionalItems = (
-  | {
-      multi: true;
-      select?: (selection: HTMLElement[]) => void;
-      checked?: (selection: HTMLElement[]) => void;
-    }
-  | {
-      multi?: false;
-      select?: (selection: HTMLElement) => void;
-      checked?: (selection: HTMLElement) => void;
-    }
-) & {
-  items?: HTMLElement[];
-  selection?: HTMLElement | HTMLElement[];
-  activateItem?: (item: HTMLElement) => void;
+export type MultiSelectionHandler<T> = {
+  multi: true;
+  selection?: T[];
+  select?: (selection: T[]) => void;
 };
+export type SelectionHandler<T> = SingleSelectionHandler<T> | MultiSelectionHandler<T>;
 
-export type EmitterSignature<T> = WithItems<T> | OptionalItems;
+export type WithItems<T> = SelectionHandler<T> & Items<T> & ActivateHandler<T> & CheckHandler<T>;
+
+export type EmitterSignature<T> = Simplify<
+  SelectionHandler<T> & (Items<T> | Partial<Items<T>>) & ActivateHandler<T> & CheckHandler<T>
+>;
 
 export function createItemEmitter<T>(control: Control, options: EmitterSignature<T>) {
   return new ItemEmitStrategy(control, {
@@ -53,10 +40,8 @@ export function createItemEmitter<T>(control: Control, options: EmitterSignature
       );
     },
 
-    checked: (selection: HTMLElement[]) => {
-      (options.checked as ((selection: HTMLElement | HTMLElement[]) => void) | undefined)?.(
-        options.multi ? selection : (selection[0] as HTMLElement)
-      );
+    check: (selection: HTMLElement[]) => {
+      (options.check as ((selection: HTMLElement[]) => void) | undefined)?.(selection);
     },
 
     activateItem: (item: HTMLElement) => {
@@ -67,7 +52,7 @@ export function createItemEmitter<T>(control: Control, options: EmitterSignature
 
 export function createIndexEmitter<T>(control: Control, options: EmitterSignature<T>) {
   const findByIndex = (index: number) => {
-    return (options as WithItems<T>).items[index] ?? undefined;
+    return options.items?.[index] ?? undefined;
   };
 
   return new IndexEmitStrategy(control, {
@@ -77,37 +62,29 @@ export function createIndexEmitter<T>(control: Control, options: EmitterSignatur
           .map((index) => findByIndex(index))
           .filter((i) => i !== undefined) as T[];
 
-        (options.select as ((selection: T[]) => void) | undefined)?.(items);
+        options.select?.(items);
       } else {
         const item = findByIndex(selection[0] as number);
 
         if (item) {
-          (options.select as ((selection: T) => void) | undefined)?.(item);
+          options.select?.(item);
         }
       }
     },
 
-    checked: (selection: number[]) => {
-      if (options.multi) {
-        const items = selection
-          .map((index) => findByIndex(index))
-          .filter((i) => i !== undefined) as T[];
+    check: (selection: number[]) => {
+      const items = selection
+        .map((index) => findByIndex(index))
+        .filter((i) => i !== undefined) as T[];
 
-        (options.checked as ((selection: T[]) => void) | undefined)?.(items);
-      } else {
-        const item = findByIndex(selection[0] as number);
-
-        if (item) {
-          (options.checked as ((selection: T) => void) | undefined)?.(item);
-        }
-      }
+      options.check?.(items);
     },
 
     activateItem: (index: number) => {
       const item = findByIndex(index);
 
       if (item) {
-        (options.activateItem as ((item: T) => void) | undefined)?.(item);
+        options.activateItem?.(item);
       }
     }
   });
