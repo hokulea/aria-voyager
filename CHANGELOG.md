@@ -1,5 +1,39 @@
 # Changelog
 
+## Release (2026-06-23)
+
+* aria-voyager 1.0.0 (major)
+* ember-aria-voyager 1.0.0 (major)
+
+#### :boom: Breaking Change
+* `aria-voyager`, `ember-aria-voyager`
+  * [#657](https://github.com/hokulea/aria-voyager/pull/657) Set minimum node version v24 ([@gossi](https://github.com/gossi))
+
+#### :rocket: Enhancement
+* `aria-voyager`, `ember-aria-voyager`
+  * [#675](https://github.com/hokulea/aria-voyager/pull/675) Extend menu with radio and checkbox ([@gossi](https://github.com/gossi))
+  * [#664](https://github.com/hokulea/aria-voyager/pull/664) Support `role="radiogroup"` ([@gossi](https://github.com/gossi))
+  * [#663](https://github.com/hokulea/aria-voyager/pull/663) Support `role="group"` ([@gossi](https://github.com/gossi))
+
+#### :memo: Documentation
+* `aria-voyager`, `ember-aria-voyager`
+  * [#679](https://github.com/hokulea/aria-voyager/pull/679) Docs for extended menu ([@gossi](https://github.com/gossi))
+  * [#665](https://github.com/hokulea/aria-voyager/pull/665) Documentation for `role="group"` ([@gossi](https://github.com/gossi))
+
+#### :house: Internal
+* `aria-voyager`
+  * [#678](https://github.com/hokulea/aria-voyager/pull/678) Refactor behaviors ([@gossi](https://github.com/gossi))
+  * [#676](https://github.com/hokulea/aria-voyager/pull/676) Update to ts6 ([@gossi](https://github.com/gossi))
+  * [#660](https://github.com/hokulea/aria-voyager/pull/660) Stabilize Test Environment ([@gossi](https://github.com/gossi))
+* Other
+  * [#662](https://github.com/hokulea/aria-voyager/pull/662) pnpm v11 with security options ([@gossi](https://github.com/gossi))
+  * [#659](https://github.com/hokulea/aria-voyager/pull/659) Update to vite v8 ([@gossi](https://github.com/gossi))
+* `ember-aria-voyager`
+  * [#656](https://github.com/hokulea/aria-voyager/pull/656) Unlock ember7 ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2026-01-15)
 
 * aria-voyager 0.2.0 (minor)
