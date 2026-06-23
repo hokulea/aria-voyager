@@ -2,6 +2,18 @@
 
 ## Release (2026-06-23)
 
+* aria-voyager 1.0.1 (patch)
+* ember-aria-voyager 1.0.1 (patch)
+
+#### :bug: Bug Fix
+* `aria-voyager`, `ember-aria-voyager`
+  * [#681](https://github.com/hokulea/aria-voyager/pull/681) Fix shift tab bug ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
+## Release (2026-06-23)
+
 * aria-voyager 1.0.0 (major)
 * ember-aria-voyager 1.0.0 (major)
 
