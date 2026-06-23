@@ -169,9 +169,11 @@ import { ariaMenu } from 'ember-aria-voyager';
 Here are the options, you can pass to `{{ariaMenu}}`
 
 ```ts
-interface MenuSignature<T> {
+interface MenuOptions<T> {
   items?: T[];
   disabled?: boolean;
+  select?: (selection: HTMLElement[]) => void;
+  check?: (selection: HTMLElement[]) => void;
 }
 ```
 
@@ -204,6 +206,86 @@ const items = [
   </div>
 </template>
 ```
+
+#### `menuitemcheckbox`
+
+Menu supports checking items.
+
+```glimmer-js
+import { ariaMenu } from 'ember-aria-voyager';
+
+function check(selection: HTMLElement[]) {
+  console.log('checked items:', selection);
+}
+
+<template>
+  <div role="menu" {{ariaMenu check=check}}>
+    <span role="menuitemcheckbox">Bold</span>
+    <span role="menuitemcheckbox">Italic</span>
+    <span role="menuitemcheckbox">Underline</span>
+    <span role="menuitemcheckbox">Strikethrough</span>
+  </div>
+</template>
+```
+
+#### `menuitemradio`
+
+Menu supports radio selection.
+The `role="menu"` itself acts as group within one of all radio items is checked.
+
+Here is a minimal example:
+
+```glimmer-js
+import { ariaMenu } from 'ember-aria-voyager';
+
+function select(selection: HTMLElement[]) {
+  console.log('selected items:', selection);
+}
+
+<template>
+  <div role="menu" {{ariaMenu select=select}}>
+    <span role="menuitemradio">Left</span>
+    <span role="menuitemradio">Center</span>
+    <span role="menuitemradio">Right</span>
+    <span role="menuitemradio">Justified</span>
+  </div>
+</template>
+```
+
+Though menus do support multiple groups of radio selection.
+This is supported as well.
+Here are all combinations:
+
+```glimmer-js
+import { ariaMenu } from 'ember-aria-voyager';
+
+function select(selection: HTMLElement) {
+  console.log('selected items across all groups:', selection);
+}
+
+<template>
+  <div role="menu" {{ariaMenu select=select}}>
+    <span role="menuitemradio">A</span>
+    <div role="group">
+      <span role="menuitemradio">B</span>
+      <span role="menuitemradio">C</span>
+    </div>
+    <span role="menuitemradio">D</span>
+    <div role="presentation">
+      <span role="menuitemradio">E</span>
+      <hr>
+      <span role="menuitemradio">F</span>
+    </div>
+    <span role="menuitemradio">G</span>
+    <span role="separator"></span>
+    <span role="menuitemradio">H</span>
+  </div>
+</template>
+```
+
+- B+C are one group
+- All others are in their own respective group
+- `select()` will return the selection across all groups
 
 ### `{{ariaTablist}}`
 

@@ -141,6 +141,65 @@ interface MenuOptions {
 
 See [updater](#updater) and [emitter](#emitter).
 
+##### `menuitemcheckbox`
+
+Menu supports checking items.
+
+```html
+<div role="menu">
+  <span role="menuitemcheckbox">Bold</span>
+  <span role="menuitemcheckbox">Italic</span>
+  <span role="menuitemcheckbox">Underline</span>
+  <span role="menuitemcheckbox">Strikethrough</span>
+</div>
+```
+
+You will get notified via `check()` in [emitter](#emitter).
+
+##### `menuitemradio`
+
+Menu supports radio selection.
+The `role="menu"` itself acts as group within one of all radio items is checked.
+
+Here is a minimal example:
+
+```html
+<div role="menu">
+  <span role="menuitemradio">Left</span>
+  <span role="menuitemradio">Center</span>
+  <span role="menuitemradio">Right</span>
+  <span role="menuitemradio">Justified</span>
+</div>
+```
+
+Though menus do support multiple groups of radio selection.
+This is supported as well.
+Here are all combinations:
+
+```html
+<div role="menu">
+  <span role="menuitemradio">A</span>
+  <div role="group">
+    <span role="menuitemradio">B</span>
+    <span role="menuitemradio">C</span>
+  </div>
+  <span role="menuitemradio">D</span>
+  <div role="presentation">
+    <span role="menuitemradio">E</span>
+    <hr>
+    <span role="menuitemradio">F</span>
+  </div>
+  <span role="menuitemradio">G</span>
+  <span role="separator"></span>
+  <span role="menuitemradio">H</span>
+</div>
+```
+
+- B+C are one group
+- All others are in their own respective group
+
+See `select()` in [emitter](#emitter) for getting notified about selection changes
+
 #### `Tablist`
 
 Bring your own markup in at first, here is an example markup for a list:
