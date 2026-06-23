@@ -17,7 +17,7 @@ test('Navigate with `Home`', async ({ annotate }) => {
   const { firstItem, secondItem, thirdItem, fourthItem, fifthItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
-  await focusControl(container);
+  await focusControl(firstItem);
   expect(document.activeElement).toBe(firstItem);
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
   await allItemsToHaveAttributeBut(items, 'tabindex', '-1', firstItem);
@@ -48,7 +48,7 @@ test('Navigate with `Home`, skip disabled item', async ({ annotate }) => {
   firstItem.setAttribute('aria-disabled', 'true');
   radioGroup.readItems();
 
-  await focusControl(container);
+  await focusControl(secondItem);
   expect(document.activeElement).toBe(secondItem);
   await expect.element(secondItem).toHaveAttribute('tabindex', '0');
   await allItemsToHaveAttributeBut(items, 'tabindex', '-1', secondItem);

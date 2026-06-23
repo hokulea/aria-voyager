@@ -26,8 +26,8 @@ test('setup', async ({ annotate }) => {
   await annotate('sets role="radiogroup"');
   await expect.element(container).toHaveAttribute('role', 'radiogroup');
 
-  await annotate('sets tabindex on the container');
-  await expect.element(container).toHaveAttribute('tabindex', '0');
+  await annotate('no tabindex on the container');
+  await expect.element(container).not.toHaveAttribute('tabindex');
 
   await annotate('sets tabindex on the first item');
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');

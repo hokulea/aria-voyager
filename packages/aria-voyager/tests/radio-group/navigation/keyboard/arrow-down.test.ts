@@ -18,7 +18,7 @@ test('Navigate with `ArrowDown`', async ({ annotate }) => {
     getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
-  await focusControl(container);
+  await focusControl(firstItem);
   expect(document.activeElement).toBe(firstItem);
 
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
@@ -65,7 +65,7 @@ test('Navigate with `ArrowDown`, skip disabled item', async ({ annotate }) => {
   await allItemsToHaveAttributeBut(items, 'tabindex', '-1', firstItem);
 
   await annotate('focus radio group to activate first item');
-  await focusControl(container);
+  await focusControl(firstItem);
   await expect.element(firstItem).toHaveAttribute('tabindex', '0');
   await allItemsToHaveAttributeBut(items, 'tabindex', '-1', firstItem);
 

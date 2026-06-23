@@ -60,8 +60,6 @@ export class Group extends Control {
   readOptions(): void {
     super.readOptions();
 
-    this.element.setAttribute('tabindex', this.options.disabled ? '-1' : '0');
-
     this.focusStrategy.updateItems();
   }
 }

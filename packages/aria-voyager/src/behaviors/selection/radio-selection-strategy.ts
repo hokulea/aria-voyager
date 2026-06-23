@@ -56,6 +56,10 @@ export class RadioSelectionStrategy
     return this.#selection;
   }
 
+  get radioItems(): Item[] {
+    return this.control.enabledItems.filter((item) => this.#isRadioItem(item));
+  }
+
   constructor(control: Control, options?: RadioSelectionOptions) {
     super(control, options?.behavior);
 
@@ -131,7 +135,7 @@ export class RadioSelectionStrategy
    */
   readSelection(): void {
     // 1. Filter control.items through isRadioItem
-    const radioItems = new Set(this.control.enabledItems.filter((item) => this.#isRadioItem(item)));
+    const radioItems = new Set(this.radioItems);
 
     // 2. Partition by data-group (missing → default key '')
     this.#groups = new Map<string, Item[]>();
@@ -163,11 +167,12 @@ export class RadioSelectionStrategy
     walk(this.control.element);
 
     // 3. For each group, enforce invariant
-    for (const items of this.#groups.values()) {
-      this.#enforceGroupInvariant(items);
-    }
+    const selection = Array.from(this.#groups.values(), (items) =>
+      this.#enforceGroupInvariant(items)
+    ).filter(Boolean) as Item[];
 
-    this.#readSelectionFromItemsStoreAndNotify();
+    this.#persistSelection(selection);
+    this.select(selection);
   }
 
   /**
@@ -178,39 +183,19 @@ export class RadioSelectionStrategy
    */
   #enforceGroupInvariant(items: Item[]): Item | undefined {
     if (items.length === 0) {
-      return undefined;
+      return;
     }
 
     const selectedItems = items.filter((item) => isItemSelected(item));
 
     // No checked item: check the first item, uncheck the rest
     if (selectedItems.length === 0) {
-      for (const [i, item] of items.entries()) {
-        item.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
-      }
-
       return items[0];
     }
 
     // Exactly one checked: keep it, ensure others are explicitely "false"
-    if (selectedItems.length === 1) {
-      const selectedItem = selectedItems[0];
-
-      for (const item of items) {
-        item.setAttribute('aria-checked', item === selectedItem ? 'true' : 'false');
-      }
-
-      return undefined;
-    }
-
     // Multiple checked: keep first, uncheck the rest
-    const firstSelected = selectedItems[0];
-
-    for (const item of items) {
-      item.setAttribute('aria-checked', item === firstSelected ? 'true' : 'false');
-    }
-
-    return firstSelected;
+    return selectedItems[0];
   }
 
   #selectItem(item: Item): void {
@@ -220,20 +205,20 @@ export class RadioSelectionStrategy
       return;
     }
 
-    const groupItems = this.#groups.get(group) ?? [];
+    // find all selected items from all other groups (in the order they appear
+    // in the DOM)
+    const selection = this.#groups
+      .entries()
+      .flatMap(([k, v]) => {
+        if (k === group) {
+          return [item];
+        }
 
-    for (const sibling of groupItems) {
-      sibling.setAttribute('aria-checked', sibling === item ? 'true' : 'false');
-    }
+        return v.filter((i) => isItemSelected(i));
+      })
+      .toArray();
 
-    this.#readSelectionFromItemsStoreAndNotify();
-  }
-
-  #readSelectionFromItemsStoreAndNotify() {
-    const selection = this.control.enabledItems.filter(
-      (item) => this.#isRadioItem(item) && isItemSelected(item)
-    );
-
+    this.#persistSelection(selection);
     this.select(selection);
   }
 
@@ -252,5 +237,11 @@ export class RadioSelectionStrategy
 
     this.notifyListener('read');
     this.control.emitter?.selected(this.#selection);
+  }
+
+  #persistSelection(selection: Item[]) {
+    for (const element of this.radioItems) {
+      element.setAttribute('aria-checked', selection.includes(element) ? 'true' : 'false');
+    }
   }
 }

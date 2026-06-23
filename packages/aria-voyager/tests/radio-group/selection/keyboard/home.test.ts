@@ -25,7 +25,7 @@ test('Select with `Home`', async ({ annotate }) => {
   const { firstItem, secondItem, thirdItem, fourthItem, fifthItem } = getItems(radioGroup);
   const items = [firstItem, secondItem, thirdItem, fourthItem, fifthItem];
 
-  await focusControl(container);
+  await focusControl(firstItem);
   expect(document.activeElement).toBe(firstItem);
   await expect.element(firstItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', firstItem);
@@ -65,7 +65,7 @@ test('Select with `Home`, skip disabled item', async ({ annotate }) => {
   firstItem.setAttribute('aria-disabled', 'true');
   radioGroup.readItems();
 
-  await focusControl(container);
+  await focusControl(secondItem);
   expect(document.activeElement).toBe(secondItem);
   await expect.element(secondItem).toHaveAttribute('aria-checked', 'true');
   await allItemsToHaveAttributeBut(items, 'aria-checked', 'false', secondItem);

@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/tracking';
-import { focus, render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import { render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -21,7 +21,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
       );
 
       assert.dom('[data-test-group]').hasAttribute('role', 'radiogroup');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '0');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0');
       assert.dom('button:nth-of-type(2)').hasAttribute('tabindex', '-1');
       assert.dom('button:last-of-type').hasAttribute('tabindex', '-1');
@@ -62,7 +61,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
       );
 
       assert.dom('[data-test-group]').doesNotHaveAria('disabled');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '0');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0');
 
       context.disabled = true;
@@ -70,7 +68,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
       await rerender();
 
       assert.dom('[data-test-group]').hasAria('disabled', 'true');
-      assert.dom('[data-test-group]').hasAttribute('tabindex', '-1');
       assert.dom('button:first-of-type').hasAttribute('tabindex', '-1');
     });
 
@@ -127,7 +124,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
         </template>
       );
 
-      await focus('[data-test-group]');
       await triggerEvent('button:nth-of-type(2)', 'pointerup');
 
       assert.strictEqual(context.selected?.textContent, 'Bottom');
@@ -157,7 +153,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
         </template>
       );
 
-      await focus('[data-test-group]');
       await triggerKeyEvent('[data-test-group]', 'keydown', 'ArrowDown');
 
       assert.strictEqual(context.selected?.textContent, 'Bottom');
@@ -176,8 +171,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
           </div>
         </template>
       );
-
-      await focus('[data-test-group]');
 
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0', 'First item is activated');
       assert
@@ -253,8 +246,6 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
           </div>
         </template>
       );
-
-      await focus('[data-test-group]');
 
       assert.dom('button:first-of-type').hasAttribute('tabindex', '0', 'First item is activated');
       assert

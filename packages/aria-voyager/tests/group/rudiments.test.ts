@@ -12,6 +12,7 @@ test('setup', async ({ annotate }) => {
   const { container, group } = createButtonGroup();
   const { firstItem } = getGroupItems(group);
 
+  await expect.element(container).not.toHaveAttribute('tabindex');
   await expect.element(container).toHaveAttribute('role', 'group');
 
   await annotate('sets tabindex on the first item');
