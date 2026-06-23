@@ -1,34 +1,22 @@
 {
   "solution": {
     "aria-voyager": {
-      "impact": "major",
-      "oldVersion": "0.2.0",
-      "newVersion": "1.0.0",
+      "impact": "patch",
+      "oldVersion": "1.0.0",
+      "newVersion": "1.0.1",
       "tagName": "latest",
       "constraints": [
         {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
-        {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
-        },
-        {
           "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/aria-voyager/package.json"
     },
     "ember-aria-voyager": {
-      "impact": "major",
-      "oldVersion": "0.2.5",
-      "newVersion": "1.0.0",
+      "impact": "patch",
+      "oldVersion": "1.0.0",
+      "newVersion": "1.0.1",
       "tagName": "latest",
       "constraints": [
         {
@@ -36,24 +24,12 @@
           "reason": "Has dependency `workspace:*` on aria-voyager"
         },
         {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
-        {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
-        },
-        {
           "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-aria-voyager/package.json"
     }
   },
-  "description": "## Release (2026-06-23)\n\n* aria-voyager 1.0.0 (major)\n* ember-aria-voyager 1.0.0 (major)\n\n#### :boom: Breaking Change\n* `aria-voyager`, `ember-aria-voyager`\n  * [#657](https://github.com/hokulea/aria-voyager/pull/657) Set minimum node version v24 ([@gossi](https://github.com/gossi))\n\n#### :rocket: Enhancement\n* `aria-voyager`, `ember-aria-voyager`\n  * [#675](https://github.com/hokulea/aria-voyager/pull/675) Extend menu with radio and checkbox ([@gossi](https://github.com/gossi))\n  * [#664](https://github.com/hokulea/aria-voyager/pull/664) Support `role=\"radiogroup\"` ([@gossi](https://github.com/gossi))\n  * [#663](https://github.com/hokulea/aria-voyager/pull/663) Support `role=\"group\"` ([@gossi](https://github.com/gossi))\n\n#### :memo: Documentation\n* `aria-voyager`, `ember-aria-voyager`\n  * [#679](https://github.com/hokulea/aria-voyager/pull/679) Docs for extended menu ([@gossi](https://github.com/gossi))\n  * [#665](https://github.com/hokulea/aria-voyager/pull/665) Documentation for `role=\"group\"` ([@gossi](https://github.com/gossi))\n\n#### :house: Internal\n* `aria-voyager`\n  * [#678](https://github.com/hokulea/aria-voyager/pull/678) Refactor behaviors ([@gossi](https://github.com/gossi))\n  * [#676](https://github.com/hokulea/aria-voyager/pull/676) Update to ts6 ([@gossi](https://github.com/gossi))\n  * [#660](https://github.com/hokulea/aria-voyager/pull/660) Stabilize Test Environment ([@gossi](https://github.com/gossi))\n* Other\n  * [#662](https://github.com/hokulea/aria-voyager/pull/662) pnpm v11 with security options ([@gossi](https://github.com/gossi))\n  * [#659](https://github.com/hokulea/aria-voyager/pull/659) Update to vite v8 ([@gossi](https://github.com/gossi))\n* `ember-aria-voyager`\n  * [#656](https://github.com/hokulea/aria-voyager/pull/656) Unlock ember7 ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "## Release (2026-06-23)\n\n* aria-voyager 1.0.1 (patch)\n* ember-aria-voyager 1.0.1 (patch)\n\n#### :bug: Bug Fix\n* `aria-voyager`, `ember-aria-voyager`\n  * [#681](https://github.com/hokulea/aria-voyager/pull/681) Fix shift tab bug ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }
