@@ -85,7 +85,7 @@
     "@gossi/config-eslint": "catalog:lint",
     "@gossi/config-prettier": "catalog:lint",
     "@gossi/config-template-lint": "catalog:lint",
-    "@rollup/plugin-babel": "^7.0.0",
+    "@rollup/plugin-babel": "^7.1.0",
     "@types/qunit": "2.19.14",
     "@types/sinon": "21.0.1",
     "babel-plugin-ember-template-compilation": "^4.0.0",
