@@ -75,8 +75,8 @@ importers:
         specifier: catalog:test
         version: 1.61.0
       release-plan:
-        specifier: 0.17.4
-        version: 0.17.4
+        specifier: 0.18.0
+        version: 0.18.0
       turbo:
         specifier: ^2.8.21
         version: 2.9.14
@@ -6017,8 +6017,8 @@ packages:
     resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
     hasBin: true
 
-  release-plan@0.17.4:
-    resolution: {integrity: sha512-CK+RrsvP6JXysgFuqUoOvprAT95J5x8usHzAQh3M1RMQqFScnAyfY6lb1LBsjqW/HUsvLjkLfSp8dJseRHEpEw==}
+  release-plan@0.18.0:
+    resolution: {integrity: sha512-WzP+O+XRF4AqhTDQK84FovY+TxHyC8J7QWoOwxnrvVjyHns417l1FUldboRhBYua5Pej6Yg/2jH1dEH2MRNHeA==}
     hasBin: true
 
   remove-types@1.0.0:
@@ -13611,7 +13611,7 @@ snapshots:
     dependencies:
       jsesc: 0.5.0
 
-  release-plan@0.17.4:
+  release-plan@0.18.0:
     dependencies:
       '@manypkg/get-packages': 2.2.2
       '@npmcli/package-json': 6.1.1
