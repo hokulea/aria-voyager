@@ -7,7 +7,7 @@ import { fireKey, focusControl } from '#tests/test-support/events';
 
 test('Meta+A range-selects all items, does not toggle check', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
 
   await focusControl(list);
   await fireKey(list, 'a', { metaKey: true });
@@ -20,7 +20,7 @@ test('Meta+A range-selects all items, does not toggle check', async () => {
 
 test('Space after Meta+A batch-toggles all', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
 
   await focusControl(list);
   await fireKey(list, 'a', { metaKey: true });

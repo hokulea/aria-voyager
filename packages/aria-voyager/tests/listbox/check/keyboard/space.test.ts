@@ -7,7 +7,7 @@ import { fireKey, focusControl } from '#tests/test-support/events';
 
 test('Space with no selection toggles active item', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem } = getItems(listbox);
 
   await focusControl(list);
@@ -26,7 +26,7 @@ test('Space with no selection toggles active item', async ({ annotate }) => {
 
 test('Space with selection batch-toggles range', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await focusControl(list);
@@ -52,7 +52,7 @@ test('Space with selection batch-toggles range', async ({ annotate }) => {
 
 test('Space preserves aria-selected range', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem } = getItems(listbox);
 
   await focusControl(list);

@@ -7,7 +7,7 @@ import { fireKey, firePointer, focusControl } from '#tests/test-support/events';
 
 test('ArrowDown without Shift clears range', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await focusControl(list);
@@ -26,7 +26,7 @@ test('ArrowDown without Shift clears range', async ({ annotate }) => {
 
 test('ArrowDown does not toggle checked state', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem } = getItems(listbox);
 
   await focusControl(list);
@@ -42,7 +42,7 @@ test('ArrowDown does not toggle checked state', async ({ annotate }) => {
 
 test('Shift+ArrowDown extends range without toggling check', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await focusControl(list);

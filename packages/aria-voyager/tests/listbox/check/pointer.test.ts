@@ -7,7 +7,7 @@ import { fireKey, firePointer, focusControl } from '#tests/test-support/events';
 
 test('Plain click toggles aria-checked', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem } = getItems(listbox);
 
   await annotate('click unchecked item');
@@ -28,7 +28,7 @@ test('Plain click toggles aria-checked', async ({ annotate }) => {
 
 test('Plain click clears aria-selected range', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await annotate('establish range across first and second');
@@ -47,7 +47,7 @@ test('Plain click clears aria-selected range', async ({ annotate }) => {
 
 test('Multiple clicks toggle independently', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await firePointer(firstItem);
@@ -60,7 +60,7 @@ test('Multiple clicks toggle independently', async () => {
 
 test('Shift+Click batch-toggles range, none checked -> all checked', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await annotate('establish range');
@@ -82,7 +82,7 @@ test('Shift+Click batch-toggles range, none checked -> all checked', async ({ an
 
 test('Shift+Click batch-toggles range, one checked -> all unchecked', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
 
   await annotate('check first item and establish range');
@@ -105,7 +105,7 @@ test('Shift+Click batch-toggles range, one checked -> all unchecked', async ({ a
 
 test('Meta+Click toggles both aria-selected and aria-checked', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { secondItem } = getItems(listbox);
 
   await focusControl(list);
@@ -122,7 +122,7 @@ test('Meta+Click toggles both aria-selected and aria-checked', async ({ annotate
 
 test('Click on disabled item does nothing', async ({ annotate }) => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { secondItem } = getItems(listbox);
 
   secondItem.setAttribute('aria-disabled', 'true');

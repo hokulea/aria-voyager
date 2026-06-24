@@ -2,7 +2,7 @@
 export type { Orientation } from '#src/controls/control';
 export { Control } from '#src/controls/control';
 export { Group } from '#src/controls/group';
-export type { ListboxOptions } from '#src/controls/listbox';
+export type { ListboxBehavior } from '#src/controls/listbox';
 export { Listbox } from '#src/controls/listbox';
 export { Menu } from '#src/controls/menu';
 export type { RadioGroupOptions } from '#src/controls/radio-group';

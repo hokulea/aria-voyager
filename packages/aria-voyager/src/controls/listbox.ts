@@ -13,10 +13,14 @@ import type { Behavior } from '#src/behaviors/behavior';
 import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
 import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
-export interface ListboxOptions {
+export interface ListboxBehavior {
+  check?: boolean;
+}
+
+interface ListboxOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
-  check?: boolean;
+  behavior?: ListboxBehavior;
 }
 
 export class Listbox extends Control implements ControlWithSelection {
@@ -46,7 +50,7 @@ export class Listbox extends Control implements ControlWithSelection {
       ...options
     });
 
-    const check = options?.check ?? false;
+    const check = options?.behavior?.check ?? false;
 
     this.#selectionStrategy = new ItemSelectionStrategy(this, {
       selectOnSpace: !check,

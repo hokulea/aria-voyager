@@ -7,7 +7,7 @@ import { fireKey, firePointer, focusControl } from '#tests/test-support/events';
 
 test('checked() fires with full array after single toggle', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem } = getItems(listbox);
 
   const listeners = {
@@ -23,7 +23,7 @@ test('checked() fires with full array after single toggle', async () => {
 
 test('checked() fires with updated array after batch-toggle', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem } = getItems(listbox);
 
   const listeners = {
@@ -41,7 +41,7 @@ test('checked() fires with updated array after batch-toggle', async () => {
 
 test('selected() fires on range change independently of checked()', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
   const { firstItem, secondItem } = getItems(listbox);
 
   const listeners = {

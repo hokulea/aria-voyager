@@ -69,14 +69,14 @@ test('focus lands on first enabled item when first item is disabled', async () =
 test('checkable: sets aria-multiselectable', async () => {
   const list = createListWithFruits();
 
-  new Listbox(list, { check: true });
+  new Listbox(list, { behavior: { check: true } });
 
   await expect.element(list).toHaveAttribute('aria-multiselectable', 'true');
 });
 
 test('checkable: items get aria-checked="false"', async () => {
   const list = createListWithFruits();
-  const listbox = new Listbox(list, { check: true });
+  const listbox = new Listbox(list, { behavior: { check: true } });
 
   for (const item of listbox.items) {
     await expect.element(item).toHaveAttribute('aria-checked', 'false');
