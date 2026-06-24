@@ -39,3 +39,23 @@ test('use pointer to activate items', async ({ annotate }) => {
   await expect.element(secondItem).not.toHaveAttribute('aria-current');
   await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
 });
+
+test('clicking a disabled item does not activate it', async ({ annotate }) => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
+
+  secondItem.setAttribute('aria-disabled', 'true');
+
+  await focusControl(list);
+  // focus already activates firstItem (first enabled)
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+
+  await firePointer(secondItem);
+
+  // disabled item must NOT become active
+  expect(list.getAttribute('aria-activedescendant')).not.toBe(secondItem.id);
+  await expect.element(firstItem).toHaveAttribute('aria-current', 'true');
+  await expect.element(secondItem).not.toHaveAttribute('aria-current');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-current');
+});

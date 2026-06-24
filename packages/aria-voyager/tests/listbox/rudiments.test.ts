@@ -2,7 +2,9 @@ import { expect, test } from 'vitest';
 
 import { Listbox } from '#src';
 
-import { createListElement, createListWithFruits } from './-shared';
+import { focusControl } from '#tests/test-support/events';
+
+import { createListElement, createListWithFruits, getItems } from './-shared';
 
 test('renders', () => {
   const list = createListWithFruits();
@@ -47,4 +49,19 @@ test('disabled: focus does not work', async () => {
   for (const elem of listbox.items) {
     await expect.element(elem).not.toHaveAttribute('aria-selected');
   }
+});
+
+test('focus lands on first enabled item when first item is disabled', async () => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem } = getItems(listbox);
+
+  firstItem.setAttribute('aria-disabled', 'true');
+  listbox.readItems();
+
+  await focusControl(list);
+
+  expect(list.getAttribute('aria-activedescendant')).toBe(secondItem.id);
+  await expect.element(firstItem).not.toHaveAttribute('aria-current');
+  await expect.element(secondItem).toHaveAttribute('aria-current', 'true');
 });

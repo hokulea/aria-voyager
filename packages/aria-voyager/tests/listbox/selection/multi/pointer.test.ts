@@ -38,3 +38,26 @@ test('Select with Pointer', async ({ annotate }) => {
   await expect.element(secondItem).toHaveAttribute('aria-selected', 'true');
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });
+
+test('clicking a disabled item does not select it', async ({ annotate }) => {
+  const list = createMultiSelectListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
+
+  secondItem.setAttribute('aria-disabled', 'true');
+
+  await annotate('plain click');
+  await firePointer(secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+
+  await annotate('Meta+click');
+  await firePointer(secondItem, { bubbles: true, metaKey: true });
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+
+  await annotate('Shift+click range from first to disabled');
+  await firePointer(firstItem, { bubbles: true, shiftKey: true });
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+});

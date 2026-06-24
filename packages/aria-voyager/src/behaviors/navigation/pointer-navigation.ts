@@ -26,7 +26,7 @@ export class PointerNavigation implements Behavior {
 
     return {
       ...bag,
-      item
+      item: item && this.control.enabledItems.includes(item) ? item : undefined
     };
   }
 }

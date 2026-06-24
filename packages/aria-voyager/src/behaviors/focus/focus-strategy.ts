@@ -73,7 +73,7 @@ export abstract class AbstractFocusStrategy implements Behavior, FocusStrategy {
       return bag;
     }
 
-    if (item) {
+    if (item && this.control.enabledItems.includes(item)) {
       this.activateItem(item, event.type === 'pointerover');
     }
 
