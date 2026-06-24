@@ -1,4 +1,4 @@
-import { Listbox } from '#src';
+import { Listbox, type ListboxOptions } from '#src';
 
 import { getCompositeItems } from './-composites';
 
@@ -29,9 +29,9 @@ export class List {
   element: HTMLDivElement;
   listbox: Listbox;
 
-  constructor(parent: HTMLElement) {
+  constructor(parent: HTMLElement, options: ListboxOptions = {}) {
     this.element = createListElement(parent);
-    this.listbox = new Listbox(this.element);
+    this.listbox = new Listbox(this.element, options);
   }
 
   get items() {

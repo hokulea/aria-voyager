@@ -31,3 +31,18 @@ body {
   }
 }
 
+.list {
+  outline: none;
+}
+
+.list[data-check] {
+  [role="option"] {
+    &[aria-checked="true"]::before {
+      content: "[x]"
+    }
+
+    &[aria-checked="false"]::before {
+      content: "[ ]"
+    }
+  }
+}

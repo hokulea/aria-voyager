@@ -1,8 +1,9 @@
 import { isEqual } from 'es-toolkit/predicate';
 
-import { asItemOf, isItemEnabled } from '#src/controls/-items';
+import { isItemEnabled } from '#src/controls/-items';
 
 import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
+import type { SelectionStrategy } from '#src/behaviors/selection/selection-strategy';
 import type { Control, Item } from '#src/controls/control';
 
 export interface CheckBehaviorOptions {
@@ -12,6 +13,13 @@ export interface CheckBehaviorOptions {
    * @defaultValue `(item) => item.hasAttribute('aria-checked')`
    */
   isCheckableItem?: (item: Item) => boolean;
+
+  /**
+   * Selection strategy reference for batch-toggle operations.
+   * When provided and the control is in multiselect mode, Space and Shift+Click
+   * toggle all items in the current selection range rather than just the active item.
+   */
+  selectionStrategy?: SelectionStrategy;
 }
 
 /**
@@ -31,6 +39,7 @@ export class CheckBehavior implements Behavior {
   #checked: Item[] = [];
   #checkableItems: Item[] = [];
   #isCheckableItem: (item: Item) => boolean;
+  #selectionStrategy?: SelectionStrategy;
 
   constructor(
     private control: Control,
@@ -38,6 +47,7 @@ export class CheckBehavior implements Behavior {
   ) {
     this.#isCheckableItem =
       options?.isCheckableItem ?? ((item) => item.hasAttribute('aria-checked'));
+    this.#selectionStrategy = options?.selectionStrategy;
   }
 
   matches(event: Event): boolean {
@@ -61,30 +71,33 @@ export class CheckBehavior implements Behavior {
   }
 
   #handlePointer(event: PointerEvent, item?: Item) {
-    const pointerItem =
-      item ??
-      (event.composedPath().find((elem) => asItemOf(elem as HTMLElement, this.control)) as
-        | Item
-        | undefined);
+    if (event.shiftKey && this.#selectionStrategy && this.control.options.multiple) {
+      this.#batchToggleSelection();
 
-    if (pointerItem && this.#isCheckableItem(pointerItem) && isItemEnabled(pointerItem)) {
-      this.#toggle(pointerItem);
+      return;
+    }
+
+    if (item && this.#isCheckableItem(item) && isItemEnabled(item)) {
+      this.#toggle(item);
     }
   }
 
   #handleKeyboard(event: KeyboardEvent) {
-    if (
-      !(
-        event.key === ' ' &&
-        this.control.activeItem &&
-        this.#isCheckableItem(this.control.activeItem)
-      )
-    ) {
+    if (event.key !== ' ' || !this.control.activeItem) {
       return;
     }
 
     event.preventDefault();
-    this.#toggle(this.control.activeItem);
+
+    if (
+      this.#selectionStrategy &&
+      this.#selectionStrategy.selection.length > 0 &&
+      this.control.options.multiple
+    ) {
+      this.#batchToggleSelection();
+    } else if (this.#isCheckableItem(this.control.activeItem)) {
+      this.#toggle(this.control.activeItem);
+    }
   }
 
   /**
@@ -96,7 +109,7 @@ export class CheckBehavior implements Behavior {
   }
 
   /**
-   * Read initial aria-checked state from DOM.
+   * Read aria-checked state from DOM.
    */
   readChecked(): void {
     this.#checked = this.#checkableItems.filter(
@@ -108,17 +121,53 @@ export class CheckBehavior implements Behavior {
    * Toggle an item's checked state.
    */
   #toggle(item: Item): void {
-    const isChecked = item.getAttribute('aria-checked') === 'true';
-    const newChecked = !isChecked;
+    const newChecked = item.getAttribute('aria-checked') !== 'true';
 
     item.setAttribute('aria-checked', newChecked ? 'true' : 'false');
 
-    // Update internal state
     const prevChecked = this.#checked;
 
     this.#checked = newChecked ? [...this.#checked, item] : this.#checked.filter((i) => i !== item);
 
-    // Emit with dedup
+    if (isEqual(prevChecked, this.#checked)) {
+      return;
+    }
+
+    this.control.emitter?.checked(this.#checked);
+  }
+
+  /**
+   * Batch-toggle all items in the current selection range.
+   * If any item in the selection is checked, uncheck all.
+   * If none are checked, check all.
+   */
+  #batchToggleSelection(): void {
+    const selection = this.#selectionStrategy?.selection.filter((item) =>
+      this.#checkableItems.includes(item)
+    );
+
+    if (!selection || selection.length === 0) {
+      return;
+    }
+
+    const anyChecked = selection.some((item) => item.getAttribute('aria-checked') === 'true');
+
+    const prevChecked = this.#checked;
+
+    if (anyChecked) {
+      for (const item of selection) {
+        item.setAttribute('aria-checked', 'false');
+      }
+
+      this.#checked = this.#checked.filter((item) => !selection.includes(item));
+    } else {
+      for (const item of selection) {
+        item.setAttribute('aria-checked', 'true');
+      }
+
+      this.#checked = [...this.#checked.filter((item) => !selection.includes(item)), ...selection];
+    }
+
     if (isEqual(prevChecked, this.#checked)) {
       return;
     }
