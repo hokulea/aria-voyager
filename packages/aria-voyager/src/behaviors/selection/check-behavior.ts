@@ -1,6 +1,6 @@
 import { isEqual } from 'es-toolkit/predicate';
 
-import { asItemOf } from '#src/controls/-items';
+import { asItemOf, isItemEnabled } from '#src/controls/-items';
 
 import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
 import type { Control, Item } from '#src/controls/control';
@@ -67,7 +67,7 @@ export class CheckBehavior implements Behavior {
         | Item
         | undefined);
 
-    if (pointerItem && this.#isCheckableItem(pointerItem)) {
+    if (pointerItem && this.#isCheckableItem(pointerItem) && isItemEnabled(pointerItem)) {
       this.#toggle(pointerItem);
     }
   }
@@ -91,7 +91,7 @@ export class CheckBehavior implements Behavior {
    * Called from control.readItems() to re-filter checkable items and re-read state.
    */
   updateItems(): void {
-    this.#checkableItems = this.control.items.filter((item) => this.#isCheckableItem(item));
+    this.#checkableItems = this.control.enabledItems.filter((item) => this.#isCheckableItem(item));
     this.readChecked();
   }
 

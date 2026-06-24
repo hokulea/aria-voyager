@@ -36,7 +36,9 @@ export class ItemSelectionStrategy
   private shiftItem?: Item;
 
   matches(event: Event): boolean {
-    return this.control.items.length > 0 && this.eventListeners.includes(event.type as EventNames);
+    return (
+      this.control.enabledItems.length > 0 && this.eventListeners.includes(event.type as EventNames)
+    );
   }
 
   prepare(event: Event): void {
@@ -86,7 +88,7 @@ export class ItemSelectionStrategy
     // eslint-disable-next-line unicorn/no-array-callback-reference
     const items = selection.every(Number)
       ? selection
-          .map((sel) => this.control.items.find((item) => item === sel))
+          .map((sel) => this.control.enabledItems.find((item) => item === sel))
           .filter((e) => e !== undefined)
       : selection;
 
@@ -112,7 +114,7 @@ export class ItemSelectionStrategy
     const selectionPresent = this.#selection.length > 0;
 
     if (this.control.capabilities.singleSelection && !multiple && !selectionPresent) {
-      this.selectSingle(this.control.items[0]);
+      this.selectSingle(this.control.enabledItems[0]);
     }
   }
 
@@ -220,7 +222,7 @@ export class ItemSelectionStrategy
 
   private selectAll() {
     if (this.control.options.multiple) {
-      this.persistSelection(this.control.items);
+      this.persistSelection(this.control.enabledItems);
     }
   }
 
@@ -232,7 +234,7 @@ export class ItemSelectionStrategy
       const up = to > from;
 
       while (up ? i <= to : i >= to) {
-        selection.push(this.control.items[i]);
+        selection.push(this.control.enabledItems[i]);
         i += up ? 1 : -1;
       }
 
@@ -244,8 +246,8 @@ export class ItemSelectionStrategy
     // only, when selection mode is MULTI
     // eslint-disable-next-line unicorn/prefer-early-return
     if (this.control.options.multiple && this.shiftItem) {
-      const indexShift = this.control.items.indexOf(this.shiftItem);
-      const indexItem = this.control.items.indexOf(item);
+      const indexShift = this.control.enabledItems.indexOf(this.shiftItem);
+      const indexItem = this.control.enabledItems.indexOf(item);
 
       this.selectRange(indexShift, indexItem);
     }
@@ -258,7 +260,7 @@ export class ItemSelectionStrategy
       return;
     }
 
-    for (const element of this.control.items) {
+    for (const element of this.control.enabledItems) {
       if (selection.includes(element)) {
         element.setAttribute('aria-selected', 'true');
       } else {
