@@ -42,7 +42,9 @@ test('Select with `ArrowDown` and `Shift`, skip disabled item', async ({ annotat
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
 
-  await annotate('use `ArrowDown` and `Shift` key to select first and third item, skipping disabled');
+  await annotate(
+    'use `ArrowDown` and `Shift` key to select first and third item, skipping disabled'
+  );
   await fireKey(list, 'ArrowDown', { shiftKey: true });
   await expect.element(firstItem).toHaveAttribute('aria-selected', 'true');
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
