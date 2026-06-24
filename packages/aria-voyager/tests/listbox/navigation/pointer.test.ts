@@ -40,7 +40,7 @@ test('use pointer to activate items', async ({ annotate }) => {
   await expect.element(thirdItem).toHaveAttribute('aria-current', 'true');
 });
 
-test('clicking a disabled item does not activate it', async ({ annotate }) => {
+test('clicking a disabled item does not activate it', async () => {
   const list = createListWithFruits();
   const listbox = new Listbox(list);
   const { firstItem, secondItem, thirdItem } = getItems(listbox);
