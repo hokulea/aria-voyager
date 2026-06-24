@@ -49,6 +49,36 @@ test('Space on menuitemcheckbox toggles aria-checked', async ({ annotate }) => {
   menu.dispose();
 });
 
+test('Space on checkbox, skip disabled checkbox', async ({ annotate }) => {
+  const menuElement = createMenuElement(document.body);
+
+  appendCheckboxItemToMenu(menuElement, 'Bold', false);
+  appendCheckboxItemToMenu(menuElement, 'Italic', false);
+  appendCheckboxItemToMenu(menuElement, 'Underline', false);
+
+  const menu = new Menu(menuElement);
+  const [bold, italic, underline] = menu.items;
+
+  italic.setAttribute('aria-disabled', 'true');
+
+  await annotate('focus Bold and toggle it');
+  bold.focus();
+  await fireKey(menuElement, ' ');
+
+  await expect.element(bold).toHaveAttribute('aria-checked', 'true');
+  await expect.element(italic).toHaveAttribute('aria-checked', 'false');
+
+  await annotate('navigate past disabled Italic to Underline');
+  await fireKey(menuElement, 'ArrowDown');
+  await fireKey(menuElement, ' ');
+
+  await expect.element(bold).toHaveAttribute('aria-checked', 'true');
+  await expect.element(italic).toHaveAttribute('aria-checked', 'false');
+  await expect.element(underline).toHaveAttribute('aria-checked', 'true');
+
+  menu.dispose();
+});
+
 test('Multiple checkboxes can be checked independently', async ({ annotate }) => {
   const menuElement = createMenuElement(document.body);
 
@@ -57,9 +87,7 @@ test('Multiple checkboxes can be checked independently', async ({ annotate }) =>
   appendCheckboxItemToMenu(menuElement, 'Underline', false);
 
   const menu = new Menu(menuElement);
-  const bold = menu.items[0];
-  const italic = menu.items[1];
-  const underline = menu.items[2];
+  const [bold, italic, underline] = menu.items;
 
   await annotate('focus bold');
   bold.focus();

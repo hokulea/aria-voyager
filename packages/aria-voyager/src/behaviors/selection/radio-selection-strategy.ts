@@ -5,7 +5,7 @@ import {
   type SelectionBehavior,
   type SelectionStrategy
 } from '#src/behaviors/selection/selection-strategy';
-import { isItemOf } from '#src/controls/-items';
+import { isItemEnabled, isItemOf } from '#src/controls/-items';
 
 import type { Behavior, BehaviorParameterBag, EventNames } from '#src/behaviors/behavior';
 import type { Control, Item } from '#src/controls/control';
@@ -26,7 +26,7 @@ function isItemSelected(item: Item): boolean {
 
 export interface RadioSelectionOptions {
   /**
-   * Filter function to determine which items in control.items are radio items.
+   * Filter function to determine which items in control.enabledItems are radio items.
    *
    * @defaultValue `() => true` (all items are radio items)
    */
@@ -74,7 +74,7 @@ export class RadioSelectionStrategy
 
   matches(event: Event): boolean {
     return (
-      this.control.items.some((item) => this.#isRadioItem(item)) &&
+      this.control.enabledItems.some((item) => this.#isRadioItem(item)) &&
       this.eventListeners.includes(event.type as EventNames)
     );
   }
@@ -106,7 +106,7 @@ export class RadioSelectionStrategy
 
   #handlePointer(_event: MouseEvent, item: Item) {
     // pointerup: check the clicked item
-    if (this.#isRadioItem(item)) {
+    if (this.#isRadioItem(item) && isItemEnabled(item)) {
       this.#selectItem(item);
     }
   }
@@ -134,7 +134,7 @@ export class RadioSelectionStrategy
    * Called from control.readItems() to re-partition items and re-enforce invariant.
    */
   readSelection(): void {
-    // 1. Filter control.items through isRadioItem
+    // 1. Filter control.enabledItems through isRadioItem
     const radioItems = new Set(this.radioItems);
 
     // 2. Partition by data-group (missing → default key '')
