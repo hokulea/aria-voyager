@@ -26,3 +26,17 @@ test('With Pointer', async ({ annotate }) => {
   await expect.element(secondItem).not.toHaveAttribute('aria-selected');
   await expect.element(thirdItem).toHaveAttribute('aria-selected', 'true');
 });
+
+test('clicking a disabled item does not select it', async () => {
+  const list = createListWithFruits();
+  const listbox = new Listbox(list);
+  const { firstItem, secondItem, thirdItem } = getItems(listbox);
+
+  secondItem.setAttribute('aria-disabled', 'true');
+
+  await firePointer(secondItem);
+  await expect.element(firstItem).not.toHaveAttribute('aria-selected');
+  await expect.element(secondItem).not.toHaveAttribute('aria-selected');
+  await expect.element(thirdItem).not.toHaveAttribute('aria-selected');
+  expect(listbox.selection).toEqual([]);
+});

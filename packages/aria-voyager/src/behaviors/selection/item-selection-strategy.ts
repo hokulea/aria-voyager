@@ -119,6 +119,10 @@ export class ItemSelectionStrategy
   }
 
   private handlePointer(event: PointerEvent, item: Item) {
+    if (!this.control.enabledItems.includes(item)) {
+      return;
+    }
+
     if (event.shiftKey) {
       this.selectShift(item);
     } else if (event.metaKey) {
