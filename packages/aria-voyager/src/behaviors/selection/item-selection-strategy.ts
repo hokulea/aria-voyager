@@ -13,6 +13,9 @@ const SELECTION_ATTRIBUTE = 'aria-selected';
 
 interface ItemSelectionOptions {
   behavior?: SelectionBehavior;
+  selectOnSpace?: boolean;
+  selectOnClick?: boolean;
+  clearOnNavigate?: boolean;
 }
 
 export class ItemSelectionStrategy
@@ -22,6 +25,9 @@ export class ItemSelectionStrategy
   eventListeners: EventNames[] = ['focusin', 'keydown', 'keyup', 'pointerup', 'change'];
 
   #selection: Item[] = [];
+  #selectOnSpace: boolean;
+  #selectOnClick: boolean;
+  #clearOnNavigate: boolean;
 
   get selection(): Item[] {
     return this.#selection;
@@ -29,6 +35,10 @@ export class ItemSelectionStrategy
 
   constructor(control: Control, options?: ItemSelectionOptions) {
     super(control, options?.behavior);
+
+    this.#selectOnSpace = options?.selectOnSpace ?? true;
+    this.#selectOnClick = options?.selectOnClick ?? true;
+    this.#clearOnNavigate = options?.clearOnNavigate ?? false;
 
     this.readSelection();
   }
@@ -131,8 +141,10 @@ export class ItemSelectionStrategy
       } else {
         this.selectAdd(item);
       }
-    } else {
+    } else if (this.#selectOnClick) {
       this.selectSingle(item);
+    } else {
+      this.clearSelection();
     }
   }
 
@@ -153,6 +165,8 @@ export class ItemSelectionStrategy
     if (this.control.options.multiple) {
       if (event.shiftKey) {
         this.selectShift(item);
+      } else if (this.#clearOnNavigate) {
+        this.clearSelection();
       }
     } else {
       if (
@@ -180,7 +194,12 @@ export class ItemSelectionStrategy
    * and cmd/ctrl + a
    */
   private handleKeyCombinations(event: KeyboardEvent) {
-    if (event.key === ' ' && this.control.activeItem && this.control.options.multiple) {
+    if (
+      this.#selectOnSpace &&
+      event.key === ' ' &&
+      this.control.activeItem &&
+      this.control.options.multiple
+    ) {
       // handle select and active item
       if (this.#selection.includes(this.control.activeItem)) {
         this.deselect(this.control.activeItem);
@@ -228,6 +247,12 @@ export class ItemSelectionStrategy
     if (this.control.options.multiple) {
       this.persistSelection(this.control.enabledItems);
     }
+  }
+
+  private clearSelection() {
+    this.shiftItem = undefined;
+
+    this.persistSelection([]);
   }
 
   private selectRange(from: number, to: number) {

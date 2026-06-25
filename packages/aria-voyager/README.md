@@ -98,10 +98,18 @@ import type { EmitStrategy, UpdateStrategy } from 'aria-voyager';
 interface ListboxOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
+  behavior?: {
+    check?: boolean;
+  }
 }
 ```
 
 See [updater](#updater) and [emitter](#emitter).
+
+##### Check Behavior
+
+Enabling the `check` behavior uses `[aria-checked]` attributes. You can also
+pass a `check()` argument.
 
 #### `Menu`
 

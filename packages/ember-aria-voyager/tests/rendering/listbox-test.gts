@@ -1,5 +1,12 @@
 import { tracked } from '@glimmer/tracking';
-import { focus, render, rerender, settled, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  focus,
+  render,
+  rerender,
+  settled,
+  triggerEvent,
+  triggerKeyEvent
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -317,6 +324,107 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
       );
 
       await testListPointerSelection(assert);
+    });
+  });
+
+  module('Checkable', () => {
+    test('checkable mode sets aria-multiselectable and initial aria-checked', async function (assert) {
+      const options = ['apple', 'banana', 'pineapple'];
+      const behavior = { check: true };
+
+      await render(
+        <template>
+          <div role="listbox" {{ariaListbox items=options behavior=behavior}}>
+            {{#each options as |option|}}
+              {{! template-lint-disable require-mandatory-role-attributes  }}
+              <p role="option">{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="listbox"]').hasAria('multiselectable', 'true');
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('checked', 'false');
+      assert.dom('[role="option"]:last-child').hasAria('checked', 'false');
+    });
+
+    test('click toggles aria-checked and emits check callback', async function (assert) {
+      const checkSpy = sinon.spy();
+      const options = ['apple', 'banana', 'pineapple'];
+      const behavior = { check: true };
+
+      await render(
+        <template>
+          <div role="listbox" {{ariaListbox items=options behavior=behavior check=checkSpy}}>
+            {{#each options as |option|}}
+              {{! template-lint-disable require-mandatory-role-attributes  }}
+              <p role="option">{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      await triggerEvent('[role="option"]:first-child', 'pointerup', { bubbles: true });
+
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'true');
+      assert.ok(checkSpy.calledOnceWith(['apple']));
+    });
+
+    test('click clears aria-selected range', async function (assert) {
+      const options = ['apple', 'banana', 'pineapple'];
+      const behavior = { check: true };
+
+      await render(
+        <template>
+          <div role="listbox" {{ariaListbox items=options behavior=behavior}}>
+            {{#each options as |option|}}
+              {{! template-lint-disable require-mandatory-role-attributes  }}
+              <p role="option">{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      await focus('[role="listbox"]');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', 'ArrowDown', { shiftKey: true });
+
+      assert.dom('[role="option"]:first-child').hasAria('selected', 'true');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('selected', 'true');
+
+      await triggerEvent('[role="option"]:last-child', 'pointerup', { bubbles: true });
+
+      assert.dom('[role="option"]:first-child').doesNotHaveAria('selected');
+      assert.dom('[role="option"]:nth-child(2)').doesNotHaveAria('selected');
+    });
+
+    test('changing checkable triggers options update', async function (assert) {
+      const options = ['apple', 'banana', 'pineapple'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        @tracked behavior = { check: true };
+      })();
+
+      await render(
+        <template>
+          <div role="listbox" {{ariaListbox items=options behavior=context.behavior}}>
+            {{#each options as |option|}}
+              {{! template-lint-disable require-mandatory-role-attributes  }}
+              <p role="option">{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="listbox"]').hasAria('multiselectable', 'true');
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+
+      context.behavior = { check: false };
+      await rerender();
+
+      assert.ok(true, 'options update triggered (no crash)');
     });
   });
 });

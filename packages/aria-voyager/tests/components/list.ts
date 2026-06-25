@@ -2,6 +2,8 @@ import { Listbox } from '#src';
 
 import { getCompositeItems } from './-composites';
 
+import type { ListboxOptions } from '#src/controls/listbox';
+
 export function createListElement(parent: HTMLElement) {
   const element = document.createElement('div');
 
@@ -29,9 +31,9 @@ export class List {
   element: HTMLDivElement;
   listbox: Listbox;
 
-  constructor(parent: HTMLElement) {
+  constructor(parent: HTMLElement, options: ListboxOptions = {}) {
     this.element = createListElement(parent);
-    this.listbox = new Listbox(this.element);
+    this.listbox = new Listbox(this.element, options);
   }
 
   get items() {

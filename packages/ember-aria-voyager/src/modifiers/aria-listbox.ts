@@ -7,6 +7,7 @@ import { isEqual } from 'es-toolkit/predicate';
 import {
   type ActivateHandler,
   asArray,
+  type CheckHandler,
   createIndexEmitter,
   createItemEmitter,
   type Items,
@@ -15,12 +16,15 @@ import {
 } from './-emitter.ts';
 
 import type Owner from '@ember/owner';
-import type { EmitStrategy } from 'aria-voyager';
+import type { EmitStrategy, ListboxBehavior } from 'aria-voyager';
 import type { ArgsFor, NamedArgs, PositionalArgs } from 'ember-modifier';
 import type { Simplify } from 'type-fest';
 
 type ListboxOptions<T> = Simplify<
-  SelectionHandler<T> & (Items<T> | Partial<Items<T>>) & ActivateHandler<T> & { disabled?: boolean }
+  SelectionHandler<T> &
+    (Items<T> | Partial<Items<T>>) &
+    ActivateHandler<T> &
+    CheckHandler<T> & { disabled?: boolean; behavior?: ListboxBehavior }
 >;
 
 interface ListboxSignature<T> {
@@ -39,6 +43,7 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
   private prevSelection?: T | T[];
   private prevMulti?: boolean;
   private prevDisabled?: boolean;
+  private prevCheck?: boolean;
 
   constructor(owner: Owner, args: ArgsFor<ListboxSignature<T>>) {
     super(owner, args);
@@ -57,7 +62,10 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
       this.updater = new ReactiveUpdateStrategy();
 
       this.listbox = new Listbox(element as HTMLElement, {
-        updater: this.updater
+        updater: this.updater,
+        behavior: {
+          check: options.behavior?.check
+        }
       });
     }
 
@@ -101,6 +109,12 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
       optionsChanged = true;
 
       this.prevDisabled = options.disabled;
+    }
+
+    if (this.prevCheck !== options.behavior?.check) {
+      optionsChanged = true;
+
+      this.prevCheck = options.behavior?.check;
     }
 
     if (optionsChanged) {
