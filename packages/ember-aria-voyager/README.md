@@ -101,6 +101,7 @@ type ListboxSignature<T = HTMLElement> = {
   items?: T[];
   selection?: T | T[];
   activateItem?: (item: T) => void;
+  check?: (selection: T[]) => void;
 } & (
   | {
       multi: true;

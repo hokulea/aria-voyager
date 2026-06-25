@@ -71,7 +71,7 @@ apply styling, it will operate on the accessibility tree.
       ✅ Scroll into view<br>
       ✅ Single selection<br>
       ✅ Multi selection<br>
-      ❌ Checked<br>
+      ✅ Checked<br>
     </td>
     <td>
       -
