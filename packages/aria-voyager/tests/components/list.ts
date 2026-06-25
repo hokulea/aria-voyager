@@ -1,6 +1,8 @@
-import { Listbox, type ListboxOptions } from '#src';
+import { Listbox } from '#src';
 
 import { getCompositeItems } from './-composites';
+
+import type { ListboxOptions } from '#src/controls/listbox';
 
 export function createListElement(parent: HTMLElement) {
   const element = document.createElement('div');

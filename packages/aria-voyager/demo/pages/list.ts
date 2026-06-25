@@ -40,7 +40,7 @@ function load() {
   listMulti.setItems([...Array.from({ length: 20 }).keys()].map((i) => `Item ${i + 1}`));
 
   const parentCheck = document.querySelector('#check') as HTMLElement;
-  const listCheck = new List(parentCheck, { check: true });
+  const listCheck = new List(parentCheck, { behavior: { check: true } });
 
   listCheck.element.style.height = '250px';
   listCheck.element.style.position = 'relative';

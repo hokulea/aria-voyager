@@ -17,7 +17,7 @@ export interface ListboxBehavior {
   check?: boolean;
 }
 
-interface ListboxOptions {
+export interface ListboxOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
   behavior?: ListboxBehavior;
