@@ -1,5 +1,22 @@
 # Changelog
 
+## Release (2026-06-25)
+
+* aria-voyager 1.1.0 (minor)
+* ember-aria-voyager 1.1.0 (minor)
+
+#### :rocket: Enhancement
+* `aria-voyager`, `ember-aria-voyager`
+  * [#687](https://github.com/hokulea/aria-voyager/pull/687) Listbox with check behavior ([@gossi](https://github.com/gossi))
+
+#### :bug: Bug Fix
+* `aria-voyager`
+  * [#686](https://github.com/hokulea/aria-voyager/pull/686) Fix: Stop activating disabled items ([@gossi](https://github.com/gossi))
+  * [#685](https://github.com/hokulea/aria-voyager/pull/685) Fix: Selection to take disabled items into account ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2026-06-23)
 
 * aria-voyager 1.0.1 (patch)
