@@ -40,6 +40,7 @@ export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
 
   private prevItems?: T[];
   private prevDisabled?: boolean;
+  private prevChecks?: T[];
 
   constructor(owner: Owner, args: ArgsFor<MenuSignature<T>>) {
     super(owner, args);
@@ -73,6 +74,11 @@ export default class MenuModifier<T> extends Modifier<MenuSignature<T>> {
     if (options.items && !isEqual(this.prevItems, options.items)) {
       this.updater.updateItems();
       this.prevItems = [...options.items];
+    }
+
+    if (options.checks && !isEqual(this.prevChecks, options.checks)) {
+      this.updater.updateChecks();
+      this.prevChecks = options.checks;
     }
 
     let optionsChanged = false;

@@ -1,4 +1,5 @@
 import { tracked } from '@glimmer/tracking';
+import { hash } from '@ember/helper';
 import {
   focus,
   render,
@@ -117,6 +118,122 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
       await triggerKeyEvent('[role="listbox"]', 'keydown', 'ArrowRight');
 
       assert.ok(handleUpdate.calledWith('pineapple'));
+    });
+
+    test('check updates', async (assert) => {
+      const handleUpdate = sinon.spy();
+      const options = ['apple', 'banana', 'pineapple'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        @tracked checks: string[] = [];
+      })();
+
+      // eslint-disable-next-line unicorn/consistent-function-scoping
+      const isChecked = (item: string, selection: string[]) => {
+        return selection.includes(item);
+      };
+
+      await render(
+        <template>
+          <div
+            role="listbox"
+            {{ariaListbox
+              items=options
+              behavior=(hash check=true)
+              checks=context.checks
+              check=handleUpdate
+            }}
+          >
+            {{#each options as |option|}}
+              <p
+                role="option"
+                aria-selected="false"
+                aria-checked={{if (isChecked option context.checks) "true" "false"}}
+              >{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('checked', 'false');
+      assert.dom('[role="option"]:last-child').hasAria('checked', 'false');
+
+      context.checks = ['banana'];
+
+      await rerender();
+
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('checked', 'true');
+      assert.dom('[role="option"]:last-child').hasAria('checked', 'false');
+
+      await focus('[role="listbox"]');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', 'ArrowRight');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', 'ArrowRight');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', ' ');
+
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('checked', 'true');
+      assert.dom('[role="option"]:last-child').hasAria('checked', 'true');
+
+      assert.ok(handleUpdate.calledWith(['banana', 'pineapple']));
+    });
+
+    test('check DDAU', async (assert) => {
+      const options = ['apple', 'banana', 'pineapple'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        @tracked checks: string[] = [];
+
+        check = (checks: string[]) => {
+          this.checks = checks;
+        };
+      })();
+
+      // eslint-disable-next-line unicorn/consistent-function-scoping
+      const isChecked = (item: string, selection: string[]) => {
+        return selection.includes(item);
+      };
+
+      await render(
+        <template>
+          <div
+            role="listbox"
+            {{ariaListbox
+              items=options
+              behavior=(hash check=true)
+              checks=context.checks
+              check=context.check
+            }}
+          >
+            {{#each options as |option|}}
+              <p
+                role="option"
+                aria-selected="false"
+                aria-checked={{if (isChecked option context.checks) "true" "false"}}
+              >{{option}}</p>
+            {{/each}}
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('checked', 'false');
+      assert.dom('[role="option"]:last-child').hasAria('checked', 'false');
+
+      await focus('[role="listbox"]');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', 'ArrowRight');
+      await triggerKeyEvent('[role="listbox"]', 'keydown', ' ');
+
+      assert.dom('[role="option"]:first-child').hasAria('checked', 'false');
+      assert.dom('[role="option"]:nth-child(2)').hasAria('checked', 'true');
+      assert.dom('[role="option"]:last-child').hasAria('checked', 'false');
+
+      assert.deepEqual(context.checks, ['banana']);
     });
   });
 

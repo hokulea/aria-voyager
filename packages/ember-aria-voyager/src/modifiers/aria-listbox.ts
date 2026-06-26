@@ -43,7 +43,7 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
   private prevSelection?: T | T[];
   private prevMulti?: boolean;
   private prevDisabled?: boolean;
-  private prevCheck?: boolean;
+  private prevChecks?: T[];
 
   constructor(owner: Owner, args: ArgsFor<ListboxSignature<T>>) {
     super(owner, args);
@@ -85,6 +85,11 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
       this.prevSelection = asArray(options.selection);
     }
 
+    if (options.checks && !isEqual(this.prevChecks, options.checks)) {
+      this.updater.updateChecks();
+      this.prevChecks = options.checks;
+    }
+
     let optionsChanged = false;
 
     if (this.prevMulti !== options.multi) {
@@ -109,12 +114,6 @@ export default class ListboxModifier<T> extends Modifier<ListboxSignature<T>> {
       optionsChanged = true;
 
       this.prevDisabled = options.disabled;
-    }
-
-    if (this.prevCheck !== options.behavior?.check) {
-      optionsChanged = true;
-
-      this.prevCheck = options.behavior?.check;
     }
 
     if (optionsChanged) {

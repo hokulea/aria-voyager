@@ -41,7 +41,8 @@ export class Tablist extends Control implements ControlWithSelection {
     super(element, {
       capabilities: {
         singleSelection: true,
-        multiSelection: false
+        multiSelection: false,
+        checks: false
       },
       optionAttributes: ['aria-orientation'],
       ...options

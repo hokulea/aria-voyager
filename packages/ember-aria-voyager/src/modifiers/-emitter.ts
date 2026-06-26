@@ -13,7 +13,7 @@ export function asArray(val?: unknown) {
 
 export type Items<T> = { items: T[] };
 export type ActivateHandler<T> = { activateItem?: (item: T) => void };
-export type CheckHandler<T> = { check?: (selection: T[]) => void };
+export type CheckHandler<T> = { check?: (selection: T[]) => void; checks?: T[] };
 export type SingleSelectionHandler<T> = {
   multi?: false;
   selection?: T;

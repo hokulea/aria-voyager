@@ -8,7 +8,12 @@ import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigatio
 import { ScrollToItem } from '#src/behaviors/navigation/scroll-to-item';
 import { CheckBehavior } from '#src/behaviors/selection/check-behavior';
 import { RadioSelectionStrategy } from '#src/behaviors/selection/radio-selection-strategy';
-import { Control, type ControlWithSelection, type Item } from '#src/controls/control';
+import {
+  Control,
+  type ControlWithChecks,
+  type ControlWithSelection,
+  type Item
+} from '#src/controls/control';
 
 import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
 import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
@@ -20,7 +25,7 @@ interface MenuOptions {
   emitter?: EmitStrategy;
 }
 
-export class Menu extends Control implements ControlWithSelection {
+export class Menu extends Control implements ControlWithSelection, ControlWithChecks {
   protected focusStrategy: RovingTabindexStrategy;
   #selectionStrategy: RadioSelectionStrategy;
   #checkBehavior: CheckBehavior;
@@ -41,7 +46,8 @@ export class Menu extends Control implements ControlWithSelection {
     super(element, {
       capabilities: {
         singleSelection: true,
-        multiSelection: false
+        multiSelection: false,
+        checks: true
       },
       ...options
     });
@@ -108,5 +114,13 @@ export class Menu extends Control implements ControlWithSelection {
 
   isSelectionAttribute(attributeName: string): boolean {
     return this.#selectionStrategy.isSelectionAttriute(attributeName);
+  }
+
+  readChecks() {
+    this.#checkBehavior.readChecked();
+  }
+
+  isCheckAttribute(attributeName: string): boolean {
+    return attributeName === 'aria-checked';
   }
 }

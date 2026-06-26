@@ -18,6 +18,14 @@ export class ReactiveUpdateStrategy implements UpdateStrategy {
     }
   }
 
+  updateChecks() {
+    if (!this.control?.usesChecks()) {
+      return;
+    }
+
+    this.control.readChecks();
+  }
+
   updateOptions() {
     this.control?.readOptions();
   }
