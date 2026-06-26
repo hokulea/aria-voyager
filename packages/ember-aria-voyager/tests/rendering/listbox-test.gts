@@ -149,6 +149,7 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
             {{#each options as |option|}}
               <p
                 role="option"
+                aria-selected="false"
                 aria-checked={{if (isChecked option context.checks) "true" "false"}}
               >{{option}}</p>
             {{/each}}
@@ -212,6 +213,7 @@ module('Rendering | Modifier | {{listbox}}', (hooks) => {
             {{#each options as |option|}}
               <p
                 role="option"
+                aria-selected="false"
                 aria-checked={{if (isChecked option context.checks) "true" "false"}}
               >{{option}}</p>
             {{/each}}
