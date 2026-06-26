@@ -122,18 +122,9 @@ export class CheckBehavior implements Behavior {
    */
   #toggle(item: Item): void {
     const newChecked = item.getAttribute('aria-checked') !== 'true';
+    const checks = newChecked ? [...this.#checked, item] : this.#checked.filter((i) => i !== item);
 
-    item.setAttribute('aria-checked', newChecked ? 'true' : 'false');
-
-    const prevChecked = this.#checked;
-
-    this.#checked = newChecked ? [...this.#checked, item] : this.#checked.filter((i) => i !== item);
-
-    if (isEqual(prevChecked, this.#checked)) {
-      return;
-    }
-
-    this.control.emitter?.checked(this.#checked);
+    this.#persistChecks(checks);
   }
 
   /**
@@ -151,26 +142,23 @@ export class CheckBehavior implements Behavior {
     }
 
     const anyChecked = selection.some((item) => item.getAttribute('aria-checked') === 'true');
+    const checks = anyChecked
+      ? this.#checked.filter((item) => !selection.includes(item))
+      : [...this.#checked.filter((item) => !selection.includes(item)), ...selection];
 
-    const prevChecked = this.#checked;
+    this.#persistChecks(checks);
+  }
 
-    if (anyChecked) {
-      for (const item of selection) {
-        item.setAttribute('aria-checked', 'false');
-      }
-
-      this.#checked = this.#checked.filter((item) => !selection.includes(item));
-    } else {
-      for (const item of selection) {
-        item.setAttribute('aria-checked', 'true');
-      }
-
-      this.#checked = [...this.#checked.filter((item) => !selection.includes(item)), ...selection];
-    }
-
-    if (isEqual(prevChecked, this.#checked)) {
+  #persistChecks(checks: Item[]) {
+    if (isEqual(this.#checked, checks)) {
       return;
     }
+
+    for (const element of this.#checkableItems) {
+      element.setAttribute('aria-checked', checks.includes(element) ? 'true' : 'false');
+    }
+
+    this.#checked = checks;
 
     this.control.emitter?.checked(this.#checked);
   }

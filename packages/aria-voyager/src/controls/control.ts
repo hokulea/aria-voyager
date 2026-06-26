@@ -19,6 +19,7 @@ function pipe<Value>(input: Value, ...fns: ((input: Value) => Value)[]) {
 interface Capabilities {
   singleSelection: boolean;
   multiSelection: boolean;
+  checks: boolean;
 }
 
 interface ControlOptions {
@@ -48,6 +49,11 @@ export interface ControlWithSelection {
   isSelectionAttribute(attributeName: string): boolean;
 }
 
+export interface ControlWithChecks {
+  readChecks(): void;
+  isCheckAttribute(attributeName: string): boolean;
+}
+
 export abstract class Control {
   protected abstract focusStrategy: FocusStrategy;
 
@@ -73,7 +79,8 @@ export abstract class Control {
    */
   #capabilities: Capabilities = {
     singleSelection: false,
-    multiSelection: false
+    multiSelection: false,
+    checks: false
   };
 
   get capabilities() {
@@ -82,6 +89,10 @@ export abstract class Control {
 
   usesSelection(): this is ControlWithSelection {
     return this.#capabilities.singleSelection || this.#capabilities.multiSelection;
+  }
+
+  usesChecks(): this is ControlWithChecks {
+    return this.#capabilities.checks;
   }
 
   #optionAttributes: string[] = [];

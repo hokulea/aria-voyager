@@ -7,7 +7,7 @@ import { PreviousNavigation } from '#src/behaviors/navigation/previous-navigatio
 import { ScrollToItem } from '#src/behaviors/navigation/scroll-to-item';
 import { CheckBehavior } from '#src/behaviors/selection/check-behavior';
 import { ItemSelectionStrategy } from '#src/behaviors/selection/item-selection-strategy';
-import { Control, type ControlWithSelection } from '#src/controls/control';
+import { Control, type ControlWithChecks, type ControlWithSelection } from '#src/controls/control';
 
 import type { Behavior } from '#src/behaviors/behavior';
 import type { EmitStrategy } from '#src/emit-strategies/emit-strategy';
@@ -23,7 +23,7 @@ export interface ListboxOptions {
   behavior?: ListboxBehavior;
 }
 
-export class Listbox extends Control implements ControlWithSelection {
+export class Listbox extends Control implements ControlWithSelection, ControlWithChecks {
   protected focusStrategy: ActiveDescendentStrategy;
   #selectionStrategy: ItemSelectionStrategy;
   #checkBehavior?: CheckBehavior;
@@ -44,7 +44,8 @@ export class Listbox extends Control implements ControlWithSelection {
     super(element, {
       capabilities: {
         singleSelection: true,
-        multiSelection: true
+        multiSelection: true,
+        checks: true
       },
       optionAttributes: ['aria-multiselectable'],
       ...options
@@ -126,12 +127,17 @@ export class Listbox extends Control implements ControlWithSelection {
 
   readSelection(): void {
     this.#selectionStrategy.readSelection();
+  }
+
+  readChecks(): void {
     this.#checkBehavior?.readChecked();
   }
 
   isSelectionAttribute(attributeName: string): boolean {
-    return (
-      this.#selectionStrategy.isSelectionAttriute(attributeName) || attributeName === 'aria-checked'
-    );
+    return this.#selectionStrategy.isSelectionAttriute(attributeName);
+  }
+
+  isCheckAttribute(attributeName: string): boolean {
+    return attributeName === 'aria-checked';
   }
 }

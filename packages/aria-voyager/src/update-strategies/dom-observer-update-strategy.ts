@@ -1,6 +1,6 @@
 import { isItemOf } from '#src/controls/-items';
 
-import type { Control, ControlWithSelection } from '#src/controls/control';
+import type { Control, ControlWithChecks, ControlWithSelection } from '#src/controls/control';
 import type { UpdateStrategy } from '#src/update-strategies/update-strategy';
 
 export class DomObserverUpdateStrategy implements UpdateStrategy {
@@ -46,6 +46,18 @@ export class DomObserverUpdateStrategy implements UpdateStrategy {
 
       if (changedSelection) {
         this.control.readSelection();
+      }
+    }
+
+    if (this.control.usesChecks()) {
+      const changedChecks = changes.every(
+        (c) =>
+          c.type === 'attributes' &&
+          (this.control as unknown as ControlWithChecks).isCheckAttribute(c.attributeName as string)
+      );
+
+      if (changedChecks) {
+        this.control.readChecks();
       }
     }
   });
