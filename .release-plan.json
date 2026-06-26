@@ -2,25 +2,21 @@
   "solution": {
     "aria-voyager": {
       "impact": "minor",
-      "oldVersion": "1.0.1",
-      "newVersion": "1.1.0",
+      "oldVersion": "1.1.0",
+      "newVersion": "1.2.0",
       "tagName": "latest",
       "constraints": [
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/aria-voyager/package.json"
     },
     "ember-aria-voyager": {
       "impact": "minor",
-      "oldVersion": "1.0.1",
-      "newVersion": "1.1.0",
+      "oldVersion": "1.1.0",
+      "newVersion": "1.2.0",
       "tagName": "latest",
       "constraints": [
         {
@@ -35,5 +31,5 @@
       "pkgJSONPath": "./packages/ember-aria-voyager/package.json"
     }
   },
-  "description": "## Release (2026-06-25)\n\n* aria-voyager 1.1.0 (minor)\n* ember-aria-voyager 1.1.0 (minor)\n\n#### :rocket: Enhancement\n* `aria-voyager`, `ember-aria-voyager`\n  * [#687](https://github.com/hokulea/aria-voyager/pull/687) Listbox with check behavior ([@gossi](https://github.com/gossi))\n\n#### :bug: Bug Fix\n* `aria-voyager`\n  * [#686](https://github.com/hokulea/aria-voyager/pull/686) Fix: Stop activating disabled items ([@gossi](https://github.com/gossi))\n  * [#685](https://github.com/hokulea/aria-voyager/pull/685) Fix: Selection to take disabled items into account ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "## Release (2026-06-26)\n\n* aria-voyager 1.2.0 (minor)\n* ember-aria-voyager 1.2.0 (minor)\n\n#### :rocket: Enhancement\n* `aria-voyager`, `ember-aria-voyager`\n  * [#690](https://github.com/hokulea/aria-voyager/pull/690) Pass in checks from the outside ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }
