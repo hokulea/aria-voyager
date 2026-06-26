@@ -1,5 +1,17 @@
 # Changelog
 
+## Release (2026-06-26)
+
+* aria-voyager 1.2.0 (minor)
+* ember-aria-voyager 1.2.0 (minor)
+
+#### :rocket: Enhancement
+* `aria-voyager`, `ember-aria-voyager`
+  * [#690](https://github.com/hokulea/aria-voyager/pull/690) Pass in checks from the outside ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2026-06-25)
 
 * aria-voyager 1.1.0 (minor)
