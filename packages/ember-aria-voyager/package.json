@@ -103,7 +103,7 @@
     "prettier": "catalog:lint",
     "qunit": "2.25.0",
     "qunit-dom": "3.5.0",
-    "sinon": "^21.0.3",
+    "sinon": "^21.1.2",
     "testem": "^3.18.0",
     "tsdown": "catalog:build",
     "type-fest": "^5.7.0",
