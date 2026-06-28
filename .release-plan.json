@@ -1,35 +1,21 @@
 {
   "solution": {
     "aria-voyager": {
-      "impact": "minor",
-      "oldVersion": "1.1.0",
-      "newVersion": "1.2.0",
-      "tagName": "latest",
-      "constraints": [
-        {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
-        }
-      ],
-      "pkgJSONPath": "./packages/aria-voyager/package.json"
+      "oldVersion": "1.2.0"
     },
     "ember-aria-voyager": {
-      "impact": "minor",
-      "oldVersion": "1.1.0",
-      "newVersion": "1.2.0",
+      "impact": "patch",
+      "oldVersion": "1.2.0",
+      "newVersion": "1.2.1",
       "tagName": "latest",
       "constraints": [
         {
           "impact": "patch",
-          "reason": "Has dependency `workspace:*` on aria-voyager"
-        },
-        {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./packages/ember-aria-voyager/package.json"
     }
   },
-  "description": "## Release (2026-06-26)\n\n* aria-voyager 1.2.0 (minor)\n* ember-aria-voyager 1.2.0 (minor)\n\n#### :rocket: Enhancement\n* `aria-voyager`, `ember-aria-voyager`\n  * [#690](https://github.com/hokulea/aria-voyager/pull/690) Pass in checks from the outside ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "## Release (2026-06-28)\n\n* ember-aria-voyager 1.2.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-aria-voyager`\n  * [#701](https://github.com/hokulea/aria-voyager/pull/701) fix selection for radiogroups ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
 }
