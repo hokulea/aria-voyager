@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2026-06-28)
+
+* ember-aria-voyager 1.2.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-aria-voyager`
+  * [#701](https://github.com/hokulea/aria-voyager/pull/701) fix selection for radiogroups ([@gossi](https://github.com/gossi))
+
+#### Committers: 1
+- Thomas Gossmann ([@gossi](https://github.com/gossi))
+
 ## Release (2026-06-26)
 
 * aria-voyager 1.2.0 (minor)
