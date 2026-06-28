@@ -79,7 +79,7 @@
     "@embroider/compat": "^4.1.20",
     "@embroider/core": "^4.6.1",
     "@embroider/macros": "^1.20.4",
-    "@embroider/vite": "^1.7.6",
+    "@embroider/vite": "^1.7.7",
     "@glint/ember-tsc": "^1.2.3",
     "@glint/template": "^1.7.7",
     "@gossi/config-eslint": "catalog:lint",
