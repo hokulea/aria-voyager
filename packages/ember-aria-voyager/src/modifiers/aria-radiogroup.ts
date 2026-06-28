@@ -43,6 +43,7 @@ export default class RadioGroupModifier<T> extends Modifier<RadioGroupSignature<
 
   private prevItems?: T[];
   private prevDisabled?: boolean;
+  private prevSelection?: T;
 
   constructor(owner: Owner, args: ArgsFor<RadioGroupSignature<T>>) {
     super(owner, args);
@@ -76,6 +77,11 @@ export default class RadioGroupModifier<T> extends Modifier<RadioGroupSignature<
     if (options.items && !isEqual(this.prevItems, options.items)) {
       this.updater.updateItems();
       this.prevItems = [...options.items];
+    }
+
+    if (options.selection && options.selection !== this.prevSelection) {
+      this.updater.updateSelection();
+      this.prevSelection = options.selection;
     }
 
     if (this.prevDisabled !== options.disabled) {
