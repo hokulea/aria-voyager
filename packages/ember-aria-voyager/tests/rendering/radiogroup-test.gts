@@ -1,7 +1,10 @@
 import { tracked } from '@glimmer/tracking';
-import { render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import { next } from '@ember/runloop';
+import { focus, render, rerender, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+
+import sinon from 'sinon';
 
 import { ariaRadioGroup } from '#src';
 
@@ -281,6 +284,103 @@ module('Rendering | Modifier | {{ariaRadioGroup}}', (hooks) => {
       assert
         .dom('button:nth-of-type(2)')
         .hasAttribute('aria-checked', 'false', '... and unchecks second item');
+    });
+  });
+
+  module('Reactivity', () => {
+    test('disabling sets tabindex to -1', async function (assert) {
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        @tracked disabled = false;
+      })();
+
+      await render(
+        <template>
+          <div {{ariaRadioGroup disabled=context.disabled}}>
+            <button type="button" role="radio" aria-checked="false">Top</button>
+            <button type="button" role="radio" aria-checked="false">Bottom</button>
+            <button type="button" role="radio" aria-checked="false">Left</button>
+          </div>
+        </template>
+      );
+
+      assert.dom('[role="radiogroup"]').doesNotHaveAria('disabled');
+      assert.dom('button:first-of-type').hasAttribute('tabindex', '0');
+
+      context.disabled = true;
+
+      await rerender();
+
+      assert.dom('[role="radiogroup"]').hasAria('disabled', 'true');
+      assert.dom('button:first-of-type').hasAttribute('tabindex', '-1');
+    });
+
+    test('selection updates', async (assert) => {
+      const options = ['top', 'bottom', 'left'];
+      // eslint-disable-next-line unicorn/no-unreadable-new-expression
+      const context = new (class {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        @tracked selection?: string = undefined;
+
+        select = (selection: string) => {
+          // eslint-disable-next-line ember/no-runloop
+          next(() => {
+            this.selection = selection;
+          });
+        };
+      })();
+      const handleUpdate = sinon.spy(context, 'select');
+
+      // eslint-disable-next-line unicorn/consistent-function-scoping
+      const isSelected = (item: string, selection?: string) => {
+        return item === selection;
+      };
+
+      await render(
+        <template>
+          <div {{ariaRadioGroup items=options selection=context.selection select=context.select}}>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="{{if (isSelected 'top' context.selection) 'true' 'false'}}"
+            >Top</button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="{{if (isSelected 'bottom' context.selection) 'true' 'false'}}"
+            >Bottom</button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="{{if (isSelected 'left' context.selection) 'true' 'false'}}"
+            >Left</button>
+          </div>
+        </template>
+      );
+
+      assert.dom('button:first-of-type').hasAria('checked', 'true');
+      assert.dom('button:nth-of-type(2)').hasAria('checked', 'false');
+      assert.dom('button:nth-of-type(3)').hasAria('checked', 'false');
+
+      await focus('button:first-of-type');
+      await triggerKeyEvent('button:first-of-type', 'keydown', 'ArrowRight');
+
+      assert.dom('button:first-of-type').hasAria('checked', 'false');
+      assert.dom('button:nth-of-type(2)').hasAria('checked', 'true');
+      assert.dom('button:nth-of-type(3)').hasAria('checked', 'false');
+      assert.ok(handleUpdate.calledWith('bottom'));
+
+      context.selection = 'left';
+      await rerender();
+
+      assert.dom('button:first-of-type').hasAria('checked', 'false');
+      assert.dom('button:nth-of-type(2)').hasAria('checked', 'false');
+      assert.dom('button:nth-of-type(3)').hasAria('checked', 'true');
+
+      assert.ok(handleUpdate.calledWith('left'));
     });
   });
 });
