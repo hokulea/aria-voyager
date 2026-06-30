@@ -240,7 +240,7 @@ importers:
         version: 13.2.0
       ember-sinon-qunit:
         specifier: ^7.5.0
-        version: 7.5.0(@babel/core@7.29.7)(ember-source@7.1.0(@glimmer/component@2.0.0))(qunit@2.26.0)(sinon@21.1.2)
+        version: 7.5.0(@babel/core@7.29.7)(ember-source@7.1.0(@glimmer/component@2.0.0))(qunit@2.26.0)(sinon@22.0.0)
       ember-source:
         specifier: ~7.1.0
         version: 7.1.0(@glimmer/component@2.0.0)
@@ -269,8 +269,8 @@ importers:
         specifier: 3.5.1
         version: 3.5.1
       sinon:
-        specifier: ^21.1.2
-        version: 21.1.2
+        specifier: ^22.0.0
+        version: 22.0.0
       testem:
         specifier: ^3.20.1
         version: 3.20.1(@babel/core@7.29.7)(handlebars@4.7.8)(underscore@1.13.7)
@@ -3582,8 +3582,8 @@ packages:
   devalue@5.8.1:
     resolution: {integrity: sha512-4CXDYRBGqN+57wVJkuXBYmpAVUSg3L6JAQa/DFqm238G73E1wuyc/JhGQJzN7vUf/CMphYau2zXbfWzDR5aTEw==}
 
-  diff@8.0.4:
-    resolution: {integrity: sha512-DPi0FmjiSU5EvQV0++GFDOJ9ASQUVFh5kD+OzOnYdi7n3Wpm9hWWGfB/O2blfHcMVTL5WkQXSnRiK9makhrcnw==}
+  diff@9.0.0:
+    resolution: {integrity: sha512-svtcdpS8CgJyqAjEQIXdb3OjhFVVYjzGAPO8WGCmRbrml64SPw/jJD4GoE98aR7r25A0XcgrK3F02yw9R/vhQw==}
     engines: {node: '>=0.3.1'}
 
   doctrine@2.1.0:
@@ -6206,8 +6206,8 @@ packages:
   simple-html-tokenizer@0.5.11:
     resolution: {integrity: sha512-C2WEK/Z3HoSFbYq8tI7ni3eOo/NneSPRoPpcM7WdLjFOArFuyXEjAoCdOC3DgMfRyziZQ1hCNR4mrNdWEvD0og==}
 
-  sinon@21.1.2:
-    resolution: {integrity: sha512-FS6mN+/bx7e2ajpXkEmOcWB6xBzWiuNoAQT18/+a20SS4U7FSYl8Ms7N6VTUxN/1JAjkx7aXp+THMC8xdpp0gA==}
+  sinon@22.0.0:
+    resolution: {integrity: sha512-sq/6DpdXOrLyfbKlXLg/Usc7xu8YXPeLkOFZRvA3bNUSA2lhbrZ06yuXbH1fkzBPCbz9O10+7hznzUsjaYNm0Q==}
 
   sirv@3.0.2:
     resolution: {integrity: sha512-2wcC/oGxHis/BoHkkPwldgiPSYcpZK3JU28WoMVv55yHJgcZ8rlXvuG9iZggz+sU1d4bRgIGASwyWqjxu3FM0g==}
@@ -10549,7 +10549,7 @@ snapshots:
 
   devalue@5.8.1: {}
 
-  diff@8.0.4: {}
+  diff@9.0.0: {}
 
   doctrine@2.1.0:
     dependencies:
@@ -10771,14 +10771,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-sinon-qunit@7.5.0(@babel/core@7.29.7)(ember-source@7.1.0(@glimmer/component@2.0.0))(qunit@2.26.0)(sinon@21.1.2):
+  ember-sinon-qunit@7.5.0(@babel/core@7.29.7)(ember-source@7.1.0(@glimmer/component@2.0.0))(qunit@2.26.0)(sinon@22.0.0):
     dependencies:
       '@embroider/addon-shim': 1.10.3
       '@types/sinon': 17.0.4
       decorator-transforms: 2.3.2(@babel/core@7.29.7)
       ember-source: 7.1.0(@glimmer/component@2.0.0)
       qunit: 2.26.0
-      sinon: 21.1.2
+      sinon: 22.0.0
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -13780,12 +13780,12 @@ snapshots:
 
   simple-html-tokenizer@0.5.11: {}
 
-  sinon@21.1.2:
+  sinon@22.0.0:
     dependencies:
       '@sinonjs/commons': 3.0.1
       '@sinonjs/fake-timers': 15.4.0
       '@sinonjs/samsam': 10.0.2
-      diff: 8.0.4
+      diff: 9.0.0
 
   sirv@3.0.2:
     dependencies:
