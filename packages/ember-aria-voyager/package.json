@@ -87,7 +87,7 @@
     "@gossi/config-template-lint": "catalog:lint",
     "@rollup/plugin-babel": "^7.1.0",
     "@types/qunit": "2.19.14",
-    "@types/sinon": "21.0.1",
+    "@types/sinon": "22.0.0",
     "babel-plugin-ember-template-compilation": "^4.0.0",
     "decorator-transforms": "^2.4.0",
     "ember-cli-code-coverage": "3.1.0",
