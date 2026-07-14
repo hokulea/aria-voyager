@@ -87,6 +87,6 @@ catalogs:
     "playwright": "^1.61.0"
     "vitest": "^4.1.9"
   lib:
-    "@hokulea/core": ^0.10.0
+    "@hokulea/core": ^0.12.0
     "@hokulea/theme-moana": ^0.4.0
     "es-toolkit": ^1.43.0
