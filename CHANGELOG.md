@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2026-06-28)
 
 * ember-aria-voyager 1.2.1 (patch)
