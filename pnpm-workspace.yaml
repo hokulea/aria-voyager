@@ -78,7 +78,7 @@ catalogs:
     "eslint": ^10.5.0
     "eslint-plugin-ember": ^13.3.2
     "eslint-plugin-qunit": ^8.2.6
-    "prettier": 3.8.4
+    "prettier": 3.9.5
   test:
     "@testing-library/dom": "10.4.1"
     "@vitest/browser-playwright": "^4.1.9"
