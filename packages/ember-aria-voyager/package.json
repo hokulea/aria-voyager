@@ -106,7 +106,7 @@
     "sinon": "^22.0.0",
     "testem": "^3.20.1",
     "tsdown": "catalog:build",
-    "type-fest": "^5.7.0",
+    "type-fest": "^5.8.0",
     "typescript": "catalog:build",
     "vite": "catalog:build"
   },
