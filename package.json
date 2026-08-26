@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "playwright": "catalog:test",
-    "release-plan": "0.18.0",
+    "release-plan": "0.20.0",
     "turbo": "^2.10.11"
   },
   "packageManager": "pnpm@11.20.0",
