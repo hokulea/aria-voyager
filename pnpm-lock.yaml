@@ -272,8 +272,8 @@ importers:
         specifier: ^22.1.0
         version: 22.1.0
       testem:
-        specifier: ^3.20.1
-        version: 3.20.1(@babel/core@7.29.7(supports-color@7.2.0))(debug@4.4.3(supports-color@7.2.0))(handlebars@4.7.8)(supports-color@7.2.0)(underscore@1.13.7)
+        specifier: ^3.20.2
+        version: 3.20.2(@babel/core@7.29.7(supports-color@7.2.0))(debug@4.4.3(supports-color@7.2.0))(handlebars@4.7.8)(supports-color@7.2.0)(underscore@1.13.7)
       tsdown:
         specifier: catalog:build
         version: 0.22.3(typescript@6.0.3)(unrun@0.2.25(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(synckit@0.11.11))
@@ -6375,8 +6375,8 @@ packages:
     resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
     engines: {node: '>=8'}
 
-  testem@3.20.1:
-    resolution: {integrity: sha512-HMbcVlrRDt+GjEGJZrPSCp0XFzM7SSdmLvNSJm++hIITEIMoccCQGikvelOO/NjfZJ0HTZCEyvg3+CIStjaZqQ==}
+  testem@3.20.2:
+    resolution: {integrity: sha512-Y29LKJ4XHjr2oUZHHIDJbz7/AYDM8soqc7Irg6sfBI5W3nfOuuovyN2SEKnFw4LqGdQe0cFXZG3xAvt00INvWQ==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
     hasBin: true
 
@@ -13876,7 +13876,7 @@ snapshots:
       glob: 7.2.3
       minimatch: 3.1.5
 
-  testem@3.20.1(@babel/core@7.29.7(supports-color@7.2.0))(debug@4.4.3(supports-color@7.2.0))(handlebars@4.7.8)(supports-color@7.2.0)(underscore@1.13.7):
+  testem@3.20.2(@babel/core@7.29.7(supports-color@7.2.0))(debug@4.4.3(supports-color@7.2.0))(handlebars@4.7.8)(supports-color@7.2.0)(underscore@1.13.7):
     dependencies:
       '@xmldom/xmldom': 0.9.10
       backbone: 1.6.1
