@@ -4,18 +4,8 @@
       "oldVersion": "1.2.0"
     },
     "ember-aria-voyager": {
-      "impact": "patch",
-      "oldVersion": "1.2.0",
-      "newVersion": "1.2.1",
-      "tagName": "latest",
-      "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        }
-      ],
-      "pkgJSONPath": "./packages/ember-aria-voyager/package.json"
+      "oldVersion": "1.2.1"
     }
   },
-  "description": "## Release (2026-06-28)\n\n* ember-aria-voyager 1.2.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-aria-voyager`\n  * [#701](https://github.com/hokulea/aria-voyager/pull/701) fix selection for radiogroups ([@gossi](https://github.com/gossi))\n\n#### Committers: 1\n- Thomas Gossmann ([@gossi](https://github.com/gossi))\n"
+  "description": "\n\n\n\n"
 }
