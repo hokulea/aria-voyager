@@ -68,7 +68,7 @@ packages:
 catalogs:
   build:
     "tsdown": "0.22.3"
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
     "vite": "8.0.16"
   lint:
     "@gossi/config-eslint": ^1.3.4
