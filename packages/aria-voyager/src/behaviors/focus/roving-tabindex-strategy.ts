@@ -56,9 +56,11 @@ export class RovingTabindexStrategy extends AbstractFocusStrategy {
         this.activeItem = undefined;
       }
 
-      if (!this.activeItem && this.control.enabledItems.length > 0) {
-        this.control.enabledItems[0].setAttribute('tabindex', '0');
-        this.activeItem = this.control.enabledItems[0];
+      const firstItem = this.control.firstFocusableItem;
+
+      if (!this.activeItem && firstItem) {
+        firstItem.setAttribute('tabindex', '0');
+        this.activeItem = firstItem;
       }
     }
   }

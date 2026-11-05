@@ -88,8 +88,8 @@ export abstract class AbstractFocusStrategy implements Behavior, FocusStrategy {
         this.selection.length > 0
       ) {
         this.activateSelection();
-      } else {
-        this.activateItem(this.control.enabledItems[0]);
+      } else if (this.control.firstFocusableItem) {
+        this.activateItem(this.control.firstFocusableItem);
       }
     } else if (this.control.focusableItems.includes(event.target as Item)) {
       this.activateItem(event.target as Item);

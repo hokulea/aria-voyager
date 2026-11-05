@@ -89,6 +89,14 @@ export abstract class Control {
     return this.enabledItems;
   }
 
+  /**
+   * Where focus starts: the first enabled item, or the first focusable one
+   * when all items are disabled, so the control stays reachable by keyboard
+   */
+  get firstFocusableItem(): Item | undefined {
+    return this.enabledItems[0] ?? this.focusableItems[0];
+  }
+
   #focusDisabledItems = false;
 
   abstract get activeItem(): Item | undefined;
