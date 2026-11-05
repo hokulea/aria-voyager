@@ -1,5 +1,4 @@
 import { AbstractFocusStrategy } from '#src/behaviors/focus/focus-strategy';
-import { isItemEnabled } from '#src/controls/-items';
 
 import type { Item } from '#src/controls/control';
 
@@ -51,7 +50,7 @@ export class RovingTabindexStrategy extends AbstractFocusStrategy {
       this.activeItem?.setAttribute('tabindex', '-1');
       this.activeItem = undefined;
     } else {
-      if (this.activeItem && isItemEnabled(this.activeItem)) {
+      if (this.activeItem && this.control.focusableItems.includes(this.activeItem)) {
         this.activeItem.setAttribute('tabindex', '0');
       } else {
         this.activeItem = undefined;

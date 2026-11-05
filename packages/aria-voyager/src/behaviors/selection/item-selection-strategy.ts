@@ -229,6 +229,11 @@ export class ItemSelectionStrategy
   }
 
   private selectSingle(item: HTMLElement) {
+    // focusable disabled items are reached by navigation, but never selected
+    if (!this.control.enabledItems.includes(item)) {
+      return;
+    }
+
     this.shiftItem = item;
 
     this.persistSelection([item]);

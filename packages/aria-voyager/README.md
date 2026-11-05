@@ -254,10 +254,20 @@ interface TablistOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
   behavior?: TablistBehavior;
+  focusDisabledItems?: boolean;
 }
 ```
 
 See [updater](#updater) and [emitter](#emitter).
+
+Tabs marked with `aria-disabled="true"` are skipped by arrow keys, `Home` and
+`End`. Set `focusDisabledItems: true` to keep them in the navigation instead.
+Focus can then land on a disabled tab, but the tab is never selected, so the
+panel of the selected tab stays visible. This follows the APG convention for
+[focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols),
+which lists tabs among the items that remain discoverable. Screen reader users
+then hear a disabled tab, and a description linked with `aria-describedby` can
+explain why it is unavailable.
 
 #### `RadioGroup`
 

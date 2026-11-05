@@ -13,15 +13,15 @@ export class EndNavigation implements Behavior {
   constructor(private control: Control) {}
 
   matches(event: Event): boolean {
-    return isEndEvent(event) && this.control.enabledItems.length > 0;
+    return isEndEvent(event) && this.control.focusableItems.length > 0;
   }
 
   handle(bag: BehaviorParameterBag): BehaviorParameterBag {
-    const lastOffset = this.control.enabledItems.length - 1;
+    const lastOffset = this.control.focusableItems.length - 1;
 
     return {
       ...bag,
-      item: this.control.enabledItems[lastOffset]
+      item: this.control.focusableItems[lastOffset]
     };
   }
 }

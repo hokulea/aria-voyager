@@ -17,6 +17,10 @@ export interface TablistOptions {
   updater?: UpdateStrategy;
   emitter?: EmitStrategy;
   behavior?: TablistBehavior;
+  /**
+   * Arrow keys, Home and End also move onto disabled tabs, without selecting them
+   */
+  focusDisabledItems?: boolean;
 }
 
 export class Tablist extends Control implements ControlWithSelection {

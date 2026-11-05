@@ -26,6 +26,8 @@ type TablistOptions<T> = Simplify<
       disabled?: boolean;
       orientation?: Orientation;
       behavior?: TablistBehavior;
+      /** Arrow keys, Home and End also move onto disabled tabs, without selecting them. Read once, on setup. */
+      focusDisabledItems?: boolean;
     }
 >;
 
@@ -66,7 +68,8 @@ export default class TablistModifier<T> extends Modifier<TablistSignature<T>> {
       this.tablist = new Tablist(element as HTMLElement, {
         updater: this.updater,
 
-        behavior: options.behavior
+        behavior: options.behavior,
+        focusDisabledItems: options.focusDisabledItems
       });
     }
 

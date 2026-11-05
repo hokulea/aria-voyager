@@ -61,7 +61,7 @@ export abstract class AbstractFocusStrategy implements Behavior, FocusStrategy {
   }
 
   matches() {
-    return this.control.enabledItems.length > 0;
+    return this.control.focusableItems.length > 0;
   }
 
   handle(bag: BehaviorParameterBag): BehaviorParameterBag {
@@ -73,7 +73,7 @@ export abstract class AbstractFocusStrategy implements Behavior, FocusStrategy {
       return bag;
     }
 
-    if (item && this.control.enabledItems.includes(item)) {
+    if (item && this.control.focusableItems.includes(item)) {
       this.activateItem(item, event.type === 'pointerover');
     }
 
@@ -91,7 +91,7 @@ export abstract class AbstractFocusStrategy implements Behavior, FocusStrategy {
       } else {
         this.activateItem(this.control.enabledItems[0]);
       }
-    } else if (this.control.enabledItems.includes(event.target as Item)) {
+    } else if (this.control.focusableItems.includes(event.target as Item)) {
       this.activateItem(event.target as Item);
     }
   }
