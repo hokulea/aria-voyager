@@ -26,6 +26,13 @@ interface ControlOptions {
   capabilities?: Capabilities;
   optionAttributes?: string[];
   updater?: UpdateStrategy;
+  /**
+   * Keep disabled items in the keyboard navigation, so they stay discoverable.
+   * They still can't be selected.
+   *
+   * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols
+   */
+  focusDisabledItems?: boolean;
 }
 
 export type Orientation = 'horizontal' | 'vertical';
@@ -66,6 +73,31 @@ export abstract class Control {
 
     return this.items.filter((item) => isItemEnabled(item));
   }
+
+  /**
+   * The items keyboard navigation moves between
+   */
+  get focusableItems() {
+    if (this.options.disabled) {
+      return [];
+    }
+
+    if (this.#focusDisabledItems) {
+      return this.items;
+    }
+
+    return this.enabledItems;
+  }
+
+  /**
+   * Where focus starts: the first enabled item, or the first focusable one
+   * when all items are disabled, so the control stays reachable by keyboard
+   */
+  get firstFocusableItem(): Item | undefined {
+    return this.enabledItems[0] ?? this.focusableItems[0];
+  }
+
+  #focusDisabledItems = false;
 
   abstract get activeItem(): Item | undefined;
   abstract get prevActiveItem(): Item | undefined;
@@ -120,6 +152,7 @@ export abstract class Control {
     this.#capabilities = options.capabilities ?? this.#capabilities;
     this.#optionAttributes = options.optionAttributes ?? this.#optionAttributes;
     this.updater = options.updater ?? new DomObserverUpdateStrategy(this);
+    this.#focusDisabledItems = options.focusDisabledItems ?? false;
 
     this.#handler = this.handleEvent.bind(this);
 

@@ -13,13 +13,13 @@ export class HomeNavigation implements Behavior {
   constructor(private control: Control) {}
 
   matches(event: Event): boolean {
-    return isHomeEvent(event) && this.control.enabledItems.length > 0;
+    return isHomeEvent(event) && this.control.focusableItems.length > 0;
   }
 
   handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     return {
       ...bag,
-      item: this.control.enabledItems[0]
+      item: this.control.focusableItems[0]
     };
   }
 }

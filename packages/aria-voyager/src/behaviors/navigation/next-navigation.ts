@@ -12,18 +12,18 @@ export class NextNavigation implements Behavior {
   ) {}
 
   matches(event: Event): boolean {
-    return doesEventMatchKeys(event, this.keyOrKeys) && this.control.enabledItems.length > 0;
+    return doesEventMatchKeys(event, this.keyOrKeys) && this.control.focusableItems.length > 0;
   }
 
   handle(bag: BehaviorParameterBag): BehaviorParameterBag {
     let item: Item | undefined = undefined;
 
     if (this.control.activeItem) {
-      const activeIndex = this.control.enabledItems.indexOf(this.control.activeItem);
+      const activeIndex = this.control.focusableItems.indexOf(this.control.activeItem);
 
       // item is last;
-      if (activeIndex !== this.control.enabledItems.length - 1) {
-        item = this.control.enabledItems[activeIndex + 1];
+      if (activeIndex !== this.control.focusableItems.length - 1) {
+        item = this.control.focusableItems[activeIndex + 1];
       }
     }
 
