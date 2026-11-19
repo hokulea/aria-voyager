@@ -95,7 +95,7 @@
     "ember-resolver": "^13.2.0",
     "ember-sinon-qunit": "^7.5.0",
     "ember-source": "~7.2.0",
-    "ember-template-lint": "^7.9.3",
+    "ember-template-lint": "^7.9.4",
     "es-toolkit": "catalog:lib",
     "eslint": "catalog:lint",
     "eslint-plugin-ember": "catalog:lint",
